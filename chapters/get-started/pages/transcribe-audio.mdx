@@ -1,0 +1,134 @@
+---
+title: Transcribe an audio file
+description: "Get your first transcription in less than a minute"
+---
+
+<Tip> Every references, assumptions, and commands mentionning "audio files" are also true & works for video files. </Tip>
+
+
+## 🤖 Using your terminal with cURL command
+
+If you are a developper, you probably want to check our [API Documentation](/api-reference/)
+<AccordionGroup>
+  <Accordion icon="file-audio" title="Transcribe local audio files">
+    You'll need:
+
+    - Your local audio file (refered as *YOUR_LOCAL_AUDIO_FILE* in the below example)
+    - Your Gladia API key (refered as *YOUR_GLADIA_API_KEY* in the below example)
+
+    First, we need to upload your local file to Gladia API : 
+
+    ```bash
+    curl --request POST \
+      --url https://api.gladia.io/v2/upload \
+      --header 'Content-Type: multipart/form-data' \
+      --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
+      --form audio=@/path/to/your/audio/conversation.wav
+    ```
+
+    If your upload succeeded, you'll get a response of type :
+
+    ```json
+    {
+      "audio_url":"https://api.gladia.io/file/43a853cf-990e-43c3-8c5d-594c0b2bfc95",
+      "audio_metadata":
+        {
+          "id":"43a853cf-990e-43c3-8c5d-594c0b2bfc95",
+          "filename": "conversation.wav",
+          "extension": "wav",
+          "size": 1813648,
+          "audio_duration": 26.555465,
+          "nb_channels": 2
+        }
+    }
+    ```
+
+    - `audio_url` : The audio URL we'll use to send the transcription request
+    - `audio_metadata` : Metadata we got from your audio files
+
+    Now that you have an audio link, you can proceed with the **"Transcribe audio links"** part 👇👇👇
+  </Accordion>
+
+  <Accordion icon="globe" title="Transcribe audio links">
+    You'll need:
+
+    - Your audio link URL (refered as *YOUR_AUDIO_LINK_URL* in the below example)
+    - Your Gladia API key (refered as *YOUR_GLADIA_API_KEY* in the below example)
+
+    ```bash
+    curl --request POST \
+      --url https://api.gladia.io/v2/transcription \
+      --header 'Content-Type: application/json' \
+      --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
+      --data '{
+      "audio_url": "YOUR_AUDIO_LINK_URL"
+      }'
+    ```
+
+    If your transcription request succeeded, you'll get a response of type :
+
+    ```json
+    {
+      "id": "40aae358-6bfd-4c01-bf1d-0fc7c0f02707",
+      "result_url": "https://api.gladia.io/v2/transcription/40aae358-6bfd-4c01-bf1d-0fc7c0f02707"
+    }
+    ```
+
+    - `id` : Your transcription ID
+    - `result_url` : A pre-built URL for convenience to fetch your XPathResult
+
+    Then you'll be able to fetch your result in JSON format using the `result_url` we provided you:
+
+    ```bash
+    curl --request GET \
+      --url https://api.gladia.io/v2/transcription/40aae358-6bfd-4c01-bf1d-0fc7c0f02707 \
+      --header 'x-gladia-key: YOUR_GLADIA_API_KEY'
+    ```
+
+    Ta-da 🎉 you just made your first transcription !
+  </Accordion>
+</AccordionGroup>
+
+## 🎮 Using our playground
+
+Using [Gladia's playground](https://app.gladia.io/playground/1) is a conveniant way to test our speech to text API. On the playground
+you are able to transcribe remote audio files through URL, and also upload your local audio files, alongside with live 
+audio transcription.
+
+<Steps>
+  <Step title="Select your audio source">
+    Choose your audio source (using an audio link, or upload a local file)
+    <Frame>
+      <img src='/assets/images/playground-1.png'/>
+    </Frame>
+    Then proceed to the next step.
+  </Step>
+  <Step title="Select features">
+    You'll be able to select <Tooltip tip="If you want to see a complete list of the features Gladia's API provide check the Features section">some of 
+    the options</Tooltip> Gladia API provide for your transcription.
+    For this example, we wants to detect the speakers, so we turned on **diarization**.
+
+    <Note>
+        Only a few features of Gladia API are available on the playground. For more advanced testing,
+        check [our API documentation](/api-reference/) instead. 
+     </Note>
+
+    <Frame>
+      <img src='/assets/images/playground-2.png'/>
+    </Frame>
+  </Step>
+  <Step title="Transcribe">
+
+    You can see an already formatted and readable results in the default "Transcription" tab, and you'll find the raw result
+    (the one you'd get with an API call) in the JSON tab.
+
+    <Frame>
+      <img src='/assets/images/playground-3.png'/>
+    </Frame>
+  </Step>
+</Steps>
+
+🥳 Congratulation, you just transcribed your first audio file with Gladia.
+
+Gladia API offer way more than providing access to state of the art speech-to-text. You'll be able to take your audio 
+transcriptions, take a look to the [next steps](/chapters/get-started/pages/next-steps/).

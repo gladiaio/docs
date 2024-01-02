@@ -1,0 +1,1818 @@
+openapi: 3.0.0
+paths:
+  /audio/text/audio-transcription:
+    post:
+      operationId: AudioToTextController_audioTranscription
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                audio:
+                  type: string
+                  format: binary
+                audio_url:
+                  type: string
+                  default: >-
+                    http://files.gladia.io/example/audio-transcription/split_infinity.wav
+                language_behaviour:
+                  type: string
+                  enum:
+                    - automatic single language
+                    - automatic multiple languages
+                    - manual
+                  default: automatic single language
+                language:
+                  type: string
+                  enum:
+                    - afrikaans
+                    - albanian
+                    - amharic
+                    - arabic
+                    - armenian
+                    - assamese
+                    - azerbaijani
+                    - bashkir
+                    - basque
+                    - belarusian
+                    - bengali
+                    - bosnian
+                    - breton
+                    - bulgarian
+                    - catalan
+                    - chinese
+                    - croatian
+                    - czech
+                    - danish
+                    - dutch
+                    - english
+                    - estonian
+                    - faroese
+                    - finnish
+                    - french
+                    - galician
+                    - georgian
+                    - german
+                    - greek
+                    - gujarati
+                    - haitian creole
+                    - hausa
+                    - hawaiian
+                    - hebrew
+                    - hindi
+                    - hungarian
+                    - icelandic
+                    - indonesian
+                    - italian
+                    - japanese
+                    - javanese
+                    - kannada
+                    - kazakh
+                    - khmer
+                    - korean
+                    - lao
+                    - latin
+                    - latvian
+                    - lingala
+                    - lithuanian
+                    - luxembourgish
+                    - macedonian
+                    - malagasy
+                    - malay
+                    - malayalam
+                    - maltese
+                    - maori
+                    - marathi
+                    - mongolian
+                    - myanmar
+                    - nepali
+                    - norwegian
+                    - nynorsk
+                    - occitan
+                    - pashto
+                    - persian
+                    - polish
+                    - portuguese
+                    - punjabi
+                    - romanian
+                    - russian
+                    - sanskrit
+                    - serbian
+                    - shona
+                    - sindhi
+                    - sinhala
+                    - slovak
+                    - slovenian
+                    - somali
+                    - spanish
+                    - sundanese
+                    - swahili
+                    - swedish
+                    - tagalog
+                    - tajik
+                    - tamil
+                    - tatar
+                    - telugu
+                    - thai
+                    - tibetan
+                    - turkish
+                    - turkmen
+                    - ukrainian
+                    - urdu
+                    - uzbek
+                    - vietnamese
+                    - welsh
+                    - yiddish
+                    - yoruba
+                transcription_hint:
+                  type: string
+                toggle_diarization:
+                  type: boolean
+                  default: false
+                diarization_num_speakers:
+                  type: integer
+                diarization_min_speakers:
+                  type: integer
+                diarization_max_speakers:
+                  type: integer
+                toggle_direct_translate:
+                  type: boolean
+                  default: false
+                target_translation_language:
+                  type: string
+                  enum:
+                    - afrikaans
+                    - albanian
+                    - amharic
+                    - arabic
+                    - armenian
+                    - asturian
+                    - azerbaijani
+                    - bashkir
+                    - belarusian
+                    - bengali
+                    - bosnian
+                    - breton
+                    - bulgarian
+                    - burmese
+                    - catalan
+                    - cebuano
+                    - chinese
+                    - croatian
+                    - czech
+                    - danish
+                    - dutch
+                    - english
+                    - estonian
+                    - finnish
+                    - french
+                    - fulah
+                    - gaelic
+                    - galician
+                    - georgian
+                    - german
+                    - greek
+                    - gujarati
+                    - haitian creole
+                    - hausa
+                    - hebrew
+                    - hindi
+                    - hungarian
+                    - icelandic
+                    - igbo
+                    - iloko
+                    - indonesian
+                    - irish
+                    - italian
+                    - japanese
+                    - javanese
+                    - kannada
+                    - kazakh
+                    - khmer
+                    - korean
+                    - lao
+                    - latvian
+                    - lingala
+                    - lithuanian
+                    - luxembourgish
+                    - macedonian
+                    - malagasy
+                    - malay
+                    - malayalam
+                    - marathi
+                    - mongolian
+                    - nepali
+                    - norwegian
+                    - occitan
+                    - oriya
+                    - panjabi
+                    - pashto
+                    - persian
+                    - polish
+                    - portuguese
+                    - romanian
+                    - russian
+                    - serbian
+                    - sindhi
+                    - sinhala
+                    - slovak
+                    - slovenian
+                    - somali
+                    - spanish
+                    - sundanese
+                    - swahili
+                    - swati
+                    - swedish
+                    - tagalog
+                    - tamil
+                    - thai
+                    - tswana
+                    - turkish
+                    - ukrainian
+                    - urdu
+                    - uzbek
+                    - vietnamese
+                    - welsh
+                    - wolof
+                    - xhosa
+                    - yiddish
+                    - yoruba
+                    - zulu
+                output_format:
+                  type: string
+                  enum:
+                    - json
+                    - srt
+                    - vtt
+                    - plain
+                    - txt
+                  default: json
+                toggle_noise_reduction:
+                  type: boolean
+                  default: false
+                webhook_url:
+                  type: string
+      responses:
+        "200":
+          description: ""
+      security:
+        - x_gladia_key: []
+      tags:
+        - API - Transcription V1
+  /video/text/video-transcription:
+    post:
+      operationId: VideoToTextController_videoTranscription
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                video:
+                  type: string
+                  format: binary
+                video_url:
+                  type: string
+                  default: >-
+                    http://files.gladia.io/example/audio-transcription/split_infinity.wav
+                language_behaviour:
+                  type: string
+                  enum:
+                    - automatic single language
+                    - automatic multiple languages
+                    - manual
+                  default: automatic single language
+                language:
+                  type: string
+                  enum:
+                    - afrikaans
+                    - albanian
+                    - amharic
+                    - arabic
+                    - armenian
+                    - assamese
+                    - azerbaijani
+                    - bashkir
+                    - basque
+                    - belarusian
+                    - bengali
+                    - bosnian
+                    - breton
+                    - bulgarian
+                    - catalan
+                    - chinese
+                    - croatian
+                    - czech
+                    - danish
+                    - dutch
+                    - english
+                    - estonian
+                    - faroese
+                    - finnish
+                    - french
+                    - galician
+                    - georgian
+                    - german
+                    - greek
+                    - gujarati
+                    - haitian creole
+                    - hausa
+                    - hawaiian
+                    - hebrew
+                    - hindi
+                    - hungarian
+                    - icelandic
+                    - indonesian
+                    - italian
+                    - japanese
+                    - javanese
+                    - kannada
+                    - kazakh
+                    - khmer
+                    - korean
+                    - lao
+                    - latin
+                    - latvian
+                    - lingala
+                    - lithuanian
+                    - luxembourgish
+                    - macedonian
+                    - malagasy
+                    - malay
+                    - malayalam
+                    - maltese
+                    - maori
+                    - marathi
+                    - mongolian
+                    - myanmar
+                    - nepali
+                    - norwegian
+                    - nynorsk
+                    - occitan
+                    - pashto
+                    - persian
+                    - polish
+                    - portuguese
+                    - punjabi
+                    - romanian
+                    - russian
+                    - sanskrit
+                    - serbian
+                    - shona
+                    - sindhi
+                    - sinhala
+                    - slovak
+                    - slovenian
+                    - somali
+                    - spanish
+                    - sundanese
+                    - swahili
+                    - swedish
+                    - tagalog
+                    - tajik
+                    - tamil
+                    - tatar
+                    - telugu
+                    - thai
+                    - tibetan
+                    - turkish
+                    - turkmen
+                    - ukrainian
+                    - urdu
+                    - uzbek
+                    - vietnamese
+                    - welsh
+                    - yiddish
+                    - yoruba
+                transcription_hint:
+                  type: string
+                toggle_diarization:
+                  type: boolean
+                  default: false
+                diarization_num_speakers:
+                  type: integer
+                diarization_min_speakers:
+                  type: integer
+                diarization_max_speakers:
+                  type: integer
+                toggle_direct_translate:
+                  type: boolean
+                  default: false
+                target_translation_language:
+                  type: string
+                  enum:
+                    - afrikaans
+                    - albanian
+                    - amharic
+                    - arabic
+                    - armenian
+                    - asturian
+                    - azerbaijani
+                    - bashkir
+                    - belarusian
+                    - bengali
+                    - bosnian
+                    - breton
+                    - bulgarian
+                    - burmese
+                    - catalan
+                    - cebuano
+                    - chinese
+                    - croatian
+                    - czech
+                    - danish
+                    - dutch
+                    - english
+                    - estonian
+                    - finnish
+                    - french
+                    - fulah
+                    - gaelic
+                    - galician
+                    - georgian
+                    - german
+                    - greek
+                    - gujarati
+                    - haitian creole
+                    - hausa
+                    - hebrew
+                    - hindi
+                    - hungarian
+                    - icelandic
+                    - igbo
+                    - iloko
+                    - indonesian
+                    - irish
+                    - italian
+                    - japanese
+                    - javanese
+                    - kannada
+                    - kazakh
+                    - khmer
+                    - korean
+                    - lao
+                    - latvian
+                    - lingala
+                    - lithuanian
+                    - luxembourgish
+                    - macedonian
+                    - malagasy
+                    - malay
+                    - malayalam
+                    - marathi
+                    - mongolian
+                    - nepali
+                    - norwegian
+                    - occitan
+                    - oriya
+                    - panjabi
+                    - pashto
+                    - persian
+                    - polish
+                    - portuguese
+                    - romanian
+                    - russian
+                    - serbian
+                    - sindhi
+                    - sinhala
+                    - slovak
+                    - slovenian
+                    - somali
+                    - spanish
+                    - sundanese
+                    - swahili
+                    - swati
+                    - swedish
+                    - tagalog
+                    - tamil
+                    - thai
+                    - tswana
+                    - turkish
+                    - ukrainian
+                    - urdu
+                    - uzbek
+                    - vietnamese
+                    - welsh
+                    - wolof
+                    - xhosa
+                    - yiddish
+                    - yoruba
+                    - zulu
+                output_format:
+                  type: string
+                  enum:
+                    - json
+                    - srt
+                    - vtt
+                    - plain
+                    - txt
+                  default: json
+                toggle_noise_reduction:
+                  type: boolean
+                  default: false
+                webhook_url:
+                  type: string
+      responses:
+        "200":
+          description: ""
+      tags:
+        - API - Transcription V1
+      security:
+        - x_gladia_key: []
+  /v2/transcription:
+    post:
+      operationId: TranscriptionController_transcript
+      summary: "Get transcription list"
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InitTranscriptionRequest"
+      responses:
+        "201":
+          description: >-
+            The transcription has been queued. Use its id to retrieve or listen
+            to its progress.
+          links:
+            GET transcription:
+              description: Get the transcription status and result
+              operationRef: "#/paths/~1v2~1transcription~1{id}/get"
+              parameters:
+                id: $response.body#/id
+            GET transcription audio file:
+              description: Get the transcription audio file
+              operationRef: "#/paths/~1v2~1transcription~1{id}~1file/get"
+              parameters:
+                id: $response.body#/id
+            DELETE transcription:
+              description: Delete the transcription
+              operationRef: "#/paths/~1v2~1transcription~1{id}/delete"
+              parameters:
+                id: $response.body#/id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InitTranscriptionResponse"
+        "400":
+          description: The parameters you gave are incorrect.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: You don't have the permissions to do a new transcription.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: The file you gave doesn't exist.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      tags:
+        - API - Transcription V2
+      security:
+        - x_gladia_key: []
+    get:
+      operationId: TranscriptionController_list
+      parameters:
+        - name: offset
+          required: false
+          in: query
+          schema:
+            minimum: 0
+            default: 0
+            type: integer
+        - name: limit
+          required: false
+          in: query
+          schema:
+            minimum: 1
+            default: 20
+            type: integer
+        - name: status
+          required: false
+          in: query
+          example:
+            - done
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - queued
+                - processing
+                - done
+                - error
+        - name: kind
+          required: false
+          in: query
+          example:
+            - pre-recorded
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - pre-recorded
+                - live
+        - name: date
+          required: false
+          in: query
+          example: "2023-12-28"
+          schema:
+            format: date-time
+            type: string
+        - name: before_date
+          required: false
+          in: query
+          example: "2023-12-28T15:07:32.110Z"
+          schema:
+            format: date-time
+            type: string
+        - name: after_date
+          required: false
+          in: query
+          example: "2023-12-28T15:07:32.110Z"
+          schema:
+            format: date-time
+            type: string
+      responses:
+        "200":
+          description: A list of transcriptions matching the parameters.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ListTranscriptionResponse"
+      tags:
+        - API - Transcription V2
+      security:
+        - x_gladia_key: []
+  /v2/transcription/{id}:
+    get:
+      operationId: TranscriptionController_getTranscript
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Id of the transcription
+          example: 45463597-20b7-4af7-b3b3-f5fb778203ab
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The status and result of the transcription.
+          content:
+            application/json:
+              schema:
+                example:
+                  id: 45463597-20b7-4af7-b3b3-f5fb778203ab
+                  request_id: G-45463597
+                  created_at: "2023-12-28T09:04:17.210Z"
+                  status: queued
+                oneOf:
+                  - $ref: "#/components/schemas/GetTranscriptQueuedResponse"
+                  - $ref: "#/components/schemas/GetTranscriptProcessingResponse"
+                  - $ref: "#/components/schemas/GetTranscriptDoneResponse"
+                  - $ref: "#/components/schemas/GetTranscriptErrorResponse"
+        "401":
+          description: You don't have the permissions to this transcription.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: >-
+            The transcription or the audio file doesn't exist or has been
+            deleted.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      tags:
+        - API - Transcription V2
+      security:
+        - x_gladia_key: []
+    delete:
+      operationId: TranscriptionController_deleteTranscript
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Id of the transcription
+          example: 45463597-20b7-4af7-b3b3-f5fb778203ab
+          schema:
+            type: string
+      responses:
+        "202":
+          description: The transcription has been deleted.
+        "401":
+          description: You don't have the permissions to this transcription.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: You can't delete a transcription in progress.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: The transcription doesn't exist or has been deleted.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      tags:
+        - API - Transcription V2
+      security:
+        - x_gladia_key: []
+  /v2/transcription/{id}/file:
+    get:
+      operationId: TranscriptionController_getAudio
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Id of the transcription
+          example: 45463597-20b7-4af7-b3b3-f5fb778203ab
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The audio file used for the transcription.
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+                example: <binary>
+        "401":
+          description: You don't have the permissions to this transcription.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: >-
+            The transcription or the audio file doesn't exist or has been
+            deleted.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      tags:
+        - API - Transcription V2
+      security:
+        - x_gladia_key: []
+  /v2/upload:
+    post:
+      operationId: FileController_upload
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                audio:
+                  type: string
+                  format: binary
+          application/json:
+            schema:
+              type: object
+              properties:
+                audio_url:
+                  type: string
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UploadResponse"
+      tags:
+        - API - Transcription V2
+      security:
+        - x_gladia_key: []
+info:
+  title: Gladia Control API
+  description: ""
+  version: "1.0"
+  contact: {}
+tags: []
+servers:
+  - url: "https://api.gladia.io/"
+    description: "ok cool"
+  - url: "https://apix.gladia.io/"
+    description: "ok cool 2"
+
+components:
+  securitySchemes:
+    x_gladia_key:
+      type: apiKey
+      in: header
+      name: x-gladia-key
+  schemas:
+    DetectionCodeLanguageEnum:
+      type: string
+      enum:
+        - af
+        - sq
+        - am
+        - ar
+        - hy
+        - as
+        - az
+        - ba
+        - eu
+        - be
+        - bn
+        - bs
+        - br
+        - bg
+        - ca
+        - zh
+        - hr
+        - cs
+        - da
+        - nl
+        - en
+        - at
+        - fo
+        - fi
+        - fr
+        - gl
+        - ka
+        - de
+        - el
+        - gu
+        - ht
+        - ha
+        - haw
+        - he
+        - hi
+        - hu
+        - is
+        - id
+        - it
+        - jp
+        - jv
+        - kn
+        - kk
+        - km
+        - ko
+        - lo
+        - la
+        - lv
+        - ln
+        - lt
+        - lb
+        - mk
+        - mg
+        - ms
+        - ml
+        - mt
+        - mi
+        - mr
+        - mn
+        - mymr
+        - ne
+        - "no"
+        - nn
+        - oc
+        - ps
+        - fa
+        - pl
+        - pt
+        - pa
+        - ro
+        - ru
+        - sa
+        - sr
+        - sn
+        - sd
+        - si
+        - sk
+        - sl
+        - so
+        - es
+        - su
+        - sw
+        - sv
+        - tl
+        - tg
+        - ta
+        - tt
+        - te
+        - th
+        - bo
+        - tr
+        - tk
+        - uk
+        - ur
+        - uz
+        - vi
+        - cy
+        - yi
+        - yo
+    SubtitlesFormatEnum:
+      type: string
+      enum:
+        - srt
+        - vtt
+    SubtitlesConfigDTO:
+      type: object
+      properties:
+        formats:
+          type: array
+          default:
+            - srt
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/SubtitlesFormatEnum"
+    DiarizationConfigDTO:
+      type: object
+      properties:
+        number_of_speakers:
+          type: integer
+          example: 2
+          minimum: 0
+        min_speakers:
+          type: integer
+          example: 1
+          minimum: 0
+        max_speakers:
+          type: integer
+          example: 2
+          minimum: 0
+    TranslationCodeLanguageEnum:
+      type: string
+      enum:
+        - af
+        - sq
+        - am
+        - ar
+        - hy
+        - as
+        - ast
+        - az
+        - ba
+        - eu
+        - be
+        - bn
+        - bs
+        - br
+        - bg
+        - my
+        - ca
+        - ceb
+        - zh
+        - hr
+        - cs
+        - da
+        - nl
+        - en
+        - at
+        - fo
+        - fi
+        - nl
+        - fr
+        - fy
+        - ff
+        - gd
+        - gl
+        - lg
+        - ka
+        - de
+        - el
+        - gu
+        - ht
+        - ha
+        - haw
+        - he
+        - hi
+        - hu
+        - is
+        - ig
+        - ilo
+        - id
+        - ga
+        - it
+        - jp
+        - jv
+        - kn
+        - kk
+        - km
+        - ko
+        - lo
+        - la
+        - lv
+        - ln
+        - lt
+        - lb
+        - mk
+        - mg
+        - ms
+        - ml
+        - mt
+        - mi
+        - mr
+        - mo
+        - mn
+        - mymr
+        - ne
+        - "no"
+        - nn
+        - oc
+        - or
+        - pa
+        - ps
+        - fa
+        - pl
+        - pt
+        - pa
+        - ro
+        - ru
+        - sa
+        - sr
+        - sn
+        - sd
+        - si
+        - sk
+        - sl
+        - so
+        - es
+        - su
+        - sw
+        - ss
+        - sv
+        - tl
+        - tg
+        - ta
+        - tt
+        - te
+        - th
+        - bo
+        - tn
+        - tr
+        - tk
+        - uk
+        - ur
+        - uz
+        - vi
+        - cy
+        - wo
+        - xh
+        - yi
+        - yo
+        - zu
+    TranslationConfigDTO:
+      type: object
+      properties:
+        target_languages:
+          type: array
+          example:
+            - en
+          minItems: 1
+          items:
+            $ref: "#/components/schemas/TranslationCodeLanguageEnum"
+        model:
+          type: string
+          default: base
+          enum:
+            - base
+            - enhanced
+      required:
+        - target_languages
+    InitTranscriptionRequest:
+      type: object
+      properties:
+        audio_url:
+          type: string
+          description: Url to a Gladia file or to an external audio or video file
+          example: >-
+            http://files.gladia.io/example/audio-transcription/split_infinity.wav
+          format: uri
+        context_prompt:
+          type: string
+          default: ""
+        custom_vocabulary:
+          default: []
+          type: array
+          items:
+            type: string
+        detect_language:
+          type: boolean
+          default: true
+        enable_code_switching:
+          type: boolean
+          default: false
+        language:
+          example: en
+          $ref: "#/components/schemas/DetectionCodeLanguageEnum"
+        callback_url:
+          type: string
+          example: http://callback.example
+          format: uri
+        subtitles:
+          type: boolean
+          default: false
+        subtitles_config:
+          $ref: "#/components/schemas/SubtitlesConfigDTO"
+        diarization:
+          type: boolean
+          default: false
+        diarization_config:
+          $ref: "#/components/schemas/DiarizationConfigDTO"
+        translation:
+          type: boolean
+          default: false
+        translation_config:
+          $ref: "#/components/schemas/TranslationConfigDTO"
+        summarization:
+          type: boolean
+          default: false
+      required:
+        - audio_url
+    InitTranscriptionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 45463597-20b7-4af7-b3b3-f5fb778203ab
+          format: uuid
+        result_url:
+          type: string
+          example: >-
+            https://api.gladia.io/v2/transcription/45463597-20b7-4af7-b3b3-f5fb778203ab
+          format: uri
+      required:
+        - id
+        - result_url
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          description: HTTP status code of the error
+          example: 404
+        timestamp:
+          type: string
+          description: Date of when the error occurred
+          example: "2023-12-28T09:04:17.210Z"
+        path:
+          type: string
+          description: Path to the API endpoint
+          example: /v2/transcription/45463597-20b7-4af7-b3b3-f5fb778203ab
+        message:
+          type: string
+          description: Error message
+          example: Not found
+        request_id:
+          type: string
+          description: Debug id
+          example: G-821fe9df
+      required:
+        - statusCode
+        - timestamp
+        - path
+        - message
+        - request_id
+    GetTranscriptErrorResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the transcription
+          format: uuid
+          example: 45463597-20b7-4af7-b3b3-f5fb778203ab
+        request_id:
+          type: string
+          description: Debug id
+          example: G-45463597
+        created_at:
+          type: string
+          description: Creation date
+          example: "2023-12-28T09:04:17.210Z"
+        status:
+          type: string
+          enum:
+            - error
+          default: error
+        completed_at:
+          type: string
+          description: Completion date
+          example: "2023-12-28T09:04:37.210Z"
+        error_code:
+          type: integer
+          description: HTTP status code of the error
+          minimum: 400
+          maximum: 599
+          example: 500
+      required:
+        - id
+        - request_id
+        - created_at
+        - status
+        - completed_at
+        - error_code
+    TranscriptionMetadataDTO:
+      type: object
+      properties:
+        audio_duration:
+          type: number
+          description: Audio duration in seconds
+          example: 3600
+        number_of_channels:
+          type: integer
+          minimum: 1
+          example: 1
+        transcription_time:
+          type: number
+          description: Duration of the transcription in seconds
+          example: 20
+        billing_time:
+          type: number
+          description: Billed duration in seconds (audio_duration * number_of_channels)
+          example: 3600
+      required:
+        - audio_duration
+        - number_of_channels
+        - transcription_time
+        - billing_time
+    CodeLanguageEnum:
+      type: string
+      enum:
+        - af
+        - sq
+        - am
+        - ar
+        - hy
+        - as
+        - ast
+        - az
+        - ba
+        - eu
+        - be
+        - bn
+        - bs
+        - br
+        - bg
+        - my
+        - ca
+        - ceb
+        - zh
+        - hr
+        - cs
+        - da
+        - nl
+        - en
+        - at
+        - fo
+        - fi
+        - fr
+        - fy
+        - ff
+        - gd
+        - gl
+        - lg
+        - ka
+        - de
+        - el
+        - gu
+        - ht
+        - ha
+        - haw
+        - he
+        - hi
+        - hu
+        - is
+        - ig
+        - ilo
+        - id
+        - ga
+        - it
+        - jp
+        - jv
+        - kn
+        - kk
+        - km
+        - ko
+        - lo
+        - la
+        - lv
+        - ln
+        - lt
+        - lb
+        - mk
+        - mg
+        - ms
+        - ml
+        - mt
+        - mi
+        - mr
+        - mo
+        - mn
+        - mymr
+        - ne
+        - "no"
+        - nn
+        - oc
+        - or
+        - pa
+        - ps
+        - fa
+        - pl
+        - pt
+        - pa
+        - ro
+        - ru
+        - sa
+        - sr
+        - sn
+        - sd
+        - si
+        - sk
+        - sl
+        - so
+        - es
+        - su
+        - sw
+        - ss
+        - sv
+        - tl
+        - tg
+        - ta
+        - tt
+        - te
+        - th
+        - bo
+        - tn
+        - tr
+        - tk
+        - uk
+        - ur
+        - uz
+        - vi
+        - cy
+        - wo
+        - xh
+        - yi
+        - yo
+        - zu
+    SubtitleDTO:
+      type: object
+      properties:
+        format:
+          example: srt
+          $ref: "#/components/schemas/SubtitlesFormatEnum"
+        subtitles:
+          type: string
+      required:
+        - format
+        - subtitles
+    WordDTO:
+      type: object
+      properties:
+        word:
+          type: string
+        start:
+          type: number
+        end:
+          type: number
+        confidence:
+          type: number
+      required:
+        - word
+        - start
+        - end
+        - confidence
+    UtteranceDTO:
+      type: object
+      properties:
+        text:
+          type: string
+        language:
+          example: en
+          $ref: "#/components/schemas/CodeLanguageEnum"
+        start:
+          type: number
+        end:
+          type: number
+        channel:
+          type: integer
+          minimum: 0
+        speaker:
+          type: integer
+          minimum: 0
+        words:
+          type: array
+          items:
+            $ref: "#/components/schemas/WordDTO"
+      required:
+        - text
+        - language
+        - start
+        - end
+        - channel
+        - words
+    TranscriptionDTO:
+      type: object
+      properties:
+        full_transcript:
+          type: string
+        languages:
+          type: array
+          example:
+            - en
+          items:
+            $ref: "#/components/schemas/CodeLanguageEnum"
+        subtitles:
+          type: array
+          items:
+            $ref: "#/components/schemas/SubtitleDTO"
+        utterances:
+          type: array
+          items:
+            $ref: "#/components/schemas/UtteranceDTO"
+      required:
+        - full_transcript
+        - languages
+        - subtitles
+        - utterances
+    AddonErrorDTO:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          example: 500
+        exception:
+          type: string
+        message:
+          type: string
+      required:
+        - status_code
+        - exception
+        - message
+    TranslationDTO:
+      type: object
+      properties:
+        success:
+          type: boolean
+        is_empty:
+          type: boolean
+        exec_time:
+          type: number
+        error:
+          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/AddonErrorDTO"
+        results:
+          nullable: true
+          type: array
+          items:
+            $ref: "#/components/schemas/TranscriptionDTO"
+      required:
+        - success
+        - is_empty
+        - exec_time
+        - error
+        - results
+    SummarizationDTO:
+      type: object
+      properties:
+        success:
+          type: boolean
+        is_empty:
+          type: boolean
+        exec_time:
+          type: number
+        error:
+          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/AddonErrorDTO"
+        results:
+          type: string
+          nullable: true
+      required:
+        - success
+        - is_empty
+        - exec_time
+        - error
+        - results
+    TranscriptionResultDTO:
+      type: object
+      properties:
+        metadata:
+          $ref: "#/components/schemas/TranscriptionMetadataDTO"
+        transcription:
+          $ref: "#/components/schemas/TranscriptionDTO"
+        translation:
+          $ref: "#/components/schemas/TranslationDTO"
+        summarization:
+          $ref: "#/components/schemas/SummarizationDTO"
+      required:
+        - metadata
+        - transcription
+    GetTranscriptDoneResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the transcription
+          format: uuid
+          example: 45463597-20b7-4af7-b3b3-f5fb778203ab
+        request_id:
+          type: string
+          description: Debug id
+          example: G-45463597
+        created_at:
+          type: string
+          description: Creation date
+          example: "2023-12-28T09:04:17.210Z"
+        status:
+          type: string
+          enum:
+            - done
+          default: done
+        completed_at:
+          type: string
+          description: Completion date
+          example: "2023-12-28T09:04:37.210Z"
+        result:
+          $ref: "#/components/schemas/TranscriptionResultDTO"
+      required:
+        - id
+        - request_id
+        - created_at
+        - status
+        - completed_at
+        - result
+    GetTranscriptProcessingResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the transcription
+          format: uuid
+          example: 45463597-20b7-4af7-b3b3-f5fb778203ab
+        request_id:
+          type: string
+          description: Debug id
+          example: G-45463597
+        created_at:
+          type: string
+          description: Creation date
+          example: "2023-12-28T09:04:17.210Z"
+        status:
+          type: string
+          enum:
+            - processing
+          default: processing
+      required:
+        - id
+        - request_id
+        - created_at
+        - status
+    GetTranscriptQueuedResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the transcription
+          format: uuid
+          example: 45463597-20b7-4af7-b3b3-f5fb778203ab
+        request_id:
+          type: string
+          description: Debug id
+          example: G-45463597
+        created_at:
+          type: string
+          description: Creation date
+          example: "2023-12-28T09:04:17.210Z"
+        status:
+          type: string
+          enum:
+            - queued
+          default: queued
+      required:
+        - id
+        - request_id
+        - created_at
+        - status
+    ListTranscriptionErrorDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the transcription
+          format: uuid
+          example: 45463597-20b7-4af7-b3b3-f5fb778203ab
+        request_id:
+          type: string
+          description: Debug id
+          example: G-45463597
+        created_at:
+          type: string
+          description: Creation date
+          example: "2023-12-28T09:04:17.210Z"
+        status:
+          type: string
+          enum:
+            - error
+          default: error
+        completed_at:
+          type: string
+          description: Completion date
+          example: "2023-12-28T09:04:37.210Z"
+        error_code:
+          type: integer
+          description: HTTP status code of the error
+          minimum: 400
+          maximum: 599
+          example: 500
+      required:
+        - id
+        - request_id
+        - created_at
+        - status
+        - completed_at
+        - error_code
+    ListTranscriptionDoneDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the transcription
+          format: uuid
+          example: 45463597-20b7-4af7-b3b3-f5fb778203ab
+        request_id:
+          type: string
+          description: Debug id
+          example: G-45463597
+        created_at:
+          type: string
+          description: Creation date
+          example: "2023-12-28T09:04:17.210Z"
+        status:
+          type: string
+          enum:
+            - done
+          default: done
+        completed_at:
+          type: string
+          description: Completion date
+          example: "2023-12-28T09:04:37.210Z"
+      required:
+        - id
+        - request_id
+        - created_at
+        - status
+        - completed_at
+    ListTranscriptionProcessingDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the transcription
+          format: uuid
+          example: 45463597-20b7-4af7-b3b3-f5fb778203ab
+        request_id:
+          type: string
+          description: Debug id
+          example: G-45463597
+        created_at:
+          type: string
+          description: Creation date
+          example: "2023-12-28T09:04:17.210Z"
+        status:
+          type: string
+          enum:
+            - processing
+          default: processing
+      required:
+        - id
+        - request_id
+        - created_at
+        - status
+    ListTranscriptionQueuedDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the transcription
+          format: uuid
+          example: 45463597-20b7-4af7-b3b3-f5fb778203ab
+        request_id:
+          type: string
+          description: Debug id
+          example: G-45463597
+        created_at:
+          type: string
+          description: Creation date
+          example: "2023-12-28T09:04:17.210Z"
+        status:
+          type: string
+          enum:
+            - queued
+          default: queued
+      required:
+        - id
+        - request_id
+        - created_at
+        - status
+    ListTranscriptionResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/ListTranscriptionQueuedDTO"
+              - $ref: "#/components/schemas/ListTranscriptionProcessingDTO"
+              - $ref: "#/components/schemas/ListTranscriptionDoneDTO"
+              - $ref: "#/components/schemas/ListTranscriptionErrorDTO"
+        first:
+          type: string
+          description: Url to fetch the first page
+          format: uri
+          example: https://api.gladia.io/v2/transcription?status=done&offset=0&limit=20
+        current:
+          type: string
+          description: Url to fetch the current page
+          format: uri
+          example: https://api.gladia.io/v2/transcription?status=done&offset=0&limit=20
+        next:
+          type: string
+          description: Url to fetch the next page
+          format: uri
+          example: >-
+            https://api.gladia.io/v2/transcription?status=done&offset=20&limit=20
+          nullable: true
+      required:
+        - items
+        - first
+        - current
+        - next
+    UploadBody:
+      type: object
+      properties: {}
+    UploadMetadataDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 6c09400e-23d2-4bd2-be55-96a5ececfa3b
+        filename:
+          type: string
+          example: short-audio-en-16000.wav
+        source:
+          type: string
+          format: uri
+          example: >-
+            http://files.gladia.io/test/audio-transcription/short-audio-en-16000.wav
+        extension:
+          type: string
+          format: uuid
+          example: wav
+        size:
+          type: integer
+          example: 365702
+        audio_duration:
+          type: number
+          example: "4.145782"
+        nb_channels:
+          type: integer
+          example: 1
+      required:
+        - id
+        - filename
+        - extension
+        - size
+        - audio_duration
+        - nb_channels
+    UploadResponse:
+      type: object
+      properties:
+        audio_url:
+          type: string
+          format: uri
+          example: https://api.gladia.io/file/6c09400e-23d2-4bd2-be55-96a5ececfa3b
+        audio_metadata:
+          $ref: "#/components/schemas/UploadMetadataDTO"
+      required:
+        - audio_url
+        - audio_metadata

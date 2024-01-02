@@ -1,0 +1,391 @@
+---
+title: Speech Recognition
+description: "Core feature of the Gladia API"
+---
+
+The core functionality of the Gladia API is its Speech Recognition model, designed to convert spoken language
+ into written text. This serves as the basis for all Gladia API offerings.
+
+
+<Note>
+Do you want to know more about Gladia latest speech-to-text recognition AI model ?
+Discover our state-of-the-art ASR model [ Whisper Zero now.](https://www.gladia.io/whisper-zero)
+</Note>
+
+ Additional capabilities, like Speaker Diarization, Summarization, Translation, and more can be integrated seamlessly
+ into the transcription process by including extra parameters in the transcription request.
+
+
+## Basic transcription
+
+<Tip>Don't forget to update *YOUR_GLADIA_TOKEN* and *YOUR_AUDIO_URL* to match yours.</Tip>
+
+// TODO : add example for users using audio files instead of urls with upload step
+
+<CodeGroup>
+```typescript TypeScript
+async function makeFetchRequest(url: string, options: any) {
+  const response = await fetch(url, options);
+  return response.json();
+}
+
+async function pollForResult(resultUrl: string, headers: any) {
+  while (true) {
+    console.log("Polling for results...");
+    const pollResponse = await makeFetchRequest(resultUrl, { headers });
+
+    if (pollResponse.status === "done") {
+      console.log("- Transcription done: \n ");
+      console.log(pollResponse.result.transcription.full_transcript);
+      break;
+    } else {
+      console.log("Transcription status : ", pollResponse.status);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+  }
+}
+
+async function startTranscription() {
+  const gladiaKey = "YOUR_GLADIA_TOKEN";
+  const requestData = {
+    audio_url:
+      "YOUR_AUDIO_URL",
+  };
+  const gladiaUrl = "https://api.gladia.io/v2/transcription/";
+  const headers = {
+    "x-gladia-key": gladiaKey,
+    "Content-Type": "application/json",
+  };
+
+  console.log("- Sending initial request to Gladia API...");
+  const initialResponse = await makeFetchRequest(gladiaUrl, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(requestData),
+  });
+
+  console.log("Initial response with Transcription ID :", initialResponse);
+
+  if (initialResponse.result_url) {
+    await pollForResult(initialResponse.result_url, headers);
+  }
+}
+
+startTranscription();
+```
+```python Python
+import requests
+import time
+
+def make_fetch_request(url, headers, method='GET', data=None):
+    if method == 'POST':
+        response = requests.post(url, headers=headers, json=data)
+    else:
+        response = requests.get(url, headers=headers)
+    return response.json()
+
+gladia_key = "YOUR_GLADIA_TOKEN"
+request_data = {"audio_url": "YOUR_AUDIO_URL"}
+gladia_url = "https://api.gladia.io/v2/transcription/"
+
+headers = {
+    "x-gladia-key": gladia_key,
+    "Content-Type": "application/json"
+}
+
+print("- Sending initial request to Gladia API...")
+initial_response = make_fetch_request(gladia_url, headers, 'POST', request_data)
+
+print("Initial response with Transcription ID:", initial_response)
+result_url = initial_response.get("result_url")
+
+if result_url:
+    while True:
+        print("Polling for results...")
+        poll_response = make_fetch_request(result_url, headers)
+        
+        if poll_response.get("status") == "done":
+            print("- Transcription done: \n")
+            print(poll_response.get("result", {}).get("transcription", {}).get("full_transcript"))
+            break
+        else:
+            print("Transcription status:", poll_response.get("status"))
+        time.sleep(1)
+
+```
+</CodeGroup>
+
+After that your audio have been processed, here's an example output of what you should get :
+
+```
+Split infinity in a time when less is more, where too much is never enough.There is always hope for the future. The future can be read from the past. The past foreshadows the present, and the present hasn't been written yet.`
+```
+
+
+## Get your transcription results
+
+You can get your transcription results in **2 different ways**.
+
+<AccordionGroup>
+<Accordion icon="repeat" title="Polling">
+
+The first way is the one we used in the above examples.
+
+Once you post your transcription request, you get a transcritpion `id` and a pre-built `result_url` for convenience.
+To get this result with this method, you'll just have to GET continuously on the given `result_url` until the status
+of your transcription is `done`.
+
+
+// TODO: Link to the API reference & documented flow 
+
+</Accordion>
+<Accordion icon="diagram-project" title="Callback URL">
+
+Callback are HTTP calls that you can use to get notified when your transcripts are ready.
+
+Instead of polling and keeping your server busy and mainting work, you can use the `callback_url` feature.
+By providing a `callback_url` on your transcription request body payload, we will send the results right there once 
+your transcription is done. No need to handle any polling logic on your side.
+
+<CodeGroup>
+```typescript TypeScript
+const requestData = {
+  audio_url:
+    "YOUR_AUDIO_URL",
+  callback_url: 'https://yourserverurl.com/your/callback/endpoint/'
+};
+```
+```python Python
+request_data = {
+  "audio_url": "YOUR_AUDIO_URL",
+  "callback_url": 'https://yourserverurl.com/your/callback/endpoint/'
+}
+```
+</CodeGroup>
+
+Once the transcription is document, we'll make a `POST` request to the `callback_url` you provided with the results.
+The `POST` request body will be of shape:
+
+```json
+{
+  "id": "2aafc84e-e1c9-440c-bfda-2faa0f5d23b3", // Transcription ID
+  "payload": { // Transcription result
+    "metadata": {
+      ...
+    },
+    "transcription": {
+      "languages": [
+        ...
+      ],
+      "full_transcript": "Split infinity in a time when less is more...",
+      "utterances": [...],
+      ...
+    },
+    ...
+    }
+  }
+```
+
+If you get an error, instead of an `payload` property you'll get an `error` key of shape:
+
+```json
+{
+  "code": 415,
+  "message": "no audio track is present"
+}
+```
+
+
+</Accordion>
+</AccordionGroup>
+
+
+
+## All transcriptions status
+
+The transcription status can have different values :
+
+| Status     | Description                              |
+| --------   | ---------------------------------------- |
+| `queued`     | Audio waiting to be processed            |
+| `processing` | Audio file being processed               |
+| `done`       | Transcription successfully completed     |
+| `error`     | An error occured on your transcription   |
+
+<Warning>
+
+Transcriptions can fail for various of reasons:
+
+- No audio in the audio file
+- Audio URL unreachable
+- Issues with your file format
+
+If you get another type of failure (most likely a server failure), resubmit the audio file and another server will take care 
+of processing it.
+</Warning>
+
+
+## Word-level timestamps
+
+Instead of just getting utterances start and end timestamps, **Gladia** Speech-to-text API provides by **default** the
+**Word-level timestamps** feature. It let you know the exact timestamp words are detected and give you a more precise transcription.
+ This feature is particularly useful for detailed analysis, as it allows you to pinpoint the exact moment each word is spoken, facilitating
+  a more accurate synchronization with audio or video files.
+
+Under each utterance, you'll find a `words` property like this:
+
+```json
+// other properties...
+"utterances": [
+    {
+      "words": [
+        {
+          "word": "Split",
+          "start": 0.21001999999999998,
+          "end": 0.69015,
+          "confidence": 1
+        },
+        {
+          "word": " infinity",
+          "start": 0.91021,
+          "end": 1.55038,
+          "confidence": 0.95
+        },
+        ...
+      ]
+    }
+  ]
+```
+
+## Language behaviour
+
+If you know the audio used in the language, you should use **Manual**, otherwise, **Automatic Language Detection**.
+
+<AccordionGroup>
+<Accordion icon="robot" title="Automatic language detection">
+
+With automatic language detection, you can identify the dominant language spoken in an audio file and use it
+ during the transcription.
+
+To enable it, set detect_language to true in the request body parameters.
+
+<CodeGroup>
+```typescript TypeScript
+const requestData = {
+  audio_url:
+    "YOUR_AUDIO_URL",
+  detect_language: true
+};
+```
+```python Python
+request_data = {
+  "audio_url": "YOUR_AUDIO_URL",
+  "detect_language": True
+}
+```
+</CodeGroup>
+</Accordion>
+<Accordion icon="wrench" title="Manual">
+If you already know the dominant language, you can use the language_code key to specify the language of the speech in
+ your audio file.
+
+
+<CodeGroup>
+```typescript TypeScript
+const requestData = {
+  audio_url:
+    "YOUR_AUDIO_URL",
+  language: 'fr'
+};
+```
+```python Python
+request_data = {
+  "audio_url": "YOUR_AUDIO_URL",
+  "language": 'fr'
+}
+```
+</CodeGroup>
+</Accordion>
+</AccordionGroup>
+
+
+## Export SRT or VTT caption files
+
+You can export completed transcripts in both SRT and VTT format, which can be used for subtitles and captions in videos.
+
+<Tip>
+You can use the `subtitles` feature alongside the `translation` feature. 
+You'll have your subtitles in the orginal language, and **also** in languages you targeted for the translation !
+</Tip>
+
+<CodeGroup>
+```typescript TypeScript
+const requestData = {
+  audio_url:
+    "YOUR_AUDIO_URL",
+  subtitles: true,
+  custom_vocabulary: {
+    "formats": ['srt', 'vtt']
+  }
+};
+```
+```python Python
+request_data = {
+  "audio_url": "YOUR_AUDIO_URL",
+  "subtitles": True,
+  "substitles_config": {
+    "formats": ['srt', 'vtt'],
+  }
+}
+```
+</CodeGroup>
+
+
+The `JSON` response will inculude a new property `subtitles` which is an array of every formats you requested.
+With the given example, `subtitles` will contains 2 items of shape:
+
+```json
+{
+  "format": "srt", //format name
+  "subtitles": "1\n00:00:00,210 --> 00:00:04,711....." // subtitles
+}
+```
+
+
+## Custom vocabulary & Context prompt
+
+- **Custom vocabulary** : To enhance the precision of transcription, especially for words or phrases that recur often in your audio file, you
+ can utilize the `custom_vocabulary` feature in the transcription configuration settings.
+
+- **Context prompt** : If you know the context of the audio you're sending, you can provide it in the `context_prompt`.
+
+<CodeGroup>
+```typescript TypeScript
+const requestData = {
+  audio_url:
+    "YOUR_AUDIO_URL",
+  context_prompt: "A conversation between Sansa Stark and Peter Baelish from the Game of Thrones series.",
+  custom_vocabulary: ['westeros', 'stark']
+};
+```
+```python Python
+request_data = {
+  "audio_url": "YOUR_AUDIO_URL",
+  "context_prompt": "A conversation between Sansa Stark and Peter Baelish from the Game of Thrones series.",
+  "custom_vocabulary": ['westeros', 'stark']
+}
+```
+</CodeGroup>
+
+## Dual-channel or Multiple channels transcription
+
+If you have multiples channels in your audio file with different content each, Gladia API automatically transcribe them.
+In the transcription result, you will get for each utterances a `channel` key corresponding to the channels the transcription
+ came from.
+
+<Warning>
+Sending an audio with 2 different channels (that does not contains the same audio data), will be billed twice as 2 different audios.
+If your audio has multiple channels but has the same audio content on each channels, it will only billed once.
+
+**TLDR**: We charge every unique channel in an audio file, we do not charge if channels are duplicates.
+</Warning>
