@@ -1,0 +1,65 @@
+---
+title: Supported files & duration
+description: "Media files limitations"
+---
+
+We support almost all types of audio or video files with a tradeoff to be taken into account between the transfer time
+ of specific formats that can generate big files and the time to convert the original format to the target one
+  (WAV pcm 16KHz little-edian).
+
+
+## Gladia API current limitations
+
+<Tip> 
+Those limits will get removed up progressively to ensure a full stability and performance
+of the service for everyone.
+</Tip>
+
+
+- **Audio length**: The maximum length of audio that can be transcribed in a single request is currently
+135 minutes. Attempts to transcribe longer audio files will result in a an error.
+
+- **File size**: Audio files must not exceed 500 MB in size. Larger files will not be accepted by the API.
+
+### Splitting oversize audio files
+For audio files that are near or exceed the limitations on length and size, it is recommended to split them into smaller chunks of ~60 minutes each. This approach not only adheres to the API constraints but also generally yields better transcription results.
+
+Tools for Splitting Audio Files: 
+
+- **FFMPEG** : FFMPEG is a versatile command-line tool that can be used to manipulate audio and video files. It is a popular choice for splitting long audio files.
+- **ffmpeg-python** : For Python users, ffmpeg-python is a wrapper around FFMPEG that provides a more Pythonic interface for interacting with FFMPEG.
+- **prism-media** for Node.js : Node.js users can use prism-media for manipulating media files, including splitting audio files.
+- **fluent-ffmpeg** for Node.js : Another option for Node.js users is fluent-ffmpeg, which offers a simpler and more fluent API for handling media files.
+
+Following these best practices will help you avoid issues due to limitations and maximize the quality of the transcriptions you obtain from the Audio Transcription API.
+
+## Supported audio formats
+
+| Source Format | Mime Type      | Audio/Video |
+|---------------|----------------|-------------|
+| aac           | audio/aac      | Audio       |
+| ac3           | audio/ac3      | Audio       |
+| eac3          | audio/eac3     | Audio       |
+| flac          | audio/flac     | Audio       |
+| m4a           | audio/mp4      | Audio       |
+| mp2           | audio/mpeg     | Audio       |
+| mp3           | audio/mpeg     | Audio       |
+| ogg           | application/ogg| Audio       |
+| wav           | audio/wav      | Audio       |
+
+
+## Supported video formats
+
+| Source Format | Mime Type            | Audio/Video |
+|---------------|----------------------|-------------|
+| 3g2           | video/3gpp2          | Video       |
+| 3gp           | video/3gpp           | Video       |
+| avi           | video/x-msvideo      | Video       |
+| flv           | video/x-flv          | Video       |
+| m4v           | video/x-m4v          | Video       |
+| matroska      | video/x-matroska     | Audio/Video |
+| mov           | video/quicktime      | Video       |
+| mp4           | video/mp4            | Audio/Video |
+| wmv           | video/x-ms-wmv       | Video       |
+
+

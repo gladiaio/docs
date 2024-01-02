@@ -1,0 +1,163 @@
+---
+title: Translation
+description: "Translate your transcriptions & subtitles"
+---
+
+<Note>
+This addon is on **Bêta**.
+
+We're looking for feedbacks to improve this feature, [share yours here](https://gladiaio.typeform.com/feedback?typeform-source=app.gladia.io).
+</Note>
+
+
+The **Translation** model generates translations in the targeted languages of your transcriptions and subtitles (if you enabled [subtitles](/chapters/speech-to-text-api/pages/speech-recognition#export-srt-or-vtt-caption-files))
+You can translate your transcription to **multiples language** in a single call to the API.
+ 
+The list of the languages covered by the Translation addons are listed in the [API Reference](/api-reference/api-v2/Transcription/post-v2transcription/) (see `translation_config`)
+
+**2 translation models** are availables:
+
+- `base` : Fast, cover most use cases
+- `enhanced` : Slower, but higher quality and with context awareness
+
+In the following examples, we're using `base` model.
+
+<CodeGroup>
+```typescript TypeScript
+async function makeFetchRequest(url: string, options: any) {
+  const response = await fetch(url, options);
+  return response.json();
+}
+
+async function pollForResult(resultUrl: string, headers: any) {
+  while (true) {
+    console.log("Polling for results...");
+    const pollResponse = await makeFetchRequest(resultUrl, { headers });
+
+    if (pollResponse.status === "done") {
+      console.log("- Transcription done: \n");
+      const translation = pollResponse.result.translation;
+      console.log(translation);
+      break;
+    } else {
+      console.log("Transcription status : ", pollResponse.status);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+  }
+}
+
+async function startTranscription() {
+  const gladiaKey = "YOUR_GLADIA_API_TOKEN";
+  const requestData = {
+    audio_url:
+      "http://files.gladia.io/example/audio-transcription/split_infinity.wav",
+    translation: true,
+    translation_config: {
+      target_languages: [ "fr", "es"],
+      model: "base" // "enhanced" is slower but of better quality
+    }
+  };
+  const gladiaUrl = "https://api.gladia.io/v2/transcription/";
+  const headers = {
+    "x-gladia-key": gladiaKey,
+    "Content-Type": "application/json",
+  };
+
+  console.log("- Sending initial request to Gladia API...");
+  const initialResponse = await makeFetchRequest(gladiaUrl, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(requestData),
+  });
+
+  console.log("Initial response with Transcription ID :", initialResponse);
+
+  if (initialResponse.result_url) {
+    await pollForResult(initialResponse.result_url, headers);
+  }
+}
+
+startTranscription();
+```
+```python Python
+import requests
+import time
+
+
+def make_fetch_request(url, headers, method='GET', data=None):
+    if method == 'POST':
+        response = requests.post(url, headers=headers, json=data)
+    else:
+        response = requests.get(url, headers=headers)
+    return response.json()
+
+
+gladia_key = "YOUR_GLADIA_API_TOKEN"
+request_data = {
+    "audio_url": "http://files.gladia.io/example/audio-transcription/split_infinity.wav",
+    "translation": True
+    "translation_config":
+    {
+      "target_languages": ['fr', 'es'],
+      "model": "base" ## "enhanced" is slower but of better quality
+    }
+}
+gladia_url = "https://api.gladia.io/v2/transcription/"
+
+headers = {
+    "x-gladia-key": gladia_key,
+    "Content-Type": "application/json"
+}
+
+print("- Sending initial request to Gladia API...")
+initial_response = make_fetch_request(
+    gladia_url, headers, 'POST', request_data)
+
+print("Initial response with Transcription ID:", initial_response)
+result_url = initial_response.get("result_url")
+
+if result_url:
+    while True:
+        print("Polling for results...")
+        poll_response = make_fetch_request(result_url, headers)
+
+        if poll_response.get("status") == "done":
+            print("- Transcription done: \n")
+            translation = poll_response.get("result", {}).get(
+                "translation", {})
+            print(translation)
+            break
+        else:
+            print("Transcription status:", poll_response.get("status"))
+        time.sleep(1)
+```
+</CodeGroup>
+
+With this code, your output will look like this:
+
+```json
+{
+  success: true,
+  is_empty: false,
+  results: [
+    {
+      languages: [Array],
+      full_transcript: 'Diviser l’infini dans un temps où moins est plus...',
+      utterances: [Array], // Also translated
+      error: null
+    },
+    {
+      languages: [Array],
+      full_transcript: 'Dividir la infinidad en un tiempo en que menos es más, donde demasiado nunca es suficiente...',
+      utterances: [Array], // Also translated
+      error: null
+    }
+  ],
+  exec_time: 0.6475496292114258,
+  error: null
+}
+```
+
+<Tip>
+If you enabled the `subtitles` generation, those will also benefits from the translation model.
+</Tip>

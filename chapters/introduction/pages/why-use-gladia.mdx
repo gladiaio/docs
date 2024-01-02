@@ -1,0 +1,89 @@
+---
+title: "Why using Gladia over vanilla Whisper ?"
+---
+
+# Running your own Whisper instance
+
+In the dynamic world of technology, leveraging AI for voice recognition has become a key asset for many applications.
+Whisper, presents a cutting-edge solution.
+However, setting up and maintaining your own Whisper instance can be fraught with challenges.
+In this article, we dive into why managing your own Whisper instance might not be the best approach and how Gladia API seamlessly fills this gap.
+
+## The Downside of Running Your Own Whisper Instance
+
+### Resource-Heavy Requirements 🏋️‍♂️
+
+<Callout type="warning">
+  Running a Whisper instance is akin to training a heavyweight champion – it
+  demands a lot of muscle (in terms of computational power) and endurance
+  (continuous data processing).
+</Callout>
+
+- **Intensive Computing Needs**: Whisper models are like power-hungry giants, requiring substantial CPU and GPU power.
+- **Enormous Storage Space**: Prepare to allocate extensive storage for datasets and model weights, akin to building large warehouses for data.
+
+### Navigating the Maze of Technical Complexity 🤖
+
+<Callout type="info">
+  Setting up a Whisper instance is not a walk in the park. It's more like
+  navigating a labyrinth, where technical expertise is your only guide.
+</Callout>
+
+- **Daunting Setup and Maintenance**: The complexity of configuration and ongoing maintenance can be overwhelming.
+- **Staying Ahead of the Curve**: Keeping up with the latest advancements in AI technology requires constant vigilance and learning.
+
+### Security Concerns: A Thorny Issue 🛡️
+
+- **Data Privacy Risks**: Storing sensitive voice data on your own servers can be like opening a Pandora's box of privacy issues.
+- **Attack Vulnerability**: Self-hosted solutions could be more susceptible to cyber-attacks, making them a potential Achilles' heel.
+
+### Cost: The Hidden Giant 💸
+
+- **Ongoing Operational Expenses**: The high computational demands translate into increased electricity and cooling costs.
+- **Initial Investment in Hardware**: Get ready to invest in high-end hardware, akin to buying a sports car for a daily commute.
+
+## Gladia API: The Knight in Shining Armor
+
+Gladia API emerges as a cloud-based savior, addressing these challenges and offering a more streamlined, secure, and efficient alternative.
+
+### User-Friendly Integration 🌟
+
+- **Plug and Play**: With Gladia API, integrating voice recognition is as easy as plugging in a USB drive – simple and straightforward.
+- **Maintenance-Free**: Say goodbye to the hassles of updates and maintenance, as Gladia API takes care of it all.
+
+### Scalability and Cost-Effectiveness 💹
+
+- **Pay-As-You-Go Model**: Only pay for the processing you need, avoiding the financial burden of maintaining expensive hardware.
+- **Elastic Scalability**: Whether your demand is a trickle or a flood, Gladia API adapts effortlessly, scaling to your needs.
+
+### Enhanced Security: Your Digital Fortress 🔒
+
+- **Fort-Knox-Level Data Security**: Gladia API ensures top-notch security for your data, adhering to stringent data privacy standards.
+- **Continuous Security Updates**: Stay protected against emerging threats with regular security updates.
+
+### Comprehensive Support and Documentation 📚
+
+- **Extensive Documentation**: Dive into detailed documentation to get the most out of Gladia API.
+- **Community and Expertise at Your Fingertips**: Leverage the collective wisdom of a vast user community and expert support for any queries or challenges.
+
+<CodeBlock language="javascript">
+{`// Example code to integrate Gladia API
+const gladiaAPI = require('gladia-api');
+
+gladiaAPI.recognizeVoice({
+audio: 'path/to/audio/file',
+onSuccess: (response) => {
+console.log('Transcription:', response.transcription);
+},
+onError: (error) => {
+console.error('Error:', error);
+}
+});`}
+
+</CodeBlock>
+
+In conclusion, while running your own Whisper instance might seem appealing, the journey is fraught with hurdles. Gladia API emerges as a robust, hassle-free alternative, letting you focus on innovation rather than infrastructure.
+
+---
+
+For further insights and integration guidelines, head over to the [Gladia API Documentation](https://gladia.io/docs).

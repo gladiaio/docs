@@ -2,19 +2,24 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "Starter Kit",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/assets/images/logos/text-white.svg",
+    "light": "/assets/images/logos/text-black.svg"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/assets/images/logos/black-bg-white-icon.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#1065fe",
+    "light": "#1065fe",
+    "dark": "#1065fe",
+    "background": {
+      "light": "#FAF7ED",
+      "dark": "#000000"
+    },
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#72a8f6",
+      "to": "#ce6ccc"
     }
   },
+  "backgroundImage": "/assets/images/background/lightbackground.png",
   "topbarLinks": [
     {
       "name": "Support",
@@ -25,49 +30,79 @@
     "name": "Dashboard",
     "url": "https://dashboard.mintlify.com"
   },
-  "tabs": [
-    {
-      "name": "API Reference",
-      "url": "api-reference"
-    }
-  ],
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "name": "API Reference",
+      "icon": "code",
+      "url": "api-reference"
     },
     {
       "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "icon": "discord",
+      "url": "https://discord.gg/T22a4ETUQp"
     },
     {
       "name": "Blog",
       "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "url": "https://www.gladia.io/blog"
     }
   ],
+  "openapi": ["/openapi.yml"],
   "navigation": [
     {
-      "group": "Get Started",
-      "pages": ["introduction", "quickstart", "development"]
+      "group": "Introduction",
+      "pages": [
+        "chapters/introduction/pages/introduction",
+        "chapters/introduction/pages/why-use-gladia"
+      ]
     },
     {
-      "group": "Essentials",
-      "pages": ["essentials/markdown", "essentials/code", "essentials/images", "essentials/settings", "essentials/navigation"]
+      "group": "Get Started",
+      "pages": [
+        "chapters/get-started/pages/configure-account",
+        "chapters/get-started/pages/transcribe-audio",
+        "chapters/get-started/pages/next-steps"
+      ]
+    },
+    {
+      "group": "Speech to Text API",
+      "pages": [
+        "chapters/speech-to-text-api/pages/speech-recognition",
+        "chapters/speech-to-text-api/pages/live-speech-recognition",
+        "chapters/speech-to-text-api/pages/speaker-recognition"
+      ]
+    },
+    {
+      "group": "Audio Intelligence",
+      "pages": [
+        "chapters/audio-intelligence/pages/translation",
+        "chapters/audio-intelligence/pages/summarization"
+      ]
+    },
+    {
+      "group": "Limits & Specifications",
+      "pages": [
+        "chapters/limits-and-specifications/pages/concurrency",
+        "chapters/limits-and-specifications/pages/supported-formats"
+      ]
     },
     {
       "group": "API Documentation",
       "pages": ["api-reference/introduction"]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Transcription",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "api-reference/api-v2/Transcription/get-v2transcription",
+        "api-reference/api-v2/Transcription/post-v2transcription",
+        "api-reference/api-v2/Transcription/get-v2transcription-1",
+        "api-reference/api-v2/Transcription/delete-v2transcription",
+        "api-reference/api-v2/Transcription/get-v2transcription-file"
       ]
+    },
+    {
+      "group": "Upload",
+      "pages": ["api-reference/api-v2/Upload/post-v2upload"]
     }
   ],
   "footerSocials": {
