@@ -50,7 +50,7 @@ async function startTranscription() {
   const gladiaKey = "YOUR_GLADIA_API_TOKEN";
   const requestData = {
     audio_url:
-      "http://files.gladia.io/example/audio-transcription/split_infinity.wav",
+      "YOUR_AUDIO_URL",
     translation: true,
     translation_config: {
       target_languages: [ "fr", "es"],
@@ -94,7 +94,7 @@ def make_fetch_request(url, headers, method='GET', data=None):
 
 gladia_key = "YOUR_GLADIA_API_TOKEN"
 request_data = {
-    "audio_url": "http://files.gladia.io/example/audio-transcription/split_infinity.wav",
+    "audio_url": "YOUR_AUDIO_URL",
     "translation": True
     "translation_config":
     {

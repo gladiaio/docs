@@ -18,7 +18,7 @@ Discover our state-of-the-art ASR model [ Whisper Zero now.](https://www.gladia.
 
 ## Basic transcription
 
-<Tip>Don't forget to update *YOUR_GLADIA_TOKEN* and *YOUR_AUDIO_URL* to match yours.</Tip>
+<Tip>Don't forget to update *YOUR_GLADIA_API_TOKEN* and *YOUR_AUDIO_URL* to match yours.</Tip>
 
 // TODO : add example for users using audio files instead of urls with upload step
 
@@ -46,7 +46,7 @@ async function pollForResult(resultUrl: string, headers: any) {
 }
 
 async function startTranscription() {
-  const gladiaKey = "YOUR_GLADIA_TOKEN";
+  const gladiaKey = "YOUR_GLADIA_API_TOKEN";
   const requestData = {
     audio_url:
       "YOUR_AUDIO_URL",
@@ -84,7 +84,7 @@ def make_fetch_request(url, headers, method='GET', data=None):
         response = requests.get(url, headers=headers)
     return response.json()
 
-gladia_key = "YOUR_GLADIA_TOKEN"
+gladia_key = "YOUR_GLADIA_API_TOKEN"
 request_data = {"audio_url": "YOUR_AUDIO_URL"}
 gladia_url = "https://api.gladia.io/v2/transcription/"
 
@@ -132,7 +132,7 @@ You can get your transcription results in **2 different ways**.
 The first way is the one we used in the above examples.
 
 Once you post your transcription request, you get a transcritpion `id` and a pre-built `result_url` for convenience.
-To get this result with this method, you'll just have to GET continuously on the given `result_url` until the status
+To get the result with this method, you'll just have to GET continuously on the given `result_url` until the status
 of your transcription is `done`.
 
 
@@ -143,7 +143,7 @@ of your transcription is `done`.
 
 Callback are HTTP calls that you can use to get notified when your transcripts are ready.
 
-Instead of polling and keeping your server busy and mainting work, you can use the `callback_url` feature.
+Instead of polling and keeping your server busy and maintaning work, you can use the `callback_url` feature.
 By providing a `callback_url` on your transcription request body payload, we will send the results right there once 
 your transcription is done. No need to handle any polling logic on your side.
 
@@ -163,7 +163,7 @@ request_data = {
 ```
 </CodeGroup>
 
-Once the transcription is document, we'll make a `POST` request to the `callback_url` you provided with the results.
+Once the transcription is done, we'll make a `POST` request to the `callback_url` you provided with the results.
 The `POST` request body will be of shape:
 
 ```json
@@ -186,7 +186,7 @@ The `POST` request body will be of shape:
   }
 ```
 
-If you get an error, instead of an `payload` property you'll get an `error` key of shape:
+If you get an error, instead of an `payload` property you'll get an `error` property of shape:
 
 ```json
 {

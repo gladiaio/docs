@@ -53,7 +53,8 @@
       "group": "Introduction",
       "pages": [
         "chapters/introduction/pages/introduction",
-        "chapters/introduction/pages/why-use-gladia"
+        "chapters/introduction/pages/why-use-gladia",
+        "chapters/get-started/pages/migration-from-v1"
       ]
     },
     {
@@ -61,7 +62,8 @@
       "pages": [
         "chapters/get-started/pages/configure-account",
         "chapters/get-started/pages/transcribe-audio",
-        "chapters/get-started/pages/next-steps"
+        "chapters/get-started/pages/next-steps",
+        "chapters/get-started/pages/integration-guides"
       ]
     },
     {

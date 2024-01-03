@@ -16,7 +16,7 @@ channel of each utterance, so you don't need to enable this feature.
 
 # Diarization example
 
-<Tip>Don't forget to update *YOUR_GLADIA_TOKEN* and *YOUR_AUDIO_URL* to match yours.</Tip>
+<Tip>Don't forget to update *YOUR_GLADIA_API_TOKEN* and *YOUR_AUDIO_URL* to match yours.</Tip>
 
 <CodeGroup>
 ```typescript TypeScript
@@ -52,7 +52,7 @@ async function startTranscription() {
   const gladiaKey = "YOUR_GLADIA_API_TOKEN";
   const requestData = {
     audio_url:
-      "http://files.gladia.io/example/audio-transcription/split_infinity.wav",
+      "YOUR_AUDIO_URL",
     diarization: true,
   };
   const gladiaUrl = "https://api.gladia.io/v2/transcription/";
@@ -92,7 +92,7 @@ def make_fetch_request(url, headers, method='GET', data=None):
 
 gladia_key = "YOUR_GLADIA_API_TOKEN"
 request_data = {
-    "audio_url": "http://files.gladia.io/example/audio-transcription/split_infinity.wav",
+    "audio_url": "YOUR_AUDIO_URL",
     "diarization": True
 }
 gladia_url = "https://api.gladia.io/v2/transcription/"
