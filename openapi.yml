@@ -527,7 +527,7 @@ paths:
   /v2/transcription:
     post:
       operationId: TranscriptionController_transcript
-      summary: "Get transcription list"
+      summary: Initiate a new transcription job
       parameters: []
       requestBody:
         required: true
@@ -584,10 +584,14 @@ paths:
         - x_gladia_key: []
     get:
       operationId: TranscriptionController_list
+      summary: Get a list of transcriptions based on query parameters
       parameters:
         - name: offset
           required: false
           in: query
+          description: >-
+            The starting point for pagination. A value of 0 starts from the
+            first item.
           schema:
             minimum: 0
             default: 0
@@ -595,6 +599,9 @@ paths:
         - name: limit
           required: false
           in: query
+          description: >-
+            The maximum number of items to return. Useful for pagination and
+            controlling data payload size.
           schema:
             minimum: 1
             default: 20
@@ -604,6 +611,9 @@ paths:
           in: query
           example:
             - done
+          description: >-
+            Filter the list based on item status. Accepts multiple values from
+            the predefined list.
           schema:
             type: array
             items:
@@ -618,6 +628,9 @@ paths:
           in: query
           example:
             - pre-recorded
+          description: >-
+            Filter the list based on the item type. Supports multiple values
+            from the predefined list.
           schema:
             type: array
             items:
@@ -628,21 +641,26 @@ paths:
         - name: date
           required: false
           in: query
-          example: "2023-12-28"
+          example: "2024-01-03"
+          description: Filter items relevant to a specific date in ISO format (YYYY-MM-DD).
           schema:
             format: date-time
             type: string
         - name: before_date
           required: false
           in: query
-          example: "2023-12-28T15:07:32.110Z"
+          example: "2024-01-03T16:09:07.507Z"
+          description: Include items that occurred before the specified date in ISO format.
           schema:
             format: date-time
             type: string
         - name: after_date
           required: false
           in: query
-          example: "2023-12-28T15:07:32.110Z"
+          example: "2024-01-03T16:09:07.507Z"
+          description: >-
+            Filter for items after the specified date. Use with `before_date`
+            for a range. Date in ISO format.
           schema:
             format: date-time
             type: string
@@ -660,6 +678,7 @@ paths:
   /v2/transcription/{id}:
     get:
       operationId: TranscriptionController_getTranscript
+      summary: Retrieve the status and result of a specific transcription
       parameters:
         - name: id
           required: true
@@ -704,6 +723,7 @@ paths:
         - x_gladia_key: []
     delete:
       operationId: TranscriptionController_deleteTranscript
+      summary: Delete a specific transcription
       parameters:
         - name: id
           required: true
@@ -740,6 +760,7 @@ paths:
   /v2/transcription/{id}/file:
     get:
       operationId: TranscriptionController_getAudio
+      summary: Download the audio file used for a specific transcription
       parameters:
         - name: id
           required: true
@@ -778,6 +799,7 @@ paths:
   /v2/upload:
     post:
       operationId: FileController_upload
+      summary: Upload an audio file or provide an audio URL for processing
       parameters: []
       requestBody:
         required: true
@@ -813,17 +835,15 @@ info:
   contact: {}
 tags: []
 servers:
-  - url: "https://api.gladia.io/"
-    description: "ok cool"
-  - url: "https://apix.gladia.io/"
-    description: "ok cool 2"
-
+  - url: https://api.gladia.io/
+    description: Gladia API production URL
 components:
   securitySchemes:
     x_gladia_key:
       type: apiKey
       in: header
       name: x-gladia-key
+      description: Your personal Gladia API key
   schemas:
     DetectionCodeLanguageEnum:
       type: string
@@ -937,6 +957,7 @@ components:
       properties:
         formats:
           type: array
+          description: Subtitles formats you want your transcription to be formatted to
           default:
             - srt
           minItems: 1
@@ -947,14 +968,17 @@ components:
       properties:
         number_of_speakers:
           type: integer
+          description: Exact number of speakers in the audio
           example: 2
           minimum: 0
         min_speakers:
           type: integer
+          description: Minimum number of speakers in the audio
           example: 1
           minimum: 0
         max_speakers:
           type: integer
+          description: Maximum number of speakers in the audio
           example: 2
           minimum: 0
     TranslationCodeLanguageEnum:
@@ -1083,6 +1107,9 @@ components:
       properties:
         target_languages:
           type: array
+          description: >-
+            Target language in `iso639-1` format you want the transcription
+            translated to
           example:
             - en
           minItems: 1
@@ -1090,6 +1117,7 @@ components:
             $ref: "#/components/schemas/TranslationCodeLanguageEnum"
         model:
           type: string
+          description: Model you want the translation model to use to translate
           default: base
           enum:
             - base
@@ -1107,42 +1135,61 @@ components:
           format: uri
         context_prompt:
           type: string
-          default: ""
+          description: >-
+            Context to feed the transcription model with for possible better
+            performance
         custom_vocabulary:
+          description: Specific vocabulary list to feed the transcription model with
           default: []
           type: array
           items:
             type: string
         detect_language:
           type: boolean
+          description: Detect the language from the given audio
           default: true
         enable_code_switching:
           type: boolean
+          description: Detect multiple languages in the given audio
           default: false
         language:
+          description: Set the spoken language for the given audio
           example: en
           $ref: "#/components/schemas/DetectionCodeLanguageEnum"
         callback_url:
           type: string
+          description: >-
+            Callback URL we will do a `POST` request to with the result of the
+            transcription
           example: http://callback.example
           format: uri
         subtitles:
           type: boolean
+          description: Enable subtitles generation for this transcription
           default: false
         subtitles_config:
-          $ref: "#/components/schemas/SubtitlesConfigDTO"
+          description: Configuration for subtitles generation if `subtitles` is enabled
+          allOf:
+            - $ref: "#/components/schemas/SubtitlesConfigDTO"
         diarization:
           type: boolean
+          description: Enable speaker recognition (diarization) for this audio
           default: false
         diarization_config:
-          $ref: "#/components/schemas/DiarizationConfigDTO"
+          description: Speaker recognition configuration, if `diarization` is enabled
+          allOf:
+            - $ref: "#/components/schemas/DiarizationConfigDTO"
         translation:
           type: boolean
+          description: Enable translation for this audio
           default: false
         translation_config:
-          $ref: "#/components/schemas/TranslationConfigDTO"
+          description: Translation configuration, if `translation` is enabled
+          allOf:
+            - $ref: "#/components/schemas/TranslationConfigDTO"
         summarization:
           type: boolean
+          description: Enable summarization for this audio
           default: false
       required:
         - audio_url
@@ -1151,10 +1198,12 @@ components:
       properties:
         id:
           type: string
+          description: "`id` of your transcription request"
           example: 45463597-20b7-4af7-b3b3-f5fb778203ab
           format: uuid
         result_url:
           type: string
+          description: Prebuilt URL with your transcription `id` to fetch the result
           example: >-
             https://api.gladia.io/v2/transcription/45463597-20b7-4af7-b3b3-f5fb778203ab
           format: uri
@@ -1208,6 +1257,7 @@ components:
           example: "2023-12-28T09:04:17.210Z"
         status:
           type: string
+          description: Error status
           enum:
             - error
           default: error
@@ -1228,30 +1278,23 @@ components:
         - status
         - completed_at
         - error_code
-    TranscriptionMetadataDTO:
+    AddonErrorDTO:
       type: object
       properties:
-        audio_duration:
-          type: number
-          description: Audio duration in seconds
-          example: 3600
-        number_of_channels:
+        status_code:
           type: integer
-          minimum: 1
-          example: 1
-        transcription_time:
-          type: number
-          description: Duration of the transcription in seconds
-          example: 20
-        billing_time:
-          type: number
-          description: Billed duration in seconds (audio_duration * number_of_channels)
-          example: 3600
+          description: Status code of the addon error
+          example: 500
+        exception:
+          type: string
+          description: Reason of the addon error
+        message:
+          type: string
+          description: Detailed message of the addon error
       required:
-        - audio_duration
-        - number_of_channels
-        - transcription_time
-        - billing_time
+        - status_code
+        - exception
+        - message
     CodeLanguageEnum:
       type: string
       enum:
@@ -1376,10 +1419,12 @@ components:
       type: object
       properties:
         format:
+          description: Format of the current subtitle
           example: srt
           $ref: "#/components/schemas/SubtitlesFormatEnum"
         subtitles:
           type: string
+          description: Transcription on the asked subtitle format
       required:
         - format
         - subtitles
@@ -1388,12 +1433,16 @@ components:
       properties:
         word:
           type: string
+          description: Spoken word
         start:
           type: number
+          description: Start timestamps in seconds of the spoken word
         end:
           type: number
+          description: End timestamps in seconds of the spoken word
         confidence:
           type: number
+          description: Confidence on the transcribed word (1 = 100% confident)
       required:
         - word
         - start
@@ -1404,20 +1453,27 @@ components:
       properties:
         text:
           type: string
+          description: Transcription for this utterance
         language:
+          description: Spoken language in this utterance
           example: en
           $ref: "#/components/schemas/CodeLanguageEnum"
         start:
           type: number
+          description: Start timestamp in seconds of this utterance
         end:
           type: number
+          description: End timestamp in seconds of this utterance
         channel:
           type: integer
+          description: Audio channel of where this utterance has been transcribed from
           minimum: 0
         speaker:
           type: integer
+          description: If `diarization` enabled, speaker identification number
           minimum: 0
         words:
+          description: List of words of the utterance, split by timestamp
           type: array
           items:
             $ref: "#/components/schemas/WordDTO"
@@ -1433,53 +1489,51 @@ components:
       properties:
         full_transcript:
           type: string
+          description: All transcription on text format without any other information
         languages:
           type: array
+          description: >-
+            All the detected languages in the audio sorted from the most
+            detected to the less detected
           example:
             - en
           items:
             $ref: "#/components/schemas/CodeLanguageEnum"
         subtitles:
+          description: If `subtitles` has been enabled, subtitles results
           type: array
           items:
             $ref: "#/components/schemas/SubtitleDTO"
         utterances:
+          description: Transcribed speech utterances present in the audio
           type: array
           items:
             $ref: "#/components/schemas/UtteranceDTO"
       required:
         - full_transcript
         - languages
-        - subtitles
         - utterances
-    AddonErrorDTO:
-      type: object
-      properties:
-        status_code:
-          type: integer
-          example: 500
-        exception:
-          type: string
-        message:
-          type: string
-      required:
-        - status_code
-        - exception
-        - message
     TranslationDTO:
       type: object
       properties:
         success:
           type: boolean
+          description: The audio intelligence model succeeded to get a valid output
         is_empty:
           type: boolean
+          description: The audio intelligence model returned an empty value
         exec_time:
           type: number
+          description: Time audio intelligence model took to complete the task
         error:
+          description: >-
+            `null` if `success` is `true`. Contains the error details of the
+            failed model
           nullable: true
           allOf:
             - $ref: "#/components/schemas/AddonErrorDTO"
         results:
+          description: List of translated transcriptions, one for each `target_languages`
           nullable: true
           type: array
           items:
@@ -1495,16 +1549,23 @@ components:
       properties:
         success:
           type: boolean
+          description: The audio intelligence model succeeded to get a valid output
         is_empty:
           type: boolean
+          description: The audio intelligence model returned an empty value
         exec_time:
           type: number
+          description: Time audio intelligence model took to complete the task
         error:
+          description: >-
+            `null` if `success` is `true`. Contains the error details of the
+            failed model
           nullable: true
           allOf:
             - $ref: "#/components/schemas/AddonErrorDTO"
         results:
           type: string
+          description: If `summarization` has been enabled, summary of the transcription
           nullable: true
       required:
         - success
@@ -1516,13 +1577,25 @@ components:
       type: object
       properties:
         metadata:
-          $ref: "#/components/schemas/TranscriptionMetadataDTO"
+          type: string
+          description: Metadata for the given transcription & audio file
+          nullable: true
         transcription:
-          $ref: "#/components/schemas/TranscriptionDTO"
+          type: string
+          description: Transcription of the audio speech
+          nullable: true
         translation:
-          $ref: "#/components/schemas/TranslationDTO"
+          description: >-
+            If `translation` has been enabled, translation of the audio speech
+            transcription
+          allOf:
+            - $ref: "#/components/schemas/TranslationDTO"
         summarization:
-          $ref: "#/components/schemas/SummarizationDTO"
+          description: >-
+            If `summarization` has been enabled, summarization of the audio
+            speech transcription
+          allOf:
+            - $ref: "#/components/schemas/SummarizationDTO"
       required:
         - metadata
         - transcription
@@ -1544,6 +1617,7 @@ components:
           example: "2023-12-28T09:04:17.210Z"
         status:
           type: string
+          description: Transcription is done and result is ready
           enum:
             - done
           default: done
@@ -1552,7 +1626,9 @@ components:
           description: Completion date
           example: "2023-12-28T09:04:37.210Z"
         result:
-          $ref: "#/components/schemas/TranscriptionResultDTO"
+          description: Transcribed audio result
+          allOf:
+            - $ref: "#/components/schemas/TranscriptionResultDTO"
       required:
         - id
         - request_id
@@ -1578,6 +1654,7 @@ components:
           example: "2023-12-28T09:04:17.210Z"
         status:
           type: string
+          description: Transcription is being processed
           enum:
             - processing
           default: processing
@@ -1604,6 +1681,7 @@ components:
           example: "2023-12-28T09:04:17.210Z"
         status:
           type: string
+          description: Transcription is on the queue, waiting to be processed
           enum:
             - queued
           default: queued
@@ -1630,6 +1708,7 @@ components:
           example: "2023-12-28T09:04:17.210Z"
         status:
           type: string
+          description: Error status
           enum:
             - error
           default: error
@@ -1668,6 +1747,7 @@ components:
           example: "2023-12-28T09:04:17.210Z"
         status:
           type: string
+          description: Transcription is done and result is ready
           enum:
             - done
           default: done
@@ -1699,6 +1779,7 @@ components:
           example: "2023-12-28T09:04:17.210Z"
         status:
           type: string
+          description: Transcription is being processed
           enum:
             - processing
           default: processing
@@ -1725,6 +1806,7 @@ components:
           example: "2023-12-28T09:04:17.210Z"
         status:
           type: string
+          description: Transcription is on the queue, waiting to be processed
           enum:
             - queued
           default: queued
@@ -1737,6 +1819,7 @@ components:
       type: object
       properties:
         items:
+          description: List of retrieved transcription for this range
           type: array
           items:
             oneOf:
@@ -1746,17 +1829,17 @@ components:
               - $ref: "#/components/schemas/ListTranscriptionErrorDTO"
         first:
           type: string
-          description: Url to fetch the first page
+          description: URL to fetch the first page
           format: uri
           example: https://api.gladia.io/v2/transcription?status=done&offset=0&limit=20
         current:
           type: string
-          description: Url to fetch the current page
+          description: URL to fetch the current page
           format: uri
           example: https://api.gladia.io/v2/transcription?status=done&offset=0&limit=20
         next:
           type: string
-          description: Url to fetch the next page
+          description: URL to fetch the next page
           format: uri
           example: >-
             https://api.gladia.io/v2/transcription?status=done&offset=20&limit=20
@@ -1794,7 +1877,7 @@ components:
         audio_duration:
           type: number
           example: "4.145782"
-        nb_channels:
+        number_of_channels:
           type: integer
           example: 1
       required:
@@ -1803,7 +1886,7 @@ components:
         - extension
         - size
         - audio_duration
-        - nb_channels
+        - number_of_channels
     UploadResponse:
       type: object
       properties:
