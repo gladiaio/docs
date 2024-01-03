@@ -19,6 +19,9 @@
       "to": "#ce6ccc"
     }
   },
+  "feedback": {
+    "thumbsRating": true
+  },
   "backgroundImage": "/assets/images/background/lightbackground.png",
   "topbarLinks": [
     {
