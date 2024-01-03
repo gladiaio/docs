@@ -23,12 +23,12 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:support@gladia.io"
     }
   ],
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "name": "Get Started",
+    "url": "https://app.gladia.io/auth/signin"
   },
   "anchors": [
     {
@@ -108,8 +108,8 @@
     }
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "twitter": "https://twitter.com/gladia_io",
+    "github": "https://github.com/gladiaio",
+    "linkedin": "https://www.linkedin.com/company/gladia-io"
   }
 }
