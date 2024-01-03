@@ -1,0 +1,162 @@
+---
+title: "Transcription workflow"
+description: 'Use your API key to auhtenticate your calls'
+---
+
+## General flow
+
+Getting your transcription using Gladia's API is pretty straight forward and can be splitted into 3 different steps:
+
+<Steps>
+  <Step title="Upload your file">
+    <Note>This step is **optionnal** if you are already working with **audio URLs**. </Note>
+
+    If you're working with audio files, you'll need to upload it first using our `/upload` endpoint with `multipart/form-data`
+    content-type since Gladia `/v2/transcription` endpoint only accept audio URLs.
+
+    If you are already using audio file URLs, proceed to the next step.
+
+    ```bash
+    curl --request POST \
+      --url https://api.gladia.io/v2/upload \
+      --header 'Content-Type: multipart/form-data' \
+      --header 'x-gladia-key: YOUR_GLADIA_API_TOKEN' \
+      --form audio=@/path/to/your/audio/conversation.wav
+    ```
+    
+    Example response :
+
+    ```json
+    {
+      "audio_url": "https://api.gladia.io/file/636c70f6-92c1-4026-a8b6-0dfe3ecf826f",
+      "audio_metadata": {
+        "id": "636c70f6-92c1-4026-a8b6-0dfe3ecf826f",
+        "filename": "conversation.wav",
+        "extension": "wav",
+        "size": 99515383,
+        "audio_duration": 4146.468542,
+        "number_of_channels": 2
+      }
+    }
+    ```
+
+    We will now proceed to the next steps using the returned `audio_url`.
+  </Step>
+  <Step title="Transcribe">
+    We'll now POST the transcription request to Gladia's API using the `/v2/transcription` endpoint.
+
+    <Note> 
+     `/v2/transcription` only accept `application/json` as Content-Type.
+    </Note>
+
+    <CodeGroup>
+    ```bash cURL
+      curl --request POST \
+        --url https://api.gladia.io/v2/transcription \
+        --header 'Content-Type: application/json' \
+        --header 'x-gladia-key: YOUR_GLADIA_API_TOKEN' \
+        --data '{
+        "audio_url": "YOUR_AUDIO_URL",
+        "diarization": true,
+        "diarization_config": {
+          "number_of_speakers": 3,
+          "min_speakers": 1,
+          "max_speakers": 5
+        },
+        "translation": true,
+        "translation_config": {
+          "model": "base",
+          "target_languages": ["fr", "en"]
+        },
+        "subtitles": true,
+        "subtitles_config": {
+          "formats": ["srt", "vtt"]
+        },
+        "detect_language": true,
+        "enable_code_switching": false
+        }
+      '
+    ```
+    </CodeGroup>
+
+    You'll get an instant response from the request with and `id` and a `result_url`. The `id` is your transcription ID that you
+    will use to get your transcription result once it's done.
+
+    `result_url` is returned for convenience. This is a pre-built url with your transcription id in it that you can use to get your result in the next step.
+
+  </Step>
+  <Step title="Get the transcription result">
+
+  You can get your transcription results in 2 different ways: 
+
+  <AccordionGroup>
+    <Accordion icon="repeat" title="Polling">
+
+    Once you post your transcription request, you get a transcritpion `id` and a pre-built `result_url` for convenience.
+    To get the result with this method, you'll just have to GET continuously on the given `result_url` until the status
+    of your transcription is `done`.
+
+
+    You can get more informations on the different transcriptions status by checking directly the [API Reference](/api-reference/)
+    </Accordion>
+    <Accordion icon="diagram-project" title="Callback URL">
+
+    Callback are HTTP calls that you can use to get notified when your transcripts are ready.
+
+    Instead of polling and keeping your server busy and maintaning work, you can use the `callback_url` feature.
+    By providing a `callback_url` on your transcription request body payload, we will send the results right there once 
+    your transcription is done.
+
+    <CodeGroup>
+    ```typescript TypeScript
+    const requestData = {
+      audio_url:
+        "YOUR_AUDIO_URL",
+      callback_url: 'https://yourserverurl.com/your/callback/endpoint/'
+    };
+    ```
+    ```python Python
+    request_data = {
+      "audio_url": "YOUR_AUDIO_URL",
+      "callback_url": 'https://yourserverurl.com/your/callback/endpoint/'
+    }
+    ```
+    </CodeGroup>
+
+    Once the transcription is done, we'll make a `POST` request to the `callback_url` you provided with the results.
+    The `POST` request body will be of shape:
+
+    ```json
+    {
+      "id": "2aafc84e-e1c9-440c-bfda-2faa0f5d23b3", // Transcription ID
+      "payload": { // Transcription result
+        "metadata": {
+          ...
+        },
+        "transcription": {
+          "languages": [
+            ...
+          ],
+          "full_transcript": "Split infinity in a time when less is more...",
+          "utterances": [...],
+          ...
+        },
+        ...
+        }
+      }
+    ```
+
+    If you get an error, instead of an `payload` property you'll get an `error` property of shape:
+
+    ```json
+    {
+      "code": 415,
+      "message": "no audio track is present"
+    }
+    ```
+
+
+    </Accordion>
+  </AccordionGroup>
+  </Step>
+</Steps>
