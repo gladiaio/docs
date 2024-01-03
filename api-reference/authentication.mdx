@@ -1,0 +1,25 @@
+---
+title: "Authentication"
+description: 'Use your API key to auhtenticate your calls'
+---
+
+
+<Tip>
+  If you do not own a **Gladia API key** yet, get yours by following our [Account Setup guide](/chapters/get-started/pages/configure-account)
+</Tip>
+
+Once you got your API key, to authenticate, you just need to pass it in the header keys, just like this:
+
+```bash
+curl --request GET \
+  --url https://api.gladia.io/v2/transcription \
+  --header 'x-gladia-key: YOUR_GLADIA_API_KEY'
+```
+
+The header authentication method ensure that you are able to use Gladia in any environment or any cloud-based third party
+ service.
+
+This is the **only** authentication method you'll need to use all the API endpoints.
+
+
+Next, we'll see what's the general transcription flow and how to manage it on your side

@@ -90,7 +90,11 @@
     },
     {
       "group": "API Documentation",
-      "pages": ["api-reference/introduction"]
+      "pages": [
+        "api-reference/introduction",
+        "api-reference/authentication",
+        "api-reference/transcription-flow"
+      ]
     },
     {
       "group": "Transcription",
