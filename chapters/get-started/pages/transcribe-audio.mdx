@@ -3,18 +3,18 @@ title: Transcribe an audio file
 description: "Get your first transcription in less than a minute"
 ---
 
-<Tip> Every references, assumptions, and commands mentionning "audio files" are also true & works for video files. </Tip>
-
+<Tip> Every references, assumptions, and commands mentioning "audio files" are also true & works for video files. </Tip>
 
 ## 🤖 Using your terminal with cURL command
 
-If you are a developper, you probably want to check our [API Documentation](/api-reference/)
+If you are a developer, you probably want to check our [API Documentation](/api-reference/).  
+
 <AccordionGroup>
   <Accordion icon="file-audio" title="Transcribe local audio files">
     You'll need:
 
-    - Your local audio file (refered as *YOUR_LOCAL_AUDIO_FILE* in the below example)
-    - Your Gladia API key (refered as *YOUR_GLADIA_API_TOKEN* in the below example)
+    - Your local audio file (referred as *YOUR_LOCAL_AUDIO_FILE* in the below example)
+    - Your Gladia API key (referred as *YOUR_GLADIA_API_TOKEN* in the below example)
 
     First, we need to upload your local file to Gladia API : 
 
@@ -52,8 +52,8 @@ If you are a developper, you probably want to check our [API Documentation](/api
   <Accordion icon="globe" title="Transcribe audio links">
     You'll need:
 
-    - Your audio link URL (refered as *YOUR_AUDIO_LINK_URL* in the below example)
-    - Your Gladia API key (refered as *YOUR_GLADIA_API_TOKEN* in the below example)
+    - Your audio link URL (referred as *YOUR_AUDIO_LINK_URL* in the below example)
+    - Your Gladia API key (referred as *YOUR_GLADIA_API_TOKEN* in the below example)
 
     ```bash
     curl --request POST \
@@ -75,7 +75,7 @@ If you are a developper, you probably want to check our [API Documentation](/api
     ```
 
     - `id` : Your transcription ID
-    - `result_url` : A pre-built URL for convenience to fetch your XPathResult
+    - `result_url` : A pre-built URL for convenience to fetch your result
 
     Then you'll be able to fetch your result in JSON format using the `result_url` we provided you:
 
@@ -85,13 +85,13 @@ If you are a developper, you probably want to check our [API Documentation](/api
       --header 'x-gladia-key: YOUR_GLADIA_API_TOKEN'
     ```
 
-    Ta-da 🎉 you just made your first transcription !
+    Ta-da 🎉 you just made your first transcription!
   </Accordion>
 </AccordionGroup>
 
 ## 🎮 Using our playground
 
-Using [Gladia's playground](https://app.gladia.io/playground/1) is a conveniant way to test our speech to text API. On the playground
+Using [Gladia's playground](https://app.gladia.io/playground/1) is a convenient way to test our speech to text API. On the playground
 you are able to transcribe remote audio files through URL, and also upload your local audio files, alongside with live 
 audio transcription.
 
@@ -106,7 +106,7 @@ audio transcription.
   <Step title="Select features">
     You'll be able to select <Tooltip tip="If you want to see a complete list of the features Gladia's API provide check the Features section">some of 
     the options</Tooltip> Gladia API provide for your transcription.
-    For this example, we wants to detect the speakers, so we turned on **diarization**.
+    For this example, we want to detect the speakers, so we turned on **diarization**.
 
     <Note>
         Only a few features of Gladia API are available on the playground. For more advanced testing,
@@ -130,5 +130,5 @@ audio transcription.
 
 🥳 Congratulation, you just transcribed your first audio file with Gladia.
 
-Gladia API offer way more than providing access to state of the art speech-to-text. You'll be able to take your audio 
-transcriptions, take a look to the [next steps](/chapters/get-started/pages/next-steps/).
+Gladia API offers way more than state of the art speech-to-text. Take a look [here](/chapters/get-started/pages/next-steps/) to take your audio 
+transcriptions to the next level.

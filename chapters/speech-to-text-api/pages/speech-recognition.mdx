@@ -8,7 +8,7 @@ The core functionality of the Gladia API is its Speech Recognition model, design
 
 
 <Note>
-Do you want to know more about Gladia latest speech-to-text recognition AI model ?
+Do you want to know more about Gladia latest speech-to-text recognition AI model?
 Discover our state-of-the-art ASR model [ Whisper Zero now.](https://www.gladia.io/whisper-zero)
 </Note>
 
@@ -131,19 +131,19 @@ You can get your transcription results in **2 different ways**.
 
 The first way is the one we used in the above examples.
 
-Once you post your transcription request, you get a transcritpion `id` and a pre-built `result_url` for convenience.
+Once you post your transcription request, you get a transcription `id` and a pre-built `result_url` for convenience.
 To get the result with this method, you'll just have to GET continuously on the given `result_url` until the status
 of your transcription is `done`.
 
 
-You can check in detail the differents transcription status in the [API Reference](/api-reference/)
+You can check in detail the different transcription status in the [API Reference](/api-reference/)
 
 </Accordion>
 <Accordion icon="diagram-project" title="Callback URL">
 
 Callback are HTTP calls that you can use to get notified when your transcripts are ready.
 
-Instead of polling and keeping your server busy and maintaning work, you can use the `callback_url` feature.
+Instead of polling and keeping your server busy and maintaining work, you can use the `callback_url` feature.
 By providing a `callback_url` on your transcription request body payload, we will send the results right there once 
 your transcription is done. No need to handle any polling logic on your side.
 
@@ -210,7 +210,7 @@ The transcription status can have different values :
 | `queued`     | Audio waiting to be processed            |
 | `processing` | Audio file being processed               |
 | `done`       | Transcription successfully completed     |
-| `error`     | An error occured on your transcription   |
+| `error`     | An error occurred on your transcription   |
 
 <Warning>
 
@@ -228,7 +228,7 @@ of processing it.
 ## Word-level timestamps
 
 Instead of just getting utterances start and end timestamps, **Gladia** Speech-to-text API provides by **default** the
-**Word-level timestamps** feature. It let you know the exact timestamp words are detected and give you a more precise transcription.
+**Word-level timestamps** feature. It lets you know the exact timestamp for each word and give you a more precise transcription.
  This feature is particularly useful for detailed analysis, as it allows you to pinpoint the exact moment each word is spoken, facilitating
   a more accurate synchronization with audio or video files.
 
@@ -269,42 +269,25 @@ With automatic language detection, you can identify the dominant language spoken
 
 To enable it, set detect_language to true in the request body parameters.
 
-<CodeGroup>
-```typescript TypeScript
-const requestData = {
-  audio_url:
-    "YOUR_AUDIO_URL",
-  detect_language: true
-};
-```
-```python Python
-request_data = {
+```json request data
+{
   "audio_url": "YOUR_AUDIO_URL",
-  "detect_language": True
+  "detect_language": true
 }
 ```
-</CodeGroup>
 </Accordion>
 <Accordion icon="wrench" title="Manual">
 If you already know the dominant language, you can use the language_code key to specify the language of the speech in
  your audio file.
 
 
-<CodeGroup>
-```typescript TypeScript
-const requestData = {
-  audio_url:
-    "YOUR_AUDIO_URL",
-  language: 'fr'
-};
-```
-```python Python
-request_data = {
+```json request data
+{
   "audio_url": "YOUR_AUDIO_URL",
-  "language": 'fr'
+  "detect_language": false,
+  "language": "fr"
 }
 ```
-</CodeGroup>
 </Accordion>
 </AccordionGroup>
 
@@ -315,33 +298,21 @@ You can export completed transcripts in both SRT and VTT format, which can be us
 
 <Tip>
 You can use the `subtitles` feature alongside the `translation` feature. 
-You'll have your subtitles in the orginal language, and **also** in languages you targeted for the translation !
+You'll have your subtitles in the original language, and **also** in languages you targeted for the translation!
 </Tip>
 
-<CodeGroup>
-```typescript TypeScript
-const requestData = {
-  audio_url:
-    "YOUR_AUDIO_URL",
-  subtitles: true,
-  custom_vocabulary: {
-    "formats": ['srt', 'vtt']
-  }
-};
-```
-```python Python
-request_data = {
+```json request data
+{
   "audio_url": "YOUR_AUDIO_URL",
-  "subtitles": True,
-  "substitles_config": {
-    "formats": ['srt', 'vtt'],
+  "subtitles": true,
+  "subtitles_config": {
+    "formats": ["srt", "vtt"]
   }
 }
 ```
-</CodeGroup>
 
 
-The `JSON` response will inculude a new property `subtitles` which is an array of every formats you requested.
+The `JSON` response will include a new property `subtitles` which is an array of every formats you requested.
 With the given example, `subtitles` will contains 2 items of shape:
 
 ```json
@@ -359,23 +330,13 @@ With the given example, `subtitles` will contains 2 items of shape:
 
 - **Context prompt** : If you know the context of the audio you're sending, you can provide it in the `context_prompt`.
 
-<CodeGroup>
-```typescript TypeScript
-const requestData = {
-  audio_url:
-    "YOUR_AUDIO_URL",
-  context_prompt: "A conversation between Sansa Stark and Peter Baelish from the Game of Thrones series.",
-  custom_vocabulary: ['westeros', 'stark']
-};
-```
-```python Python
-request_data = {
+```json request data
+{
   "audio_url": "YOUR_AUDIO_URL",
   "context_prompt": "A conversation between Sansa Stark and Peter Baelish from the Game of Thrones series.",
-  "custom_vocabulary": ['westeros', 'stark']
+  "custom_vocabulary": ["westeros", "stark"]
 }
 ```
-</CodeGroup>
 
 ## Dual-channel or Multiple channels transcription
 
