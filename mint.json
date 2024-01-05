@@ -26,7 +26,7 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:support@gladia.io"
+      "url": "https://gladiaio.typeform.com/support"
     }
   ],
   "topbarCtaButton": {
@@ -102,9 +102,9 @@
     {
       "group": "Transcription",
       "pages": [
-        "api-reference/api-v2/Transcription/get-v2transcription",
+        "api-reference/api-v2/Transcription/list-v2transcription",
         "api-reference/api-v2/Transcription/post-v2transcription",
-        "api-reference/api-v2/Transcription/get-v2transcription-1",
+        "api-reference/api-v2/Transcription/get-v2transcription",
         "api-reference/api-v2/Transcription/delete-v2transcription",
         "api-reference/api-v2/Transcription/get-v2transcription-file"
       ]

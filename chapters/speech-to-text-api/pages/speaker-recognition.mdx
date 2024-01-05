@@ -131,7 +131,7 @@ if result_url:
 </CodeGroup>
 
 
-In the result, you'll get, for each utterance, a `speaker` property , that you can use to determine who's speaking. 
+In the result, you'll get, for each utterance, a `speaker` property that you can use to determine who's speaking. 
 In the above code, we're using the `speaker` parameter alongside with timestamps and utterance text to get an
  output like this:
 
@@ -147,30 +147,16 @@ If you already know the number of speakers in your sent audio, you can improve t
  this on the `diarization_config` parameter:
 
 
-<CodeGroup>
-```typescript TypeScript
-const requestData = {
-  audio_url: "YOUR_AUDIO_URL",
-  diarization_config: {
-    // either set a range
-    min_speakers: 2,
-    max_speakers: 6,
-    // or you know your exact number of speaker 
-    number_of_speakers: 5
-  }
-};
-```
-```python Python
-request_data = {
+```json request data
+{
   "audio_url": "YOUR_AUDIO_URL",
   "diarization_config": {
-    ## either set a range
+    // either set a range
     "min_speakers": 2,
     "max_speakers": 6,
-    ## or you know your exact number of speaker 
+    // or you know your exact number of speaker 
     "number_of_speakers": 5
   }
 }
 ```
-</CodeGroup>
 

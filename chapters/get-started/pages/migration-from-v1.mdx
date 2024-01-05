@@ -5,7 +5,7 @@ description: "Migration guide from Gladia V1 API to the V2 API"
 
 ## General flow changes
 
-In th first version of the Gladia API, to get your transcription through an HTTP call, you had to send everything
+In the first version of Gladia API, to get your transcription through an HTTP call, you had to send everything
  (audio file/url, parameters, etc) in a single HTTP call, and then keep the connection open until you get your result.
 
 This was not ideal for many scenarios that could lead to longer waiting time to get your results, or in case of connection
@@ -16,7 +16,7 @@ In V2, we addressed this by decomposing the process in multiple steps:
 
 <Steps>
   <Step title="Upload your file">
-    <Note>This step is **optionnal** if you are already working with **audio URLs**. </Note>
+    <Note>This step is **optional** if you are already working with **audio URLs**. </Note>
 
     If you're working with audio files, you'll need to upload it first using our `/upload` endpoint with `multipart/form-data`
     content-type since Gladia `/v2/transcription` endpoint only accept audio URLs now.
@@ -77,7 +77,6 @@ In V2, we addressed this by decomposing the process in multiple steps:
         # Translation
         --form toggle_direct_translate=true \
         --form target_translation_language=french
-        # Webhook url
     ```
     ```bash V2
       curl --request POST \
@@ -109,11 +108,10 @@ In V2, we addressed this by decomposing the process in multiple steps:
     ```
     </CodeGroup>
 
-    - **Old V1** : The HTTP connection is kept openned until you get your transcription result, and there's no third step.
+    - **Old V1** : The HTTP connection is kept opened until you get your transcription result, and there's no third step.
 
-    - **New V2** : You get an instant response from the request with and `id` and a `result_url`. The `id` is your transcription ID that you
-    will use to get your transcription result once it's done. You don't have to keep any HTTP connection open on your side.
-
+    - **New V2** : You get an instant response from the request with an `id` and a `result_url`.  
+    The `id` is your transcription ID that you will use to get your transcription result once it's done. You don't have to keep any HTTP connection open on your side.  
     `result_url` is returned for convenience. This is a pre-built url with your transcription id in it that you can use to get your result in the next step.
 
   </Step>
@@ -125,12 +123,12 @@ In V2, we addressed this by decomposing the process in multiple steps:
   <AccordionGroup>
     <Accordion icon="repeat" title="Polling">
 
-    Once you post your transcription request, you get a transcritpion `id` and a pre-built `result_url` for convenience.
+    Once you post your transcription request, you get a transcription `id` and a pre-built `result_url` for convenience.
     To get the result with this method, you'll just have to GET continuously on the given `result_url` until the status
     of your transcription is `done`.
 
 
-    You can get more informations on the different transcriptions status by checking the dedicated [Speech Recognition part](/chapters/speech-to-text-api/pages/speech-recognition)
+    You can get more information on the different transcriptions status by checking the dedicated [Speech Recognition part](/chapters/speech-to-text-api/pages/speech-recognition)
     of the documentation, or directly in the [API Reference](/api-reference/)
     </Accordion>
     <Accordion icon="diagram-project" title="Callback URL">
@@ -139,25 +137,16 @@ In V2, we addressed this by decomposing the process in multiple steps:
 
     It behaves the same as the V1 `webhook_url` parameter.
 
-    Instead of polling and keeping your server busy and maintaning work, you can use the `callback_url` feature.
+    Instead of polling and keeping your server busy and maintaining work, you can use the `callback_url` feature.
     By providing a `callback_url` on your transcription request body payload, we will send the results right there once 
     your transcription is done. No need to handle any polling logic on your side.
 
-    <CodeGroup>
-    ```typescript TypeScript
-    const requestData = {
-      audio_url:
-        "YOUR_AUDIO_URL",
-      callback_url: 'https://yourserverurl.com/your/callback/endpoint/'
-    };
-    ```
-    ```python Python
-    request_data = {
+    ```json
+    {
       "audio_url": "YOUR_AUDIO_URL",
-      "callback_url": 'https://yourserverurl.com/your/callback/endpoint/'
+      "callback_url": "https://yourserverurl.com/your/callback/endpoint/"
     }
     ```
-    </CodeGroup>
 
     Once the transcription is done, we'll make a `POST` request to the `callback_url` you provided with the results.
     The `POST` request body will be of shape:
@@ -200,7 +189,7 @@ In V2, we addressed this by decomposing the process in multiple steps:
 
 ## Transcription result output changes
 
-In addition the transcription flow & input changes, output also changed. 
+In addition to the transcription flow & input changes, output also changed. 
 To get the exhaustive documentation of the **V2 input/output**, please refer to the [API Reference](/api-reference/) part of the documentation.
 
 ### Output changes
@@ -345,7 +334,7 @@ Here is a general changelog for the output part of the transcription's core feat
 ```
 </CodeGroup>
 
-To dive deeper into the V2 version of the API, please take a look at thoses next:
+To dive deeper into the V2 version of the API, please take a look at those next:
 
 - [API Reference](/api-reference/)
 - [Speech Recognition](/chapters/speech-to-text-api/pages/speech-recognition)
