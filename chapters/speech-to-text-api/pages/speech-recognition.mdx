@@ -322,6 +322,36 @@ With the given example, `subtitles` will contains 2 items of shape:
 }
 ```
 
+## Custom metadata filters
+
+You can add metadata to your transcription using the `custom_metadata` input during your POST request on `/v2/transcription` endpoint.
+This will allow you to recognize your transcription when you get its data from the GET `/v2/transcription/{id}` endpoint, but more important, it will allow you to use it as a filter in the GET `/v2/transcription` list endpoint.
+For example, you can add the following when asking for a transcription:
+
+```json
+"custom_metadata": {
+    "internalUserId": 2348739875894375,
+    "paymentMethod": {
+        "last4Digits": 4576
+     },
+     "internalUserName": "Spencer"
+}
+```
+
+And then, use the following GET request to filter results like:
+```
+http://localhost:3000/v2/transcription?custom_metadata={"internalUserId": "2348739875894375"}
+```
+or
+```
+http://localhost:3000/v2/transcription?custom_metadata={"paymentMethod": {"last4Digits": 4576}, "internalUserName": "Spencer"}
+```
+
+<Warning>
+
+`custom_metadata` can only contain object, number and string shorter than 500 characters.
+
+</Warning>
 
 ## Custom vocabulary & Context prompt
 
