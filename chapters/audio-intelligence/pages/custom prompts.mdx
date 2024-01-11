@@ -1,0 +1,158 @@
+---
+title: Custom Prompts
+description: "Ask any question or analysis, as you would do with an assistant"
+---
+
+<Note>
+This addon is on **Alpha**.
+
+We're looking for feedbacks to improve this feature, [share yours here](https://gladiaio.typeform.com/feedback?typeform-source=app.gladia.io).
+
+</Note>
+
+The **Custom Prompts** feature apply your own prompts to the audio transcription.
+
+<CodeGroup>
+```typescript TypeScript
+async function makeFetchRequest(url: string, options: any) {
+  const response = await fetch(url, options);
+  return response.json();
+}
+
+async function pollForResult(resultUrl: string, headers: any) {
+  while (true) {
+    console.log("Polling for results...");
+    const pollResponse = await makeFetchRequest(resultUrl, { headers });
+
+    if (pollResponse.status === "done") {
+      console.log("- Transcription done: \n");
+      const customPromptsResults = pollResponse.result.custom_prompts;
+      console.log(customPromptsResults);
+      break;
+    } else {
+      console.log("Transcription status : ", pollResponse.status);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+  }
+}
+
+async function startTranscription() {
+  const gladiaKey = "YOUR_GLADIA_API_TOKEN";
+  const requestData = {
+    audio_url:
+      "YOUR_AUDIO_URL",
+    custom_prompts: [
+      "Extract the key points from the transcription",
+      "Generate a title from this transcription"
+    ],
+  };
+  const gladiaUrl = "https://api.gladia.io/v2/transcription/";
+  const headers = {
+    "x-gladia-key": gladiaKey,
+    "Content-Type": "application/json",
+  };
+
+  console.log("- Sending initial request to Gladia API...");
+  const initialResponse = await makeFetchRequest(gladiaUrl, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(requestData),
+  });
+
+  console.log("Initial response with Transcription ID :", initialResponse);
+
+  if (initialResponse.result_url) {
+    await pollForResult(initialResponse.result_url, headers);
+  }
+}
+
+startTranscription();
+
+````
+```python Python
+import requests
+import time
+
+
+def make_fetch_request(url, headers, method='GET', data=None):
+    if method == 'POST':
+        response = requests.post(url, headers=headers, json=data)
+    else:
+        response = requests.get(url, headers=headers)
+    return response.json()
+
+
+gladia_key = "YOUR_GLADIA_API_TOKEN"
+request_data = {
+    "audio_url": "YOUR_AUDIO_URL",
+    "custom_prompts": [
+      "Extract the key points from the transcription",
+      "Generate a title from this transcription"
+    ]
+}
+gladia_url = "https://api.gladia.io/v2/transcription/"
+
+headers = {
+    "x-gladia-key": gladia_key,
+    "Content-Type": "application/json"
+}
+
+print("- Sending initial request to Gladia API...")
+initial_response = make_fetch_request(
+    gladia_url, headers, 'POST', request_data)
+
+print("Initial response with Transcription ID:", initial_response)
+result_url = initial_response.get("result_url")
+
+if result_url:
+    while True:
+        print("Polling for results...")
+        poll_response = make_fetch_request(result_url, headers)
+
+        if poll_response.get("status") == "done":
+            print("- Transcription done: \n")
+            custom_prompts_results = poll_response.get("result", {}).get(
+                "custom_prompts", {})
+            print(custom_prompts_results)
+            break
+        else:
+            print("Transcription status:", poll_response.get("status"))
+        time.sleep(1)
+````
+
+</CodeGroup>
+
+With this code, your output will look like this:
+
+```json
+{
+  "success": true,
+  "is_empty": false,
+  "results": [
+    {
+      "success": true,
+      "is_empty": false,
+      "results": {
+        "prompt": "Extract the key points from the transcription",
+        "response": "The main entities key points from the transcription are:\n- ..."
+      },
+      "exec_time": 1.7726809978485107,
+      "error": null
+    },
+    {
+      "success": true,
+      "is_empty": false,
+      "results": {
+        "prompt": "Generate a title from this transcription",
+        "response": "The Great Title"
+      },
+      "exec_time": 1.7832809978258485,
+      "error": null
+    }
+  ],
+  "exec_time": 6.127103805541992,
+  "error": null
+}
+```
+
+You'll find your custom prompts results of your audio under the `results` key.

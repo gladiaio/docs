@@ -256,8 +256,8 @@ paths:
                 webhook_url:
                   type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
       security:
         - x_gladia_key: []
       tags:
@@ -518,8 +518,8 @@ paths:
                 webhook_url:
                   type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
       tags:
         - API - Transcription V1
       security:
@@ -534,50 +534,50 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/InitTranscriptionRequest'
+              $ref: "#/components/schemas/InitTranscriptionRequest"
       responses:
-        '201':
+        "201":
           description: >-
             The transcription has been queued. Use its id to retrieve or listen
             to its progress.
           links:
             GET transcription:
               description: Get the transcription status and result
-              operationRef: '#/paths/~1v2~1transcription~1{id}/get'
+              operationRef: "#/paths/~1v2~1transcription~1{id}/get"
               parameters:
                 id: $response.body#/id
             GET transcription audio file:
               description: Get the transcription audio file
-              operationRef: '#/paths/~1v2~1transcription~1{id}~1file/get'
+              operationRef: "#/paths/~1v2~1transcription~1{id}~1file/get"
               parameters:
                 id: $response.body#/id
             DELETE transcription:
               description: Delete the transcription
-              operationRef: '#/paths/~1v2~1transcription~1{id}/delete'
+              operationRef: "#/paths/~1v2~1transcription~1{id}/delete"
               parameters:
                 id: $response.body#/id
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InitTranscriptionResponse'
-        '400':
+                $ref: "#/components/schemas/InitTranscriptionResponse"
+        "400":
           description: The parameters you gave are incorrect.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '401':
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
           description: You don't have the permissions to do a new transcription.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: The file you gave doesn't exist.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
       tags:
         - API - Transcription V2
       security:
@@ -641,7 +641,7 @@ paths:
         - name: date
           required: false
           in: query
-          example: '2024-01-05'
+          example: "2024-01-10"
           description: Filter items relevant to a specific date in ISO format (YYYY-MM-DD).
           schema:
             format: date-time
@@ -649,7 +649,7 @@ paths:
         - name: before_date
           required: false
           in: query
-          example: '2024-01-05T10:19:58.784Z'
+          example: "2024-01-10T09:25:08.773Z"
           description: Include items that occurred before the specified date in ISO format.
           schema:
             format: date-time
@@ -657,7 +657,7 @@ paths:
         - name: after_date
           required: false
           in: query
-          example: '2024-01-05T10:19:58.784Z'
+          example: "2024-01-10T09:25:08.773Z"
           description: >-
             Filter for items after the specified date. Use with `before_date`
             for a range. Date in ISO format.
@@ -665,12 +665,12 @@ paths:
             format: date-time
             type: string
       responses:
-        '200':
+        "200":
           description: A list of transcriptions matching the parameters.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ListTranscriptionResponse'
+                $ref: "#/components/schemas/ListTranscriptionResponse"
       tags:
         - API - Transcription V2
       security:
@@ -688,7 +688,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: The status and result of the transcription.
           content:
             application/json:
@@ -696,34 +696,27 @@ paths:
                 example:
                   id: 45463597-20b7-4af7-b3b3-f5fb778203ab
                   request_id: G-45463597
-                  created_at: '2023-12-28T09:04:17.210Z'
+                  created_at: "2023-12-28T09:04:17.210Z"
                   status: queued
                 oneOf:
-                  - $ref: '#/components/schemas/GetTranscriptQueuedResponse'
-                  - $ref: '#/components/schemas/GetTranscriptProcessingResponse'
-                  - $ref: '#/components/schemas/GetTranscriptDoneResponse'
-                  - $ref: '#/components/schemas/GetTranscriptErrorResponse'
-                discriminator:
-                  propertyName: status
-                  mapping:
-                    queued: '#/components/schemas/GetTranscriptQueuedResponse'
-                    processing: '#/components/schemas/GetTranscriptProcessingResponse'
-                    done: '#/components/schemas/GetTranscriptDoneResponse'
-                    error: '#/components/schemas/GetTranscriptErrorResponse'
-        '401':
+                  - $ref: "#/components/schemas/GetTranscriptQueuedResponse"
+                  - $ref: "#/components/schemas/GetTranscriptProcessingResponse"
+                  - $ref: "#/components/schemas/GetTranscriptDoneResponse"
+                  - $ref: "#/components/schemas/GetTranscriptErrorResponse"
+        "401":
           description: You don't have the permissions to this transcription.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: >-
             The transcription or the audio file doesn't exist or has been
             deleted.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
       tags:
         - API - Transcription V2
       security:
@@ -740,26 +733,26 @@ paths:
           schema:
             type: string
       responses:
-        '202':
+        "202":
           description: The transcription has been deleted.
-        '401':
+        "401":
           description: You don't have the permissions to this transcription.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '403':
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
           description: You can't delete a transcription in progress.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: The transcription doesn't exist or has been deleted.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
       tags:
         - API - Transcription V2
       security:
@@ -777,7 +770,7 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: The audio file used for the transcription.
           content:
             application/octet-stream:
@@ -785,20 +778,20 @@ paths:
                 type: string
                 format: binary
                 example: <binary>
-        '401':
+        "401":
           description: You don't have the permissions to this transcription.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        '404':
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
           description: >-
             The transcription or the audio file doesn't exist or has been
             deleted.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
       tags:
         - API - Transcription V2
       security:
@@ -829,20 +822,20 @@ paths:
                   type: string
                   description: The URL of the audio or video file to be uploaded.
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UploadResponse'
+                $ref: "#/components/schemas/UploadResponse"
       tags:
         - API - Transcription V2
       security:
         - x_gladia_key: []
 info:
   title: Gladia Control API
-  description: ''
-  version: '1.0'
+  description: ""
+  version: "1.0"
   contact: {}
 tags: []
 servers:
@@ -920,7 +913,7 @@ components:
         - mn
         - mymr
         - ne
-        - 'no'
+        - "no"
         - nn
         - oc
         - ps
@@ -973,7 +966,7 @@ components:
             - srt
           minItems: 1
           items:
-            $ref: '#/components/schemas/SubtitlesFormatEnum'
+            $ref: "#/components/schemas/SubtitlesFormatEnum"
     DiarizationConfigDTO:
       type: object
       properties:
@@ -1068,7 +1061,7 @@ components:
         - mn
         - mymr
         - ne
-        - 'no'
+        - "no"
         - nn
         - oc
         - or
@@ -1125,7 +1118,7 @@ components:
             - en
           minItems: 1
           items:
-            $ref: '#/components/schemas/TranslationCodeLanguageEnum'
+            $ref: "#/components/schemas/TranslationCodeLanguageEnum"
         model:
           type: string
           description: Model you want the translation model to use to translate
@@ -1135,15 +1128,22 @@ components:
             - enhanced
       required:
         - target_languages
+    CustomPromptsConfigDTO:
+      type: object
+      properties:
+        prompts:
+          description: The list of prompts applied on the audio transcription
+          example:
+            - Extract the key points from the transcription
+          minItems: 1
+          type: array
+          items:
+            type: array
+      required:
+        - prompts
     InitTranscriptionRequest:
       type: object
       properties:
-        audio_url:
-          type: string
-          description: URL to a Gladia file or to an external audio or video file
-          example: >-
-            http://files.gladia.io/example/audio-transcription/split_infinity.wav
-          format: uri
         context_prompt:
           type: string
           description: >-
@@ -1166,7 +1166,7 @@ components:
         language:
           description: Set the spoken language for the given audio
           example: en
-          $ref: '#/components/schemas/DetectionCodeLanguageEnum'
+          $ref: "#/components/schemas/DetectionCodeLanguageEnum"
         callback_url:
           type: string
           description: >-
@@ -1181,7 +1181,7 @@ components:
         subtitles_config:
           description: Configuration for subtitles generation if `subtitles` is enabled
           allOf:
-            - $ref: '#/components/schemas/SubtitlesConfigDTO'
+            - $ref: "#/components/schemas/SubtitlesConfigDTO"
         diarization:
           type: boolean
           description: Enable speaker recognition (diarization) for this audio
@@ -1189,7 +1189,7 @@ components:
         diarization_config:
           description: Speaker recognition configuration, if `diarization` is enabled
           allOf:
-            - $ref: '#/components/schemas/DiarizationConfigDTO'
+            - $ref: "#/components/schemas/DiarizationConfigDTO"
         translation:
           type: boolean
           description: Enable translation for this audio
@@ -1197,11 +1197,28 @@ components:
         translation_config:
           description: Translation configuration, if `translation` is enabled
           allOf:
-            - $ref: '#/components/schemas/TranslationConfigDTO'
+            - $ref: "#/components/schemas/TranslationConfigDTO"
         summarization:
           type: boolean
           description: Enable summarization for this audio
           default: false
+        custom_prompts:
+          type: boolean
+          description: Enable custom prompts processing for this audio
+          default: false
+        custom_prompts_config:
+          description: Custom prompts configuration, if `custom_prompts` is enabled
+          allOf:
+            - $ref: "#/components/schemas/CustomPromptsConfigDTO"
+        custom_metadata:
+          type: object
+          default: {}
+        audio_url:
+          type: string
+          description: URL to a Gladia file or to an external audio or video file
+          example: >-
+            http://files.gladia.io/example/audio-transcription/split_infinity.wav
+          format: uri
       required:
         - audio_url
     InitTranscriptionResponse:
@@ -1209,7 +1226,7 @@ components:
       properties:
         id:
           type: string
-          description: '`id` of your transcription request'
+          description: "`id` of your transcription request"
           example: 45463597-20b7-4af7-b3b3-f5fb778203ab
           format: uuid
         result_url:
@@ -1231,7 +1248,7 @@ components:
         timestamp:
           type: string
           description: Date of when the error occurred
-          example: '2023-12-28T09:04:17.210Z'
+          example: "2023-12-28T09:04:17.210Z"
         path:
           type: string
           description: Path to the API endpoint
@@ -1250,6 +1267,102 @@ components:
         - path
         - message
         - request_id
+    BaseFormFile:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The file id
+        filename:
+          type: string
+          description: The name of the uploaded file
+        source:
+          type: string
+          description: The link used to download the file if audio_url was used
+        contentType:
+          type: string
+          description: The file content type
+      required:
+        - id
+        - filename
+        - source
+        - contentType
+    RequestParamsResponse:
+      type: object
+      properties:
+        context_prompt:
+          type: string
+          description: >-
+            Context to feed the transcription model with for possible better
+            performance
+        custom_vocabulary:
+          description: Specific vocabulary list to feed the transcription model with
+          default: []
+          type: array
+          items:
+            type: string
+        detect_language:
+          type: boolean
+          description: Detect the language from the given audio
+          default: true
+        enable_code_switching:
+          type: boolean
+          description: Detect multiple languages in the given audio
+          default: false
+        language:
+          description: Set the spoken language for the given audio
+          example: en
+          $ref: "#/components/schemas/DetectionCodeLanguageEnum"
+        callback_url:
+          type: string
+          description: >-
+            Callback URL we will do a `POST` request to with the result of the
+            transcription
+          example: http://callback.example
+          format: uri
+        subtitles:
+          type: boolean
+          description: Enable subtitles generation for this transcription
+          default: false
+        subtitles_config:
+          description: Configuration for subtitles generation if `subtitles` is enabled
+          allOf:
+            - $ref: "#/components/schemas/SubtitlesConfigDTO"
+        diarization:
+          type: boolean
+          description: Enable speaker recognition (diarization) for this audio
+          default: false
+        diarization_config:
+          description: Speaker recognition configuration, if `diarization` is enabled
+          allOf:
+            - $ref: "#/components/schemas/DiarizationConfigDTO"
+        translation:
+          type: boolean
+          description: Enable translation for this audio
+          default: false
+        translation_config:
+          description: Translation configuration, if `translation` is enabled
+          allOf:
+            - $ref: "#/components/schemas/TranslationConfigDTO"
+        summarization:
+          type: boolean
+          description: Enable summarization for this audio
+          default: false
+        custom_prompts:
+          type: boolean
+          description: Enable custom prompts processing for this audio
+          default: false
+        custom_prompts_config:
+          description: Custom prompts configuration, if `custom_prompts` is enabled
+          allOf:
+            - $ref: "#/components/schemas/CustomPromptsConfigDTO"
+        custom_metadata:
+          type: object
+          default: {}
+        file:
+          description: The file data you uploaded
+          allOf:
+            - $ref: "#/components/schemas/BaseFormFile"
     GetTranscriptErrorResponse:
       type: object
       properties:
@@ -1265,7 +1378,11 @@ components:
         created_at:
           type: string
           description: Creation date
-          example: '2023-12-28T09:04:17.210Z'
+          example: "2023-12-28T09:04:17.210Z"
+        request_params:
+          description: Parameters used for this transcription.
+          allOf:
+            - $ref: "#/components/schemas/RequestParamsResponse"
         status:
           type: string
           description: Error status
@@ -1275,7 +1392,7 @@ components:
         completed_at:
           type: string
           description: Completion date
-          example: '2023-12-28T09:04:37.210Z'
+          example: "2023-12-28T09:04:37.210Z"
         error_code:
           type: integer
           description: HTTP status code of the error
@@ -1364,7 +1481,7 @@ components:
         - mn
         - mymr
         - ne
-        - 'no'
+        - "no"
         - nn
         - oc
         - or
@@ -1415,7 +1532,7 @@ components:
         format:
           description: Format of the current subtitle
           example: srt
-          $ref: '#/components/schemas/SubtitlesFormatEnum'
+          $ref: "#/components/schemas/SubtitlesFormatEnum"
         subtitles:
           type: string
           description: Transcription on the asked subtitle format
@@ -1451,7 +1568,7 @@ components:
         language:
           description: Spoken language in this utterance
           example: en
-          $ref: '#/components/schemas/CodeLanguageEnum'
+          $ref: "#/components/schemas/CodeLanguageEnum"
         start:
           type: number
           description: Start timestamp in seconds of this utterance
@@ -1470,7 +1587,7 @@ components:
           description: List of words of the utterance, split by timestamp
           type: array
           items:
-            $ref: '#/components/schemas/WordDTO'
+            $ref: "#/components/schemas/WordDTO"
       required:
         - text
         - language
@@ -1492,17 +1609,17 @@ components:
           example:
             - en
           items:
-            $ref: '#/components/schemas/CodeLanguageEnum'
+            $ref: "#/components/schemas/CodeLanguageEnum"
         subtitles:
           description: If `subtitles` has been enabled, subtitles results
           type: array
           items:
-            $ref: '#/components/schemas/SubtitleDTO'
+            $ref: "#/components/schemas/SubtitleDTO"
         utterances:
           description: Transcribed speech utterances present in the audio
           type: array
           items:
-            $ref: '#/components/schemas/UtteranceDTO'
+            $ref: "#/components/schemas/UtteranceDTO"
       required:
         - full_transcript
         - languages
@@ -1542,13 +1659,13 @@ components:
             failed model
           nullable: true
           allOf:
-            - $ref: '#/components/schemas/AddonErrorDTO'
+            - $ref: "#/components/schemas/AddonErrorDTO"
         results:
           description: List of translated transcriptions, one for each `target_languages`
           nullable: true
           type: array
           items:
-            $ref: '#/components/schemas/TranscriptionDTO'
+            $ref: "#/components/schemas/TranscriptionDTO"
       required:
         - success
         - is_empty
@@ -1573,7 +1690,7 @@ components:
             failed model
           nullable: true
           allOf:
-            - $ref: '#/components/schemas/AddonErrorDTO'
+            - $ref: "#/components/schemas/AddonErrorDTO"
         results:
           type: string
           description: If `summarization` has been enabled, summary of the transcription
@@ -1594,19 +1711,19 @@ components:
         transcription:
           description: Transcription of the audio speech
           allOf:
-            - $ref: '#/components/schemas/TranscriptionDTO'
+            - $ref: "#/components/schemas/TranscriptionDTO"
         translation:
           description: >-
             If `translation` has been enabled, translation of the audio speech
             transcription
           allOf:
-            - $ref: '#/components/schemas/TranslationDTO'
+            - $ref: "#/components/schemas/TranslationDTO"
         summarization:
           description: >-
             If `summarization` has been enabled, summarization of the audio
             speech transcription
           allOf:
-            - $ref: '#/components/schemas/SummarizationDTO'
+            - $ref: "#/components/schemas/SummarizationDTO"
       required:
         - metadata
         - transcription
@@ -1625,7 +1742,11 @@ components:
         created_at:
           type: string
           description: Creation date
-          example: '2023-12-28T09:04:17.210Z'
+          example: "2023-12-28T09:04:17.210Z"
+        request_params:
+          description: Parameters used for this transcription.
+          allOf:
+            - $ref: "#/components/schemas/RequestParamsResponse"
         status:
           type: string
           description: Transcription is done and result is ready
@@ -1635,11 +1756,11 @@ components:
         completed_at:
           type: string
           description: Completion date
-          example: '2023-12-28T09:04:37.210Z'
+          example: "2023-12-28T09:04:37.210Z"
         result:
           description: Transcribed audio result
           allOf:
-            - $ref: '#/components/schemas/TranscriptionResultDTO'
+            - $ref: "#/components/schemas/TranscriptionResultDTO"
       required:
         - id
         - request_id
@@ -1662,7 +1783,11 @@ components:
         created_at:
           type: string
           description: Creation date
-          example: '2023-12-28T09:04:17.210Z'
+          example: "2023-12-28T09:04:17.210Z"
+        request_params:
+          description: Parameters used for this transcription.
+          allOf:
+            - $ref: "#/components/schemas/RequestParamsResponse"
         status:
           type: string
           description: Transcription is being processed
@@ -1689,7 +1814,11 @@ components:
         created_at:
           type: string
           description: Creation date
-          example: '2023-12-28T09:04:17.210Z'
+          example: "2023-12-28T09:04:17.210Z"
+        request_params:
+          description: Parameters used for this transcription.
+          allOf:
+            - $ref: "#/components/schemas/RequestParamsResponse"
         status:
           type: string
           description: Transcription is on the queue, waiting to be processed
@@ -1716,7 +1845,11 @@ components:
         created_at:
           type: string
           description: Creation date
-          example: '2023-12-28T09:04:17.210Z'
+          example: "2023-12-28T09:04:17.210Z"
+        request_params:
+          description: Parameters used for this transcription.
+          allOf:
+            - $ref: "#/components/schemas/RequestParamsResponse"
         status:
           type: string
           description: Error status
@@ -1726,7 +1859,7 @@ components:
         completed_at:
           type: string
           description: Completion date
-          example: '2023-12-28T09:04:37.210Z'
+          example: "2023-12-28T09:04:37.210Z"
         error_code:
           type: integer
           description: HTTP status code of the error
@@ -1755,7 +1888,11 @@ components:
         created_at:
           type: string
           description: Creation date
-          example: '2023-12-28T09:04:17.210Z'
+          example: "2023-12-28T09:04:17.210Z"
+        request_params:
+          description: Parameters used for this transcription.
+          allOf:
+            - $ref: "#/components/schemas/RequestParamsResponse"
         status:
           type: string
           description: Transcription is done and result is ready
@@ -1765,7 +1902,7 @@ components:
         completed_at:
           type: string
           description: Completion date
-          example: '2023-12-28T09:04:37.210Z'
+          example: "2023-12-28T09:04:37.210Z"
       required:
         - id
         - request_id
@@ -1787,7 +1924,11 @@ components:
         created_at:
           type: string
           description: Creation date
-          example: '2023-12-28T09:04:17.210Z'
+          example: "2023-12-28T09:04:17.210Z"
+        request_params:
+          description: Parameters used for this transcription.
+          allOf:
+            - $ref: "#/components/schemas/RequestParamsResponse"
         status:
           type: string
           description: Transcription is being processed
@@ -1814,7 +1955,11 @@ components:
         created_at:
           type: string
           description: Creation date
-          example: '2023-12-28T09:04:17.210Z'
+          example: "2023-12-28T09:04:17.210Z"
+        request_params:
+          description: Parameters used for this transcription.
+          allOf:
+            - $ref: "#/components/schemas/RequestParamsResponse"
         status:
           type: string
           description: Transcription is on the queue, waiting to be processed
@@ -1831,20 +1976,13 @@ components:
       properties:
         items:
           description: List of retrieved transcription for this range
-          discriminator:
-            propertyName: status
-            mapping:
-              queued: '#/components/schemas/ListTranscriptionQueuedDTO'
-              processing: '#/components/schemas/ListTranscriptionProcessingDTO'
-              done: '#/components/schemas/ListTranscriptionDoneDTO'
-              error: '#/components/schemas/ListTranscriptionErrorDTO'
           type: array
           items:
             oneOf:
-              - $ref: '#/components/schemas/ListTranscriptionQueuedDTO'
-              - $ref: '#/components/schemas/ListTranscriptionProcessingDTO'
-              - $ref: '#/components/schemas/ListTranscriptionDoneDTO'
-              - $ref: '#/components/schemas/ListTranscriptionErrorDTO'
+              - $ref: "#/components/schemas/ListTranscriptionQueuedDTO"
+              - $ref: "#/components/schemas/ListTranscriptionProcessingDTO"
+              - $ref: "#/components/schemas/ListTranscriptionDoneDTO"
+              - $ref: "#/components/schemas/ListTranscriptionErrorDTO"
         first:
           type: string
           description: URL to fetch the first page
@@ -1900,7 +2038,7 @@ components:
         audio_duration:
           type: number
           description: Uploaded audio duration
-          example: '4.145782'
+          example: "4.145782"
         number_of_channels:
           type: integer
           description: Uploaded audio channel numbers
@@ -1923,7 +2061,7 @@ components:
         audio_metadata:
           description: Uploaded audio file detected metadata
           allOf:
-            - $ref: '#/components/schemas/UploadMetadataDTO'
+            - $ref: "#/components/schemas/UploadMetadataDTO"
       required:
         - audio_url
         - audio_metadata

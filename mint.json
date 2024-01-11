@@ -50,7 +50,9 @@
       "url": "https://www.gladia.io/blog"
     }
   ],
-  "openapi": ["/openapi.yml"],
+  "openapi": [
+    "/openapi.yml"
+  ],
   "navigation": [
     {
       "group": "Introduction",
@@ -81,7 +83,8 @@
       "group": "Audio Intelligence",
       "pages": [
         "chapters/audio-intelligence/pages/translation",
-        "chapters/audio-intelligence/pages/summarization"
+        "chapters/audio-intelligence/pages/summarization",
+        "chapters/audio-intelligence/pages/custom prompts"
       ]
     },
     {
@@ -111,7 +114,9 @@
     },
     {
       "group": "Upload",
-      "pages": ["api-reference/api-v2/Upload/post-v2upload"]
+      "pages": [
+        "api-reference/api-v2/Upload/post-v2upload"
+      ]
     }
   ],
   "footerSocials": {
