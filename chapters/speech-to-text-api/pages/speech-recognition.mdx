@@ -3,6 +3,8 @@ title: Speech Recognition
 description: "Core feature of the Gladia API"
 ---
 
+import GetTranscriptionResult from '/snippets/get-transcription-result.mdx';
+
 The core functionality of the Gladia API is its Speech Recognition model, designed to convert spoken language
  into written text. This serves as the basis for all Gladia API offerings.
 
@@ -118,87 +120,13 @@ if result_url:
 After that your audio have been processed, here's an example output of what you should get :
 
 ```
-Split infinity in a time when less is more, where too much is never enough.There is always hope for the future. The future can be read from the past. The past foreshadows the present, and the present hasn't been written yet.`
+Split infinity in a time when less is more, where too much is never enough. There is always hope for the future. The future can be read from the past. The past foreshadows the present, and the present hasn't been written yet.`
 ```
 
 
 ## Get your transcription results
 
-You can get your transcription results in **2 different ways**.
-
-<AccordionGroup>
-<Accordion icon="repeat" title="Polling">
-
-The first way is the one we used in the above examples.
-
-Once you post your transcription request, you get a transcription `id` and a pre-built `result_url` for convenience.
-To get the result with this method, you'll just have to GET continuously on the given `result_url` until the status
-of your transcription is `done`.
-
-
-You can check in detail the different transcription status in the [API Reference](/api-reference/)
-
-</Accordion>
-<Accordion icon="diagram-project" title="Callback URL">
-
-Callback are HTTP calls that you can use to get notified when your transcripts are ready.
-
-Instead of polling and keeping your server busy and maintaining work, you can use the `callback_url` feature.
-By providing a `callback_url` on your transcription request body payload, we will send the results right there once 
-your transcription is done. No need to handle any polling logic on your side.
-
-<CodeGroup>
-```typescript TypeScript
-const requestData = {
-  audio_url:
-    "YOUR_AUDIO_URL",
-  callback_url: 'https://yourserverurl.com/your/callback/endpoint/'
-};
-```
-```python Python
-request_data = {
-  "audio_url": "YOUR_AUDIO_URL",
-  "callback_url": 'https://yourserverurl.com/your/callback/endpoint/'
-}
-```
-</CodeGroup>
-
-Once the transcription is done, we'll make a `POST` request to the `callback_url` you provided with the results.
-The `POST` request body will be of shape:
-
-```json
-{
-  "id": "2aafc84e-e1c9-440c-bfda-2faa0f5d23b3", // Transcription ID
-  "payload": { // Transcription result
-    "metadata": {
-      ...
-    },
-    "transcription": {
-      "languages": [
-        ...
-      ],
-      "full_transcript": "Split infinity in a time when less is more...",
-      "utterances": [...],
-      ...
-    },
-    ...
-    }
-  }
-```
-
-If you get an error, instead of an `payload` property you'll get an `error` property of shape:
-
-```json
-{
-  "code": 415,
-  "message": "no audio track is present"
-}
-```
-
-
-</Accordion>
-</AccordionGroup>
-
+<GetTranscriptionResult />
 
 
 ## All transcriptions status

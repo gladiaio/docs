@@ -117,6 +117,21 @@
       "pages": [
         "api-reference/api-v2/Upload/post-v2upload"
       ]
+    },
+    {
+      "group": "Webhooks",
+      "pages": [
+        "api-reference/api-v2/Webhooks/transcription-created",
+        "api-reference/api-v2/Webhooks/transcription-success",
+        "api-reference/api-v2/Webhooks/transcription-error"
+      ]
+    },
+    {
+      "group": "Callback",
+      "pages": [
+        "api-reference/api-v2/Callback/transcription-success",
+        "api-reference/api-v2/Callback/transcription-error"
+      ]
     }
   ],
   "footerSocials": {

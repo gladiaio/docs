@@ -3,6 +3,8 @@ title: "Transcription workflow"
 description: 'Understand the workflow to transcribe an audio file and get your result'
 ---
 
+import GetTranscriptionResult from '/snippets/get-transcription-result.mdx';
+
 ## General transcription flow
 
 Getting your transcription using Gladia's API is pretty straight forward and can be splitted into 3 different steps:
@@ -86,77 +88,6 @@ Getting your transcription using Gladia's API is pretty straight forward and can
 
   </Step>
   <Step title="Get the transcription result">
-
-  You can get your transcription results in 2 different ways: 
-
-  <AccordionGroup>
-    <Accordion icon="repeat" title="Polling">
-
-    Once you post your transcription request, you get a transcritpion `id` and a pre-built `result_url` for convenience.
-    To get the result with this method, you'll just have to GET continuously on the given `result_url` until the status
-    of your transcription is `done`.
-
-
-    You can get more informations on the different transcriptions status by checking directly the [API Reference](/api-reference/)
-    </Accordion>
-    <Accordion icon="diagram-project" title="Callback URL">
-
-    Callback are HTTP calls that you can use to get notified when your transcripts are ready.
-
-    Instead of polling and keeping your server busy and maintaning work, you can use the `callback_url` feature.
-    By providing a `callback_url` on your transcription request body payload, we will send the results right there once 
-    your transcription is done.
-
-    <CodeGroup>
-    ```typescript TypeScript
-    const requestData = {
-      audio_url:
-        "YOUR_AUDIO_URL",
-      callback_url: 'https://yourserverurl.com/your/callback/endpoint/'
-    };
-    ```
-    ```python Python
-    request_data = {
-      "audio_url": "YOUR_AUDIO_URL",
-      "callback_url": 'https://yourserverurl.com/your/callback/endpoint/'
-    }
-    ```
-    </CodeGroup>
-
-    Once the transcription is done, we'll make a `POST` request to the `callback_url` you provided with the results.
-    The `POST` request body will be of shape:
-
-    ```json
-    {
-      "id": "2aafc84e-e1c9-440c-bfda-2faa0f5d23b3", // Transcription ID
-      "payload": { // Transcription result
-        "metadata": {
-          ...
-        },
-        "transcription": {
-          "languages": [
-            ...
-          ],
-          "full_transcript": "Split infinity in a time when less is more...",
-          "utterances": [...],
-          ...
-        },
-        ...
-        }
-      }
-    ```
-
-    If you get an error, instead of an `payload` property you'll get an `error` property of shape:
-
-    ```json
-    {
-      "code": 415,
-      "message": "no audio track is present"
-    }
-    ```
-
-
-    </Accordion>
-  </AccordionGroup>
+    <GetTranscriptionResult />
   </Step>
 </Steps>

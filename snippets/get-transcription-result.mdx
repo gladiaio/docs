@@ -1,0 +1,37 @@
+You can get your transcription results in **3 different ways**: 
+
+<AccordionGroup>
+  <Accordion icon="repeat" title="Polling">
+
+  Once you post your transcription request, you get a transcription `id` and a pre-built `result_url` for convenience.
+  To get the result with this method, you'll just have to GET continuously on the given `result_url` until the status
+  of your transcription is `done`.
+
+
+  You can get more information on the different transcriptions status by checking directly the [API Reference](/api-reference/).
+  </Accordion>
+  <Accordion icon="webhook" title="Webhook">
+  You can configure webhooks at https://app.gladia.io/account to be notified when your transcriptions are done.
+  <img src='/assets/images/webhooks-1.png'/>
+  Once a transcription is done, a `POST` request will be made to the endpoint you configured. The request body is a JSON object containing the transcription `id` that you can use to retrieve your result with [our API](/api-reference/api-v2/Transcription/get-v2transcription).  
+  For the full body definition, check [our API definition](/api-reference/api-v2/Webhooks/transcription-success).  
+  </Accordion>
+  <Accordion icon="diagram-project" title="Callback URL">
+
+  Callback are HTTP calls that you can use to get notified when your transcripts are ready.
+
+  Instead of polling and keeping your server busy and maintaining work, you can use the `callback_url` feature.
+  By providing a `callback_url` on your transcription request body payload, we will send the results right there once 
+  your transcription is done.
+
+  ```json
+  {
+    "audio_url": "YOUR_AUDIO_URL",
+    "callback_url": "https://yourserverurl.com/your/callback/endpoint/"
+  }
+  ```
+
+  Once the transcription is done, a `POST` request will be made to the `callback_url` you provided.  
+  The request body is a JSON object containing the transcription `id` and an `event` property that tells you if it's a [success](/api-reference/api-v2/Callback/transcription-success) or an [error](/api-reference/api-v2/Callback/transcription-error).
+  </Accordion>
+</AccordionGroup>
