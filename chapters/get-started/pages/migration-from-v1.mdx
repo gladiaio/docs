@@ -3,6 +3,8 @@ title: Migrate from V1 API
 description: "Migration guide from Gladia V1 API to the V2 API"
 ---
 
+import GetTranscriptionResult from '/snippets/get-transcription-result.mdx';
+
 ## General flow changes
 
 In the first version of Gladia API, to get your transcription through an HTTP call, you had to send everything
@@ -117,72 +119,7 @@ In V2, we addressed this by decomposing the process in multiple steps:
   </Step>
   <Step title="Get the transcription result">
     As on V1 you get the transcription results in the previous step, this step is only relevant for V2.
-
-    You can get your transcription results in 2 different ways: 
-
-  <AccordionGroup>
-    <Accordion icon="repeat" title="Polling">
-
-    Once you post your transcription request, you get a transcription `id` and a pre-built `result_url` for convenience.
-    To get the result with this method, you'll just have to GET continuously on the given `result_url` until the status
-    of your transcription is `done`.
-
-
-    You can get more information on the different transcriptions status by checking the dedicated [Speech Recognition part](/chapters/speech-to-text-api/pages/speech-recognition)
-    of the documentation, or directly in the [API Reference](/api-reference/)
-    </Accordion>
-    <Accordion icon="diagram-project" title="Callback URL">
-
-    Callback are HTTP calls that you can use to get notified when your transcripts are ready.
-
-    It behaves the same as the V1 `webhook_url` parameter.
-
-    Instead of polling and keeping your server busy and maintaining work, you can use the `callback_url` feature.
-    By providing a `callback_url` on your transcription request body payload, we will send the results right there once 
-    your transcription is done. No need to handle any polling logic on your side.
-
-    ```json
-    {
-      "audio_url": "YOUR_AUDIO_URL",
-      "callback_url": "https://yourserverurl.com/your/callback/endpoint/"
-    }
-    ```
-
-    Once the transcription is done, we'll make a `POST` request to the `callback_url` you provided with the results.
-    The `POST` request body will be of shape:
-
-    ```json
-    {
-      "id": "2aafc84e-e1c9-440c-bfda-2faa0f5d23b3", // Transcription ID
-      "payload": { // Transcription result
-        "metadata": {
-          ...
-        },
-        "transcription": {
-          "languages": [
-            ...
-          ],
-          "full_transcript": "Split infinity in a time when less is more...",
-          "utterances": [...],
-          ...
-        },
-        ...
-        }
-      }
-    ```
-
-    If you get an error, instead of an `payload` property you'll get an `error` property of shape:
-
-    ```json
-    {
-      "code": 415,
-      "message": "no audio track is present"
-    }
-    ```
-
-
-    </Accordion>
-  </AccordionGroup>
+    <GetTranscriptionResult />
   </Step>
 </Steps>
 
