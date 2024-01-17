@@ -6,13 +6,24 @@ description: "Get important information from your audio files"
 <Note>
 This addon is on **Alpha**.
 
-In addition to this summary, you'll soon be able to select the type of summary you want (bullets, paragraphs, etc...)
-
 We're looking for feedbacks to improve this feature, [share yours here](https://gladiaio.typeform.com/feedback?typeform-source=app.gladia.io).
 </Note>
 
 
 The **Summarization** model generates a summary of your transcript.
+
+You choose one of our summary type to customize the summarization based on your preference.
+
+**3 summarization types** are available:
+
+- `general` : A regular summary of the transcription
+- `concise` : A shorter summary for quick overview
+- `bullet_points` : Retrieve the key points in a list
+
+If no summarization_config is provided, `general` type will be used by default.
+Find all this information in the [API Reference](/api-reference/api-v2/Transcription/post-v2transcription/) (see `summarization_config`).
+
+In the following examples, we're using `concise` type.
 
 <CodeGroup>
 ```typescript TypeScript
@@ -44,6 +55,10 @@ async function startTranscription() {
     audio_url:
       "YOUR_AUDIO_URL",
     summarization: true,
+    summarization_config: { 
+      type: "concise" // can be 'general', 'concise' or 'bullet_points'
+      // use 'general' if no summarization_config is provided
+    }
   };
   const gladiaUrl = "https://api.gladia.io/v2/transcription/";
   const headers = {
@@ -83,7 +98,10 @@ def make_fetch_request(url, headers, method='GET', data=None):
 gladia_key = "YOUR_GLADIA_API_TOKEN"
 request_data = {
     "audio_url": "YOUR_AUDIO_URL",
-    "summarization": True
+    "summarization": True,
+    "summarization_config": { 
+      "type": "concise" # can be 'general', 'concise' or 'bullet_points'
+      # use 'general' if no summarization_config is provided
 }
 gladia_url = "https://api.gladia.io/v2/transcription/"
 

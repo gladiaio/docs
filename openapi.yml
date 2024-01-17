@@ -561,23 +561,29 @@ paths:
               schema:
                 $ref: "#/components/schemas/InitTranscriptionResponse"
         "400":
-          description: The parameters you gave are incorrect.
+          description: Something is wrong with the request.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: "#/components/schemas/BadRequestErrorResponse"
         "401":
           description: You don't have the permissions to do a new transcription.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
         "404":
           description: The file you gave doesn't exist.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: "#/components/schemas/NotFoundErrorResponse"
+        "422":
+          description: The parameters you gave are incorrect.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnprocessableEntityErrorResponse"
       tags:
         - API - Transcription V2
       security:
@@ -641,7 +647,7 @@ paths:
         - name: date
           required: false
           in: query
-          example: "2024-01-10"
+          example: "2024-01-17"
           description: Filter items relevant to a specific date in ISO format (YYYY-MM-DD).
           schema:
             format: date-time
@@ -649,7 +655,7 @@ paths:
         - name: before_date
           required: false
           in: query
-          example: "2024-01-10T09:25:08.773Z"
+          example: "2024-01-17T15:12:07.622Z"
           description: Include items that occurred before the specified date in ISO format.
           schema:
             format: date-time
@@ -657,7 +663,7 @@ paths:
         - name: after_date
           required: false
           in: query
-          example: "2024-01-10T09:25:08.773Z"
+          example: "2024-01-17T15:12:07.622Z"
           description: >-
             Filter for items after the specified date. Use with `before_date`
             for a range. Date in ISO format.
@@ -698,6 +704,20 @@ paths:
                   request_id: G-45463597
                   created_at: "2023-12-28T09:04:17.210Z"
                   status: queued
+                  request_params:
+                    file:
+                      id: f0dcZE10-23d8-47f0-a25d-74a6eed88721
+                      source: null
+                      filename: split_infinity.wav
+                      contentType: audio/x-wav
+                    subtitles: false
+                    diarization: false
+                    translation: false
+                    summarization: false
+                    audio_enhancer: true
+                    custom_prompts: false
+                    detect_language: true
+                    enable_code_switching: false
                 oneOf:
                   - $ref: "#/components/schemas/GetTranscriptQueuedResponse"
                   - $ref: "#/components/schemas/GetTranscriptProcessingResponse"
@@ -708,7 +728,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
         "404":
           description: >-
             The transcription or the audio file doesn't exist or has been
@@ -716,7 +736,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: "#/components/schemas/NotFoundErrorResponse"
       tags:
         - API - Transcription V2
       security:
@@ -740,19 +760,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
         "403":
           description: You can't delete a transcription in progress.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: "#/components/schemas/ForbiddenErrorResponse"
         "404":
           description: The transcription doesn't exist or has been deleted.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: "#/components/schemas/NotFoundErrorResponse"
       tags:
         - API - Transcription V2
       security:
@@ -783,7 +803,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: "#/components/schemas/UnauthorizedErrorResponse"
         "404":
           description: >-
             The transcription or the audio file doesn't exist or has been
@@ -791,7 +811,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponse"
+                $ref: "#/components/schemas/NotFoundErrorResponse"
       tags:
         - API - Transcription V2
       security:
@@ -1128,6 +1148,19 @@ components:
             - enhanced
       required:
         - target_languages
+    SummaryTypesEnum:
+      type: string
+      enum:
+        - general
+        - bullet_points
+        - concise
+    SummarizationConfigDTO:
+      type: object
+      properties:
+        type:
+          description: The type of summarization to apply
+          default: general
+          $ref: "#/components/schemas/SummaryTypesEnum"
     CustomPromptsConfigDTO:
       type: object
       properties:
@@ -1202,6 +1235,10 @@ components:
           type: boolean
           description: Enable summarization for this audio
           default: false
+        summarization_config:
+          description: Summarization configuration, if `summarization` is enabled
+          allOf:
+            - $ref: "#/components/schemas/SummarizationConfigDTO"
         custom_prompts:
           type: boolean
           description: Enable custom prompts processing for this audio
@@ -1238,13 +1275,9 @@ components:
       required:
         - id
         - result_url
-    ErrorResponse:
+    BadRequestErrorResponse:
       type: object
       properties:
-        statusCode:
-          type: number
-          description: HTTP status code of the error
-          example: 404
         timestamp:
           type: string
           description: Date of when the error occurred
@@ -1253,20 +1286,111 @@ components:
           type: string
           description: Path to the API endpoint
           example: /v2/transcription/45463597-20b7-4af7-b3b3-f5fb778203ab
-        message:
-          type: string
-          description: Error message
-          example: Not found
         request_id:
           type: string
           description: Debug id
           example: G-821fe9df
+        statusCode:
+          type: number
+          description: HTTP status code of the error
+          example: 400
+        message:
+          type: string
+          description: Error message
+          example: Content-Type is missing Multipart Boundary.
       required:
-        - statusCode
         - timestamp
         - path
-        - message
         - request_id
+        - statusCode
+        - message
+    UnauthorizedErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          description: Date of when the error occurred
+          example: "2023-12-28T09:04:17.210Z"
+        path:
+          type: string
+          description: Path to the API endpoint
+          example: /v2/transcription/45463597-20b7-4af7-b3b3-f5fb778203ab
+        request_id:
+          type: string
+          description: Debug id
+          example: G-821fe9df
+        statusCode:
+          type: number
+          description: HTTP status code of the error
+          example: 401
+        message:
+          type: string
+          description: Error message
+          example: gladia key not found
+      required:
+        - timestamp
+        - path
+        - request_id
+        - statusCode
+        - message
+    NotFoundErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          description: Date of when the error occurred
+          example: "2023-12-28T09:04:17.210Z"
+        path:
+          type: string
+          description: Path to the API endpoint
+          example: /v2/transcription/45463597-20b7-4af7-b3b3-f5fb778203ab
+        request_id:
+          type: string
+          description: Debug id
+          example: G-821fe9df
+        statusCode:
+          type: number
+          description: HTTP status code of the error
+          example: 404
+        message:
+          type: string
+          description: Error message
+          example: Not found
+      required:
+        - timestamp
+        - path
+        - request_id
+        - statusCode
+        - message
+    UnprocessableEntityErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          description: Date of when the error occurred
+          example: "2023-12-28T09:04:17.210Z"
+        path:
+          type: string
+          description: Path to the API endpoint
+          example: /v2/transcription/45463597-20b7-4af7-b3b3-f5fb778203ab
+        request_id:
+          type: string
+          description: Debug id
+          example: G-821fe9df
+        statusCode:
+          type: number
+          description: HTTP status code of the error
+          example: 422
+        message:
+          type: string
+          description: Error message
+          example: Invalid parameter
+      required:
+        - timestamp
+        - path
+        - request_id
+        - statusCode
+        - message
     BaseFormFile:
       type: object
       properties:
@@ -1348,6 +1472,10 @@ components:
           type: boolean
           description: Enable summarization for this audio
           default: false
+        summarization_config:
+          description: Summarization configuration, if `summarization` is enabled
+          allOf:
+            - $ref: "#/components/schemas/SummarizationConfigDTO"
         custom_prompts:
           type: boolean
           description: Enable custom prompts processing for this audio
@@ -1406,6 +1534,31 @@ components:
         - status
         - completed_at
         - error_code
+    TranscriptionMetadataDTO:
+      type: object
+      properties:
+        audio_duration:
+          type: number
+          description: Duration of the transcribed audio file
+          example: 3600
+        number_of_channels:
+          type: integer
+          description: Number of channels in the transcribed audio file
+          minimum: 1
+          example: 1
+        transcription_time:
+          type: number
+          description: Duration of the transcription in seconds
+          example: 20
+        billing_time:
+          type: number
+          description: Billed duration in seconds (audio_duration * number_of_channels)
+          example: 3600
+      required:
+        - audio_duration
+        - number_of_channels
+        - transcription_time
+        - billing_time
     CodeLanguageEnum:
       type: string
       enum:
@@ -1701,13 +1854,91 @@ components:
         - exec_time
         - error
         - results
+    CustomPromptResultDTO:
+      type: object
+      properties:
+        prompt:
+          type: string
+          description: The prompt used
+          nullable: true
+        response:
+          type: string
+          description: The result of the AI analysis
+          nullable: true
+      required:
+        - prompt
+        - response
+    CustomPromptDTO:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: The audio intelligence model succeeded to get a valid output
+        is_empty:
+          type: boolean
+          description: The audio intelligence model returned an empty value
+        exec_time:
+          type: number
+          description: Time audio intelligence model took to complete the task
+        error:
+          description: >-
+            `null` if `success` is `true`. Contains the error details of the
+            failed model
+          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/AddonErrorDTO"
+        results:
+          description: The result from a specific prompt
+          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/CustomPromptResultDTO"
+      required:
+        - success
+        - is_empty
+        - exec_time
+        - error
+        - results
+    CustomPromptsDTO:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: The audio intelligence model succeeded to get a valid output
+        is_empty:
+          type: boolean
+          description: The audio intelligence model returned an empty value
+        exec_time:
+          type: number
+          description: Time audio intelligence model took to complete the task
+        error:
+          description: >-
+            `null` if `success` is `true`. Contains the error details of the
+            failed model
+          nullable: true
+          allOf:
+            - $ref: "#/components/schemas/AddonErrorDTO"
+        results:
+          description: >-
+            If `custom_prompts` has been enabled, results of the AI custom
+            analysis
+          nullable: true
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomPromptDTO"
+      required:
+        - success
+        - is_empty
+        - exec_time
+        - error
+        - results
     TranscriptionResultDTO:
       type: object
       properties:
         metadata:
-          type: string
           description: Metadata for the given transcription & audio file
           nullable: true
+          allOf:
+            - $ref: "#/components/schemas/TranscriptionMetadataDTO"
         transcription:
           description: Transcription of the audio speech
           allOf:
@@ -1724,6 +1955,12 @@ components:
             speech transcription
           allOf:
             - $ref: "#/components/schemas/SummarizationDTO"
+        custom_prompts:
+          description: >-
+            If `summarization` has been enabled, summarization of the audio
+            speech transcription
+          allOf:
+            - $ref: "#/components/schemas/CustomPromptsDTO"
       required:
         - metadata
         - transcription
@@ -2005,6 +2242,35 @@ components:
         - first
         - current
         - next
+    ForbiddenErrorResponse:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          description: Date of when the error occurred
+          example: "2023-12-28T09:04:17.210Z"
+        path:
+          type: string
+          description: Path to the API endpoint
+          example: /v2/transcription/45463597-20b7-4af7-b3b3-f5fb778203ab
+        request_id:
+          type: string
+          description: Debug id
+          example: G-821fe9df
+        statusCode:
+          type: number
+          description: HTTP status code of the error
+          example: 403
+        message:
+          type: string
+          description: Forbidden request
+          example: Invalid parameter
+      required:
+        - timestamp
+        - path
+        - request_id
+        - statusCode
+        - message
     UploadBody:
       type: object
       properties: {}
