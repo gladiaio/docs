@@ -13,15 +13,17 @@ In the first version of Gladia API, to get your transcription through an HTTP ca
 This was not ideal for many scenarios that could lead to longer waiting time to get your results, or in case of connection
 errors, not getting your results at all despite the transcription being successful. 
 
-In V2, we addressed this by decomposing the process in multiple steps:
+In V2, we addressed this by decomposing the process in multiple steps, and have merged both audio & video endpoints:
 
 
 <Steps>
   <Step title="Upload your file">
     <Note>This step is **optional** if you are already working with **audio URLs**. </Note>
 
-    If you're working with audio files, you'll need to upload it first using our `/upload` endpoint with `multipart/form-data`
+    If you're working with audio or video files, you'll need to upload it first using our `/upload` endpoint with `multipart/form-data`
     content-type since Gladia `/v2/transcription` endpoint only accept audio URLs now.
+
+    More information about this step [in the API Reference](/api-reference/api-v2/Upload/post-v2upload)
 
     ```bash
     curl --request POST \
@@ -59,6 +61,8 @@ In V2, we addressed this by decomposing the process in multiple steps:
      `multipart/form-data` anymore, but `application/json`.
     </Note>
 
+    More information about this step [in the API Reference](/api-reference/api-v2/Transcription/post-v2transcription)
+
     <CodeGroup>
     ```bash V1 (deprecated)
       curl --request POST \
@@ -87,7 +91,7 @@ In V2, we addressed this by decomposing the process in multiple steps:
         --header 'Content-Type: application/json' \
         --header 'x-gladia-key: YOUR_GLADIA_API_TOKEN' \
         --data '{
-        "audio_url": "YOUR_AUDIO_URL",
+        "audio_url": "https://api.gladia.io/file/636c70f6-92c1-4026-a8b6-0dfe3ecf826f",
         "diarization": true,
         "diarization_config": {
           "number_of_speakers": 3,
@@ -124,10 +128,23 @@ In V2, we addressed this by decomposing the process in multiple steps:
 </Steps>
 
 
-## Transcription result output changes
+## Transcription Input & Output changes
 
-In addition to the transcription flow & input changes, output also changed. 
+In addition to the transcription flow changes, input & output also changed. 
 To get the exhaustive documentation of the **V2 input/output**, please refer to the [API Reference](/api-reference/) part of the documentation.
+
+
+### Input changes
+
+The most efficient way to get the new inputs list is to check the [API Reference](/api-reference/). But here's a quick recap table
+about the most used parameters changes :
+
+| V1 | V2                           |
+| -------- | ------------------------------------- |
+| `toggle_diarization`     | `diarization`                     |
+| `language_behaviour`    | `detect_language`, `enable_code_switching`, `language`          |
+| `output_format`   | `subtitles` + `subtitles_config` |
+| `webhook_url` | `callback_url` |
 
 ### Output changes
 

@@ -22,8 +22,6 @@ Discover our state-of-the-art ASR model [ Whisper Zero now.](https://www.gladia.
 
 <Tip>Don't forget to update *YOUR_GLADIA_API_TOKEN* and *YOUR_AUDIO_URL* to match yours.</Tip>
 
-// TODO : add example for users using audio files instead of urls with upload step
-
 <CodeGroup>
 ```typescript TypeScript
 async function makeFetchRequest(url: string, options: any) {
@@ -195,12 +193,27 @@ If you know the audio used in the language, you should use **Manual**, otherwise
 With automatic language detection, you can identify the dominant language spoken in an audio file and use it
  during the transcription.
 
-To enable it, set detect_language to true in the request body parameters.
+To enable or disable it, set `detect_language` to true in the request body parameters. (default to `true`)
 
 ```json request data
 {
   "audio_url": "YOUR_AUDIO_URL",
-  "detect_language": true
+  "detect_language": false
+}
+```
+</Accordion>
+<Accordion icon="shuffle" title="Multiple language detection">
+For specific scenarios where language is changed multiple times throughout the audio (e.g. a conversation between 2 people, each speaking a different language.).
+The model will continuously detect the spoken language and switch the transcription language accordingly.
+
+Please note that certain strong accents can possibly cause this mode to transcribe to the wrong language.
+
+To enable or disable it, set `enable_code_switching` to true in the request body parameters. (default to `false`)
+
+```json request data
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "enable_code_switching": true
 }
 ```
 </Accordion>

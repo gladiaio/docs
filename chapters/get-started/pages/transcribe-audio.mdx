@@ -65,7 +65,7 @@ If you are a developer, you probably want to check our [API Documentation](/api-
       }'
     ```
 
-    If your transcription request succeeded, you'll get a response of type :
+    If your transcription request is accepted, you'll get a response of type :
 
     ```json
     {
@@ -77,7 +77,8 @@ If you are a developer, you probably want to check our [API Documentation](/api-
     - `id` : Your transcription ID
     - `result_url` : A pre-built URL for convenience to fetch your result
 
-    Then you'll be able to fetch your result in JSON format using the `result_url` we provided you:
+    At this stage, your transcription is queued and will be processed  shortly. To check its status and/or get its result, use the 
+    `result_url` we provided you:
 
     ```bash
     curl --request GET \
@@ -119,8 +120,8 @@ audio transcription.
   </Step>
   <Step title="Transcribe">
 
-    You can see an already formatted and readable results in the default "Transcription" tab, and you'll find the raw result
-    (the one you'd get with an API call) in the JSON tab.
+    You can see an already formatted and readable results in the default "Transcription" tab, and you'll also find
+     the result in various format (plain text, SRT, VTT) and JSON (the one you’d get with an API call).
 
     <Frame>
       <img src='/assets/images/playground-3.png'/>
