@@ -18,7 +18,7 @@ Discover our state-of-the-art ASR model [ Whisper Zero now.](https://www.gladia.
  into the transcription process by including extra parameters in the transcription request.
 
 
-## Basic transcription
+## Sending a transcription request
 
 <Tip>Don't forget to update *YOUR_GLADIA_API_TOKEN* and *YOUR_AUDIO_URL* to match yours.</Tip>
 
@@ -122,12 +122,12 @@ Split infinity in a time when less is more, where too much is never enough. Ther
 ```
 
 
-## Get your transcription results
+## Getting the result of a request 
 
 <GetTranscriptionResult />
 
 
-## All transcriptions status
+## Transcription job status
 
 The transcription status can have different values :
 
@@ -263,7 +263,44 @@ With the given example, `subtitles` will contains 2 items of shape:
 }
 ```
 
-## Custom metadata filters
+## Context prompt
+
+- **Context prompt** : If you know the context of the audio you're sending, you can provide it in the `context_prompt`.
+
+```json request data
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "context_prompt": "A conversation between Sansa Stark and Peter Baelish from the Game of Thrones series.",
+}
+```
+
+## Custom vocabulary
+
+- **Custom vocabulary** : To enhance the precision of transcription, especially for words or phrases that recur often in your audio file, you
+ can utilize the `custom_vocabulary` feature in the transcription configuration settings.
+
+
+```json request data
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "custom_vocabulary": ["westeros", "stark"]
+}
+```
+
+## Dual-channel or Multiple channels transcription
+
+If you have multiples channels in your audio file with different content each, Gladia API automatically transcribe them.
+In the transcription result, you will get for each utterances a `channel` key corresponding to the channels the transcription
+ came from.
+
+<Warning>
+Sending an audio with 2 different channels (that does not contains the same audio data), will be billed twice as 2 different audios.
+If your audio has multiple channels but has the same audio content on each channels, it will only billed once.
+
+**TLDR**: We charge every unique channel in an audio file, we do not charge if channels are duplicates.
+</Warning>
+
+## Adding custom metadata
 
 You can add metadata to your transcription using the `custom_metadata` input during your POST request on `/v2/transcription` endpoint.
 This will allow you to recognize your transcription when you get its data from the GET `/v2/transcription/{id}` endpoint, but more important, it will allow you to use it as a filter in the GET `/v2/transcription` list endpoint.
@@ -292,32 +329,4 @@ https://api.gladia.io/v2/transcription?custom_metadata={"paymentMethod": {"last4
 
 `custom_metadata` cannot be longer than 2000 characters when stringified.
 
-</Warning>
-
-## Custom vocabulary & Context prompt
-
-- **Custom vocabulary** : To enhance the precision of transcription, especially for words or phrases that recur often in your audio file, you
- can utilize the `custom_vocabulary` feature in the transcription configuration settings.
-
-- **Context prompt** : If you know the context of the audio you're sending, you can provide it in the `context_prompt`.
-
-```json request data
-{
-  "audio_url": "YOUR_AUDIO_URL",
-  "context_prompt": "A conversation between Sansa Stark and Peter Baelish from the Game of Thrones series.",
-  "custom_vocabulary": ["westeros", "stark"]
-}
-```
-
-## Dual-channel or Multiple channels transcription
-
-If you have multiples channels in your audio file with different content each, Gladia API automatically transcribe them.
-In the transcription result, you will get for each utterances a `channel` key corresponding to the channels the transcription
- came from.
-
-<Warning>
-Sending an audio with 2 different channels (that does not contains the same audio data), will be billed twice as 2 different audios.
-If your audio has multiple channels but has the same audio content on each channels, it will only billed once.
-
-**TLDR**: We charge every unique channel in an audio file, we do not charge if channels are duplicates.
 </Warning>

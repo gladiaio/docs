@@ -86,6 +86,41 @@ If you are a developer, you probably want to check our [API Documentation](/api-
       --header 'x-gladia-key: YOUR_GLADIA_API_TOKEN'
     ```
 
+    You should get a JSON response like this :
+
+    ```json
+    {
+      "id": "40aae358-6bfd-4c01-bf1d-0fc7c0f02707",
+      "request_id": "G-99eaeae8",
+      "kind": "pre-recorded",
+      "status": "done",
+      ...
+      "request_params": {
+        "audio_url": "http://files.gladia.io/example/audio-transcription/split_infinity.wav",
+        "translation": true,
+        "translation_config": {
+          "model": "base",
+          "target_languages": [
+            "fr",
+            "es"
+          ]
+        }
+      },
+      "result": {
+        "metadata": {
+          "audio_duration": 20.555465,
+          "number_of_distinct_channels": 1,
+          "billing_time": 20.555465,
+          "transcription_time": 21.047
+        },
+        "transcription": {
+          "full_transcript": "Split infinity in a time when less is more where too much is never enough there is always hope for the future the future can be read from the past the past foreshadows the present and the present hasn't been written yet"
+        },
+        ...
+      }
+      ...
+    }
+    ```
     Ta-da 🎉 you just made your first transcription!
   </Accordion>
 </AccordionGroup>
