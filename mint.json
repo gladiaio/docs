@@ -50,6 +50,9 @@
       "url": "https://www.gladia.io/blog"
     }
   ],
+  "api": {
+    "maintainOrder": true
+  },
   "openapi": ["/openapi.yml"],
   "navigation": [
     {
