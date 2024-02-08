@@ -2,7 +2,9 @@
 
 Welcome to [Gladia](documentation)
 
+<Note>
 To access V1 documentation (deprecation may 1st) click [Here](https://docs-v1.gladia.io)
+</Note>
 
 ### Development
 
