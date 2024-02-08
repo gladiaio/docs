@@ -3,7 +3,7 @@
 Welcome to [Gladia](documentation)
 
 <Note>
-To access V1 documentation (deprecation may 1st) click [Here](https://docs-v1.gladia.io)
+To access V1 documentation (deprecation April 1st, 2024) click [Here](https://docs-v1.gladia.io)
 </Note>
 
 ### Development
