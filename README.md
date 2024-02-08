@@ -2,6 +2,8 @@
 
 Welcome to [Gladia](documentation)
 
+To access V1 documentation (deprecation may 1st) click [Here](https://docs-v1.gladia.io)
+
 ### Development
 
 Install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the documentation changes locally. To install, use the following command
