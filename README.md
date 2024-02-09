@@ -6,6 +6,7 @@ Welcome to [Gladia](documentation)
 To access V1 documentation (deprecation April 1st, 2024) click [Here](https://docs-v1.gladia.io)
 </Note>
 
+
 ### Development
 
 Install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the documentation changes locally. To install, use the following command
