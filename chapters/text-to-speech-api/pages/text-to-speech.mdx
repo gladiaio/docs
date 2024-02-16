@@ -1,0 +1,104 @@
+---
+title: Pre Recorded Text To Speech
+description: "Get your transcription in Real-Time"
+---
+
+
+POST /text/audio/audio-synthesis/
+
+there are two modes:
+- with pre recorded speaker voices
+{
+    speaker_voice_behaviour: "pre recorded voice"
+    pre_recorded_speaker_voice: one of the voices
+    text: "",
+    language: 
+}
+
+- with cloned speaker voice
+{
+    cloned_speaker_voice: file
+    text: "",
+    language: 
+}
+
+then you receive audio file at 24_000 Hz in wav/pcm format
+
+    CLARIBEL_DERVLA = "Claribel Dervla"
+    DAISY_STUDIOUS = "Daisy Studious"
+    GRACIE_WISE = "Gracie Wise"
+    TAMMIE_EMA = "Tammie Ema"
+    ALISON_DIETLINDE = "Alison Dietlinde"
+    ANA_FLORENCE = "Ana Florence"
+    ANNMARIE_NELE = "Annmarie Nele"
+    ASYA_ANARA = "Asya Anara"
+    BRENDA_STERN = "Brenda Stern"
+    GITTA_NIKOLINA = "Gitta Nikolina"
+    HENRIETTE_USHA = "Henriette Usha"
+    SOFIA_HELLEN = "Sofia Hellen"
+    TAMMY_GRIT = "Tammy Grit"
+    TANJA_ADELINA = "Tanja Adelina"
+    VJOLLCA_JOHNNIE = "Vjollca Johnnie"
+    ANDREW_CHIPPER = "Andrew Chipper"
+    BADR_ODHIAMBO = "Badr Odhiambo"
+    DIONISIO_SCHUYLER = "Dionisio Schuyler"
+    ROYSTON_MIN = "Royston Min"
+    VIKTOR_EKA = "Viktor Eka"
+    ABRAHAN_MACK = "Abrahan Mack"
+    ADDE_MICHAL = "Adde Michal"
+    BALDUR_SANJIN = "Baldur Sanjin"
+    CRAIG_GUTSY = "Craig Gutsy"
+    DAMIEN_BLACK = "Damien Black"
+    GILBERTO_MATHIAS = "Gilberto Mathias"
+    ILKIN_URBANO = "Ilkin Urbano"
+    KAZUHIKO_ATALLAH = "Kazuhiko Atallah"
+    LUDVIG_MILIVOJ = "Ludvig Milivoj"
+    SUAD_QASIM = "Suad Qasim"
+    TORCULL_DIARMUID = "Torcull Diarmuid"
+    VIKTOR_MENELAOS = "Viktor Menelaos"
+    ZACHARIE_AIMILIOS = "Zacharie Aimilios"
+    NOVA_HOGARTH = "Nova Hogarth"
+    MAJA_RUOHO = "Maja Ruoho"
+    UTA_OBANDO = "Uta Obando"
+    LIDIYA_SZEKERES = "Lidiya Szekeres"
+    CHANDRA_MACFARLAND = "Chandra MacFarland"
+    SZOFI_GRANGER = "Szofi Granger"
+    CAMILLA_HOLMSTRÖM = "Camilla Holmström"
+    LILYA_STAINTHORPE = "Lilya Stainthorpe"
+    ZOFIJA_KENDRICK = "Zofija Kendrick"
+    NARELLE_MOON = "Narelle Moon"
+    BARBORA_MACLEAN = "Barbora MacLean"
+    ALEXANDRA_HISAKAWA = "Alexandra Hisakawa"
+    ALMA_MARÍA = "Alma María"
+    ROSEMARY_OKAFOR = "Rosemary Okafor"
+    IGE_BEHRINGER = "Ige Behringer"
+    FILIP_TRAVERSE = "Filip Traverse"
+    DAMJAN_CHAPMAN = "Damjan Chapman"
+    WULF_CARLEVARO = "Wulf Carlevaro"
+    AARON_DRESCHNER = "Aaron Dreschner"
+    KUMAR_DAHL = "Kumar Dahl"
+    EUGENIO_MATARACI = "Eugenio Mataracı"
+    FERRAN_SIMEN = "Ferran Simen"
+    XAVIER_HAYASAKA = "Xavier Hayasaka"
+    LUIS_MORAY = "Luis Moray"
+    MARCOS_RUDASKI = "Marcos Rudaski"
+
+
+supported languages are
+    EN = "en"
+    ES = "es"
+    FR = "fr"
+    DE = "de"
+    IT = "it"
+    PT = "pt"
+    PL = "pl"
+    TR = "tr"
+    RU = "ru"
+    NL = "nl"
+    CS = "cs"
+    AR = "ar"
+    ZH_CN = "zh-cn"
+    HU = "hu"
+    KO = "ko"
+    JA = "ja"
+    HI = "hi"
