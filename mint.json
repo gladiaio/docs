@@ -135,6 +135,6 @@
     "linkedin": "https://www.linkedin.com/company/gladia-io"
   },
   "seo": {
-    "indexHiddenPages": true
+    "indexHiddenPages": false
   }
 }
