@@ -133,5 +133,8 @@
     "twitter": "https://twitter.com/gladia_io",
     "github": "https://github.com/gladiaio",
     "linkedin": "https://www.linkedin.com/company/gladia-io"
+  },
+  "seo": {
+    "indexHiddenPages": true
   }
 }
