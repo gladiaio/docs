@@ -50,7 +50,7 @@
       "url": "https://www.gladia.io/blog"
     }
   ],
-  "openapi": "https://api.gladia.io/openapi.json",
+  "openapi": ["https://api.gladia.io/openapi.json"],
   "navigation": [
     {
       "group": "Introduction",
