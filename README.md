@@ -32,5 +32,3 @@ mintlify dev
   npm update -g
   npm i -g mintlify
 ```
-
-Enjoy
