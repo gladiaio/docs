@@ -1,0 +1,106 @@
+---
+title: Live Text To Speech
+description: "Live Text To Speech API Guide"
+---
+
+## Connecting and Configuring
+
+1. **Connection**: Establish a WebSocket (wss) connection to `/text/audio/audio-synthesis/`.
+2. **Configuration**: Configure the stream by selecting a speaker voice.
+3. **Data**: Send the actual text to synthesize
+
+## Modes of Operation
+
+### Pre-recorded Speaker Voices
+
+Select from the list of available pre-recorded speaker voices for your text-to-speech synthesis.
+wss://api.gladia.io/text/audio/audio-synthesis/
+```json
+{
+  "speaker_voice_behaviour": "pre recorded voice",
+  "pre_recorded_speaker_voice": "Select from the list above",
+}
+
+```json
+{
+  "text": "Enter your text here",
+  "language": "Select your language (e.g., en, es, fr)"
+}
+
+### Cloned Speaker Voice
+
+To utilize a cloned speaker voice for your text-to-speech synthesis, follow these steps:
+wss://api.gladia.io/text/audio/audio-synthesis/
+```json
+{
+  "cloned_speaker_voice": "base64 audio content",
+  "cloned_speaker_voice_sample_rate" : 44100,
+}
+```json
+{
+  "text": "Enter your text here",
+  "language": "Select your language (e.g., en, es, fr)"
+}
+
+### Supported Languages
+
+The API supports a variety of languages, including english (en), spanish (es), french (fr), german (de), italian (it), portuguese (pt), polish (pl), turkish (tr), russian (ru), dutch (nl), czech (cs), arabic (ar), chinese (zh-cn), hungarian (hu), korean (ko), japanese (ja), and hindi (hi). This wide range of supported languages makes it easy to create audio content for a global audience.
+
+
+## Available Speaker Voices
+
+The Live Text to Speech API offers a diverse range of speaker voices to choose from. Here is a list of available voices:
+
+- Gitta Nikolina
+- Henriette Usha
+- Sofia Hellen
+- Tammy Grit
+- Tanja Adelina
+- Vjollca Johnnie
+- Andrew Chipper
+- Badr Odhiambo
+- Dionisio Schuyler
+- Royston Min
+- Viktor Eka
+- Abrahan Mack
+- Adde Michal
+- Baldur Sanjin
+- Craig Gutsy
+- Damien Black
+- Gilberto Mathias
+- Ilkin Urbano
+- Kazuhiko Atallah
+- Ludvig Milivoj
+- Suad Qasim
+- Torcull Diarmuid
+- Viktor Menelaos
+- Zacharie Aimilios
+- Nova Hogarth
+- Maja Ruoho
+- Uta Obando
+- Lidiya Szekeres
+- Chandra MacFarland
+- Szofi Granger
+- Camilla Holmström
+- Lilya Stainthorpe
+- Zofija Kendrick
+- Narelle Moon
+- Barbora MacLean
+- Alexandra Hisakawa
+- Alma María
+- Rosemary Okafor
+- Ige Behringer
+- Filip Traverse
+- Damjan Chapman
+- Wulf Carlevaro
+- Aaron Dreschner
+- Kumar Dahl
+- Eugenio Mataracı
+- Ferran Simen
+- Xavier Hayasaka
+- Luis Moray
+- Marcos Rudaski
+
+
+
+

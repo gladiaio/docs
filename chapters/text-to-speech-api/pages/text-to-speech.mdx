@@ -1,0 +1,108 @@
+---
+title: Pre Recorded Text To Speech
+description: "Guide on using Pre Recorded Text To Speech API for audio synthesis from text."
+---
+
+This API allows you to synthesize audio from text using two different modes: with pre-recorded speaker voices or with a cloned speaker voice. 
+Depending on your needs, you can choose the voice that best fits your project from a wide selection of pre-recorded voices, 
+or you can opt to clone a specific voice using a provided audio file.
+
+### Modes of Operation
+
+1. **Pre-recorded Speaker Voices**:
+This mode uses a library of pre-recorded voices. 
+You can select a voice that suits your requirements and provide the text you wish to synthesize. 
+The API will then generate audio using the selected voice. 
+The available voices include but are not limited to Claribel Dervla, Daisy Studious, Gracie Wise, and many more. 
+Each voice has its unique tone and style, providing a range of options for your audio content.
+
+2. **Cloned Speaker Voice**: 
+If you require a more personalized voice, this mode allows you to clone a specific voice from an audio file you provide. 
+This is particularly useful for creating a unique voice for your brand or for specific characters in storytelling applications.
+
+### Request Format
+
+To use the API, send a POST request to `/text/audio/audio-synthesis/` with a JSON payload specifying the `speaker_voice_behaviour` (either `"pre recorded voice"` or `"cloned voice"`), the chosen `pre_recorded_speaker_voice` or `cloned_speaker_voice` file (if applicable), the `text` to be synthesized, and the `language`.
+
+### Response
+
+The API responds with an audio file at 24,000 Hz in WAV/PCM format, allowing for high-quality audio output suitable for various applications, from virtual assistants to audio books.
+
+### Example
+Here is an example of payload for a pre recorded voice:
+POST https://api.gladia.io/text/audio/audio-synthesis/
+```json
+{
+  "speaker_voice_behaviour": "pre recorded voice",
+  "pre_recorded_speaker_voice": "Claribel Dervla",
+  "text": "Hello, welcome to our Text to Speech API. This is an example using a pre-recorded speaker voice.",
+  "language": "en"
+}
+Here is an example of payload for a cloned speaker voice voice:
+POST https://api.gladia.io/text/audio/audio-synthesis/
+```json
+{
+  "speaker_voice_behaviour": "cloned voice",
+  "cloned_speaker_voice": "file_path_to_cloned_voice_sample.wav",
+  "text": "This is an example using a cloned speaker voice.",
+  "language": "en"
+}
+
+### Supported Languages
+
+The API supports a variety of languages, including english (en), spanish (es), french (fr), german (de), italian (it), portuguese (pt), polish (pl), turkish (tr), russian (ru), dutch (nl), czech (cs), arabic (ar), chinese (zh-cn), hungarian (hu), korean (ko), japanese (ja), and hindi (hi). This wide range of supported languages makes it easy to create audio content for a global audience.
+
+
+## Available Speaker Voices
+
+The Live Text to Speech API offers a diverse range of speaker voices to choose from. Here is a list of available voices:
+
+- Gitta Nikolina
+- Henriette Usha
+- Sofia Hellen
+- Tammy Grit
+- Tanja Adelina
+- Vjollca Johnnie
+- Andrew Chipper
+- Badr Odhiambo
+- Dionisio Schuyler
+- Royston Min
+- Viktor Eka
+- Abrahan Mack
+- Adde Michal
+- Baldur Sanjin
+- Craig Gutsy
+- Damien Black
+- Gilberto Mathias
+- Ilkin Urbano
+- Kazuhiko Atallah
+- Ludvig Milivoj
+- Suad Qasim
+- Torcull Diarmuid
+- Viktor Menelaos
+- Zacharie Aimilios
+- Nova Hogarth
+- Maja Ruoho
+- Uta Obando
+- Lidiya Szekeres
+- Chandra MacFarland
+- Szofi Granger
+- Camilla Holmström
+- Lilya Stainthorpe
+- Zofija Kendrick
+- Narelle Moon
+- Barbora MacLean
+- Alexandra Hisakawa
+- Alma María
+- Rosemary Okafor
+- Ige Behringer
+- Filip Traverse
+- Damjan Chapman
+- Wulf Carlevaro
+- Aaron Dreschner
+- Kumar Dahl
+- Eugenio Mataracı
+- Ferran Simen
+- Xavier Hayasaka
+- Luis Moray
+- Marcos Rudaski
