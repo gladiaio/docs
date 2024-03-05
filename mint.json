@@ -81,6 +81,13 @@
       ]
     },
     {
+      "group": "Text to Speech API",
+      "pages": [
+        "chapters/text-to-speech-api/pages/live-text-to-speech",
+        "chapters/text-to-speech-api/pages/text-to-speech"
+      ]
+    },
+    {
       "group": "Audio Intelligence",
       "pages": [
         "chapters/audio-intelligence/pages/translation",
