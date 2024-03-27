@@ -84,7 +84,8 @@
       "group": "Audio Intelligence",
       "pages": [
         "chapters/audio-intelligence/pages/translation",
-        "chapters/audio-intelligence/pages/summarization"
+        "chapters/audio-intelligence/pages/summarization",
+        "chapters/audio-intelligence/pages/audio to llm"
       ]
     },
     {
@@ -114,7 +115,9 @@
     },
     {
       "group": "Upload",
-      "pages": ["api-reference/api-v2/Upload/post-v2upload"]
+      "pages": [
+        "api-reference/api-v2/Upload/post-v2upload"
+      ]
     },
     {
       "group": "Webhooks",
