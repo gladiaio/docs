@@ -1,5 +1,5 @@
 ---
-title: Custom Prompts
+title: Audio to LLM
 description: "Ask any question or analysis, as you would do with an assistant"
 ---
 
@@ -10,7 +10,7 @@ We're looking for feedbacks to improve this feature, [share yours here](https://
 
 </Note>
 
-The **Custom Prompts** feature apply your own prompts to the audio transcription.
+The **Audio to LLM** feature applies your own prompts to the audio transcription.
 
 <CodeGroup>
 ```typescript TypeScript
@@ -26,8 +26,8 @@ async function pollForResult(resultUrl: string, headers: any) {
 
     if (pollResponse.status === "done") {
       console.log("- Transcription done: \n");
-      const customPromptsResults = pollResponse.result.custom_prompts;
-      console.log(customPromptsResults);
+      const audioToLlmResults = pollResponse.result.audio_to_llm;
+      console.log(audioToLlmResults);
       break;
     } else {
       console.log("Transcription status : ", pollResponse.status);
@@ -39,12 +39,14 @@ async function pollForResult(resultUrl: string, headers: any) {
 async function startTranscription() {
   const gladiaKey = "YOUR_GLADIA_API_TOKEN";
   const requestData = {
-    audio_url:
-      "YOUR_AUDIO_URL",
-    custom_prompts: [
-      "Extract the key points from the transcription",
-      "Generate a title from this transcription"
-    ],
+    audio_url: "YOUR_AUDIO_URL",
+    audio_to_llm: true,
+    audio_to_llm_config: {
+      prompts: [
+        "Extract the key points from the transcription as bullet points",
+        "Generate a title from this transcription",
+      ],
+    },
   };
   const gladiaUrl = "https://api.gladia.io/v2/transcription/";
   const headers = {
@@ -84,11 +86,14 @@ def make_fetch_request(url, headers, method='GET', data=None):
 
 gladia_key = "YOUR_GLADIA_API_TOKEN"
 request_data = {
-    "audio_url": "YOUR_AUDIO_URL",
-    "custom_prompts": [
-      "Extract the key points from the transcription",
+  "audio_url": "YOUR_AUDIO_URL",
+  "audio_to_llm": True,
+  "audio_to_llm_config": {
+    "prompts": [
+      "Extract the key points from the transcription as bullet points",
       "Generate a title from this transcription"
     ]
+  }
 }
 gladia_url = "https://api.gladia.io/v2/transcription/"
 
@@ -111,9 +116,9 @@ if result_url:
 
         if poll_response.get("status") == "done":
             print("- Transcription done: \n")
-            custom_prompts_results = poll_response.get("result", {}).get(
-                "custom_prompts", {})
-            print(custom_prompts_results)
+            audio_to_llm_results = poll_response.get("result", {}).get(
+                "audio_to_llm", {})
+            print(audio_to_llm_results)
             break
         else:
             print("Transcription status:", poll_response.get("status"))
@@ -133,7 +138,7 @@ With this code, your output will look like this:
       "success": true,
       "is_empty": false,
       "results": {
-        "prompt": "Extract the key points from the transcription",
+        "prompt": "Extract the key points from the transcription as bullet points",
         "response": "The main entities key points from the transcription are:\n- ..."
       },
       "exec_time": 1.7726809978485107,
