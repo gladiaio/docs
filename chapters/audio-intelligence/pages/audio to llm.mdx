@@ -43,7 +43,7 @@ async function startTranscription() {
     audio_to_llm: true,
     audio_to_llm_config: {
       prompts: [
-        "Extract the key points from the transcription",
+        "Extract the key points from the transcription as bullet points",
         "Generate a title from this transcription",
       ],
     },
@@ -90,7 +90,7 @@ request_data = {
   "audio_to_llm": True,
   "audio_to_llm_config": {
     "prompts": [
-      "Extract the key points from the transcription",
+      "Extract the key points from the transcription as bullet points",
       "Generate a title from this transcription"
     ]
   }
@@ -138,7 +138,7 @@ With this code, your output will look like this:
       "success": true,
       "is_empty": false,
       "results": {
-        "prompt": "Extract the key points from the transcription",
+        "prompt": "Extract the key points from the transcription as bullet points",
         "response": "The main entities key points from the transcription are:\n- ..."
       },
       "exec_time": 1.7726809978485107,
