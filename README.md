@@ -25,6 +25,7 @@ mintlify dev
 
 - Mintlify dev isn't running - Run `mintlify install` it'll re-install dependencies.
 - Page loads as a 404 - Make sure you are running in a folder with `mint.json`
+- Openapi.json not taken in account in API Reference, stop and relaunch server
 - "Error: Could not load the "sharp" module using the darwin-arm64 runtime":
 
 ```bash
