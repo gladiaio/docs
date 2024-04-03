@@ -1,0 +1,167 @@
+---
+title: Moderation
+description: "Find out if your transcription needs to be moderated and why"
+---
+
+<Note>
+This feature is on **Alpha** state.
+
+We're looking for feedbacks to improve this feature, [share yours here](https://gladiaio.typeform.com/feedback?typeform-source=app.gladia.io).
+</Note>
+
+
+The **Moderation** model scans your transcription and finds out if it contains words and expressions that need to be moderated.
+
+To use this feature, follow this example:
+
+<CodeGroup>
+```typescript TypeScript
+async function makeFetchRequest(url: string, options: any) {
+  const response = await fetch(url, options);
+  return response.json();
+}
+
+async function pollForResult(resultUrl: string, headers: any) {
+  while (true) {
+    console.log("Polling for results...");
+    const pollResponse = await makeFetchRequest(resultUrl, { headers });
+
+    if (pollResponse.status === "done") {
+      console.log("- Moderation done: \n");
+      const moderation = pollResponse.result.moderation;
+      console.log(moderation);
+      break;
+    } else {
+      console.log("Moderation status : ", pollResponse.status);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    }
+  }
+}
+
+async function startModeration() {
+  const gladiaKey = "YOUR_GLADIA_API_TOKEN";
+  const requestData = {
+    audio_url:
+      "YOUR_AUDIO_URL",
+    moderation: true
+  };
+  const gladiaUrl = "https://api.gladia.io/v2/transcription/";
+  const headers = {
+    "x-gladia-key": gladiaKey,
+    "Content-Type": "application/json",
+  };
+
+  console.log("- Sending initial request to Gladia API...");
+  const initialResponse = await makeFetchRequest(gladiaUrl, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(requestData),
+  });
+
+  console.log("Initial response with Transcription ID :", initialResponse);
+
+  if (initialResponse.result_url) {
+    await pollForResult(initialResponse.result_url, headers);
+  }
+}
+
+startTranscription();
+```
+```python Python
+import requests
+import time
+
+
+def make_fetch_request(url, headers, method='GET', data=None):
+    if method == 'POST':
+        response = requests.post(url, headers=headers, json=data)
+    else:
+        response = requests.get(url, headers=headers)
+    return response.json()
+
+
+gladia_key = "YOUR_GLADIA_API_TOKEN"
+request_data = {
+    "audio_url": "YOUR_AUDIO_URL",
+    "moderation": True
+}
+gladia_url = "https://api.gladia.io/v2/transcription/"
+
+headers = {
+    "x-gladia-key": gladia_key,
+    "Content-Type": "application/json"
+}
+
+print("- Sending initial request to Gladia API...")
+initial_response = make_fetch_request(
+    gladia_url, headers, 'POST', request_data)
+
+print("Initial response with Transcription ID:", initial_response)
+result_url = initial_response.get("result_url")
+
+if result_url:
+    while True:
+        print("Polling for results...")
+        poll_response = make_fetch_request(result_url, headers)
+
+        if poll_response.get("status") == "done":
+            print("- Transcription done: \n")
+            moderation = poll_response.get("result", {}).get(
+                "moderation", {})
+            print(moderation)
+            break
+        else:
+            print("Transcription status:", poll_response.get("status"))
+        time.sleep(1)
+```
+</CodeGroup>
+
+With this code, your output will look like this if there is no need to moderate anything:
+
+```json
+{
+  "success": true,
+  "is_empty": false,
+  "results": [],
+  "exec_time": 1.5126123428344727,
+  "error": null
+}
+```
+
+On the other hand, if profanities were detected, your result would look like this :
+```json
+{
+  "success": true,
+  "is_empty": false,
+  "results": [
+  {
+    "success": true,
+    "is_empty": false,
+    "results": [
+    {
+      "utterance_id": 0,
+      "text": "****.",
+      "type": "HATEFUL",
+      "severity": "MEDIUM",
+      "classifications": [
+        "INSULT",
+        "VULGARITY"
+      ]
+    },
+    {
+      "utterance_id": 3,
+      "text": "****",
+      "type": "HATEFUL",
+      "severity": "MEDIUM",
+      "classifications": [
+          "INSULT"
+      ]
+    }
+    ],
+    "exec_time": 0.23801589012145996,
+    "error": null
+  }],
+  "exec_time": 0.27121686935424805,
+  "error": null
+}
+```
