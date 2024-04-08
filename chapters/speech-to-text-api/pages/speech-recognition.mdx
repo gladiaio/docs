@@ -183,6 +183,45 @@ Under each utterance, you'll find a `words` property like this:
   ]
 ```
 
+## Sentences
+In addition to getting the transcription split by utterances, you can request to semantically segment the transcription to  sentences, providing a more human readable result. 
+```json request data
+{
+  "sentences": true
+}
+```
+
+The result will contain a `sentences` key (in addition to `utterances`):
+```json
+		"sentences": {
+			"success": true,
+			"is_empty": false,
+			"results": [
+				{
+					"sentence": "Amy, it says you are trained in technology.",
+					"start": 0.4681999999999999,
+					"end": 2.45525,
+					"words": [...],
+					"confidence": 0.95,
+					"language": "en",
+					"speaker": 0,
+					"channel": 0
+				},
+				{
+					"sentence": "That's very good.",
+					"start": 2.51546,
+					"end": 3.5992999999999995,
+					"words": [...],
+					"confidence": 0.96,
+					"language": "en",
+					"speaker": 0,
+					"channel": 0
+				},
+        ...
+      ]
+    }
+```
+
 ## Language behaviour
 
 If you know the audio used in the language, you should use **Manual**, otherwise, **Automatic Language Detection**.
