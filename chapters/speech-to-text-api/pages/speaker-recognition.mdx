@@ -1,168 +1,143 @@
 ---
-title: Speaker Recognition
-description: "Also known as Speaker Diarization"
+title: "Supported Languages"
+description: "Gladia supporteds a variety of languages. Below, you'll find the list of supported languages."
 ---
+Gladia supported a variety of languages.
 
-The Speaker Diarization feature of the Gladia API enables the identification of different speakers within an audio
- file and transcribes what each one says. 
- When this feature is activated, the transcript produced will include a series of utterances,
-  with each utterance representing a continuous speech segment from an individual speaker.
+Below, you'll find the list of supported languages.
+
 
 <Note>
-If you have an audio setup where 1 speaker = 1 audio channel, we already perform a mechanical diarization by providing
-channel of each utterance, so you don't need to enable this feature.
+If you don't know which language you have please use the [Automatic Single Language Detection configuration](https://docs.gladia.io/chapters/speech-to-text-api/pages/speech-recognition#language-behaviour)
 </Note>
 
+Here is the converted table in Markdown format:
 
-# Diarization example
-
-<Tip>Don't forget to update *YOUR_GLADIA_API_TOKEN* and *YOUR_AUDIO_URL* to match yours.</Tip>
-
-<CodeGroup>
-```typescript TypeScript
-async function makeFetchRequest(url: string, options: any) {
-  const response = await fetch(url, options);
-  return response.json();
-}
-
-async function pollForResult(resultUrl: string, headers: any) {
-  while (true) {
-    console.log("Polling for results...");
-    const pollResponse = await makeFetchRequest(resultUrl, { headers });
-
-    if (pollResponse.status === "done") {
-      console.log("- Transcription done: \n");
-      const utterances = pollResponse.result.transcription.utterances;
-      utterances.forEach((utterance: any) => {
-        const speaker = utterance.speaker;
-        const start = utterance.start.toFixed(2);
-        const end = utterance.end.toFixed(2);
-        const text = utterance.text;
-        console.log(`Speaker ${speaker} (${start}s -> ${end}s): "${text}"`);
-      });
-      break;
-    } else {
-      console.log("Transcription status : ", pollResponse.status);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-    }
-  }
-}
-
-async function startTranscription() {
-  const gladiaKey = "YOUR_GLADIA_API_TOKEN";
-  const requestData = {
-    audio_url:
-      "YOUR_AUDIO_URL",
-    diarization: true,
-  };
-  const gladiaUrl = "https://api.gladia.io/v2/transcription/";
-  const headers = {
-    "x-gladia-key": gladiaKey,
-    "Content-Type": "application/json",
-  };
-
-  console.log("- Sending initial request to Gladia API...");
-  const initialResponse = await makeFetchRequest(gladiaUrl, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(requestData),
-  });
-
-  console.log("Initial response with Transcription ID :", initialResponse);
-
-  if (initialResponse.result_url) {
-    await pollForResult(initialResponse.result_url, headers);
-  }
-}
-
-startTranscription();
-
-```
-
-```python Python
-import requests
-import time
-
-def make_fetch_request(url, headers, method='GET', data=None):
-    if method == 'POST':
-        response = requests.post(url, headers=headers, json=data)
-    else:
-        response = requests.get(url, headers=headers)
-    return response.json()
-
-gladia_key = "YOUR_GLADIA_API_TOKEN"
-request_data = {
-    "audio_url": "YOUR_AUDIO_URL",
-    "diarization": True
-}
-gladia_url = "https://api.gladia.io/v2/transcription/"
-
-headers = {
-    "x-gladia-key": gladia_key,
-    "Content-Type": "application/json"
-}
-
-print("- Sending initial request to Gladia API...")
-initial_response = make_fetch_request(gladia_url, headers, 'POST', request_data)
-
-print("Initial response with Transcription ID:", initial_response)
-result_url = initial_response.get("result_url")
-
-if result_url:
-    while True:
-        print("Polling for results...")
-        poll_response = make_fetch_request(result_url, headers)
-
-        if poll_response.get("status") == "done":
-            print("- Transcription done: \n")
-            utterances = poll_response.get("result", {}).get("transcription", {}).get("utterances", [])
-            for utterance in utterances:
-                speaker = utterance.get("speaker")
-                start_time = utterance.get("start")
-                end_time = utterance.get("end")
-                text = utterance.get("text")
-                print(f"Speaker {speaker} ({start_time:.2f}s -> {end_time:.2f}s): \"{text}\"")
-            break
-        else:
-            print("Transcription status:", poll_response.get("status"))
-        time.sleep(1)
-
-```
-</CodeGroup>
-
-
-In the result, you'll get, for each utterance, a `speaker` property that you can use to determine who's speaking. 
-In the above code, we're using the `speaker` parameter alongside with timestamps and utterance text to get an
- output like this:
-
-```
-Speaker 0 (0.21s -> 4.71s): "First utterance"
-Speaker 1 (5.55s -> 7.77s): "Second one"
-Speaker 2 (8.53s -> 10.81s): "....."
-```
-
-## Set number of speakers
-
-If you already know the number of speakers in your sent audio, you can improve the diarization performance by providing
- this on the `diarization_config` parameter:
-
-
-| Parameter | Description |
-| --------  |   ---------    |
-| `min_speakers` | The minimum number of speaker present in the audio       |
-| `min_speakers` | The maximum number of speaker present in the audio       |
-| `number_of_speakers` | The exact number of speaker present in the audio   |
-
-```json request data
-{
-  "audio_url": "YOUR_AUDIO_URL",
-  "diarization_config": {
-    // either set a range
-    "min_speakers": 2,
-    "max_speakers": 6,
-    // or you know your exact number of speaker 
-    "number_of_speakers": 5
-  }
-}
-```
+| Language | Auto-discovery and code-switch | Translation |
+| --- | --- | --- |
+| Afrikaans | Yes | Yes |
+| Albanian | Yes | Yes |
+| Amharic | Yes | Yes |
+| Arabic | Yes | Yes |
+| Armenian | Yes | Yes |
+| Assamese | Yes | No |
+| Asturian | No | Yes |
+| Azerbaijani | Yes | Yes |
+| Bashkir | Yes | Yes |
+| Basque | Yes | No |
+| Belarusian | Yes | Yes |
+| Bengali | Yes | Yes |
+| Bosnian | Yes | Yes |
+| Breton | Yes | Yes |
+| Bulgarian | Yes | Yes |
+| Burmese | Yes | Yes |
+| Castilian | Yes | No |
+| Catalan | Yes | Yes |
+| Cebuano | No | Yes |
+| Chinese | Yes | Coming soon |
+| Croatian | Yes | Yes |
+| Czech | Yes | Yes |
+| Danish | Yes | Yes |
+| Dutch | Yes | Yes |
+| English | Yes | Yes |
+| Estonian | Yes | Yes |
+| Faroese | Yes | No |
+| Finnish | Yes | Yes |
+| Flemish | Yes | Yes |
+| French | Yes | Yes |
+| Western Frisian | No | Yes |
+| Fulah | No | Yes |
+| Gaelic | No | Yes (Gaelic and Scottish Gaelic) |
+| Galician | Yes | Yes |
+| Ganda | No | Yes |
+| Georgian | Yes | Yes |
+| German | Yes | Yes |
+| Greek | Yes | Yes |
+| Gujarati | Yes | Yes |
+| Haitian | Yes | Yes |
+| Haitian Creole | Yes | No |
+| Hausa | Yes | Yes |
+| Hawaiian | Yes | No |
+| Hebrew | Yes | Yes |
+| Hindi | Yes | Yes |
+| Hungarian | Yes | Yes |
+| Icelandic | Yes | Yes |
+| Igbo | No | Yes |
+| Iloko | No | Yes |
+| Indonesian | Yes | Yes |
+| Irish | No | Yes |
+| Italian | Yes | Yes |
+| Japanese | Yes | Yes |
+| Javanese | Yes | Yes |
+| Kannada | Yes | Yes |
+| Kazakh | Yes | Yes |
+| Khmer | Yes | No |
+| Korean | Yes | Yes |
+| Lao | Yes | Yes |
+| Latin | Yes | No |
+| Latvian | Yes | Yes |
+| Letzeburgesch | Yes | No |
+| Lingala | Yes | Yes |
+| Lithuanian | Yes | Yes |
+| Luxembourgish | Yes | Yes |
+| Macedonian | Yes | Yes |
+| Malagasy | Yes | Yes |
+| Malay | Yes | Yes |
+| Malayalam | Yes | Yes |
+| Maltese | Yes | No |
+| Maori | Yes | No |
+| Marathi | Yes | Yes |
+| Moldavian | Yes | Yes |
+| Moldovan | Yes | Yes |
+| Mongolian | Yes | Yes |
+| Myanmar | Yes | No |
+| Nepali | Yes | Yes |
+| Norwegian | Yes | Yes |
+| Nynorsk | Yes | No |
+| Occitan | Yes | Yes |
+| Oriya | No | Yes |
+| Panjabi | Yes | Yes |
+| Pashto | Yes | Yes |
+| Persian | Yes | No |
+| Polish | Yes | Yes |
+| Portuguese | Yes | Yes |
+| Punjabi | Yes | No |
+| Pushto | Yes | Yes |
+| Romanian | Yes | Yes |
+| Russian | Yes | Yes |
+| Sanskrit | Yes | No |
+| Serbian | Yes | Yes |
+| Shona | Yes | No |
+| Sindhi | Yes | Yes |
+| Sinhala | Yes | Yes |
+| Sinhalese | Yes | No |
+| Slovak | Yes | Yes |
+| Slovenian | Yes | Yes |
+| Somali | Yes | Yes |
+| Spanish | Yes | Yes |
+| Sundanese | Yes | Yes |
+| Swahili | Yes | Yes |
+| Swati | No | Yes |
+| Swedish | Yes | Yes |
+| Tagalog | Yes | Yes |
+| Tajik | Yes | No |
+| Tamil | Yes | Yes |
+| Tatar | Yes | No |
+| Telugu | Yes | No |
+| Thai | Yes | Yes |
+| Tibetan | Yes | No |
+| Tswana | No | Yes |
+| Turkish | Yes | Yes |
+| Turkmen | Yes | No |
+| Ukrainian | Yes | Yes |
+| Urdu | Yes | Yes |
+| Uzbek | Yes | Yes |
+| Valencian | Yes | Yes |
+| Vietnamese | Yes | Yes |
+| Welsh | Yes | Yes |
+| Wolof | No | Yes |
+| Xhosa | No | Yes |
+| Yiddish | Yes | Yes |
+| Yoruba | Yes | Yes |
+| Zulu | Yes | No |
 
