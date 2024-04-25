@@ -322,12 +322,12 @@ With the given example, `subtitles` will contains 2 items of shape:
 
 - **Custom vocabulary** : To enhance the precision of transcription, especially for words or phrases that recur often in your audio file, you
  can utilize the `custom_vocabulary` feature in the transcription configuration settings.
-
+The custom vocabulary has a global limit of 10k characters.
 
 ```json request data
 {
   "audio_url": "YOUR_AUDIO_URL",
-  "custom_vocabulary": ["westeros", "stark"]
+  "custom_vocabulary": ["westeros", "stark", "night's watch"]
 }
 ```
 
