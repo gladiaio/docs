@@ -1,0 +1,76 @@
+---
+title: "Callbacks - Large Language Model (LLM)"
+description: "Store LLM response for a dedicated customer"
+---
+
+## Endpoint
+
+This endpoint is an HTTP `POST` request located at `/v1/callbacks/large-language-model`.
+
+## Request
+
+### Request body
+
+A <Tooltip tip="Content-type: application/json">JSON</Tooltip> body is required. Its shape can be found below:
+
+```json
+{
+  "request_id": "string",
+  "customer_id": "string",
+  "status": "string",
+  "data": "object or array"
+}
+```
+
+### Parameters
+
+<ParamField body="request_id" type="string" required>
+  It is Gladia's request identifier (ID). It starts with `G-` followed by 8 hexadecimal characters eg. `G-0a1bf42e`
+</ParamField>
+<ParamField body="customer_id" type="string" required>
+  It is a reference to your customer. It is a string up to 100 characters.
+</ParamField>
+<ParamField body="status" type="string" required>
+  It is a value representing the state of your LLM request. It is a string up to 100 characters.
+</ParamField>
+<ParamField body="data" type="object or array" required>
+  It is the response of your LLM request. It can either be a JSON object or array.
+</ParamField>
+
+## Response
+
+If the call is successful, it will return an `HTTP 204 - No Content` response.
+
+## Usage
+
+<Info>This endpoint requires that you provide a Gladia API key.</Info>
+
+<Warning>Even if the status of the request is unsuccessful, the `data` property is **required**. You can use an empty object (`{}`) or array (`[]`) for example or any value of your choice.</Warning>
+
+With an **object** passed to `data`:
+```sh
+curl --request POST \
+  --url https://api.gladia.io/v1/callbacks/large-language-model \
+  --header 'Content-Type: application/json' \
+  --header 'x-gladia-key: <GLADIA_API_KEY>' \
+  --data '{
+	"request_id": "G-00000000",
+	"customer_id": "customer_xyz",
+	"status": "success",
+	"data": {"response": {"key: "value"}}
+}'
+```
+
+With an **array** passed to `data`.
+```sh
+curl --request POST \
+  --url https://api.gladia.io/v1/callbacks/large-language-model \
+  --header 'Content-Type: application/json' \
+  --header 'x-gladia-key: <GLADIA_API_KEY>' \
+  --data '{
+	"request_id": "<request_id>",
+	"customer_id": "<customer_id>",
+	"status": "<status>",
+	"data": ["prompt_response_a", "prompt_response_b"]
+}'
+```
