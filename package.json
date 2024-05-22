@@ -1,0 +1,17 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "Gladia documentation",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run broken-links",
+    "dev": "mintlify dev",
+    "broken-links": "mintlify broken-links"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mintlify": "^4.0.159",
+    "sharp": "^0.33.4"
+  }
+}
