@@ -1,27 +1,42 @@
 # Gladia Documentation
 
-Welcome to [Gladia](documentation)
+Welcome to [Gladia Documentation](https://docs.gladio.io)
 
 <Note>
 To access V1 documentation (deprecation April 1st, 2024) click [Here](https://docs-v1.gladia.io)
 </Note>
 
+#### Getting started
+
+### Installing dependencies
+
+```
+npm i
+```
 
 ### Development
+
+Run the following command at the root of your documentation (where mint.json is) to run a local development server
+
+```
+npm run dev
+```
+
+### Checking broken links
+
+The following command will lint the documentation for any formatting error and check broken links
+
+```
+npm run broken-links
+```
+
+#### Troubleshooting
 
 Install the [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the documentation changes locally. To install, use the following command
 
 ```
 npm i -g mintlify
 ```
-
-Run the following command at the root of your documentation (where mint.json is)
-
-```
-mintlify dev
-```
-
-#### Troubleshooting
 
 - Mintlify dev isn't running - Run `mintlify install` it'll re-install dependencies.
 - Page loads as a 404 - Make sure you are running in a folder with `mint.json`

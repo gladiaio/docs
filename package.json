@@ -1,0 +1,17 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "Welcome to [Gladia](documentation)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "mintlify dev",
+    "broken-links": "mintlify broken-links"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mintlify": "^4.0.159",
+    "sharp": "^0.33.4"
+  }
+}
