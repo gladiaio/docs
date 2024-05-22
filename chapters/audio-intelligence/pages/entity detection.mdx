@@ -1,6 +1,6 @@
 ---
-title: Entity Detection
-description: "The Entity Detection model automatically identifies and categorize key elements in transcribed audio." 
+title: Named Entity Recognition
+description: "The Named Entity Recognition model automatically identifies and categorizes key information in the audio." 
 ---
 
 
@@ -8,145 +8,46 @@ description: "The Entity Detection model automatically identifies and categorize
 This feature is on **Alpha** state.<br/>
 Breaking changes may still be introduced to this API, but an advanced notice will be sent. 
 
-We're looking for feedbacks to improve this feature, [share yours here](https://gladiaio.typeform.com/feedback?typeform-source=app.gladia.io).
+We're looking for feedback to improve this feature, [share yours here](https://gladiaio.typeform.com/feedback?typeform-source=app.gladia.io).
 </Note>
 
-The **Entity Detection** also known as **Named Entity Recognition** feature helps your detectv and categorize key informations from the audio transcript.
+The **Named Entity Recognition** also known as **Entity Detection** feature helps you detect and categorize key information in the audio.
 
-<CodeGroup>
-```typescript TypeScript
-async function makeFetchRequest(url: string, options: any) {
-  const response = await fetch(url, options);
-  return response.json();
+## Usage
+Enable named entity recognition by setting ```named_entity_recognition``` to ```true``` in your transcription request.
+```json
+{
+  "audio_url": "<your audio URL>"
+  "named_entity_recognition": true
 }
+```
 
-async function pollForResult(resultUrl: string, headers: any) {
-  while (true) {
-    console.log("Polling for results...");
-    const pollResponse = await makeFetchRequest(resultUrl, { headers });
-
-    if (pollResponse.status === "done") {
-      console.log("- Transcription done: \n");
-      const entityDetectionResults = pollResponse.result.entity_detection;
-      console.log(entityDetectionResults);
-      break;
-    } else {
-      console.log("Transcription status : ", pollResponse.status);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-    }
-  }
-}
-
-async function startTranscription() {
-  const gladiaKey = "YOUR_GLADIA_API_TOKEN";
-  const requestData = {
-    audio_url:
-      "YOUR_AUDIO_URL",
-    entity_detection: True,
-  };
-  const gladiaUrl = "https://api.gladia.io/v2/transcription/";
-  const headers = {
-    "x-gladia-key": gladiaKey,
-    "Content-Type": "application/json",
-  };
-
-  console.log("- Sending initial request to Gladia API...");
-  const initialResponse = await makeFetchRequest(gladiaUrl, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(requestData),
-  });
-
-  console.log("Initial response with Transcription ID :", initialResponse);
-
-  if (initialResponse.result_url) {
-    await pollForResult(initialResponse.result_url, headers);
-  }
-}
-
-startTranscription();
-
-````
-```python Python
-import requests
-import time
-
-
-def make_fetch_request(url, headers, method='GET', data=None):
-    if method == 'POST':
-        response = requests.post(url, headers=headers, json=data)
-    else:
-        response = requests.get(url, headers=headers)
-    return response.json()
-
-
-gladia_key = "YOUR_GLADIA_API_TOKEN"
-request_data = {
-    "audio_url": "YOUR_AUDIO_URL",
-    "entity_detection": True
-}
-gladia_url = "https://api.gladia.io/v2/transcription/"
-
-headers = {
-    "x-gladia-key": gladia_key,
-    "Content-Type": "application/json"
-}
-
-print("- Sending initial request to Gladia API...")
-initial_response = make_fetch_request(
-    gladia_url, headers, 'POST', request_data)
-
-print("Initial response with Transcription ID:", initial_response)
-result_url = initial_response.get("result_url")
-
-if result_url:
-    while True:
-        print("Polling for results...")
-        poll_response = make_fetch_request(result_url, headers)
-
-        if poll_response.get("status") == "done":
-            print("- Transcription done: \n")
-            entity_detection_results = poll_response.get("result", {}).get(
-                "entity_detection", {})
-            print(custom_prompts_results)
-            break
-        else:
-            print("Transcription status:", poll_response.get("status"))
-        time.sleep(1)
-````
-
-</CodeGroup>
-
+## Result
 With this code, your output will look like this:
 
 ```json
 {
-  "success": true,
-  "is_empty": false,
-  "results": [
-    {
-      "success": true,
-      "is_empty": false,
-      "entities": [
-        {
-          "entity_type": "EMAIL_ADDRESS",
-          "text": "privacy@gladia.io",
-          "start": 1234,
-          "end": 1245
-        },
-        {
-          "entity_type": "AGE",
-          "text": "27 years old",
-          "start": 1247,
-          "end": 1256
-        }
-      ],
-      "exec_time": 1.7726809978485107,
-      "error": null
-    }
-  ],
-  "exec_time": 1.7726809978485107,
-  "error": null
+  "transcription":{...}
+  "named_entity_recognition": {
+    "success": true,
+    "is_empty": false,
+    "results": [
+      {
+        "entity_type": "EMAIL_ADDRESS",
+        "text": "privacy@gladia.io",
+        "start": 1234,
+        "end": 1245
+      },
+      {
+        "entity_type": "AGE",
+        "text": "27 years old",
+        "start": 1247,
+        "end": 1256
+      }
+    ],
+    "exec_time": 1.7726809978485107,
+    "error": null
+  }
 }
 ```
 
