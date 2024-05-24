@@ -3,7 +3,7 @@
 Welcome to [Gladia Documentation](https://docs.gladio.io)
 
 > [!NOTE]
-> To access V1 documentation (deprecation April 1st, 2024) click [Here](https://docs-v1.gladia.io)
+> To access V1 documentation (deprecation April 1st, 2024) click [Here](https://docs-v1.gladia.io) 
 
 ### Installing dependencies
 
