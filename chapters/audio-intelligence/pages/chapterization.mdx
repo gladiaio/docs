@@ -1,0 +1,49 @@
+---
+title: 'Chapterizatoin'
+description: 'The Chapterization model segments the audio into distinct chapters, each with a descriptive headline and summaries'
+---
+
+The chapterization model segments the audio 
+into logical chapters based on the audio and content, and makes it easier to navigate long audios such as meeting recordings.
+
+Each chapter will contain it's start and end time, as well as a summary, headline and bottom line "gist".
+
+## Usage
+Enable chapterization by simply setting ```chapterization``` to ```true``` in your transcription request.
+```json
+{
+  "audio_url": "<your audio URL>"
+  "chapterization": true
+}
+```
+## Result
+The transcription result will contain a ```"chapterization"``` key with the output of the model:
+
+```json
+{
+  "transcription":{...}
+  "chapterization": {
+    "success": true,
+    "is_empty": false,
+    "chapters": [
+          {
+            "summary": "In a world where minimalism is valued, yet excess is desired, hope for the future remains. The past predicts the present, which is yet to be determined.",
+            "headline": "Headline: \"Embracing Hope: The Interconnectedness of Past, Present, and Future\"",
+            "gist": "Embracing Hope: Past, Present, Future Interconnected",
+            "keywords": [
+              "Split infinity",
+              "less is more",
+              "too much",
+              "hope",
+              "present"
+            ],
+            "start": 0.18202000000000007,
+            "end": 19.83977,
+        }],
+    "exec_time": 5.078396797180176,
+    "error": null
+  }
+}
+```
+```json
+```
