@@ -1,15 +1,27 @@
 ---
 title: Sentiment and Emotion Analysis
-description: "General purpose Sentiment and Emotion Analysis."
+description: "Extract sentiments and emotions from the transcript."
 ---
 
 <Note>
-This feature is on **Alpha** state.
+This feature is in **Alpha** state.<br/>
+Breaking changes may still be introduced to this API, but an advanced notice will be sent. 
 
-We're looking for feedbacks to improve this feature, [share yours here](https://gladiaio.typeform.com/feedback?typeform-source=app.gladia.io).
-
+We're looking for feedback to improve this feature, [share yours here](https://gladiaio.typeform.com/feedback?typeform-source=app.gladia.io).
 </Note>
 
+The sentiment and emotion analysis model analyzies the transcript, detecting the general sentiment which is conveyed in each sentence (positive, neutral or negative) as well as any emotion that is being epxressed.
+
+## Usage
+To enable sentiment and emotion analysis, set the `"sentiment_analysis"` parameter to true:
+```json
+{
+  "audio_url": "<your audio url>"
+  "sentiment_analysis": true
+}
+```
+
+<Accordion icon="code" title="Sample code">
 <CodeGroup>
 ```typescript TypeScript
 async function makeFetchRequest(url: string, options: any) {
@@ -112,48 +124,55 @@ if result_url:
 ````
 
 </CodeGroup>
+</Accordion>
 
-With this code, your output will look like this:
+## Result
+
+Your transcription result will contain a `sentiment_analysis` key which will contain an array of all sentences in the audio, and for each one the conveyed sentiment and expressed emotion. See possible values below.
+<br/>**Note** that when `diarization` is enabled, the sentiment analysis output will contain the `speaker`  as well, allowing you to analyze each speaker sperately.
 
 ```json
 {
-  "success": true,
-  "is_empty": false,
-  "results": [
-    {
-      "text": "Jonathan, it says you are trained in technology.",
-      "sentiment": "neutral",
-      "emotion": "neutral",
-      "start": 0.45158000000000004,
-      "end": 2.364,
-      "channel": 0,
-      "speaker": 0,
-    },
-    {
-      "text": "That's very good.",
-      "sentiment": "positive",
-      "emotion": "positive_surprise",
-      "start": 2.54438,
-      "end": 3.5432300000000003,
-      "channel": 0,
-      "speaker": 0,
-    }
-  ],
-  "exec_time": 1.127103805541992,
-  "error": null
+  "transcription":{...},
+  "sentiment_analysis": {
+    "success": true,
+    "is_empty": false,
+    "results": [
+      {
+        "text": "Jonathan, it says you are trained in technology.",
+        "sentiment": "neutral",
+        "emotion": "neutral",
+        "start": 0.45158000000000004,
+        "end": 2.364,
+        "channel": 0,
+        "speaker": 0,
+      },
+      {
+        "text": "That's very good.",
+        "sentiment": "positive",
+        "emotion": "positive_surprise",
+        "start": 2.54438,
+        "end": 3.5432300000000003,
+        "channel": 0,
+        "speaker": 0,
+      }
+    ],
+    "exec_time": 1.127103805541992,
+    "error": null
+  }
 }
 ```
 
-You'll find your sentiment and emotion results of your audio under the `results` key.
 
-# Available values
-## Sentiments
+## Possible values
+
+### Sentiments
   - positive
   - negative
   - neutral
   - mixed
 
-## Emotions
+### Emotions
   - adoration
   - amusement
   - anger
