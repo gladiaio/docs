@@ -13,8 +13,8 @@ We're looking for feedback to improve this feature, [share yours here](https://g
 The sentiment and emotion analysis model analyzies the transcript, detecting the general sentiment which is conveyed in each sentence (positive, neutral or negative) as well as any emotion that is being epxressed.
 
 ## Usage
-To enable sentiment and emotion analysis, set the `"sentiment_analysis"` parameter to true:
-```json
+To enable sentiment and emotion analysis, set the `"sentiment_analysis"` parameter to true
+```json Request JSON
 {
   "audio_url": "<your audio url>"
   "sentiment_analysis": true
@@ -129,9 +129,10 @@ if result_url:
 ## Result
 
 Your transcription result will contain a `sentiment_analysis` key which will contain an array of all sentences in the audio, and for each one the conveyed sentiment and expressed emotion. See possible values below.
-<br/>**Note** that when `diarization` is enabled, the sentiment analysis output will contain the `speaker`  as well, allowing you to analyze each speaker sperately.
-
-```json
+<Tip>
+When `diarization` is enabled, the sentiment analysis output will contain the `speaker`  as well, allowing you to analyze each speaker sperately.
+</Tip>
+```json Result
 {
   "transcription":{...},
   "sentiment_analysis": {
