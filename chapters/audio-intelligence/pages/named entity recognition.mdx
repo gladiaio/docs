@@ -15,7 +15,7 @@ We're looking for feedback to improve this feature, [share yours here](https://g
 
 ## Usage
 Enable named entity recognition by setting ```named_entity_recognition``` to ```true``` in your transcription request.
-```json Request JSON
+```json request data
 {
   "audio_url": "<your audio URL>"
   "named_entity_recognition": true
@@ -24,7 +24,7 @@ Enable named entity recognition by setting ```named_entity_recognition``` to ```
 ## Result
 The transcription result will contain a ```"named_entity_recognition"``` key with the output of the model:
 
-```json Result
+```json result
 {
   "transcription":{...}
   "named_entity_recognition": {

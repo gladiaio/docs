@@ -10,7 +10,7 @@ Each chapter will contain it's start and end time, as well as a summary, headlin
 
 ## Usage
 Enable chapterization by simply setting ```chapterization``` to ```true``` in your transcription request.
-```json Request JSON
+```json request data
 {
   "audio_url": "<your audio URL>"
   "chapterization": true
@@ -19,7 +19,7 @@ Enable chapterization by simply setting ```chapterization``` to ```true``` in yo
 ## Result
 The transcription result will contain a ```"chapterization"``` key with the output of the model:
 
-```json Result
+```json result
 {
   "transcription":{...}
   "chapterization": {

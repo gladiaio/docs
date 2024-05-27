@@ -309,7 +309,7 @@ With the given example, `subtitles` will contains 2 items of shape:
 
 ## Context prompt
 
-- **Context prompt** : If you know the context of the audio you're sending, you can provide it in the `context_prompt`.
+If you know the context of the audio you're sending, you can provide it in the `context_prompt`.
 
 ```json request data
 {
@@ -320,7 +320,7 @@ With the given example, `subtitles` will contains 2 items of shape:
 
 ## Custom vocabulary
 
-- **Custom vocabulary** : To enhance the precision of transcription, especially for words or phrases that recur often in your audio file, you
+To enhance the precision of transcription, especially for words or phrases that recur often in your audio file, you
  can utilize the `custom_vocabulary` feature in the transcription configuration settings.<br/>
  The custom vocabulary has a global limit of **10k characters**.
 
@@ -331,18 +331,33 @@ With the given example, `subtitles` will contains 2 items of shape:
 }
 ```
 
-## Dual-channel or Multiple channels transcription
+## Custom spelling
+You can customize how certain words, names or phrases are spelled in the final transcript.
 
-If you have multiples channels in your audio file with different content each, Gladia API automatically transcribe them.
-In the transcription result, you will get for each utterances a `channel` key corresponding to the channels the transcription
- came from.
+To use custom spelling, provide a  dictionary through the custom_spelling_config parameter. This dictionary should contain the correct spelling as the key and a list of one or more possible variations as the value.
 
-<Warning>
-Sending an audio with 2 different channels (that does not contains the same audio data), will be billed twice as 2 different audios.
-If your audio has multiple channels but has the same audio content on each channels, it will only billed once.
+This feature is useful in scenarios where consistent spelling of specific words is crucial (e.g., technical terms in industry-specific recordings).
 
-**TLDR**: We charge every unique channel in an audio file, we do not charge if channels are duplicates.
-</Warning>
+
+```json request data
+{
+  "custom_spelling": true,
+  "custom_spelling_config": {
+    "spelling_dictionary": {
+        "Gorish": ["ghorish", "gaurish", "gaureish"],
+        "Data Science": ["data-science", "data science"],
+        ".": ["period", "full stop"],
+        "SQL": ["sequel"]
+    }
+  }
+}
+```
+
+In this example, the model will ensure that "Gorish" is spelled correctly throughout the transcript, even if it is pronounced in various ways such as "ghorish," "gaurish," or "gaureish." Similarly
+
+<Note>
+The key is case-sensitive, but the value isn't. The value can contain multiple words.
+</Note>
 
 ## Name consistency
 You can ask the model to enforce consistent spelling of names using the `name_consistency` parameter. Thie will ensure the same name is spelled in the same manner throughout the transcript, at the cost of a small amount of added processing time.
@@ -358,29 +373,19 @@ To ensure correct spelling of names which are known in advance, use the [custom 
 }
 ```
 
-## Custom spelling
-You can ask the model to enforce specific spellings for words using the custom_spelling parameter. This ensures that certain words are spelled in the desired manner throughout the transcript, which can be particularly useful for names or terms with multiple possible spellings.
 
-To use this feature, you need to provide a configuration dictionary through the custom_spelling_config parameter. This dictionary should contain the correct spelling as the key and a list of possible variations as the value.
+## Dual-channel or Multiple channels transcription
 
-This feature is useful in scenarios where consistent spelling of specific words is crucial (e.g., technical terms in industry-specific recordings).
+If you have multiples channels in your audio file with different content each, Gladia API automatically transcribe them.
+In the transcription result, you will get for each utterances a `channel` key corresponding to the channels the transcription
+ came from.
 
+<Warning>
+Sending an audio with 2 different channels (that does not contains the same audio data), will be billed twice as 2 different audios.
+If your audio has multiple channels but has the same audio content on each channels, it will only billed once.
 
-```json request data
-{
-  "custom_spelling": true,
-  "custom_spelling_config": {
-    "spelling_dictionary": {
-        "Gorish": ["ghorish", "gaurish", "gaureish"],
-        "Data Science": ["data-science", "data science"]
-    }
-  }
-}
-```
-
-In this example, the model will ensure that "Gorish" is spelled correctly throughout the transcript, even if it is pronounced in various ways such as "ghorish," "gaurish," or "gaureish." Similarly, "Data Science" will be consistently spelled, regardless of whether it is pronounced as "data-science" or "data science."
-
-<Tip>The key is case-sensitive, but the value isn't. The value can contain multiple words.</Tip>
+**TLDR**: We charge every unique channel in an audio file, we do not charge if channels are duplicates.
+</Warning>
 
 ## Adding custom metadata
 

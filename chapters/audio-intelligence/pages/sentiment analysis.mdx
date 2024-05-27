@@ -14,7 +14,7 @@ The sentiment and emotion analysis model analyzies the transcript, detecting the
 
 ## Usage
 To enable sentiment and emotion analysis, set the `"sentiment_analysis"` parameter to true
-```json Request JSON
+```json request data
 {
   "audio_url": "<your audio url>"
   "sentiment_analysis": true
@@ -132,7 +132,7 @@ Your transcription result will contain a `sentiment_analysis` key which will con
 <Tip>
 When `diarization` is enabled, the sentiment analysis output will contain the `speaker`  as well, allowing you to analyze each speaker sperately.
 </Tip>
-```json Result
+```json result
 {
   "transcription":{...},
   "sentiment_analysis": {
