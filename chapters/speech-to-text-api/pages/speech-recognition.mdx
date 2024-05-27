@@ -344,6 +344,13 @@ If your audio has multiple channels but has the same audio content on each chann
 **TLDR**: We charge every unique channel in an audio file, we do not charge if channels are duplicates.
 </Warning>
 
+## Name consistency
+You can request the model to enforce consistent spelling of names using the `name_consistency` parameter.
+
+This is especially useful for scenarios where people's names may be mentioned multiple times, but these names are not known in advance
+(e.g. recruitment call recordings).
+To ensure correct spelling of names which are known in advance, use the [custom vocabulary](chapters/speech-to-text-api/pages/speech-recognition#custom-vocabulary).
+
 ## Adding custom metadata
 
 You can add metadata to your transcription using the `custom_metadata` input during your POST request on `/v2/transcription` endpoint.
