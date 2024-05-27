@@ -334,9 +334,13 @@ To enhance the precision of transcription, especially for words or phrases that 
 ## Custom spelling
 You can customize how certain words, names or phrases are spelled in the final transcript.
 
-To use custom spelling, provide a  dictionary through the custom_spelling_config parameter. This dictionary should contain the correct spelling as the key and a list of one or more possible variations as the value.
+To use custom spelling, provide a  dictionary through the `custom_spelling_config` parameter. This dictionary should contain the correct spelling as the key and a list of one or more possible variations as the value.
 
 This feature is useful in scenarios where consistent spelling of specific words is crucial (e.g., technical terms in industry-specific recordings).
+
+<Note>
+The keys in the dictionary are case sensitive, while the values aren't. Values can contain multiple words.
+</Note>
 
 
 ```json request data
@@ -354,10 +358,6 @@ This feature is useful in scenarios where consistent spelling of specific words 
 ```
 
 In this example, the model will ensure that "Gorish" is spelled correctly throughout the transcript, even if it is pronounced in various ways such as "ghorish," "gaurish," or "gaureish." Similarly
-
-<Note>
-The key is case sensitive, while the value isn't. Values can contain multiple words.
-</Note>
 
 ## Name consistency
 You can ask the model to enforce consistent spelling of names using the `name_consistency` parameter. Thie will ensure the same name is spelled in the same manner throughout the transcript, at the cost of a small amount of added processing time.
