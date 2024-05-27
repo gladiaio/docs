@@ -77,7 +77,7 @@
       "pages": [
         "chapters/speech-to-text-api/pages/speech-recognition",
         "chapters/speech-to-text-api/pages/live-speech-recognition",
-        "chapters/speech-to-text-api/pages/speaker-recognition",
+        "chapters/speech-to-text-api/pages/speaker-diarization",
         "chapters/speech-to-text-api/pages/languages"
       ]
     },
