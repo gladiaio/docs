@@ -1,0 +1,50 @@
+---
+title: 'Speaker Diarization'
+description: 'Detect speakers and understand who said what.'
+---
+
+
+Speaker diarization is the process of detecting multiple speakers in an audio, and understanding which parts of the transcription each speaker said.
+
+## Enabling diarization
+
+Diarization is enabled by sending the `diarization` parameter in the transcription request:
+```json
+{
+  "audio_url": "<your audio URL>"
+  "diarization": true
+}
+```
+
+## Response
+When **diarization** is enabled, each utterance will contain a `speaker` field, whose value is an index representing the speaker.
+Speakers will be assigned indexes by **order of appearance** (i.e. the 1st speaker will be speaker 0, the 2nd speaker 1, etc).
+
+```json
+{
+  "transcription": {
+    "utterances": [
+      {
+        "words": [...],
+        "text": "it says you are trained in technology.",
+        "language": "en",
+        "start": 0.7334100000000001,
+        "end": 2.364,
+        "confidence": 0.8914285714285715,
+        "channel": 0
+        "speaker": 0,
+      }
+      ...
+}
+```
+
+## Improving diarization accuracy
+You can improve the accuracy of the diarization by providing the model with hints regarding the expected number or lower/upper bounds ofspeakers using the `diarization_config.num_of_speakers`, `diarization_config.min_speakers` and `diarization_config.max_speakers`  parameters respectively.
+
+**Important:** These parameters are hints, not hard constraints. The actual number of speakers detected by the model may not comply with the provided parameters.
+
+| Key | Type | Description |
+| --- | --- | --- |
+| `diarization_config.number_of_speakers` | number | Guiding number of speakers - instructs the model to detect an exact number of speakers in the audio. |
+| `diarization_config.min_speakers` | number | Instructs the model to detect no less than this number of speakers in the audio. |
+| `diarization_config.max_speakers` | number | Causes the model to detect no more than this number of speakers in the audio. |
