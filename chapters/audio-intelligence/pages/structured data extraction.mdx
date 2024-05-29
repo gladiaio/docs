@@ -4,7 +4,7 @@ description: 'Description of your new file.'
 ---
 
 
-## Available Classes
+# Available Classes
 - Addresses
 - Appointments
 - DateTimeEntities
@@ -28,7 +28,7 @@ description: 'Description of your new file.'
 - TradingActions
 - Vehicles
 
-### Addresses
+## Addresses
 A list of addresses containing the following properties:
 
 - **address_type** (str): The type of the address. Could be home, work or other
@@ -43,7 +43,7 @@ A list of addresses containing the following properties:
 - **zipcode** (str): The zipcode of the address
 - **coordinates** (str): The coordinates of the address
 
-### Appointments
+## Appointments
 A list of appointments with the following properies:
 
 - **date** (str): The date of the appointment
@@ -60,7 +60,7 @@ A list of combined date and time entities found in the conversation with the fol
 - **time** (list[str]): a list of times found in the text
 - **duration** (list[str]): a list of duration found in the text
 
-###  Documents
+##  Documents
 A list of documents mentionned in the conversation with the following properties:
 
 - **document_type** (str): The type of the document for instance a passport
@@ -70,7 +70,7 @@ A list of documents mentionned in the conversation with the following properties
 - **document_location** (str): The location associated with the document for instance the country associated with the passport
 - **document_doctor** (str): The doctor associated with the document when related to medical domain.
 
-### Events
+## Events
 A list of events mentionned in the conversation with the following properties:
 
 - **event_name** (str): The name of the event
@@ -78,7 +78,7 @@ A list of events mentionned in the conversation with the following properties:
 - **event_location** (str): The location of the event
 - **event_organizer** (str): The organizer of the event, could be a person or an organization
 
-### Facilities
+## Facilities
 A list of facilities mentionned in the conversation with the following properties:
 
 - **facility_name** (str): The name of the facility
@@ -87,9 +87,9 @@ A list of facilities mentionned in the conversation with the following propertie
 - **facility_is_medical** (bool): Whether the facility is medical or not
 - **facility_type_other** (str): The type of the facility if other than the **facility_type** proposed Enum
 
-#### Facility Types String Enum
+### Facility Types String Enum
 Here are the possible value for the facility predefined types:
-##### ***Medical Facilities***:
+#### ***Medical Facilities***:
 - **CLINIC**
 - **DENTAL_CENTER**
 - **DIETITIAN_CLINIC**
@@ -105,33 +105,33 @@ Here are the possible value for the facility predefined types:
 - **REHABILITATION_CENTER**
 - **VETERINARY_CLINIC**
 
-##### ***Educational Facilities***:
+#### ***Educational Facilities***:
 - **COLLEGE**
 - **SCHOOL**
 - **UNIVERSITY**
 
-##### ***Recreational Facilities***:
+#### ***Recreational Facilities***:
 - **PARK**
 - **PLAYGROUND**
 - **SPORTS_CENTER**
 - **STADIUM**
 
-##### ***Residential Facilities***:
+#### ***Residential Facilities***:
 - **APARTMENT**
 - **CONDOMINIUM**
 - **HOUSE**
 
-##### ***Commercial Facilities***:
+#### ***Commercial Facilities***:
 - **OFFICE_BUILDING**
 - **RETAIL_STORE**
 - **SHOPPING_MALL**
 
-##### ***Industrial Facilities***:
+#### ***Industrial Facilities***:
 - **FACTORY**
 - **MANUFACTURING_PLANT**
 - **WAREHOUSE**
 
-##### ***Government Facilities***:
+#### ***Government Facilities***:
 - **COURTHOUSE**
 - **EMBASSY**
 - **FIRE_STATION**
@@ -140,24 +140,24 @@ Here are the possible value for the facility predefined types:
 - **POST_OFFICE**
 - **TOWN_HALL**
 
-##### ***Transportation Facilities***:
+#### ***Transportation Facilities***:
 - **AIRPORT**
 - **BUS_STATION**
 - **TRAIN_STATION**
 
-##### ***Cultural Facilities***:
+#### ***Cultural Facilities***:
 - **ART_GALLERY**
 - **LIBRARY**
 - **MUSEUM**
 - **THEATER**
 
-##### ***Religious Facilities***:
+#### ***Religious Facilities***:
 - **CHURCH**
 - **MOSQUE**
 - **SYNAGOGUE**
 - **TEMPLE**
 
-##### ***Hospitality Facilities***:
+#### ***Hospitality Facilities***:
 - **HOTEL**
 - **RESORT**
 - **RESTAURANT**
@@ -165,17 +165,16 @@ Here are the possible value for the facility predefined types:
 - **BAR**
 - **CLUB**
 
-##### ***Agricultural Facilities***:
+#### ***Agricultural Facilities***:
 - **FARM**
 - **GREENHOUSE**
 - **RANCH**
 - **YARD**
 
-##### ***Others***:
+#### ***Others***:
 - **OTHER**
 
-
-### FlightBookings
+## FlightBookings
 A list of flight booking mentionned in the conversation with the following properties:
 - **departure_date** (str): The departure date of the flight
 - **departure_time** (str): The departure time of the flight
@@ -184,14 +183,14 @@ A list of flight booking mentionned in the conversation with the following prope
 - **arrival_time** (str): The arrivale time of the flight ## TODO CHANGE IN CODE
 - **arrival_location** (str): The arrivale location of the flight
 
-### GeopoliticalEntities
+## GeopoliticalEntities
 A list of geopolitical entities mentionned in the conversation with the following properties:
 
 - **country** (str): The name of the country
 - **state** (str): The name of the state
 - **city** (str): The name of the city
 
-### HealthRecords
+## HealthRecords
 A list of Health Records mentionned in the conversation with the followinf properties:
  
 - **blood_type** (Enum): The blood type of the person
@@ -222,17 +221,7 @@ A list of Health Records mentionned in the conversation with the followinf prope
 - **pets** (List[Pet]): The pets of the person
 - **insurance** (List[str]): The insurance of the person
 
-#### Blood Types (Enum)
- - **A_POSITIVE**
- - **A_NEGATIVE**
- - **B_POSITIVE**
- - **B_NEGATIVE**
- - **AB_POSITIVE**
- - **AB_NEGATIVE**
- - **O_POSITIVE**
- - **O_NEGATIVE**
-
-#### Injuries
+### Injuries
 - **injury_name** (str): The name of the injury
 - **injury_description** (str): The description of the injury
 - **injury_severity** (str): The severity of the injury
@@ -241,7 +230,7 @@ A list of Health Records mentionned in the conversation with the followinf prope
 - **injury_location** (str): The location of the injury
 - **injury_treatment** (str): The treatment of the injury
 
-#### Medications
+### Medications
 - **medication_name** (str): The name of the medication
 - **medication_dosage** (str): The dosage of the medication
 - **medication_frequency** (str): The frequency of the medication
@@ -255,45 +244,72 @@ A list of Health Records mentionned in the conversation with the followinf prope
 - **medication_instructions** (str): The instructions of the medication
 - **medication_doctor** (str): The notes of the medication
 
-#### Vaccination
+### Vaccination
 - **vaccination_name** (str): The name of the vaccination
 - **vaccination_date** (str): The date of the vaccination
 - **vaccination_location** (str): The location of the vaccination
 - **vaccination_doctor** (str): The doctor of the vaccination
 
-#### Surgery
+### Surgery
 - **surgery_name** (str): The name of the surgery
 - **surgery_date** (str): The date of the surgery
 - **surgery_location** (str): The location of the surgery
 - **surgery_doctor** (str): The doctor of the surgery
 
-#### Hospitalization
+### Hospitalization
 - **hospital_name** (str): The name of the hospital
 - **hospital_date** (str): The date of the hospitalization
 - **hospital_location** (str): The location of the hospital
 - **hospital_doctor** (str): The doctor of the hospital
 
-#### Pregnancy
+### Pregnancy
 - **pregnancy_date** (str): The date of the pregnancy
 - **pregnancy_location** (str): The location of the pregnancy
 - **pregnancy_doctor** (str): The doctor of the pregnancy
 - **pregnancy_outcome** (str): The outcome of the pregnancy
 
-#### Children
+### Children
 - **child_name** (str): The name of the child
 - **child_age** (str): The age of the child
 - **child_gender** (str): The gender of the child assigned at birth
 
-#### Pet
+### Pet
 - **pet_name** (str): The name of the pet
 - **pet_age** (str): The age of the pet
 - **pet_species** (str): The species of the pet
 - **pet_breed** (str): The breed of the pet
 - **pet_gender** (str): The gender of the pet
 
-### HotelBookings
+## HotelBookings
+A list of hotel booking mentionned in the conversation with the following properties:
 
-### Locations
+- **checkin_date** (str): The checkin date of the hotel booking
+- **checkout_date** (str): The checkout date of the hotel booking
+- **number_of_adults** (int): The number of adults in the hotel booking
+- **number_of_children** (int): The number of children in the hotel booking
+- **number_of_babies** (int): The number of babies in the hotel booking
+- **number_of_baby_bed_needed** (int): The number of baby bed needed in the hotel booking
+- **number_of_pets** (int): The number of pets in the hotel booking
+- **hotel_name** (str): The name of the hotel in the hotel booking
+- **location** (str): The location of the hotel in the hotel booking
+- **room_type** (str): The room type of the hotel in the hotel booking
+- **room_number** (str): The room number of the hotel in the hotel booking
+- **room_price** (float): The room price of the hotel in the hotel booking in the original currency
+- **room_price_currency** (Currency): The room price currency of the hotel in the hotel booking
+- **room_service** (List[str]): The room service of the hotel in the hotel booking
+- **breakfast_needed** (bool): The breakfast needed in the hotel booking
+- **lunch_needed** (bool): The lunch needed in the hotel booking
+- **dinner_needed** (bool): The dinner needed in the hotel booking
+- **wifi_needed** (bool): The wifi needed in the hotel booking
+- **gym_needed** (bool): The gym needed in the hotel booking
+- **pool_needed** (bool): The pool needed in the hotel booking
+- **spa_needed** (bool): The spa needed in the hotel booking
+- **parking_needed** (bool): The parking needed in the hotel booking
+- **airport_shuttle_needed** (bool): The airport shuttle needed in the hotel booking
+- **checkin_time** (str): The checkin time of the hotel booking
+- **checkout_time** (str): The checkout time of the hotel booking
+
+## Locations
 A list of locations containing the following properties:
 
 - **city** (str): The name of the city
@@ -301,36 +317,36 @@ A list of locations containing the following properties:
 - **zipcode** (str): The zipcode of the location
 - **country** (str): The name of the country
 
-### Moneys
+## Moneys
 A list of moneys containing the following properties:
 - **amount** (float): The amount of money
 - **currency** (str): The currency of the money
 - **subject** (str): The subject of the money
 
-### NonGeopoliticalEntities
+## NonGeopoliticalEntities
 A list of non geopolitical entities mentionned in the conversation with the following properties:
 - **entity_name** (str): The name of the entity
 - **entity_type** (str): The type of the entity
 
-### Organizations
+## Organizations
 A list of organizations mentionned in the conversation with the following properties:
 - **organization_name** (str): The name of the organization
 - **organization_location** (Location): The location of the organization
 - **organization_type** (OrganizationType): The type of the organization
 
-### PaymentCardIndustries
+## PaymentCardIndustries
 A list of payment card industry entities mentionned in the conversation with the following properties:
 - **bank_account** (List[str]): The bank account of the person. Exclude GeoPolitical entities, Companies and commercial entities.
 - **credit_card** (List[CreditCard]): The credit card of the person.
 - **bank_routing_number** (List[str]): The bank routing number of the person. Exclude GeoPolitical entities, Companies and commercial entities.
 
-#### CreditCard
+### CreditCard
 - **card_holder_name** (str): The name of the card holder
 - **card_number** (str): The number of the credit card
 - **card_expiration_date** (str): The expiration date of the credit card
 - **card_cvv** (str): The security code of the credit card
 
-### Persons
+## Persons
 A list of persons mentionned in the conversation with the following properties:
 - **full_name** (str): The full name of the human person
 - **first_name** (str): The first name of the human person
@@ -338,7 +354,8 @@ A list of persons mentionned in the conversation with the following properties:
 - **last_name** (str): The last name of the human person
 - **nickname** (str): The nickname of the person
 - **person_extra** (PersonExtra): Extra information about the person
-#### PersonExtra
+
+### PersonExtra
 - **email_address** (str): The email address
 - **gender** (str): The gender of the person assigned at birth
 - **origins** (List[str]): The origin of the person
@@ -374,109 +391,17 @@ A list of other attributes mentionned in the conversation with the following pro
 - **subject** (str): The subject to whom the attribute applies
 
 
-#### MaritalStatus (Enum)
-- **SINGLE**
-- **MARRIED**
-- **WIDOWED**
-- **DIVORCED**
-
-#### Occupation (Enum)
-- **EMPLOYED**
-- **UNEMPLOYED**
-- **STUDENT**
-- **RETIRED**
-- **HOMEMAKER**
-- **SELF_EMPLOYED**
-- **FREELANCER**
-- **ENTREPRENEUR**
-- **OTHER**
-
-#### EducationLevel (Enum)
-- **PRIMARY**
-- **SECONDARY**
-- **BACHELOR**
-- **MASTER**
-- **DOCTORATE**
-- **OTHER**
-
-#### Skill
+## Skill
 A list of skills mentionned in the conversation with the following properties:
 - **skill_name** (str): The name of the skill
 - **skill_level** (SkillLevel): The level of the skill
 
-#### SkillLevel (Enum)
-- **BEGINNER**
-- **INTERMEDIATE**
-- **ADVANCED**
-- **EXPERT**
 
-
-#### MedicalProfession (Enum)
-- **PHYSICIAN**
-- **SURGEON**
-- **DENTIST**
-- **NURSE**
-- **OPTOMETRIST**
-- **PHARMACIST**
-- **PSYCHOLOGIST**
-- **DIETITIAN**
-- **VETERINARIAN**
-- **PHYSIOTHERAPIST**
-- **ASSISTANT_PHYSICIAN**
-- **RADIOLOGIST**
-- **MEDICAL_LABORATORY_SCIENTIST**
-- **OTHER**
-
-#### Religion (Enum)
-- **CHRISTIANITY**
-- **ISLAM**
-- **HINDUISM**
-- **BUDDHISM**
-- **JUDAISM**
-- **SIKHISM**
-- **SHINTO**
-- **BAHAISM**
-- **JAINISM**
-- **ZOROASTRIANISM**
-- **TAOISM**
-- **SHAMANISM**
-- **PAGANISM**
-- **OTHER**
-
-#### PoliticalAffiliation (Enum)
-- **DEMOCRAT**
-- **REPUBLICAN**
-- **LIBERTARIAN**
-- **GREEN**
-- **INDEPENDENT**
-- **OTHER**
-
-#### ZodiacSign (Enum)
-- **ARIES**
-- **TAURUS**
-- **GEMINI**
-- **CANCER**
-- **LEO**
-- **VIRGO**
-- **LIBRA**
-- **SCORPIO**
-- **SAGITTARIUS**
-- **CAPRICORN**
-- **AQUARIUS**
-- **PISCES**
-
-### Products
+## Products
 A list of products mentionned in the conversation with the following properties:
 - **product_name** (str): The name of the product
 
-### Quantities
-A list of quantities mentionned in the conversation with the following properties:
-- **value** (float): The value of the quantity
-- **unit** (str): The unit of the quantity
-- **subject** (str): The subject of the quantity
-- **speaker** (str): The speaker mentioning the quantity
-
-### Questions
+## Questions
 A list of questions mentionned in the conversation with the following properties:
 - **question** (str): The question asked
 - **answer** (str): The answer to the question
@@ -484,12 +409,12 @@ A list of questions mentionned in the conversation with the following properties
 - **asker** (str): The person asking the question
 - **asked** (str): The date of the question
 
-### Speakers
+## Speakers
 A list of speakers mentionned in the conversation with the following properties:
 - **speaker_name** (str): The name of the speaker
 - **speaker_id** (str): The id of the speaker
 
-### TradingAction
+## TradingAction
 A list of trading actions mentionned in the conversation with the following properties:
 - **stock_name** (str): The name of the stock
 - **stock_symbol** (str): The symbol of the stock
@@ -497,7 +422,7 @@ A list of trading actions mentionned in the conversation with the following prop
 - **stock_quantity** (int): The quantity of the stock
 - **stock_date** (str): The date of the trading action
 
-### Vehicles
+## Vehicles
 A list of vehicles mentionned in the conversation with the following properties:
 - **vehicle_make** (str): The make of the vehicle
 - **vehicle_model** (str): The model of the vehicle
@@ -514,5 +439,273 @@ A measurement will have the following properties:
 - **unit** (str): The unit of the measurement
 - **subject** (str): The subject of the measurement
 - **speaker** (str): The speaker mentioning the measurement
+
+
+### Quantities
+A list of quantities mentionned in the conversation with the following properties:
+- **value** (float): The value of the quantity
+- **unit** (str): The unit of the quantity
+- **subject** (str): The subject of the quantity
+- **speaker** (str): The speaker mentioning the quantity
+
+
+
+# Enums
+## Blood Types (Enum)
+ - **A_POSITIVE**
+ - **A_NEGATIVE**
+ - **B_POSITIVE**
+ - **B_NEGATIVE**
+ - **AB_POSITIVE**
+ - **AB_NEGATIVE**
+ - **O_POSITIVE**
+ - **O_NEGATIVE**
+
+
+
+## SkillLevel (Enum)
+- **BEGINNER**
+- **INTERMEDIATE**
+- **ADVANCED**
+- **EXPERT**
+
+
+## MedicalProfession (Enum)
+- **PHYSICIAN**
+- **SURGEON**
+- **DENTIST**
+- **NURSE**
+- **OPTOMETRIST**
+- **PHARMACIST**
+- **PSYCHOLOGIST**
+- **DIETITIAN**
+- **VETERINARIAN**
+- **PHYSIOTHERAPIST**
+- **ASSISTANT_PHYSICIAN**
+- **RADIOLOGIST**
+- **MEDICAL_LABORATORY_SCIENTIST**
+- **OTHER**
+
+## Religion (Enum)
+- **CHRISTIANITY**
+- **ISLAM**
+- **HINDUISM**
+- **BUDDHISM**
+- **JUDAISM**
+- **SIKHISM**
+- **SHINTO**
+- **BAHAISM**
+- **JAINISM**
+- **ZOROASTRIANISM**
+- **TAOISM**
+- **SHAMANISM**
+- **PAGANISM**
+- **OTHER**
+
+## PoliticalAffiliation (Enum)
+- **DEMOCRAT**
+- **REPUBLICAN**
+- **LIBERTARIAN**
+- **GREEN**
+- **INDEPENDENT**
+- **OTHER**
+
+## ZodiacSign (Enum)
+- **ARIES**
+- **TAURUS**
+- **GEMINI**
+- **CANCER**
+- **LEO**
+- **VIRGO**
+- **LIBRA**
+- **SCORPIO**
+- **SAGITTARIUS**
+- **CAPRICORN**
+- **AQUARIUS**
+- **PISCES**
+
+## MaritalStatus (Enum)
+- **SINGLE**
+- **MARRIED**
+- **WIDOWED**
+- **DIVORCED**
+
+## Occupation (Enum)
+- **EMPLOYED**
+- **UNEMPLOYED**
+- **STUDENT**
+- **RETIRED**
+- **HOMEMAKER**
+- **SELF_EMPLOYED**
+- **FREELANCER**
+- **ENTREPRENEUR**
+- **OTHER**
+
+## EducationLevel (Enum)
+- **PRIMARY**
+- **SECONDARY**
+- **BACHELOR**
+- **MASTER**
+- **DOCTORATE**
+- **OTHER**
+
+## Currency (Enum)
+- **AED**
+- **AFN**
+- **ALL**
+- **AMD**
+- **ANG**
+- **AOA**
+- **ARS**
+- **AUD**
+- **AWG**
+- **AZN**
+- **BAM**
+- **BBD**
+- **BDT**
+- **BGN**
+- **BHD**
+- **BIF**
+- **BMD**
+- **BND**
+- **BOB**
+- **BRL**
+- **BSD**
+- **BTC**
+- **BTN**
+- **BWP**
+- **BYN**
+- **BZD**
+- **CAD**
+- **CDF**
+- **CHF**
+- **CLP**
+- **CNY**
+- **COP**
+- **CRC**
+- **CUP**
+- **CVE**
+- **CZK**
+- **DJF**
+- **DKK**
+- **DOP**
+- **DZD**
+- **EGP**
+- **ERN**
+- **ETB**
+- **EUR**
+- **FJD**
+- **FKP**
+- **GBP**
+- **GEL**
+- **GHS**
+- **GIP**
+- **GMD**
+- **GNF**
+- **GTQ**
+- **GYD**
+- **HKD**
+- **HNL**
+- **HTG**
+- **HUF**
+- **IDR**
+- **ILS**
+- **INR**
+- **IQD**
+- **IRR**
+- **ISK**
+- **JMD**
+- **JOD**
+- **JPY**
+- **KES**
+- **KGS**
+- **KHR**
+- **KMF**
+- **KPW**
+- **KRW**
+- **KWD**
+- **KYD**
+- **KZT**
+- **LAK**
+- **LBP**
+- **LKR**
+- **LRD**
+- **LSL**
+- **LYD**
+- **MAD**
+- **MDL**
+- **MGA**
+- **MKD**
+- **MMK**
+- **MNT**
+- **MOP**
+- **MRU**
+- **MUR**
+- **MVR**
+- **MWK**
+- **MXN**
+- **MYR**
+- **MZN**
+- **NAD**
+- **NGN**
+- **NIO**
+- **NOK**
+- **NPR**
+- **NZD**
+- **OMR**
+- **PAB**
+- **PEN**
+- **PGK**
+- **PHP**
+- **PKR**
+- **PLN**
+- **PYG**
+- **QAR**
+- **RON**
+- **RSD**
+- **RUB**
+- **RWF**
+- **SAR**
+- **SBD**
+- **SCR**
+- **SDG**
+- **SEK**
+- **SGD**
+- **SHP**
+- **SLE**
+- **SOS**
+- **SRD**
+- **SSP**
+- **STN**
+- **SYP**
+- **SZL**
+- **THB**
+- **TJS**
+- **TMT**
+- **TND**
+- **TOP**
+- **TRY**
+- **TTD**
+- **TWD**
+- **TZS**
+- **UAH**
+- **UGX**
+- **USD**
+- **UYU**
+- **UZS**
+- **VED**
+- **VES**
+- **VND**
+- **VUV**
+- **WST**
+- **XAF**
+- **XCD**
+- **XOF**
+- **XPF**
+- **YER**
+- **ZAR**
+- **ZMW**
+
+
 
 
