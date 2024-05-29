@@ -193,7 +193,7 @@ A list of geopolitical entities mentionned in the conversation with the followin
 ## HealthRecords
 A list of Health Records mentionned in the conversation with the followinf properties:
  
-- **blood_type** (Enum): The blood type of the person
+- **blood_type** (BloodType): The blood type of the person
 - **weight** (List[Measurement]): The weight of the person
 - **height** (List[Measurement]): The height of the person
 - **bmi** (List[Measurement]): The body mass index of the person
@@ -220,6 +220,18 @@ A list of Health Records mentionned in the conversation with the followinf prope
 - **children** (List[Childrens]): The children of the person
 - **pets** (List[Pet]): The pets of the person
 - **insurance** (List[str]): The insurance of the person
+
+## Blood Type (Enum)
+ - **A_POSITIVE**
+ - **A_NEGATIVE**
+ - **B_POSITIVE**
+ - **B_NEGATIVE**
+ - **AB_POSITIVE**
+ - **AB_NEGATIVE**
+ - **O_POSITIVE**
+ - **O_NEGATIVE**
+
+
 
 ### Injuries
 - **injury_name** (str): The name of the injury
@@ -383,6 +395,88 @@ A list of persons mentionned in the conversation with the following properties:
 - **age_in_years** (int): The age of the associated person in years
 - **age_in_months** (int): The age of the associated person in months
 
+#### MedicalProfession (Enum)
+- **PHYSICIAN**
+- **SURGEON**
+- **DENTIST**
+- **NURSE**
+- **OPTOMETRIST**
+- **PHARMACIST**
+- **PSYCHOLOGIST**
+- **DIETITIAN**
+- **VETERINARIAN**
+- **PHYSIOTHERAPIST**
+- **ASSISTANT_PHYSICIAN**
+- **RADIOLOGIST**
+- **MEDICAL_LABORATORY_SCIENTIST**
+- **OTHER**
+
+#### Religion (Enum)
+- **CHRISTIANITY**
+- **ISLAM**
+- **HINDUISM**
+- **BUDDHISM**
+- **JUDAISM**
+- **SIKHISM**
+- **SHINTO**
+- **BAHAISM**
+- **JAINISM**
+- **ZOROASTRIANISM**
+- **TAOISM**
+- **SHAMANISM**
+- **PAGANISM**
+- **OTHER**
+
+
+
+#### ZodiacSign (Enum)
+- **ARIES**
+- **TAURUS**
+- **GEMINI**
+- **CANCER**
+- **LEO**
+- **VIRGO**
+- **LIBRA**
+- **SCORPIO**
+- **SAGITTARIUS**
+- **CAPRICORN**
+- **AQUARIUS**
+- **PISCES**
+
+#### MaritalStatus (Enum)
+- **SINGLE**
+- **MARRIED**
+- **WIDOWED**
+- **DIVORCED**
+
+#### Occupation (Enum)
+- **EMPLOYED**
+- **UNEMPLOYED**
+- **STUDENT**
+- **RETIRED**
+- **HOMEMAKER**
+- **SELF_EMPLOYED**
+- **FREELANCER**
+- **ENTREPRENEUR**
+- **OTHER**
+
+
+#### EducationLevel (Enum)
+- **PRIMARY**
+- **SECONDARY**
+- **BACHELOR**
+- **MASTER**
+- **DOCTORATE**
+- **OTHER**
+
+#### PoliticalAffiliation (Enum)
+- **DEMOCRAT**
+- **REPUBLICAN**
+- **LIBERTARIAN**
+- **GREEN**
+- **INDEPENDENT**
+- **OTHER**
+
 #### OtherAttributes
 A list of other attributes mentionned in the conversation with the following properties:
 - **attribute_name** (str): The name of the attribute
@@ -391,11 +485,16 @@ A list of other attributes mentionned in the conversation with the following pro
 - **subject** (str): The subject to whom the attribute applies
 
 
-## Skill
+#### Skill
 A list of skills mentionned in the conversation with the following properties:
 - **skill_name** (str): The name of the skill
 - **skill_level** (SkillLevel): The level of the skill
 
+##### SkillLevel (Enum)
+- **BEGINNER**
+- **INTERMEDIATE**
+- **ADVANCED**
+- **EXPERT**
 
 ## Products
 A list of products mentionned in the conversation with the following properties:
@@ -448,108 +547,8 @@ A list of quantities mentionned in the conversation with the following propertie
 - **subject** (str): The subject of the quantity
 - **speaker** (str): The speaker mentioning the quantity
 
-
-
-# Enums
-## Blood Types (Enum)
- - **A_POSITIVE**
- - **A_NEGATIVE**
- - **B_POSITIVE**
- - **B_NEGATIVE**
- - **AB_POSITIVE**
- - **AB_NEGATIVE**
- - **O_POSITIVE**
- - **O_NEGATIVE**
-
-
-
-## SkillLevel (Enum)
-- **BEGINNER**
-- **INTERMEDIATE**
-- **ADVANCED**
-- **EXPERT**
-
-
-## MedicalProfession (Enum)
-- **PHYSICIAN**
-- **SURGEON**
-- **DENTIST**
-- **NURSE**
-- **OPTOMETRIST**
-- **PHARMACIST**
-- **PSYCHOLOGIST**
-- **DIETITIAN**
-- **VETERINARIAN**
-- **PHYSIOTHERAPIST**
-- **ASSISTANT_PHYSICIAN**
-- **RADIOLOGIST**
-- **MEDICAL_LABORATORY_SCIENTIST**
-- **OTHER**
-
-## Religion (Enum)
-- **CHRISTIANITY**
-- **ISLAM**
-- **HINDUISM**
-- **BUDDHISM**
-- **JUDAISM**
-- **SIKHISM**
-- **SHINTO**
-- **BAHAISM**
-- **JAINISM**
-- **ZOROASTRIANISM**
-- **TAOISM**
-- **SHAMANISM**
-- **PAGANISM**
-- **OTHER**
-
-## PoliticalAffiliation (Enum)
-- **DEMOCRAT**
-- **REPUBLICAN**
-- **LIBERTARIAN**
-- **GREEN**
-- **INDEPENDENT**
-- **OTHER**
-
-## ZodiacSign (Enum)
-- **ARIES**
-- **TAURUS**
-- **GEMINI**
-- **CANCER**
-- **LEO**
-- **VIRGO**
-- **LIBRA**
-- **SCORPIO**
-- **SAGITTARIUS**
-- **CAPRICORN**
-- **AQUARIUS**
-- **PISCES**
-
-## MaritalStatus (Enum)
-- **SINGLE**
-- **MARRIED**
-- **WIDOWED**
-- **DIVORCED**
-
-## Occupation (Enum)
-- **EMPLOYED**
-- **UNEMPLOYED**
-- **STUDENT**
-- **RETIRED**
-- **HOMEMAKER**
-- **SELF_EMPLOYED**
-- **FREELANCER**
-- **ENTREPRENEUR**
-- **OTHER**
-
-## EducationLevel (Enum)
-- **PRIMARY**
-- **SECONDARY**
-- **BACHELOR**
-- **MASTER**
-- **DOCTORATE**
-- **OTHER**
-
-## Currency (Enum)
+## Common Enums
+### Currency (Enum)
 - **AED**
 - **AFN**
 - **ALL**
