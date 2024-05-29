@@ -5,25 +5,47 @@ description: 'Description of your new file.'
 
 
 ## Available Classes
-- Locations
 - Addresses
-- Persons
-- Moneys
-- HealthRecords
+- Appointments
+- DateTimeEntities
 - Documents
 - Events
+- Facilities
+- FlightBookings
+- GeopoliticalEntities
+- HealthRecords
+- HotelBookings
+- Locations
+- Moneys
+- NonGeopoliticalEntities
 - Organizations
 - PaymentCardIndustry
-- DateTimeEntities
-- Appointments
-- Vehicles
-- GeopoliticalEntities
-- NonGeopoliticalEntities
-- Facilities
-- Quantities
+- Persons
 - Products
-- HotelBookings
-- FlightBookings
+- Quantities
 - Questions
-- TradingActions
 - Speakers
+- TradingActions
+- Vehicles
+
+### Addresses
+- address_type (str):The type of the address. Could be home, work or other
+- full_address (str): The full address. For example 35 rue du louvre or 23rd avenue, etc. include the city, the country, the state, the zipcode, the coordinates, the building number, the appartment number, the floor, etc.
+- floor (str): The floor of the appartement if applicable
+- appartement_number (str):The number of the appartment. Could be the appartment number or the office number
+- building_number (str):The number of the address. Could be the building number or the house number
+- street_name (str): The name of the street
+- city_name (str): The name of the city
+- country (str): The name of the country
+- state (str): The name of the state
+- zipcode (str): The zipcode of the address
+- coordinates (str): The coordinates of the address
+
+
+### Locations
+
+- city (str): The name of the city
+- state (str): The name of the state
+- zipcode (str): The zipcode of the location
+- country (str): The name of the country
+
