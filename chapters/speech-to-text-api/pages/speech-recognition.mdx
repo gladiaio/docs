@@ -227,30 +227,18 @@ The result will contain a `sentences` key (in addition to `utterances`):
     }
 ```
 
-## Language behaviour
+## Automatic language detection
 
-If you know the audio used in the language, you should use **Manual**, otherwise, **Automatic Language Detection**.
+With automatic language detection, Gladia will identify the dominant language spoken in an audio file and use it during the transcription.
 
-<AccordionGroup>
-<Accordion icon="robot" title="Automatic language detection">
+**Automatic language detection is turned on by default.**
 
-With automatic language detection, you can identify the dominant language spoken in an audio file and use it
- during the transcription.
 
-To enable or disable it, set `detect_language` to true in the request body parameters. (default to `true`)
+## Multiple languages detection <br/>(Code switching)
+By enabling code switching the model will continuously detect the spoken language and switch the transcription language accordingly.
+This behaviour is recommended for specific scenarios where the language is changed multiple times throughout the audio (e.g. a conversation between 2 people, each speaking a different language.), 
 
-```json request data
-{
-  "audio_url": "YOUR_AUDIO_URL",
-  "detect_language": false
-}
-```
-</Accordion>
-<Accordion icon="shuffle" title="Multiple language detection">
-For specific scenarios where language is changed multiple times throughout the audio (e.g. a conversation between 2 people, each speaking a different language.).
-The model will continuously detect the spoken language and switch the transcription language accordingly.
-
-Please note that certain strong accents can possibly cause this mode to transcribe to the wrong language.
+Please note that certain strong accents may  possibly cause this mode to transcribe to the wrong language.
 
 To enable or disable it, set `enable_code_switching` to true in the request body parameters. (default to `false`)
 
@@ -260,10 +248,23 @@ To enable or disable it, set `enable_code_switching` to true in the request body
   "enable_code_switching": true
 }
 ```
-</Accordion>
-<Accordion icon="wrench" title="Manual">
-If you already know the dominant language, you can use the language_code key to specify the language of the speech in
- your audio file.
+
+### Guided code switching
+When code switching is enabled, you may provide a list of languages to the model, ensuring the model will only transcribe to one of thes languages.
+```json request data
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "enable_code_switching": true,
+  "code_switching_config": {
+    "languages": ["en", "es", "fr"]
+  }
+}
+```
+
+
+
+## Manual transcription language
+If you already know the dominant language, you can disable language detection and use the `language` key to specify the language of the speech in your audio file.
 
 
 ```json request data
@@ -273,8 +274,6 @@ If you already know the dominant language, you can use the language_code key to 
   "language": "fr"
 }
 ```
-</Accordion>
-</AccordionGroup>
 
 
 ## Export SRT or VTT caption files
