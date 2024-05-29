@@ -29,23 +29,408 @@ description: 'Description of your new file.'
 - Vehicles
 
 ### Addresses
-- address_type (str):The type of the address. Could be home, work or other
-- full_address (str): The full address. For example 35 rue du louvre or 23rd avenue, etc. include the city, the country, the state, the zipcode, the coordinates, the building number, the appartment number, the floor, etc.
-- floor (str): The floor of the appartement if applicable
-- appartement_number (str):The number of the appartment. Could be the appartment number or the office number
-- building_number (str):The number of the address. Could be the building number or the house number
-- street_name (str): The name of the street
-- city_name (str): The name of the city
-- country (str): The name of the country
-- state (str): The name of the state
-- zipcode (str): The zipcode of the address
-- coordinates (str): The coordinates of the address
+A list of addresses containing the following properties:
 
+- **address_type** (str): The type of the address. Could be home, work or other
+- **full_address** (str): The full address. For example 35 rue du louvre or 23rd avenue, etc. include the city, the country, the state, the zipcode, the coordinates, the building number, the appartment number, the floor, etc.
+- **floor** (str): The floor of the appartement if applicable
+- **appartement_number** (str): The number of the appartment. Could be the appartment number or the office number
+- **building_number** (str): The number of the address. Could be the building number or the house number
+- **street_name** (str): The name of the street
+- **city_name** (str): The name of the city
+- **country** (str): The name of the country
+- **state** (str): The name of the state
+- **zipcode** (str): The zipcode of the address
+- **coordinates** (str): The coordinates of the address
+
+### Appointments
+A list of appointments with the following properies:
+
+- **date** (str): The date of the appointment
+- **time** (str): The time of the appointment
+- **location** (str): The location of the appointment
+- **appointment_with_person** (str): The person with whom the appointment is made
+- **reason** (str): The reason of the appointment
+
+## DateTimeEntities
+A list of combined date and time entities found in the conversation with the following properties:
+
+- **dates** (list[str]): a list of date item found in the text
+- **date_interval** (list[str]) a list of date intervals found in the text
+- **time** (list[str]): a list of times found in the text
+- **duration** (list[str]): a list of duration found in the text
+
+###  Documents
+A list of documents mentionned in the conversation with the following properties:
+
+- **document_type** (str): The type of the document for instance a passport
+- **document_number** (str): The number/identifier of the document for instance a passport number
+- **document_name** (str): The name of the document
+- **document_date** (str): The date associated with the document
+- **document_location** (str): The location associated with the document for instance the country associated with the passport
+- **document_doctor** (str): The doctor associated with the document when related to medical domain.
+
+### Events
+A list of events mentionned in the conversation with the following properties:
+
+- **event_name** (str): The name of the event
+- **event_date** (str): The date associated with the event
+- **event_location** (str): The location of the event
+- **event_organizer** (str): The organizer of the event, could be a person or an organization
+
+### Facilities
+A list of facilities mentionned in the conversation with the following properties:
+
+- **facility_name** (str): The name of the facility
+- **facility_location** (str): The location of the facility
+- **facility_type** (Enum): The type of the facility # change to do in code
+- **facility_is_medical** (bool): Whether the facility is medical or not
+- **facility_type_other** (str): The type of the facility if other than the **facility_type** proposed Enum
+
+#### Facility Types String Enum
+Here are the possible value for the facility predefined types:
+- **HOSPITAL**
+- 
+-  TODO and changed in CODE
+
+### FlightBookings
+A list of flight booking mentionned in the conversation with the following properties:
+- **departure_date** (str): The departure date of the flight
+- **departure_time** (str): The departure time of the flight
+- **departure_location** (str): The departure location of the flight
+- **arrival_date** (str): The arrivale date of the flight ## TODO CHANGE IN CODE
+- **arrival_time** (str): The arrivale time of the flight ## TODO CHANGE IN CODE
+- **arrival_location** (str): The arrivale location of the flight
+
+### GeopoliticalEntities
+A list of geopolitical entities mentionned in the conversation with the following properties:
+
+- **country** (str): The name of the country
+- **state** (str): The name of the state
+- **city** (str): The name of the city
+
+### HealthRecords
+A list of Health Records mentionned in the conversation with the followinf properties:
+ 
+- **blood_type** (Enum): The blood type of the person
+- **weight** (List[Measurement]): The weight of the person
+- **height** (List[Measurement]): The height of the person
+- **bmi** (List[Measurement]): The body mass index of the person
+- **blood_pressure** (List[Measurement]): The blood pressure of the person
+- **heart_rate** (List[Measurement]): The heart rate of the person
+- **temperature** (List[Measurement]): The temperature of the person
+- **allergies** (List[str]): The allergies of the person
+- **injuries** (List[Injury]): The injuries of the person
+- **medications** (List[Medications]): The medications of the person
+- **vaccinations** (List[Vaccination]): The vaccinations of the person
+- **diseases** (List[str]): The diseases of the person
+- **surgeries** (List[Surgery]): The surgeries of the person
+- **hospitalizations** (List[Hospitalization]): The hospitalizations of the person
+- **family_history** (List[str]): The family history of the person
+- **lifestyle** (List[str]): The lifestyle of the person
+- **diet** (List[str]): The diet of the person
+- **exercise** (List[str]): The exercise of the person
+- **sleep** (List[str]): The sleep of the person
+- **mental_health** (List[str]): The mental health of the person
+- **substance_use** (List[str]): The substance use of the person
+- **sexual_health** (List[str]): The sexual health of the person
+- **reproductive_health** (List[str]): The reproductive health of the person
+- **pregnancy** (List[Pregnancy]): The pregnancy of the person
+- **children** (List[Childrens]): The children of the person
+- **pets** (List[Pet]): The pets of the person
+- **insurance** (List[str]): The insurance of the person
+
+#### Blood Types (Enum)
+ - **A_POSITIVE**
+ - **A_NEGATIVE**
+ - **B_POSITIVE**
+ - **B_NEGATIVE**
+ - **AB_POSITIVE**
+ - **AB_NEGATIVE**
+ - **O_POSITIVE**
+ - **O_NEGATIVE**
+
+#### Injuries
+- **injury_name** (str): The name of the injury
+- **injury_description** (str): The description of the injury
+- **injury_severity** (str): The severity of the injury
+- **injury_date** (str): The date of the injury
+- **injury_cause** (str): The cause of the injury
+- **injury_location** (str): The location of the injury
+- **injury_treatment** (str): The treatment of the injury
+
+#### Medications
+- **medication_name** (str): The name of the medication
+- **medication_dosage** (str): The dosage of the medication
+- **medication_frequency** (str): The frequency of the medication
+- **medication_duration** (str): The duration of the medication
+- **medication_start_date** (str): The start date of the medication
+- **medication_end_date** (str): The end date of the medication
+- **medication_prescription** (str): The prescription of the medication
+- **medication_reason** (str): The doctor who prescribed the medication
+- **medication_side_effects** (str): The side effects of the medication
+- **medication_warnings** (str): The warnings of the medication
+- **medication_instructions** (str): The instructions of the medication
+- **medication_doctor** (str): The notes of the medication
+
+#### Vaccination
+- **vaccination_name** (str): The name of the vaccination
+- **vaccination_date** (str): The date of the vaccination
+- **vaccination_location** (str): The location of the vaccination
+- **vaccination_doctor** (str): The doctor of the vaccination
+
+#### Surgery
+- **surgery_name** (str): The name of the surgery
+- **surgery_date** (str): The date of the surgery
+- **surgery_location** (str): The location of the surgery
+- **surgery_doctor** (str): The doctor of the surgery
+
+#### Hospitalization
+- **hospital_name** (str): The name of the hospital
+- **hospital_date** (str): The date of the hospitalization
+- **hospital_location** (str): The location of the hospital
+- **hospital_doctor** (str): The doctor of the hospital
+
+#### Pregnancy
+- **pregnancy_date** (str): The date of the pregnancy
+- **pregnancy_location** (str): The location of the pregnancy
+- **pregnancy_doctor** (str): The doctor of the pregnancy
+- **pregnancy_outcome** (str): The outcome of the pregnancy
+
+#### Children
+- **child_name** (str): The name of the child
+- **child_age** (str): The age of the child
+- **child_gender** (str): The gender of the child assigned at birth
+
+#### Pet
+- **pet_name** (str): The name of the pet
+- **pet_age** (str): The age of the pet
+- **pet_species** (str): The species of the pet
+- **pet_breed** (str): The breed of the pet
+- **pet_gender** (str): The gender of the pet
+
+### HotelBookings
 
 ### Locations
+A list of locations containing the following properties:
 
-- city (str): The name of the city
-- state (str): The name of the state
-- zipcode (str): The zipcode of the location
-- country (str): The name of the country
+- **city** (str): The name of the city
+- **state** (str): The name of the state
+- **zipcode** (str): The zipcode of the location
+- **country** (str): The name of the country
+
+### Moneys
+A list of moneys containing the following properties:
+- **amount** (float): The amount of money
+- **currency** (str): The currency of the money
+- **subject** (str): The subject of the money
+
+### NonGeopoliticalEntities
+A list of non geopolitical entities mentionned in the conversation with the following properties:
+- **entity_name** (str): The name of the entity
+- **entity_type** (str): The type of the entity
+
+### Organizations
+A list of organizations mentionned in the conversation with the following properties:
+- **organization_name** (str): The name of the organization
+- **organization_location** (Location): The location of the organization
+- **organization_type** (OrganizationType): The type of the organization
+
+### PaymentCardIndustries
+A list of payment card industry entities mentionned in the conversation with the following properties:
+- **bank_account** (List[str]): The bank account of the person. Exclude GeoPolitical entities, Companies and commercial entities.
+- **credit_card** (List[CreditCard]): The credit card of the person.
+- **bank_routing_number** (List[str]): The bank routing number of the person. Exclude GeoPolitical entities, Companies and commercial entities.
+
+#### CreditCard
+- **card_holder_name** (str): The name of the card holder
+- **card_number** (str): The number of the credit card
+- **card_expiration_date** (str): The expiration date of the credit card
+- **card_cvv** (str): The security code of the credit card
+
+### Persons
+A list of persons mentionned in the conversation with the following properties:
+- **full_name** (str): The full name of the human person
+- **first_name** (str): The first name of the human person
+- **middle_name** (str): The middle name of the human person
+- **last_name** (str): The last name of the human person
+- **nickname** (str): The nickname of the person
+- **person_extra** (PersonExtra): Extra information about the person
+#### PersonExtra
+- **email_address** (str): The email address
+- **gender** (str): The gender of the person assigned at birth
+- **origins** (List[str]): The origin of the person
+- **attributes** (List[str]): The attributes of the person
+- **other_attributes** (List[OtherAttributes]): The other attributes of the person
+- **keywords** (List[str]): The keywords associated with the person
+- **marital_status** (MaritalStatus): The marital status of the person
+- **occupation** (Occupation): The occupation of the person
+- **education_level** (EducationLevel): The education level of the person
+- **skills** (List[Skill]): The skills of the person
+- **medical_profession** (MedicalProfession): The medical profession of the person
+- **employer** (str): The employer of the person
+- **religion** (Religion): The religion of the person
+- **phone_number** (str): The phone number of the person
+- **political_affiliation** (PoliticalAffiliation): The political affiliation of the person
+- **passport_number** (str): The passport number of the person
+- **username** (str): The username of the person
+- **password** (str): The password of the person
+- **ip_address** (str): The IP address of the person
+- **social_security_number** (str): The social security number of the person
+- **drivers_license_number** (str): The driver's license number of the person
+- **languages** (List[str]): The languages spoken by the person
+- **zodiac_sign** (ZodiacSign): The zodiac sign of the person
+- **age** (Age): The age of the associated person
+- **age_in_years** (int): The age of the associated person in years
+- **age_in_months** (int): The age of the associated person in months
+
+#### OtherAttributes
+A list of other attributes mentionned in the conversation with the following properties:
+- **attribute_name** (str): The name of the attribute
+- **attribute_value** (str): The value of the attribute
+- **speaker** (str): The speaker mentioning the attribute
+- **subject** (str): The subject to whom the attribute applies
+
+
+#### MaritalStatus (Enum)
+- **SINGLE**
+- **MARRIED**
+- **WIDOWED**
+- **DIVORCED**
+
+#### Occupation (Enum)
+- **EMPLOYED**
+- **UNEMPLOYED**
+- **STUDENT**
+- **RETIRED**
+- **HOMEMAKER**
+- **SELF_EMPLOYED**
+- **FREELANCER**
+- **ENTREPRENEUR**
+- **OTHER**
+
+#### EducationLevel (Enum)
+- **PRIMARY**
+- **SECONDARY**
+- **BACHELOR**
+- **MASTER**
+- **DOCTORATE**
+- **OTHER**
+
+#### Skill
+A list of skills mentionned in the conversation with the following properties:
+- **skill_name** (str): The name of the skill
+- **skill_level** (SkillLevel): The level of the skill
+
+#### SkillLevel (Enum)
+- **BEGINNER**
+- **INTERMEDIATE**
+- **ADVANCED**
+- **EXPERT**
+
+
+#### MedicalProfession (Enum)
+- **PHYSICIAN**
+- **SURGEON**
+- **DENTIST**
+- **NURSE**
+- **OPTOMETRIST**
+- **PHARMACIST**
+- **PSYCHOLOGIST**
+- **DIETITIAN**
+- **VETERINARIAN**
+- **PHYSIOTHERAPIST**
+- **ASSISTANT_PHYSICIAN**
+- **RADIOLOGIST**
+- **MEDICAL_LABORATORY_SCIENTIST**
+- **OTHER**
+
+#### Religion (Enum)
+- **CHRISTIANITY**
+- **ISLAM**
+- **HINDUISM**
+- **BUDDHISM**
+- **JUDAISM**
+- **SIKHISM**
+- **SHINTO**
+- **BAHAISM**
+- **JAINISM**
+- **ZOROASTRIANISM**
+- **TAOISM**
+- **SHAMANISM**
+- **PAGANISM**
+- **OTHER**
+
+#### PoliticalAffiliation (Enum)
+- **DEMOCRAT**
+- **REPUBLICAN**
+- **LIBERTARIAN**
+- **GREEN**
+- **INDEPENDENT**
+- **OTHER**
+
+#### ZodiacSign (Enum)
+- **ARIES**
+- **TAURUS**
+- **GEMINI**
+- **CANCER**
+- **LEO**
+- **VIRGO**
+- **LIBRA**
+- **SCORPIO**
+- **SAGITTARIUS**
+- **CAPRICORN**
+- **AQUARIUS**
+- **PISCES**
+
+### Products
+A list of products mentionned in the conversation with the following properties:
+- **product_name** (str): The name of the product
+
+### Quantities
+A list of quantities mentionned in the conversation with the following properties:
+- **value** (float): The value of the quantity
+- **unit** (str): The unit of the quantity
+- **subject** (str): The subject of the quantity
+- **speaker** (str): The speaker mentioning the quantity
+
+### Questions
+A list of questions mentionned in the conversation with the following properties:
+- **question** (str): The question asked
+- **answer** (str): The answer to the question
+- **answer** (str): The person answering the question
+- **asker** (str): The person asking the question
+- **asked** (str): The date of the question
+
+### Speakers
+A list of speakers mentionned in the conversation with the following properties:
+- **speaker_name** (str): The name of the speaker
+- **speaker_id** (str): The id of the speaker
+
+### TradingAction
+A list of trading actions mentionned in the conversation with the following properties:
+- **stock_name** (str): The name of the stock
+- **stock_symbol** (str): The symbol of the stock
+- **stock_price** (float): The price of the stock
+- **stock_quantity** (int): The quantity of the stock
+- **stock_date** (str): The date of the trading action
+
+### Vehicles
+A list of vehicles mentionned in the conversation with the following properties:
+- **vehicle_make** (str): The make of the vehicle
+- **vehicle_model** (str): The model of the vehicle
+- **vehicle_year** (str): The year of the vehicle
+- **vehicle_color** (str): The color of the vehicle
+- **vehicle_plate** (str): The plate of the vehicle
+- **vehicle_vin** (str): The VIN of the vehicle
+- **vehicle_identification_number** (str): The identification number of the vehicle
+
+## Common Classes
+### Measurement
+A measurement will have the following properties:
+- **value** (float): The value of the measurement
+- **unit** (str): The unit of the measurement
+- **subject** (str): The subject of the measurement
+- **speaker** (str): The speaker mentioning the measurement
+
 
