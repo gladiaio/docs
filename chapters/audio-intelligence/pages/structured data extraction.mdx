@@ -342,6 +342,157 @@ A list of Health Records mentionned in the conversation with the followinf prope
 - **pets** (List[Pet]): The pets of the person
 - **insurance** (List[str]): The insurance of the person
 
+```json results
+{
+  "health_records": [
+    {
+      "blood_type": "BloodType(ENUM)",
+      "weight": [
+        {
+          "value": "str",
+          "unit": "str",
+          "date": "str",
+          "subject": "str",
+          "speaker": "str"
+        }
+      ],
+      "height": [
+        {
+          "value": "str",
+          "unit": "str",
+          "date": "str",
+          "subject": "str",
+          "speaker": "str"
+        }
+      ],
+      "bmi": [
+        {
+          "value": "str",
+          "unit": "str",
+          "date": "str",
+          "subject": "str",
+          "speaker": "str"
+        }
+      ],
+      "blood_pressure": [
+        {
+          "value": "str",
+          "unit": "str",
+          "date": "str",
+          "subject": "str",
+          "speaker": "str"
+        }
+      ],
+      "heart_rate": [
+        {
+          "value": "str",
+          "unit": "str",
+          "date": "str",
+          "subject": "str",
+          "speaker": "str"
+        }
+      ],
+      "temperature": [
+        {
+          "value": "str",
+          "unit": "str",
+          "date": "str",
+          "subject": "str",
+          "speaker": "str"
+        }
+      ],
+      "allergies": ["str"],
+      "injuries": [
+        {
+          "injury_name": "str",
+          "injury_description": "str",
+          "injury_severity": "str",
+          "injury_date": "str",
+          "injury_cause": "str",
+          "injury_location": "str",
+          "injury_treatment": "str"
+        }
+      ],
+      "medications": [
+        {
+          "medication_name": "str",
+          "medication_dosage": "str",
+          "medication_frequency": "str",
+          "medication_duration": "str",
+          "medication_start_date": "str",
+          "medication_end_date": "str",
+          "medication_prescription": "str",
+          "medication_reason": "str",
+          "medication_side_effects": "str",
+          "medication_warnings": "str",
+          "medication_instructions": "str",
+          "medication_doctor": "str"
+        }
+      ],
+      "vaccinations": [
+        {
+          "vaccination_name": "str",
+          "vaccination_date": "str",
+          "vaccination_location": "str",
+          "vaccination_doctor": "str"
+        }
+      ],
+      "diseases": ["str"],
+      "surgeries": [
+        {
+          "surgery_name": "str",
+          "surgery_date": "str",
+          "surgery_location": "str",
+          "surgery_doctor": "str"
+        }
+      ],
+      "hospitalizations": [
+        {
+          "hospital_name": "str",
+          "hospital_date": "str",
+          "hospital_location": "str",
+          "hospital_doctor": "str"
+        }
+      ],
+      "family_history": ["str"],
+      "lifestyle": ["str"],
+      "diet": ["str"],
+      "exercise": ["str"],
+      "sleep": ["str"],
+      "mental_health": ["str"],
+      "substance_use": ["str"],
+      "sexual_health": ["str"],
+      "reproductive_health": ["str"],
+      "pregnancy": [
+        {
+          "pregnancy_date": "str",
+          "pregnancy_location": "str",
+          "pregnancy_doctor": "str",
+          "pregnancy_outcome": "str"
+        }
+      ],
+      "children": [
+        {
+          "child_name": "str",
+          "child_age": "str",
+          "child_gender": "str"
+        }
+      ],
+      "pets": [
+        {
+          "pet_name": "str",
+          "pet_age": "str",
+          "pet_species": "str",
+          "pet_breed": "str",
+          "pet_gender": "str"
+        }
+      ],
+      "insurance": ["str"]
+    }
+  ]
+}
+```
+
 ### Blood Type (Enum)
  - **A_POSITIVE**
  - **A_NEGATIVE**
