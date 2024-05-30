@@ -81,41 +81,16 @@
         "chapters/speech-to-text-api/pages/languages"
       ]
     },
-//    {
-//      "group": "Audio Intelligence",
-//      "pages": [
-//        "chapters/audio-intelligence/pages/translation",
-//        "chapters/audio-intelligence/pages/summarization",
-//        "chapters/audio-intelligence/pages/named entity recognition",
-//        "chapters/audio-intelligence/pages/sentiment analysis",
-//        "chapters/audio-intelligence/pages/moderation",
-//        "chapters/audio-intelligence/pages/chapterization",
-//        "chapters/audio-intelligence/pages/audio to llm"
-//      ]
-//    },
     {
-      "group": "Structured Data Extraction",
+      "group": "Audio Intelligence",
       "pages": [
-        "chapters/structured-data-extraction/pages/addresses",
-        "chapters/structured-data-extraction/pages/appointments",
-        "chapters/structured-data-extraction/pages/data time entities",
-        "chapters/structured-data-extraction/pages/documents",
-        "chapters/structured-data-extraction/pages/events",
-        "chapters/structured-data-extraction/pages/facilities",
-        "chapters/structured-data-extraction/pages/flight bookings",
-        "chapters/structured-data-extraction/pages/geopolitical entities",
-        "chapters/structured-data-extraction/pages/health records",
-        "chapters/structured-data-extraction/pages/hotel bookings",
-        "chapters/structured-data-extraction/pages/money entities",
-        "chapters/structured-data-extraction/pages/non geopolitical entities",
-        "chapters/structured-data-extraction/pages/organizations",
-        "chapters/structured-data-extraction/pages/payment card industry",
-        "chapters/structured-data-extraction/pages/persons",
-        "chapters/structured-data-extraction/pages/products",
-        "chapters/structured-data-extraction/pages/questions",
-        "chapters/structured-data-extraction/pages/speakers",
-        "chapters/structured-data-extraction/pages/trading actions",
-        "chapters/structured-data-extraction/pages/vehicules"
+        "chapters/audio-intelligence/pages/translation",
+        "chapters/audio-intelligence/pages/summarization",
+        "chapters/audio-intelligence/pages/named entity recognition",
+        "chapters/audio-intelligence/pages/sentiment analysis",
+        "chapters/audio-intelligence/pages/moderation",
+        "chapters/audio-intelligence/pages/chapterization",
+        "chapters/audio-intelligence/pages/audio to llm"
       ]
     },
     {
