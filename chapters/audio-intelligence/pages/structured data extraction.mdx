@@ -3,7 +3,6 @@ title: 'Structured Data Extraction'
 description: 'Thanks to structured data extract you can now extract directly nested json structure directly from the audio conversation.'
 ---
 
-
 # Available Classes
 - Addresses
 - Appointments
@@ -42,6 +41,26 @@ A list of addresses containing the following properties:
 - **state** (str): The name of the state
 - **zipcode** (str): The zipcode of the address
 - **coordinates** (str): The coordinates of the address
+
+```json result
+{
+  "addresses": [
+    {
+      "address_type": "ENUM",
+      "full_address": "str",
+      "floor": "str",
+      "appartment_number": "str",
+      "building_number": "str",
+      "street_name": "str",
+      "city_name": "str",
+      "country": "str",
+      "state": "str",
+      "zipcode": "str",
+      "coordinates": "str"
+    }
+  ]
+}
+```
 
 ### AddressType (Enum)
 - **HOME**
