@@ -775,10 +775,26 @@ A list of other attributes mentionned in the conversation with the following pro
 - **speaker** (str): The speaker mentioning the attribute
 - **subject** (str): The subject to whom the attribute applies
 
+```json result
+{
+  "attribute_name": "str,
+  "attribute_value": "str",
+  "speaker": "str",
+  "subject": "str"
+}
+```
+
 #### Skill
 A list of skills mentionned in the conversation with the following properties:
 - **skill_name** (str): The name of the skill
 - **skill_level** (SkillLevel): The level of the skill
+
+```json result
+{
+  "skill_name": "str,
+  "skill_level": "SkillLevel(ENUM)"
+}
+```
 
 ##### SkillLevel (Enum)
 - **BEGINNER**
@@ -1052,4 +1068,4 @@ A list of quantities mentionned in the conversation with the following propertie
 - **YER**
 - **ZAR**
 - **ZMW**
-: 
+: :
