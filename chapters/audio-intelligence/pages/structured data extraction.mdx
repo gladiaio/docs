@@ -27,45 +27,6 @@ description: 'Thanks to structured data extract you can now extract directly nes
 - TradingActions
 - Vehicles
 
-## Addresses
-A list of addresses containing the following properties:
-
-- **address_type** (AddressType): The type of the address. Could be home, work or other
-- **full_address** (str): The full address. For example 35 rue du louvre or 23rd avenue, etc. include the city, the country, the state, the zipcode, the coordinates, the building number, the appartment number, the floor, etc.
-- **floor** (str): The floor of the appartement if applicable
-- **appartement_number** (str): The number of the appartment. Could be the appartment number or the office number
-- **building_number** (str): The number of the address. Could be the building number or the house number
-- **street_name** (str): The name of the street
-- **city_name** (str): The name of the city
-- **country** (str): The name of the country
-- **state** (str): The name of the state
-- **zipcode** (str): The zipcode of the address
-- **coordinates** (str): The coordinates of the address
-
-```json result
-{
-  "addresses": [
-    {
-      "address_type": "ENUM",
-      "full_address": "str",
-      "floor": "str",
-      "appartment_number": "str",
-      "building_number": "str",
-      "street_name": "str",
-      "city_name": "str",
-      "country": "str",
-      "state": "str",
-      "zipcode": "str",
-      "coordinates": "str"
-    }
-  ]
-}
-```
-
-### AddressType (Enum)
-- **HOME**
-- **WORK**
-- **OTHER**
 
 ## Appointments
 A list of appointments with the following properies:
