@@ -229,10 +229,16 @@ The result will contain a `sentences` key (in addition to `utterances`):
 
 ## Automatic language detection
 
-With automatic language detection, Gladia will identify the dominant language spoken in an audio file and use it during the transcription.
+With automatic language detection, Gladia will identify the dominant language spoken in an audio file and use it during the transcription. This behaviour can be toggled with the `detect_language` parameter.
 
 **Automatic language detection is turned on by default.**
 
+```json request data
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "detect_language": true
+}
+```
 
 ## Multiple languages detection <br/>(Code switching)
 By enabling code switching, the model will continuously detect the spoken language and switch the transcription language accordingly.
