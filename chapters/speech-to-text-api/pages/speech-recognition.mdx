@@ -262,10 +262,12 @@ When code switching is enabled, you may provide a list of languages to the model
 ```
 
 
-
 ## Manual transcription language
 If you already know the dominant language, you can disable language detection by setting `detect_language` to `false` and manually set the the language with the `language` key.
 
+<Warning>
+In order to use manual language `detect_language` must be disabled, otherwise the `language` parameter will be ignored.
+</Warning>
 
 ```json request data
 {
