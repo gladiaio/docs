@@ -94,6 +94,15 @@
       ]
     },
     {
+      "group": "Structured Data Extraction",
+      "pages": [
+        "chapters/structured-data-extraction/pages/addresses",
+        "chapters/structured-data-extraction/pages/appointments",
+        "chapters/structured-data-extraction/pages/data time entities",
+        "chapters/structured-data-extraction/pages/documents",
+      ]
+    },
+    {
       "group": "Limits & Specifications",
       "pages": [
         "chapters/limits-and-specifications/pages/concurrency",
