@@ -772,6 +772,16 @@ A list of trading actions mentionned in the conversation with the following prop
 - **stock_quantity** (int): The quantity of the stock
 - **stock_date** (str): The date of the trading action
 
+```json results
+{
+  "stock_name": "str",
+  "stock_symbol": "str",
+  "stock_price": 42.42,
+  "stock_quantity": 1,
+  "stock_date": "str"
+}
+```
+
 ## Vehicles
 A list of vehicles mentionned in the conversation with the following properties:
 - **vehicle_make** (str): The make of the vehicle
@@ -779,8 +789,18 @@ A list of vehicles mentionned in the conversation with the following properties:
 - **vehicle_year** (str): The year of the vehicle
 - **vehicle_color** (str): The color of the vehicle
 - **vehicle_plate** (str): The plate of the vehicle
-- **vehicle_vin** (str): The VIN of the vehicle
 - **vehicle_identification_number** (str): The identification number of the vehicle
+
+```json results
+{
+  "vehicle_make": "str",
+  "vehicle_model": "str",
+  "vehicle_year": "str",
+  "vehicle_color": "str",
+  "vehicle_plate": "str",
+  "vehicle_identification_number": "str",
+}
+```
 
 ## Common Classes
 ### Measurement
