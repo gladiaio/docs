@@ -81,18 +81,18 @@
         "chapters/speech-to-text-api/pages/languages"
       ]
     },
-    {
-      "group": "Audio Intelligence",
-      "pages": [
-        "chapters/audio-intelligence/pages/translation",
-        "chapters/audio-intelligence/pages/summarization",
-        "chapters/audio-intelligence/pages/named entity recognition",
-        "chapters/audio-intelligence/pages/sentiment analysis",
-        "chapters/audio-intelligence/pages/moderation",
-        "chapters/audio-intelligence/pages/chapterization",
-        "chapters/audio-intelligence/pages/audio to llm"
-      ]
-    },
+//    {
+//      "group": "Audio Intelligence",
+//      "pages": [
+//        "chapters/audio-intelligence/pages/translation",
+//        "chapters/audio-intelligence/pages/summarization",
+//        "chapters/audio-intelligence/pages/named entity recognition",
+//        "chapters/audio-intelligence/pages/sentiment analysis",
+//        "chapters/audio-intelligence/pages/moderation",
+//        "chapters/audio-intelligence/pages/chapterization",
+//        "chapters/audio-intelligence/pages/audio to llm"
+//      ]
+//    },
     {
       "group": "Structured Data Extraction",
       "pages": [
