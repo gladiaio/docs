@@ -147,7 +147,7 @@ A list of events mentionned in the conversation with the following properties:
 
 ```json result
 {
-  "documents": [
+  "events": [
     {
       "event_name": "str",
       "event_date": "str",
@@ -169,7 +169,7 @@ A list of facilities mentionned in the conversation with the following propertie
 
 ```json result
 {
-  "documents": [
+  "facilities": [
     {
       "facility_name": "str",
       "facility_location": "str",
@@ -342,7 +342,7 @@ A list of Health Records mentionned in the conversation with the followinf prope
 - **pets** (List[Pet]): The pets of the person
 - **insurance** (List[str]): The insurance of the person
 
-## Blood Type (Enum)
+### Blood Type (Enum)
  - **A_POSITIVE**
  - **A_NEGATIVE**
  - **B_POSITIVE**
@@ -351,8 +351,6 @@ A list of Health Records mentionned in the conversation with the followinf prope
  - **AB_NEGATIVE**
  - **O_POSITIVE**
  - **O_NEGATIVE**
-
-
 
 ### Injuries
 - **injury_name** (str): The name of the injury
@@ -442,6 +440,43 @@ A list of hotel booking mentionned in the conversation with the following proper
 - **checkin_time** (str): The checkin time of the hotel booking
 - **checkout_time** (str): The checkout time of the hotel booking
 
+```json result
+{
+  "hotel_bookings": [
+    {
+      "checkin_date": "str",
+      "checkout_date": "str",
+      "number_of_adults": 1,
+      "number_of_children": 1,
+      "number_of_babies": 1,
+      "number_of_baby_bed_needed": 1,
+      "number_of_pets": 1,
+      "hotel_name": "str",
+      "location": "str",
+      "room_type": "str",
+      "room_number": "str",
+      "room_price": 1.0,
+      "room_price_currency": "Currency(ENUM)",
+      "room_service": [
+        "str"
+      ],
+      "breakfast_needed": true,
+      "lunch_needed": true,
+      "dinner_needed": true,
+      "wifi_needed": true,
+      "gym_needed": true,
+      "pool_needed": true,
+      "spa_needed": true,
+      "parking_needed": true,
+      "airport_shuttle_needed": true,
+      "checkin_time": "str",
+      "checkout_time": "str"
+      
+    }
+  ]
+}
+```
+
 ## Locations
 A list of locations containing the following properties:
 
@@ -450,16 +485,52 @@ A list of locations containing the following properties:
 - **zipcode** (str): The zipcode of the location
 - **country** (str): The name of the country
 
+```json results
+{
+  "locations": [
+    {
+      "city": "str",
+      "state": "str",
+      "zipcode": "str",
+      "country": "str"
+    }
+  ]
+}
+```
+
 ## Moneys
 A list of moneys containing the following properties:
 - **amount** (float): The amount of money
-- **currency** (str): The currency of the money
+- **currency** (Currency): The currency of the money
 - **subject** (str): The subject of the money
+
+```json results
+{
+  "moneys": [
+    {
+      "amount": 42.42,
+      "currency": "Currency(ENUM)",
+      "subject": "str"
+    }
+  ]
+}
+```
 
 ## NonGeopoliticalEntities
 A list of non geopolitical entities mentionned in the conversation with the following properties:
 - **entity_name** (str): The name of the entity
 - **entity_type** (str): The type of the entity
+
+```json results
+{
+  "non_geopolitical_entities": [
+    {
+      "entity_name": "str",
+      "entity_name": "str"
+    }
+  ]
+}
+```
 
 ## Organizations
 A list of organizations mentionned in the conversation with the following properties:
@@ -467,15 +538,53 @@ A list of organizations mentionned in the conversation with the following proper
 - **organization_location** (Location): The location of the organization
 - **organization_type** (OrganizationType): The type of the organization
 
+```json results
+{
+  "organization": [
+    {
+      "organization_name": "str",
+      "organization_location": {
+        "city": "str",
+        "state": "str",
+        "zipcode": "str",
+        "country": "str"
+      },
+      "organization_type": "OrganizationType(ENUM)"
+  ]
+}
+```
+
+### Organization Types
+- **GOVERNMENT**
+- **PRIVATE**
+- **NGO**
+
 ## PaymentCardIndustries
 A list of payment card industry entities mentionned in the conversation with the following properties:
-- **bank_account** (List[str]): The bank account of the person. Exclude GeoPolitical entities, Companies and commercial entities.
-- **credit_card** (List[CreditCard]): The credit card of the person.
-- **bank_routing_number** (List[str]): The bank routing number of the person. Exclude GeoPolitical entities, Companies and commercial entities.
+- **bank_accounts** (List[str]): The bank account of the person. Exclude GeoPolitical entities, Companies and commercial entities.
+- **credit_cards** (List[CreditCard]): The credit card of the person.
+- **bank_routing_numbers** (List[str]): The bank routing number of the person. Exclude GeoPolitical entities, Companies and commercial entities.
+
+```json results
+{
+  "payment_card_industries": [
+    "bank_accounts": ["str"],
+    "credit_cards": [
+      {
+        "card_holder_name": "str",
+        "card_number": 1234567890,
+        "card_expiration_date": "str",
+        "card_cvv": str
+      }
+    ],
+    "organization_type": ["str"]
+  ]
+}
+```
 
 ### CreditCard
 - **card_holder_name** (str): The name of the card holder
-- **card_number** (str): The number of the credit card
+- **card_number** (int): The number of the credit card
 - **card_expiration_date** (str): The expiration date of the credit card
 - **card_cvv** (str): The security code of the credit card
 
@@ -621,13 +730,27 @@ A list of skills mentionned in the conversation with the following properties:
 A list of products mentionned in the conversation with the following properties:
 - **product_name** (str): The name of the product
 
+```json results
+{
+  "products": ["str"]
+}
+```
+
 ## Questions
 A list of questions mentionned in the conversation with the following properties:
 - **question** (str): The question asked
 - **answer** (str): The answer to the question
-- **answer** (str): The person answering the question
 - **asker** (str): The person asking the question
 - **asked** (str): The date of the question
+
+```json results
+{
+  "question": "str",
+  "answer": "str",
+  "asker": "str",
+  "asked": "str"
+}
+```
 
 ## Speakers
 A list of speakers mentionned in the conversation with the following properties:
