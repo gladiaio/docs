@@ -405,43 +405,6 @@ A list of moneys containing the following properties:
 }
 ```
 
-## PaymentCardIndustries
-A list of payment card industry entities mentionned in the conversation with the following properties:
-- **bank_accounts** (List[str]): The bank account of the person. Exclude GeoPolitical entities, Companies and commercial entities.
-- **credit_cards** (List[CreditCard]): The credit card of the person.
-- **bank_routing_numbers** (List[str]): The bank routing number of the person. Exclude GeoPolitical entities, Companies and commercial entities.
-
-```json results
-{
-  "payment_card_industries": [
-    "bank_accounts": ["str"],
-    "credit_cards": [
-      {
-        "card_holder_name": "str",
-        "card_number": 1234567890,
-        "card_expiration_date": "str",
-        "card_cvv": str
-      }
-    ],
-    "organization_type": ["str"]
-  ]
-}
-```
-
-### CreditCard
-- **card_holder_name** (str): The name of the card holder
-- **card_number** (int): The number of the credit card
-- **card_expiration_date** (str): The expiration date of the credit card
-- **card_cvv** (str): The security code of the credit card
-
-```json results
-{
-  "card_holder_name": "str",
-  "card_number": 1234567890,
-  "card_expiration_date": "str",
-  "card_cvv": "str"
-}
-```
 
 
 
