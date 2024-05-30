@@ -76,13 +76,41 @@ A list of appointments with the following properies:
 - **appointment_with_person** (str): The person with whom the appointment is made
 - **reason** (str): The reason of the appointment
 
+```json result
+{
+  "appointments": [
+    {
+      "date": "str",
+      "time": "str",
+      "location": "str",
+      "appointment_with_person": "str",
+      "reason": "str"
+    }
+  ]
+}
+```
+
 ## DateTimeEntities
 A list of combined date and time entities found in the conversation with the following properties:
 
 - **dates** (list[str]): a list of date item found in the text
-- **date_interval** (list[str]) a list of date intervals found in the text
-- **time** (list[str]): a list of times found in the text
-- **duration** (list[str]): a list of duration found in the text
+- **date_intervals** (list[str]) a list of date intervals found in the text
+- **times** (list[str]): a list of times found in the text
+- **durations** (list[str]): a list of duration found in the text
+
+```json result
+{
+  "date_time_entities": [
+    {
+      "dates":["str"],
+      "times": ["str"],
+      "locations": ["str"],
+      "appointment_with_persons": ["str"],
+      "reasons": ["str"]
+    }
+  ]
+}
+```
 
 ##  Documents
 A list of documents mentionned in the conversation with the following properties:
