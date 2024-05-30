@@ -597,9 +597,58 @@ A list of persons mentionned in the conversation with the following properties:
 - **nickname** (str): The nickname of the person
 - **person_extra** (PersonExtra): Extra information about the person
 
+```json results
+{
+  "persones": [
+    "full_name": "str",
+    "first_name": "str",
+    "middle_name": "str",
+    "last_name": "str",
+    "nickname": "str",
+    "person_extra": {
+      "email_address": "str",
+      "gender": "Gender(ENUM)",
+      "origins": ["str"],
+      "attributes": ["str"],
+      "other_attributes": [
+        
+      ],
+      "keywords": ["str"],
+      "marital_status": "MaritalStatus(ENUM)",
+      "occupation": "Occupation(ENUM)",
+      "education_level": "EducationLevel(ENUM)",
+      "skills": [
+        {
+          "skill_name": "str",
+          "skill_level" "SkillLevel(ENUM)"
+        }
+      ],
+      "medical_profession": "MedicalProfession(ENUM)",
+      "employer": "str",
+      "religion": "Religion(ENUM)",
+      "phone_number": "str",
+      "political_affiliation": "PoliticalAffiliation(ENUM)",
+      "passport_number": "str",
+      "username": "str",
+      "password": "str",
+      "ip_address": "str",
+      "social_security_number": "str",
+      "drivers_license_number": "str",
+      "languages": ["str"],
+      "zodiac_sign": "ZodiacSign(ENUM)",
+      "age": {
+        "age_number": 42,
+         "age_unit": "str"
+      },
+      "age_in_years": 42,
+      "age_in_months": 504
+    }
+}
+```
+
 ### PersonExtra
 - **email_address** (str): The email address
-- **gender** (str): The gender of the person assigned at birth
+- **gender** (Gender): The gender of the person assigned at birth
 - **origins** (List[str]): The origin of the person
 - **attributes** (List[str]): The attributes of the person
 - **other_attributes** (List[OtherAttributes]): The other attributes of the person
@@ -624,6 +673,21 @@ A list of persons mentionned in the conversation with the following properties:
 - **age** (Age): The age of the associated person
 - **age_in_years** (int): The age of the associated person in years
 - **age_in_months** (int): The age of the associated person in months
+
+#### Age
+- **age_number** (int): The age of the person in years
+- **age_unit** (str): The unit of the age. Could be years, months, days, etc.
+
+```json result
+{
+  "age_number": 1,
+  "age_unit": "years"
+}
+```
+
+#### Gender (Enum)
+- **MALE**
+- **FEMALE**
 
 #### MedicalProfession (Enum)
 - **PHYSICIAN**
@@ -988,7 +1052,4 @@ A list of quantities mentionned in the conversation with the following propertie
 - **YER**
 - **ZAR**
 - **ZMW**
-
-
-
-
+: 
