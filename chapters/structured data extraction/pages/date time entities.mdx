@@ -1,0 +1,24 @@
+---
+title: 'DateTimeEntities'
+description: 'Description of your new file.'
+---
+A list of combined date and time entities found in the conversation with the following properties:
+
+- **dates** (list[str]): a list of date item found in the text
+- **date_intervals** (list[str]) a list of date intervals found in the text
+- **times** (list[str]): a list of times found in the text
+- **durations** (list[str]): a list of duration found in the text
+
+```json result
+{
+  "date_time_entities": [
+    {
+      "dates":["str"],
+      "times": ["str"],
+      "locations": ["str"],
+      "appointment_with_persons": ["str"],
+      "reasons": ["str"]
+    }
+  ]
+}
+```

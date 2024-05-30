@@ -28,27 +28,6 @@ description: 'Thanks to structured data extract you can now extract directly nes
 - Vehicles
 
 
-## DateTimeEntities
-A list of combined date and time entities found in the conversation with the following properties:
-
-- **dates** (list[str]): a list of date item found in the text
-- **date_intervals** (list[str]) a list of date intervals found in the text
-- **times** (list[str]): a list of times found in the text
-- **durations** (list[str]): a list of duration found in the text
-
-```json result
-{
-  "date_time_entities": [
-    {
-      "dates":["str"],
-      "times": ["str"],
-      "locations": ["str"],
-      "appointment_with_persons": ["str"],
-      "reasons": ["str"]
-    }
-  ]
-}
-```
 
 
 
@@ -421,22 +400,6 @@ A list of moneys containing the following properties:
       "amount": 42.42,
       "currency": "Currency(ENUM)",
       "subject": "str"
-    }
-  ]
-}
-```
-
-## NonGeopoliticalEntities
-A list of non geopolitical entities mentionned in the conversation with the following properties:
-- **entity_name** (str): The name of the entity
-- **entity_type** (str): The type of the entity
-
-```json results
-{
-  "non_geopolitical_entities": [
-    {
-      "entity_name": "str",
-      "entity_name": "str"
     }
   ]
 }
