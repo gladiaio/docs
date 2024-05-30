@@ -702,7 +702,10 @@ A list of persons mentionned in the conversation with the following properties:
       "origins": ["str"],
       "attributes": ["str"],
       "other_attributes": [
-        
+        {
+          "key": "str",
+          "value": "str"
+        }
       ],
       "keywords": ["str"],
       "marital_status": "MaritalStatus(ENUM)",
@@ -764,6 +767,50 @@ A list of persons mentionned in the conversation with the following properties:
 - **age** (Age): The age of the associated person
 - **age_in_years** (int): The age of the associated person in years
 - **age_in_months** (int): The age of the associated person in months
+
+```json results
+{
+  "email_address": "str",
+  "gender": "Gender(ENUM)",
+  "origins": ["str"],
+  "attributes": ["str"],
+  "other_attributes": [
+    {
+      "key": "str",
+      "value": "str"
+    }
+  ],
+  "keywords": ["str"],
+  "marital_status": "MaritalStatus(ENUM)",
+  "occupation": "Occupation(ENUM)",
+  "education_level": "EducationLevel(ENUM)",
+  "skills": [
+    {
+      "skill_name": "str",
+      "skill_level" "SkillLevel(ENUM)"
+    }
+  ],
+  "medical_profession": "MedicalProfession(ENUM)",
+  "employer": "str",
+  "religion": "Religion(ENUM)",
+  "phone_number": "str",
+  "political_affiliation": "PoliticalAffiliation(ENUM)",
+  "passport_number": "str",
+  "username": "str",
+  "password": "str",
+  "ip_address": "str",
+  "social_security_number": "str",
+  "drivers_license_number": "str",
+  "languages": ["str"],
+  "zodiac_sign": "ZodiacSign(ENUM)",
+  "age": {
+    "age_number": 42,
+      "age_unit": "str"
+  },
+  "age_in_years": 42,
+  "age_in_months": 504
+}
+```
 
 #### Age
 - **age_number** (int): The age of the person in years
@@ -974,6 +1021,7 @@ A list of vehicles mentionned in the conversation with the following properties:
 A measurement will have the following properties:
 - **value** (float): The value of the measurement
 - **unit** (str): The unit of the measurement
+- **date** (str): The date of the measurement
 - **subject** (str): The subject of the measurement
 - **speaker** (str): The speaker mentioning the measurement
 
