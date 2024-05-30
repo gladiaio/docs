@@ -375,11 +375,37 @@ A list of Health Records mentionned in the conversation with the followinf prope
 - **medication_instructions** (str): The instructions of the medication
 - **medication_doctor** (str): The notes of the medication
 
+```json results
+{
+  "medication_name": "str",
+  "medication_dosage": "str",
+  "medication_frequency": "str",
+  "medication_duration": "str",
+  "medication_start_date": "str",
+  "medication_end_date": "str",
+  "medication_prescription": "str",
+  "medication_reason": "str",
+  "medication_side_effects": "str",
+  "medication_warnings": "str",
+  "medication_instructions": "str",
+  "medication_doctor": "str"
+}
+```
+
 ### Vaccination
 - **vaccination_name** (str): The name of the vaccination
 - **vaccination_date** (str): The date of the vaccination
 - **vaccination_location** (str): The location of the vaccination
 - **vaccination_doctor** (str): The doctor of the vaccination
+
+```json results
+{
+  "vaccination_name": "str",
+  "vaccination_date": "str",
+  "vaccination_location": "str",
+  "vaccination_doctor": "str"
+}
+```
 
 ### Surgery
 - **surgery_name** (str): The name of the surgery
@@ -387,11 +413,29 @@ A list of Health Records mentionned in the conversation with the followinf prope
 - **surgery_location** (str): The location of the surgery
 - **surgery_doctor** (str): The doctor of the surgery
 
+```json results
+{
+  "surgery_name": "str",
+  "surgery_date": "str",
+  "surgery_location": "str",
+  "surgery_doctor": "str"
+}
+```
+
 ### Hospitalization
 - **hospital_name** (str): The name of the hospital
 - **hospital_date** (str): The date of the hospitalization
 - **hospital_location** (str): The location of the hospital
 - **hospital_doctor** (str): The doctor of the hospital
+
+```json results
+{
+  "hospital_name": "str",
+  "hospital_date": "str",
+  "hospital_location": "str",
+  "hospital_doctor": "str"
+}
+```
 
 ### Pregnancy
 - **pregnancy_date** (str): The date of the pregnancy
@@ -399,10 +443,27 @@ A list of Health Records mentionned in the conversation with the followinf prope
 - **pregnancy_doctor** (str): The doctor of the pregnancy
 - **pregnancy_outcome** (str): The outcome of the pregnancy
 
+```json results
+{
+  "pregnancy_date": "str",
+  "pregnancy_location": "str",
+  "pregnancy_doctor": "str",
+  "pregnancy_outcome": "str"
+}
+```
+
 ### Children
 - **child_name** (str): The name of the child
 - **child_age** (str): The age of the child
 - **child_gender** (str): The gender of the child assigned at birth
+
+```json results
+{
+  "child_name": "str",
+  "child_age": "str",
+  "child_gender": "str"
+}
+```
 
 ### Pet
 - **pet_name** (str): The name of the pet
@@ -410,6 +471,16 @@ A list of Health Records mentionned in the conversation with the followinf prope
 - **pet_species** (str): The species of the pet
 - **pet_breed** (str): The breed of the pet
 - **pet_gender** (str): The gender of the pet
+
+```json results
+{
+  "pet_name": "str",
+  "pet_age": "str",
+  "pet_species": "str",
+  "pet_breed": "str",
+  "pet_gender": "str"
+}
+```
 
 ## HotelBookings
 A list of hotel booking mentionned in the conversation with the following properties:
@@ -471,7 +542,6 @@ A list of hotel booking mentionned in the conversation with the following proper
       "airport_shuttle_needed": true,
       "checkin_time": "str",
       "checkout_time": "str"
-      
     }
   ]
 }
@@ -587,6 +657,15 @@ A list of payment card industry entities mentionned in the conversation with the
 - **card_number** (int): The number of the credit card
 - **card_expiration_date** (str): The expiration date of the credit card
 - **card_cvv** (str): The security code of the credit card
+
+```json results
+{
+  "card_holder_name": "str",
+  "card_number": 1234567890,
+  "card_expiration_date": "str",
+  "card_cvv": "str"
+}
+```
 
 ## Persons
 A list of persons mentionned in the conversation with the following properties:
