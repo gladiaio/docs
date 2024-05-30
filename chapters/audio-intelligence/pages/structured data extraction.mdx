@@ -29,8 +29,6 @@ description: 'Thanks to structured data extract you can now extract directly nes
 
 
 
-
-
 ## HealthRecords
 A list of Health Records mentionned in the conversation with the followinf properties:
  
@@ -382,24 +380,6 @@ A list of locations containing the following properties:
       "state": "str",
       "zipcode": "str",
       "country": "str"
-    }
-  ]
-}
-```
-
-## Moneys
-A list of moneys containing the following properties:
-- **amount** (float): The amount of money
-- **currency** (Currency): The currency of the money
-- **subject** (str): The subject of the money
-
-```json results
-{
-  "moneys": [
-    {
-      "amount": 42.42,
-      "currency": "Currency(ENUM)",
-      "subject": "str"
     }
   ]
 }
