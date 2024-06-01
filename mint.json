@@ -101,6 +101,12 @@
       ]
     },
     {
+      "group": "Use cases configurations",
+      "pages": [
+        "chapters/use-cases-configuration/pages/meeting recording"
+      ]
+    },
+    {
       "group": "API Documentation",
       "pages": [
         "api-reference/introduction",
