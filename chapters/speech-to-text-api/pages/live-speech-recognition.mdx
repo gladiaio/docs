@@ -27,4 +27,23 @@ wss://api.gladia.io/audio/text/audio-transcription
 To connect to the Gladia Audio Transcription WebSocket API, follow the steps below:
 
 1. Create a WebSocket connection to the Gladia Audio Transcription endpoint: `wss://api.gladia.io/audio/text/audio-transcription`.
-2. After establishing the connection, send an initial configuration message as a JSON object. This message specifies the transcription options and settings.
+2. After establishing the connection, send an initial configuration message as a JSON object. This message 
+specifies the transcription options and settings.
+
+
+### Initial Configuration Message
+
+The initial configuration message should be sent as a JSON object and include the following options:
+
+- `x_gladia_key` (mandatory, string): Your API key obtained from [app.gladia.io](https://app.gladia.io/).
+- `encoding` (optional, string): Specifies the audio encoding format. Valid values are "WAV", "WAV/PCM", "WAV/ALAW", "WAV/ULAW", "AMB", "MP3", "FLAC", "OGG/VORBIS", "OPUS", "SPHERE" and "AMR-NB". Default value is "WAV."
+- `bit_depth`(optional, integer): Specifies the bit depth of the audio submitted for transcription. The bit depth represents the number of bits of information stored for each sample of audio. Available options are `8`, `16`, `24`, `32`, and `64`. If not specified, the default value is `16`.
+- `sample_rate` (optional, integer): Specifies the sample rate of the audio in Hz. Valid values are `8000`, `16000`, `32000`,  `44100`, and `48000`. default value is `16000`
+- `language_behaviour` (optional, enum): - Defines how the transcription model detects the audio language. Default value is `automatic single language`.  
+
+| Value                      | Description                                                                                                                                                                                                                                           |
+|----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `manual`                   | Manually define the language of the transcription using the `language` parameter                                                                                                                                                                      |
+| `automatic single language`| **default value** - the model will auto detect the language based on the first utterance, then will continue transcribing the rest of the audio stream to that language. Segments in other languages will automatically be translated to the first detected language. |
+| `automatic multiple languages` | The model will continuously detect the spoken language for each utterance and switch the transcription language accordingly. <br>Please note that certain strong accents can possibly cause this mode to transcribe to the wrong language.             |
+
