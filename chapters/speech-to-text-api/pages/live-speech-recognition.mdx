@@ -18,9 +18,9 @@ The Gladia Audio Transcription WebSocket API allows developers to connect to a s
 
 The WebSocket endpoint for Gladia Audio Transcription API is:
 
-```
+`
 wss://api.gladia.io/audio/text/audio-transcription
-```
+`
 
 ## Establishing a WebSocket Connection
 
@@ -41,9 +41,490 @@ The initial configuration message should be sent as a JSON object and include th
 - `sample_rate` (optional, integer): Specifies the sample rate of the audio in Hz. Valid values are `8000`, `16000`, `32000`,  `44100`, and `48000`. default value is `16000`
 - `language_behaviour` (optional, enum): - Defines how the transcription model detects the audio language. Default value is `automatic single language`.  
 
-| Value                      | Description                                                                                                                                                                                                                                           |
-|----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `manual`                   | Manually define the language of the transcription using the `language` parameter                                                                                                                                                                      |
+| Value | Description |
+|---|----|
+| `manual` | Manually define the language of the transcription using the `language` parameter |
 | `automatic single language`| **default value** - the model will auto detect the language based on the first utterance, then will continue transcribing the rest of the audio stream to that language. Segments in other languages will automatically be translated to the first detected language. |
-| `automatic multiple languages` | The model will continuously detect the spoken language for each utterance and switch the transcription language accordingly. <br>Please note that certain strong accents can possibly cause this mode to transcribe to the wrong language.             |
+| `automatic multiple languages` | The model will continuously detect the spoken language for each utterance and switch the transcription language accordingly. Please note that certain strong accents can possibly cause this mode to transcribe to the wrong language. |
+- `language` (optional, string):  e.g. “english” - Required when `language_behaviour = manual`. Defines the language to use for the transcription. 
+- `transcription_hint` (optional, string): Provides a custom vocabulary to the model to improve accuracy of transcribing context specific words, technical terms, names, etc. If empty, this argument is ignored.  
+  ⚠️ Warning ⚠️: Please be aware that the `transcription_hint` field has a character limit of 600. If you provide a `transcription_hint` longer than 600 characters, it will be automatically truncated to meet this limit.
+- `endpointing` (optional, integer): Specifies the endpointing duration in milliseconds. i.e. the duration of silence which will cause the utterance to be considered finished and a result of type ‘final’ to be sent. For more info see [Transcription Results](https://docs.gladia.io/v1.0.0/reference/live-audio#transcription-results) below. Default value is 300 ms.
+- `model_type` (optional, string): Specifics which transcription model to use. possible values are "accurate" and "fast". Default value is "fast".  
+  The fast model will return less accurate 'partial' frames during an utterance with 400-500ms latency, and a more accurate 'final' frame at the end of each utterance with 700-800 ms latency.  
+  The accurate model will only return final frames at the end of each utterance, with very high accuracy and a latency of 1000-1100ms.
+- `frames_format` (optional, string): Specifies how formated the frames will be. Possible values are "base64" and "bytes". Default value is "base64".
+- `prosody` (optional, boolean): If prosody is true, you will get a transcription that can contain prosodies i.e. (laugh) (giggles) (malefic laugh) (toss) (music).... Default value is `false`.
+- `audio_enhancer` (optional, boolean): If true, audio will be pre-processed to improve accuracy but latency will increase. Default value is `false`.
+- `reinject_context` [experimental] \(optional, boolean or string): Enables or disables reinjecting the last 10 sentences to guide the transcription. Depending on the use case and context, turning this on may increase accuracy or degrade it. Default value is `false`.  
+  **Note:** Do not enable if code switching is required. If language_behaviour is set to `automatic multiple languages`, enabling `reinject_context` will override the behaviour to `automatic single language`
+- `word_timestamps` (optional,  boolean): It enables word timestamps. Default value is`false`.
+- `maximum_audio_duration` (optional,  int): When audio duration since last final is longer than `maximum_audio_duration`, a final will be triggered with stable utterances. Default value is`30` seconds.
 
+Here's an example initial configuration message:
+
+```json configuration
+{
+    "x_gladia_key": "your_gladia_key",
+    "sample_rate": 16000,
+    "encoding": "mp3"
+}
+```
+
+
+### Sending Audio Data for Transcription
+
+Once the WebSocket connection is established and the initial configuration message is sent, you can start sending audio data for transcription.
+
+#### Using base64 encoded frames
+
+Send JSON objects as messages to the WebSocket with the following structure:
+
+```json sending data
+{
+    "frames": "base64"
+}
+```
+
+- `frames` (string): Contains the audio data in base64-encoded format.
+
+To send audio data, convert your audio to base64-encoded bytes and include them in the `frames` field of the JSON object.
+
+#### Using raw frames (bytes)
+
+In case you specified in the configuration message `frames_format` to be `bytes`, you need to forward the binary frames as it without any formatting nor wrapping.
+
+### Transcription Results
+
+The Gladia Audio Transcription API will send back transcription results as JSON objects in real-time.  
+There are 3 types of results, identified by the `event` parameter:
+
+| Event        | Description                                                        |
+| :----------- | :----------------------------------------------------------------- |
+| `connected`  | The first response, contains the session's request_id              |
+| `transcript` | Transcription results, both `partial` and `final`                  |
+| `error`      | Sent if there's an unrecognized field in the configuration message |
+
+Each result object with `"event": "transcript"`contains the following information:
+
+- `type` (string): Specifies the type of transcription result. It can have two values: "final" or "partial." If the type is "final," it means there are more than `endpointing` milliseconds of silence or `maximum_audio_duration` has been reached; otherwise, it is considered partial.
+- `transcription` (string): Contains the full transcription text since the last 'final' result.
+- `language` (string): Represents the detected language for the transcription.
+- `time_begin` (number): Timestamp in seconds of the beginning of this transcription
+- `time_end` (number): Timestamp in seconds of the end of this transcription
+- `duration` (number): Total duration in seconds of the audio
+- `words` (array): Contains the words within the transcription. Only present if you enabled `word_timestamps`.
+- `utterances` (array): Contains the detected utterances
+  - `id` (number): Unique identifier across partial and final message of this utterance
+  - `stable` (boolean): If `true`, the utterance is "stable", meaning its transcription won't change and you can safely use it even if returned in a partial transcript 
+  - `transcription` (string): Contains the transcription of this utterance
+  - `language` (string): Represents the detected language for this utterance.
+  - `time_begin` (number): Timestamp in seconds of the beginning of this utterance
+  - `time_end` (number): Timestamp in seconds of the end of this utterance
+  - `words` (array): Contains the words within the utterance. Only present if you enabled `word_timestamps`.
+
+With word timestamps enabled, the result can be the following:
+
+```json response
+{
+    "event": "transcript",
+    "type": "final",
+    "transcription": "Dall'associazione",
+    "language": "it",
+    "time_begin": 0.08019,
+    "time_end": 0.58137,
+    "duration": 0.623,
+    "utterances": [
+      {
+        "id": 0,
+        "stable": true,
+        "transcription": "Dall'associazione",
+        "language": "it",
+        "time_begin": 0.08019,
+        "time_end": 0.58137,
+        "words": [
+          {
+            "word": "Dall'associazione",
+            "time_begin": 0.08019,
+            "time_end": 0.58137,
+            "confidence": 0.77
+          }
+        ]
+      }
+    ],
+    "words": [
+        {
+            "word": "Dall'associazione",
+            "time_begin": 0.08019,
+            "time_end": 0.58137,
+            "confidence": 0.77
+        }
+    ]
+}
+```
+
+Please note that multiple result objects may be received during the transcription process, depending on the audio duration and WebSocket connection.
+
+### End a live transcription session
+
+When you have send your last audio chunk, instead of closing yourself the WebSocket connection, you should send the following JSON message: 
+
+```json terminate
+{
+    "event": "terminate"
+}
+```
+
+If there is any pending audio chunk, you'll receive a transcript event with a final transcription result. The WebSocket connection will then be closed with a code 1000.
+
+If you close the WebSocket connection without sending this event, you may miss the last final transcription.
+
+### Recovering from WebSocket disconnects
+
+The WebSocket connection may disconnect for any number of reasons. It is important to implement a recovery mechanism on the client side to reopen the connection and continue the live transcription.  
+On the close event, you should reconnect to the WebSocket unless :  
+
+- code = 1000: you should only receive that code if you send the terminate event or you closed the connection yourself. In this case, you should not attempt a reconnection
+- code >= 4400 and \< 4500: we send code in this range when there is an issue with something you sent. In this case, you should look at the reason and fix the issue.
+
+For any other code, you should reconnect to the WebSocket.
+
+## Example Workflow
+
+1. Establish a WebSocket connection to `wss://api.gladia.io/audio/text/audio-transcription`.
+2. Send the initial configuration message as a JSON object to specify the transcription options.
+
+```json initial configuration
+{
+    "x_gladia_key": "your_gladia_key",
+    "sample_rate": 16000,
+    "encoding": "mp3"
+}
+```
+
+1. Start sending audio data for transcription by converting the audio to base64-encoded bytes and including them in the `frames` field of a JSON object.
+
+```json sending data
+{
+    "frames": "base64"
+}
+```
+
+1. Receive real-time transcription results in JSON format. Each result object will include the `type`, `transcription`, `language`, and `words` fields.
+
+```json response
+{
+    "type": "partial",
+    "transcription": "Hello world.",
+    "language": "en",
+}
+```
+
+1. Continue sending audio data and receiving transcription results until the audio stream is complete.
+2. Send the finalize event once your session is complete
+
+```json terminate
+{
+    "event": "terminate"
+}
+```
+
+## Limitations
+
+### Chunk Size Limitation
+
+Our streaming service is designed to handle data in smaller, manageable chunks. While we aim to provide flexibility in the content you can stream, we have established a maximum chunk duration of 120 seconds for the following reasons:
+
+- **Optimal Streaming Performance**: Smaller chunks allow for better real-time processing and distribution, reducing the risk of buffering or delays in playback.
+- **Resource Management**: Longer chunks could potentially strain our server resources and impact the overall performance of the service for all users.
+- **Reliability**: Shorter chunks improve the reliability of the streaming service by minimizing the likelihood of errors or data loss during transmission.
+
+### Thirty Seconds Behavior
+
+If endpointing fails to be activated and the audio that is being buffered is greater than 30s, we force the following behavior:
+
+- force a final utterance is forced
+- the buffer state is reinitialised
+
+## Conclusion
+
+Congratulations! You have successfully learned how to connect to the Gladia Audio Transcription WebSocket API and send audio data for real-time transcription. Make sure to handle [WebSocket connection errors](https://docs.gladia.io/reference/live-audio#websocket-close-codes), manage audio streaming, and process the received transcription results according to your application's needs.
+
+For further assistance or inquiries, please refer to the Gladia documentation or contact our support team at [support@gladia.io](mailto:support@gladia.io).
+
+## WebSocket close codes
+
+| Close code (uint16) | Codename               | Internal | Customizable | Description                                                                            |
+| ------------------- | ---------------------- | -------- | ------------ | -------------------------------------------------------------------------------------- |
+| 0 - 999             |                        | Yes      | No           | Unused                                                                                 |
+| 1000                | `CLOSE_NORMAL`         | No       | No           | Successful operation / regular socket shutdown                                         |
+| 1001                | `CLOSE_GOING_AWAY`     | No       | No           | Client is leaving (browser tab closing)                                                |
+| 1002                | `CLOSE_PROTOCOL_ERROR` | Yes      | No           | Endpoint received a malformed frame                                                    |
+| 1003                | `CLOSE_UNSUPPORTED`    | Yes      | No           | Endpoint received an unsupported frame (e.g. binary-only endpoint received text frame) |
+| 1004                |                        | Yes      | No           | Reserved                                                                               |
+| 1005                | `CLOSED_NO_STATUS`     | Yes      | No           | Expected close status, received none                                                   |
+| 1006                | `CLOSE_ABNORMAL`       | Yes      | No           | No close code frame has been receieved                                                 |
+| 1007                | _Unsupported payload_  | Yes      | No           | Endpoint received inconsistent message (e.g. malformed UTF-8)                          |
+| 1008                | _Policy violation_     | No       | No           | Generic code used for situations other than 1003 and 1009                              |
+| 1009                | `CLOSE_TOO_LARGE`      | No       | No           | Endpoint won't process large frame                                                     |
+| 1010                | _Mandatory extension_  | No       | No           | Client wanted an extension which server did not negotiate                              |
+| 1011                | _Server error_         | No       | No           | Internal server error while operating                                                  |
+| 1012                | _Service restart_      | No       | No           | Server/service is restarting                                                           |
+| 1013                | _Try again later_      | No       | No           | Temporary server condition forced blocking client's request                            |
+| 1014                | _Bad gateway_          | No       | No           | Server acting as gateway received an invalid response                                  |
+| 1015                | _TLS handshake fail_   | Yes      | No           | Transport Layer Security handshake failure                                             |
+| 1016 - 1999         |                        | Yes      | No           | Reserved for later                                                                     |
+| 2000 - 2999         |                        | Yes      | Yes          | Reserved for websocket extensions                                                      |
+| 3000 - 3999         |                        | No       | Yes          | Registered first come first serve at IANA                                              |
+| 4000 - 4999         |                        | No       | Yes          | Available for applications                                                             |
+
+# Code samples
+
+```python python
+import asyncio
+import websockets
+import json
+import base64
+
+ERROR_KEY = 'error'
+TYPE_KEY = 'type'
+TRANSCRIPTION_KEY = 'transcription'
+LANGUAGE_KEY = 'language'
+
+# retrieve gladia key
+gladiaKey = ''  # replace with your gladia key
+if not gladiaKey:
+    print('You must provide a gladia key. Go to app.gladia.io')
+    exit(1)
+else:
+    print('using the gladia key : ' + gladiaKey)
+
+# connect to api websocket
+gladiaUrl = "wss://api.gladia.io/audio/text/audio-transcription"
+
+async def send_audio(socket):
+
+    # Configure stream with a configuration message
+    configuration = {
+        "x_gladia_key": gladiaKey,
+        # "model_type":"accurate" <- Less faster but more accurate model_type, useful if you need precise addresses for example.
+    }
+    await socket.send(json.dumps(configuration))
+
+    # Once the initial message is sent, send audio data
+    file = '../../../data/anna-and-sasha-16000.wav'
+    with open(file, 'rb') as f:
+        fileSync = f.read()
+    base64Frames = base64.b64encode(fileSync).decode('utf-8')
+    partSize = 20000  # The size of each part
+    numberOfParts = -(-len(base64Frames) // partSize)  # equivalent of math.ceil
+
+    # Split the audio data into parts and send them sequentially
+    for i in range(numberOfParts):
+        start = i * partSize
+        end = min((i + 1) * partSize, len(base64Frames))
+        part = base64Frames[start:end]
+
+        # Delay between sending parts (500 mseconds in this case)
+        await asyncio.sleep(0.5)
+        message = {
+            'frames': part
+        }
+        await socket.send(json.dumps(message))
+
+    await asyncio.sleep(2)
+    print("final closing")
+
+
+# get ready to receive transcriptions
+async def receive_transcription(socket):
+    while True:
+        response = await socket.recv()
+        utterance = json.loads(response)
+        if utterance:
+            if ERROR_KEY in utterance:
+                print(f"{utterance[ERROR_KEY]}")
+                break
+            else:
+                print(f"{utterance[TYPE_KEY]}: ({utterance[LANGUAGE_KEY]}) {utterance[TRANSCRIPTION_KEY]}")
+        else:
+            print('empty,waiting for next utterance...')
+
+
+# run both tasks concurrently
+async def main():
+    async with websockets.connect(gladiaUrl) as socket:
+        send_task = asyncio.create_task(send_audio(socket))
+        receive_task = asyncio.create_task(receive_transcription(socket))
+        await asyncio.gather(send_task, receive_task)
+
+asyncio.run(main())
+```
+
+## Working with Typescript
+
+### Streaming a file
+
+```typescript typescript
+import WebSocket from "ws";
+import fs from "fs";
+import { resolve } from "path";
+import { exit } from "process";
+
+const ERROR_KEY = "error";
+const TYPE_KEY = "type";
+const TRANSCRIPTION_KEY = "transcription";
+const LANGUAGE_KEY = "language";
+
+const sleep = (delay: number): Promise<void> =>
+  new Promise((f) => setTimeout(f, delay));
+
+// retrieve gladia key
+const gladiaKey = process.argv[2];
+if (!gladiaKey) {
+  console.error("You must provide a gladia key. Go to app.gladia.io");
+  exit(1);
+} else {
+  console.log("using the gladia key : " + gladiaKey);
+}
+
+// connect to api websocket
+const gladiaUrl = "wss://api.gladia.io/audio/text/audio-transcription";
+const socket = new WebSocket(gladiaUrl);
+
+// get ready to receive transcriptions
+socket.on("message", (event: any) => {
+  if (event) {
+    const utterance = JSON.parse(event.toString());
+    if (Object.keys(utterance).length !== 0) {
+      if (ERROR_KEY in utterance) {
+        console.error(`${utterance[ERROR_KEY]}`);
+        socket.close();
+      } else {
+        console.log(
+          `${utterance[TYPE_KEY]}: (${utterance[LANGUAGE_KEY]}) ${utterance[TRANSCRIPTION_KEY]}`
+        );
+      }
+    }
+  } else {
+    console.log("empty ...");
+  }
+});
+
+socket.on("error", (error: WebSocket.ErrorEvent) => {
+  console.log(error.message);
+});
+
+socket.on("open", async () => {
+  // Configure stream with a configuration message
+  const configuration = {
+    x_gladia_key: gladiaKey,
+    // "model_type":"accurate"
+  };
+  socket.send(JSON.stringify(configuration));
+
+  // Once the initial message is sent, send audio data
+  const file = resolve("../data/anna-and-sasha-16000.wav");
+  const fileSync = fs.readFileSync(file);
+  const newBuffers = Buffer.from(fileSync)
+  const segment = newBuffers.slice(44, newBuffers.byteLength);
+  const base64Frames = segment.toString("base64");
+  const partSize = 20000; // The size of each part
+  const numberOfParts = Math.ceil(base64Frames.length / partSize);
+
+  // Split the audio data into parts and send them sequentially
+  for (let i = 0; i < numberOfParts; i++) {
+    const start = i * partSize;
+    const end = Math.min((i + 1) * partSize, base64Frames.length);
+    const part = base64Frames.substring(start, end);
+
+    // Delay between sending parts (500 mseconds in this case)
+    await sleep(500);
+    const message = {
+      frames: part,
+    };
+    // console.log(part)
+    socket.send(JSON.stringify(message));
+  }
+
+  socket.send(JSON.stringify({event: 'terminate'}));
+});
+```
+
+### Streaming a microphone
+
+```typescript typescript
+import { exit } from "process";
+import WebSocket from "ws";
+import mic from "mic";
+
+const ERROR_KEY = "error";
+const TYPE_KEY = "type";
+const TRANSCRIPTION_KEY = "transcription";
+const LANGUAGE_KEY = "language";
+const SAMPLE_RATE = 16_000
+
+// retrieve gladia key
+const gladiaKey = process.argv[2];
+if (!gladiaKey) {
+  console.error("You must provide a gladia key. Go to app.gladia.io");
+  exit(1);
+} else {
+  console.log("using the gladia key : " + gladiaKey);
+}
+
+// connect to api websocket
+const gladiaUrl = "wss://api.gladia.io/audio/text/audio-transcription";
+const socket = new WebSocket(gladiaUrl);
+
+// get ready to receive transcriptions
+socket.on("message", (event: any) => {
+  if (event) {
+    const utterance = JSON.parse(event.toString());
+    if (Object.keys(utterance).length !== 0) {
+      if (ERROR_KEY in utterance) {
+        console.error(`${utterance[ERROR_KEY]}`);
+        socket.close();
+      } else {
+        console.log(
+          `${utterance[TYPE_KEY]}: (${utterance[LANGUAGE_KEY]}) ${utterance[TRANSCRIPTION_KEY]}`
+        );
+      }
+    }
+  } else {
+    console.log("empty ...");
+  }
+});
+
+socket.on("error", (error: WebSocket.ErrorEvent) => {
+  console.log(error.message);
+});
+
+socket.on("open", async () => {
+  // Configure stream with a configuration message
+  const configuration = {
+    x_gladia_key: gladiaKey,
+    sample_rate: SAMPLE_RATE
+    // "model_type":"accurate"
+  };
+  socket.send(JSON.stringify(configuration));
+
+  // create micrphone instance
+  const micophoneInstance = mic({
+    rate: SAMPLE_RATE,
+    channels: '1',
+  });
+
+  const microphoneInputStream = micophoneInstance.getAudioStream();
+  microphoneInputStream.on('data', function (data: any) {
+    const base64 = data.toString('base64')
+    socket.send(JSON.stringify({ frames: base64 }));
+  });
+
+  microphoneInputStream.on('error', function (err: any) {
+    console.log("Error in Input Stream: " + err);
+  });
+
+  micophoneInstance.start();
+})
+```
