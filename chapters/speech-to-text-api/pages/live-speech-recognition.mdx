@@ -9,3 +9,22 @@ Live speech recognition V2 is not globally available yet but you can still use V
 
 - [Documentation for Live Transcription V1](https://docs-v1.gladia.io/reference/live-audio)
 - [Gladia samples Github repository for different coding languages](https://github.com/gladiaio/gladia-samples)
+
+## Overview
+
+The Gladia Audio Transcription WebSocket API allows developers to connect to a streaming audio transcription endpoint and receive real-time transcription results. This documentation provides the necessary information and guidelines for establishing a WebSocket connection and sending audio data for transcription.
+
+### WebSocket Endpoint
+
+The WebSocket endpoint for Gladia Audio Transcription API is:
+
+```
+wss://api.gladia.io/audio/text/audio-transcription
+```
+
+## Establishing a WebSocket Connection
+
+To connect to the Gladia Audio Transcription WebSocket API, follow the steps below:
+
+1. Create a WebSocket connection to the Gladia Audio Transcription endpoint: `wss://api.gladia.io/audio/text/audio-transcription`.
+2. After establishing the connection, send an initial configuration message as a JSON object. This message specifies the transcription options and settings.
