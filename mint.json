@@ -96,7 +96,7 @@
     {
       "group": "Limits & Specifications",
       "pages": [
-        "chapters/limits-and-specifications/pages/concurrency",
+        "chapters/limits-and-specifications/pages/concurrency and rate limits",
         "chapters/limits-and-specifications/pages/supported-formats"
       ]
     },
