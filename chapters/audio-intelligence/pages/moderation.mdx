@@ -12,8 +12,16 @@ We're looking for feedbacks to improve this feature, [share yours here](https://
 
 The **Content Moderation** model scans your transcription and finds out if it contains words or expressions that potentially need to be moderated, while classifying their type and severity.
 
-To use this feature, follow this example:
+## Usage
+To enable content moderation set the `"moderation"` parameter to true
+```json request data
+{
+  "audio_url": "<your audio url>"
+  "moderation": true
+}
+```
 
+<Accordion icon="code" title="Sample code">
 <CodeGroup>
 ```typescript TypeScript
 async function makeFetchRequest(url: string, options: any) {
@@ -115,6 +123,7 @@ if result_url:
         time.sleep(1)
 ```
 </CodeGroup>
+</Accordion>
 
 With this code, your output will look like this if there is no need to moderate anything:
 
