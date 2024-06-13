@@ -20,6 +20,17 @@ The list of the languages covered by the Translation feature are listed in the [
 - `base` : Fast, cover most use cases
 - `enhanced` : Slower, but higher quality and with context awareness
 
+## Usage
+To enable content moderation set the `"translation"` parameter to true
+```json request data
+{
+  "audio_url": "<your audio url>"
+  "translation": true
+}
+```
+
+<Accordion icon="code" title="Sample code">
+
 In the following examples, we're using `base` model.
 
 <CodeGroup>
@@ -132,59 +143,65 @@ if result_url:
         time.sleep(1)
 ```
 </CodeGroup>
+</Accordion>
 
-With this code, your output will look like this:
+## Result
+The transcription result will contain a ```"translation"``` key with the output of the model:
+
 
 ```json
 {
-  success: true,
-  is_empty: false,
-  results: [
-    {
-      words: [
-        {
-          word: "Diviser",
-          start: 0.20043,
-          end: 0.7008000000000001,
-          confidence: 1
-        },
-        {
-          word: "l'infini",
-          start: 0.9009500000000001,
-          end: 1.5614400000000002,
-          confidence: 1
-        },
-        ...
-      ],
-      languages: [Array],
-      full_transcript: "Diviser l'infini dans un temps où moins est plus...",
-      utterances: [Array], // Also translated
-      error: null
-    },
-    {
-      words: [
-        {
-          word: "Dividir",
-          start: 0.20043,
-          end: 0.7008000000000001,
-          confidence: 1
-        },
-        {
-          word: "la infinidad",
-          start: 0.9009500000000001,
-          end: 1.5614400000000002,
-          confidence: 1
-        },
-        ...
-      ],
-      languages: [Array],
-      full_transcript: "Dividir la infinidad en un tiempo en que menos es más, donde demasiado nunca es suficiente...",
-      utterances: [Array], // Also translated
-      error: null
-    }
-  ],
-  exec_time: 0.6475496292114258,
-  error: null
+  "transcription":{...},
+  "translation": {
+    success: true,
+    is_empty: false,
+    results: [
+      {
+        words: [
+          {
+            word: "Diviser",
+            start: 0.20043,
+            end: 0.7008000000000001,
+            confidence: 1
+          },
+          {
+            word: "l'infini",
+            start: 0.9009500000000001,
+            end: 1.5614400000000002,
+            confidence: 1
+          },
+          ...
+        ],
+        languages: [Array],
+        full_transcript: "Diviser l'infini dans un temps où moins est plus...",
+        utterances: [Array], // Also translated
+        error: null
+      },
+      {
+        words: [
+          {
+            word: "Dividir",
+            start: 0.20043,
+            end: 0.7008000000000001,
+            confidence: 1
+          },
+          {
+            word: "la infinidad",
+            start: 0.9009500000000001,
+            end: 1.5614400000000002,
+            confidence: 1
+          },
+          ...
+        ],
+        languages: [Array],
+        full_transcript: "Dividir la infinidad en un tiempo en que menos es más, donde demasiado nunca es suficiente...",
+        utterances: [Array], // Also translated
+        error: null
+      }
+    ],
+    exec_time: 0.6475496292114258,
+    error: null
+  }
 }
 ```
 
