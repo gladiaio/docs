@@ -23,6 +23,18 @@ You choose one of our summary type to customize the summarization based on your 
 If no summarization_config is provided, `general` type will be used by default.
 Find all this information in the [API Reference](/api-reference/api-v2/Transcription/post-v2transcription/) (see `summarization_config`).
 
+## Usage
+To enable summarization simply set the `"summarization"` parameter to true
+```json request data
+{
+  "audio_url": "<your audio url>"
+  "summarization": true
+}
+```
+
+<Accordion icon="code" title="Sample code">
+
+
 In the following examples, we're using `concise` type.
 
 <CodeGroup>
@@ -133,16 +145,22 @@ if result_url:
         time.sleep(1)
 ```
 </CodeGroup>
+</Accordion>
 
-With this code, your output will look like this:
+## Result
+The transcription result will contain a ```"summarization"``` key with the output of the model:
+
 
 ```json result
 {
-  success: true,
-  is_empty: false,
-  results: 'This transcription suggests that...',
-  exec_time: 1.5126123428344727,
-  error: null
+  "transcription": {...},
+  "summarization": {
+    "success": true,
+    "is_empty": false,
+    "results": "This transcription suggests that...",
+    "exec_time": 1.5126123428344727,
+    "error": null
+  }
 }
 ```
 
