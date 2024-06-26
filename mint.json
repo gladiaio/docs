@@ -139,7 +139,7 @@
       ]
     },
     {
-      "group": "Callback",
+      "group": "Callbacks",
       "pages": [
         "api-reference/api-v2/Callback/transcription-success",
         "api-reference/api-v2/Callback/transcription-error"
