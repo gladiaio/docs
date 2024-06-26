@@ -153,5 +153,8 @@
   },
   "seo": {
     "indexHiddenPages": false
-  }
+  },
+  "integrations": {
+    "intercom": "zkqf4zax"
+}
 }
