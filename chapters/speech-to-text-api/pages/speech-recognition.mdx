@@ -330,7 +330,11 @@ If you know the context of the audio you're sending, you can provide it in the `
 
 To enhance the precision of transcription, especially for words or phrases that recur often in your audio file, you
  can utilize the `custom_vocabulary` feature in the transcription configuration settings.<br/>
- The custom vocabulary has a global limit of **10k characters**.
+ The custom vocabulary has the following limitation:
+
+ - global limit of **10k characters**
+ - no more than **100 elements**
+ - each element should not contain more than **5 words**
 
 ```json request data
 {
