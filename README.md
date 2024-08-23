@@ -2,8 +2,6 @@
 
 Welcome to [Gladia Documentation](https://docs.gladia.io)
 
-> [!NOTE]
-> To access V1 documentation (deprecation April 1st, 2024) click [Here](https://docs-v1.gladia.io) 
 
 ### Installing dependencies
 
