@@ -54,6 +54,52 @@
     "maintainOrder": true
   },
   "openapi": "https://api.gladia.io/openapi.json",
+  "redirects": [
+    {
+      "source": "/api-reference/api-v2/Upload/post-v2upload",
+      "destination": "/api-reference/v2/upload/audio-file"
+    },
+    {
+      "source": "/api-reference/api-v2/Transcription/post-v2transcription",
+      "destination": "/api-reference/v2/transcription/init"
+    },
+    {
+      "source": "/api-reference/api-v2/Transcription/get-v2transcription",
+      "destination": "/api-reference/v2/transcription/get"
+    },
+    {
+      "source": "/api-reference/api-v2/Transcription/list-v2transcription",
+      "destination": "/api-reference/v2/transcription/list"
+    },
+    {
+      "source": "/api-reference/api-v2/Transcription/get-v2transcription-file",
+      "destination": "/api-reference/v2/transcription/get-audio"
+    },
+    {
+      "source": "/api-reference/api-v2/Transcription/delete-v2transcription",
+      "destination": "/api-reference/v2/transcription/delete"
+    },
+    {
+      "source": "/api-reference/api-v2/Webhooks/transcription-created",
+      "destination": "/api-reference/v2/webhooks/transcription-created"
+    },
+    {
+      "source": "/api-reference/api-v2/Webhooks/transcription-success",
+      "destination": "/api-reference/v2/webhooks/transcription-success"
+    },
+    {
+      "source": "/api-reference/api-v2/Webhooks/transcription-error",
+      "destination": "/api-reference/v2/webhooks/transcription-error"
+    },
+    {
+      "source": "/api-reference/api-v2/Callback/transcription-success",
+      "destination": "/api-reference/v2/callback/transcription-success"
+    },
+    {
+      "source": "/api-reference/api-v2/Callback/transcription-error",
+      "destination": "/api-reference/v2/callback/transcription-error"
+    }
+  ],
   "navigation": [
     {
       "group": "Introduction",
@@ -102,9 +148,7 @@
     },
     {
       "group": "Use cases configurations",
-      "pages": [
-        "chapters/use-cases-configuration/pages/meeting recording"
-      ]
+      "pages": ["chapters/use-cases-configuration/pages/meeting recording"]
     },
     {
       "group": "API Documentation",
@@ -115,34 +159,77 @@
       ]
     },
     {
-      "group": "Transcription",
-      "pages": [
-        "api-reference/api-v2/Transcription/list-v2transcription",
-        "api-reference/api-v2/Transcription/post-v2transcription",
-        "api-reference/api-v2/Transcription/get-v2transcription",
-        "api-reference/api-v2/Transcription/delete-v2transcription",
-        "api-reference/api-v2/Transcription/get-v2transcription-file"
-      ]
-    },
-    {
       "group": "Upload",
+      "pages": ["api-reference/v2/upload/audio-file"]
+    },
+    {
+      "group": "Pre-recorded transcription",
       "pages": [
-        "api-reference/api-v2/Upload/post-v2upload"
+        "api-reference/v2/pre-recorded/init",
+        "api-reference/v2/pre-recorded/get",
+        "api-reference/v2/pre-recorded/list",
+        "api-reference/v2/pre-recorded/get-audio",
+        "api-reference/v2/pre-recorded/delete"
       ]
     },
     {
-      "group": "Webhooks",
+      "group": "Pre-recorded webhooks",
       "pages": [
-        "api-reference/api-v2/Webhooks/transcription-created",
-        "api-reference/api-v2/Webhooks/transcription-success",
-        "api-reference/api-v2/Webhooks/transcription-error"
+        "api-reference/v2/webhooks/transcription-created",
+        "api-reference/v2/webhooks/transcription-success",
+        "api-reference/v2/webhooks/transcription-error"
       ]
     },
     {
-      "group": "Callbacks",
+      "group": "Pre-recorded callbacks",
       "pages": [
-        "api-reference/api-v2/Callback/transcription-success",
-        "api-reference/api-v2/Callback/transcription-error"
+        "api-reference/v2/callback/transcription-success",
+        "api-reference/v2/callback/transcription-error"
+      ]
+    },
+    {
+      "group": "Live transcription",
+      "pages": [
+        "api-reference/v2/live/init",
+        "api-reference/v2/live/get",
+        "api-reference/v2/live/list",
+        "api-reference/v2/live/get-audio",
+        "api-reference/v2/live/delete"
+      ]
+    },
+    {
+      "group": "Live messages",
+      "pages": [
+        "api-reference/v2/websocket/live-audio-chunk",
+        "api-reference/v2/websocket/live-audio-chunk-ack"
+      ]
+    },
+    {
+      "group": "Live webhooks",
+      "pages": [
+        "api-reference/v2/webhooks/live-start-session",
+        "api-reference/v2/webhooks/live-start-recording",
+        "api-reference/v2/webhooks/live-end-recording",
+        "api-reference/v2/webhooks/live-end-session"
+      ]
+    },
+    {
+      "group": "Live callbacks",
+      "pages": [
+        "api-reference/v2/callback/live-start-session",
+        "api-reference/v2/callback/live-start-recording",
+        "api-reference/v2/callback/live-end-recording",
+        "api-reference/v2/callback/live-end-session"
+      ]
+    },
+    {
+      "group": "Transcription (deprecated)",
+      "pages": [
+        "api-reference/v2/transcription/init",
+        "api-reference/v2/transcription/get",
+        "api-reference/v2/transcription/list",
+        "api-reference/v2/transcription/get-audio",
+        "api-reference/v2/transcription/delete"
       ]
     }
   ],
