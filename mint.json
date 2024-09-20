@@ -155,7 +155,8 @@
       "pages": [
         "api-reference/introduction",
         "api-reference/authentication",
-        "api-reference/transcription-flow"
+        "api-reference/transcription-flow",
+        "api-reference/live-flow"
       ]
     },
     {
