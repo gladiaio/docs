@@ -299,11 +299,26 @@ You'll have your subtitles in the original language, and **also** in languages y
   "audio_url": "YOUR_AUDIO_URL",
   "subtitles": true,
   "subtitles_config": {
-    "formats": ["srt", "vtt"]
+    "formats": ["srt", "vtt"],
+    "minimum_duration": 1,
+    "maximum_duration": 5,
+    "maximum_characters_per_row": 42,
+    "maximum_rows_per_caption": 2,
+    "style": "compliance"
   }
 }
 ```
 
+The `subtitles_config` object supports the following options:
+
+- `formats`: Array of subtitle formats to generate (options: "srt", "vtt")
+- `minimum_duration`: Minimum duration of a subtitle in seconds (minimum: 0)
+- `maximum_duration`: Maximum duration of a subtitle in seconds (minimum: 1, maximum: 30)
+- `maximum_characters_per_row`: Maximum number of characters per row in a subtitle (minimum: 1)
+- `maximum_rows_per_caption`: Maximum number of rows per caption (minimum: 1, maximum: 5)
+- `style`: Style of the subtitles. Options are:
+  - "default": Standard subtitle style
+  - "compliance": Follows the compliance mode as described in [Library of Congress Recommended Format Statement](https://loc.gov/preservation/digital/formats//fdd/fdd000569.shtml)
 
 The `JSON` response will include a new property `subtitles` which is an array of every formats you requested.
 With the given example, `subtitles` will contains 2 items of shape:
