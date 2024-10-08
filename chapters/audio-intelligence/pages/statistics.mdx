@@ -1,0 +1,115 @@
+---
+title: Statistics
+description: "Get detailed statistics about your transcription"
+---
+
+The Statistics addon provides comprehensive analytics about your transcription, including overall metrics and per-speaker analysis.
+
+## Usage
+
+Enable statistics by setting `statistics` to `true` in your transcription request.
+
+```json
+json
+{
+"audio_url": "<your audio URL>",
+"statistics": true
+}
+```
+
+## Response
+
+The response will include detailed statistics about the transcription, including overall metrics and per-speaker analysis.
+
+```json
+{
+  "transcription": {...},
+  "statistics": {
+    "overall": {
+      "total_duration": 300.5,
+      "total_words": 500,
+      "overall_wpm": 100,
+      "number_of_speakers": 2,
+      "avg_pause_duration": 0.5,
+      "overlap_duration": 5.2,
+      "avg_response_time": 1.5,
+      "most_frequent_words": [
+        {
+          "word": "example",
+          "count": 10,
+          "frequency": 0.02
+        },
+        // More frequent words...
+      ],
+      "silence_duration": 30.5,
+      "silence_percentage": 0.1,
+      "conversational_balance": {
+        "speaking_time_gini_score": 0.3,
+        "word_count_gini_score": 0.25
+      }
+    },
+    "per_speaker": {
+      "0": {
+        "wpm": 95,
+        "speaking_time_percentage": 0.55,
+        "voice_clarity": 0.8,
+        "longest_monologue": 30.5,
+        "number_of_turns": 15,
+        "vocabulary_diversity": 0.7,
+        "avg_words_per_turn": 20,
+        "filler_word_percentage": 0.05,
+        "question_percentage": 0.2,
+        "interruption_rate": 0.1,
+        "speaking_speed_variation": 0.15,
+        "type_token_ratio": 0.6,
+        "avg_utterance_length_words": 10,
+        "avg_utterance_duration": 5.5,
+        "sentiment_score": 0.7,
+        "dominance_score": 0.6
+      },
+      // More speakers...
+    }
+  }
+}
+```
+
+## Statistics Explanation
+
+### Overall Statistics
+
+- `total_duration`: Total duration of the audio in seconds.
+- `total_words`: Total number of words in the transcription.
+- `overall_wpm`: Average words per minute for the entire conversation.
+- `number_of_speakers`: Number of distinct speakers detected.
+- `avg_pause_duration`: Average duration of pauses in seconds.
+- `overlap_duration`: Total duration of speech overlaps in seconds.
+- `avg_response_time`: Average time between speaker turns in seconds.
+- `most_frequent_words`: List of the most frequently used words, their count, and frequency.
+- `silence_duration`: Total duration of silence in seconds.
+- `silence_percentage`: Percentage of the audio that is silence.
+- `conversational_balance`: Measures of how balanced the conversation is among speakers.
+  - `speaking_time_gini_score`: Gini coefficient for speaking time distribution (0 = perfectly equal, 1 = completely unequal).
+  - `word_count_gini_score`: Gini coefficient for word count distribution.
+
+### Per-Speaker Statistics
+
+For each speaker, the following metrics are provided:
+
+- `wpm`: Words per minute for this speaker.
+- `speaking_time_percentage`: Percentage of total speaking time for this speaker.
+- `voice_clarity`: Measure of how clear the speaker's voice is (0-1).
+- `longest_monologue`: Duration of the speaker's longest uninterrupted speech in seconds.
+- `number_of_turns`: Number of times this speaker took a turn speaking.
+- `vocabulary_diversity`: Measure of the variety of words used by the speaker (0-1).
+- `avg_words_per_turn`: Average number of words spoken per turn.
+- `filler_word_percentage`: Percentage of words that are fillers (um, uh, etc.).
+- `question_percentage`: Percentage of the speaker's utterances that are questions.
+- `interruption_rate`: Rate at which this speaker interrupts others.
+- `speaking_speed_variation`: Variation in the speaker's talking speed.
+- `type_token_ratio`: Ratio of unique words to total words (measure of vocabulary richness).
+- `avg_utterance_length_words`: Average number of words per utterance.
+- `avg_utterance_duration`: Average duration of utterances in seconds.
+- `sentiment_score`: Overall sentiment of the speaker's words (-1 to 1, negative to positive).
+- `dominance_score`: Measure of how dominant the speaker is in the conversation (0-1).
+
+These statistics provide valuable insights into the dynamics of the conversation, speaking patterns of each participant, and overall characteristics of the transcribed audio.
