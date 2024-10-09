@@ -208,34 +208,69 @@
     {
       "group": "Live WS messages",
       "pages": [
-        "api-reference/v2/live/message/transcript",
-        "api-reference/v2/live/message/audio-chunk-ack",
-        "api-reference/v2/live/message/stop-recording-ack",
-        "api-reference/v2/live/message/start-session",
-        "api-reference/v2/live/message/start-recording",
-        "api-reference/v2/live/message/end-recording",
-        "api-reference/v2/live/message/end-session"
+        {
+          "group": "Realtime messages",
+          "pages": [
+            "api-reference/v2/live/message/transcript"
+          ]
+        },
+        {
+          "group": "Acknowledgment messages",
+          "pages": [
+            "api-reference/v2/live/message/audio-chunk-ack",
+            "api-reference/v2/live/message/stop-recording-ack"
+          ]
+        },
+        {
+          "group": "Lifecycle messages",
+          "pages": [
+            "api-reference/v2/live/message/start-session",
+            "api-reference/v2/live/message/start-recording",
+            "api-reference/v2/live/message/end-recording",
+            "api-reference/v2/live/message/end-session"
+          ]
+        }
       ]
     },
     {
       "group": "Live callbacks",
       "pages": [
-        "api-reference/v2/live/callback/transcript",
-        "api-reference/v2/live/callback/audio-chunk-ack",
-        "api-reference/v2/live/callback/stop-recording-ack",
-        "api-reference/v2/live/callback/start-session",
-        "api-reference/v2/live/callback/start-recording",
-        "api-reference/v2/live/callback/end-recording",
-        "api-reference/v2/live/callback/end-session"
+        {
+          "group": "Realtime messages",
+          "pages": [
+            "api-reference/v2/live/callback/transcript"
+          ]
+        },
+        {
+          "group": "Acknowledgment messages",
+          "pages": [
+            "api-reference/v2/live/callback/audio-chunk-ack",
+            "api-reference/v2/live/callback/stop-recording-ack"
+          ]
+        },
+        {
+          "group": "Lifecycle messages",
+          "pages": [
+            "api-reference/v2/live/callback/start-session",
+            "api-reference/v2/live/callback/start-recording",
+            "api-reference/v2/live/callback/end-recording",
+            "api-reference/v2/live/callback/end-session"
+          ]
+        }
       ]
     },
     {
       "group": "Live webhooks",
       "pages": [
-        "api-reference/v2/live/webhook/start-session",
-        "api-reference/v2/live/webhook/start-recording",
-        "api-reference/v2/live/webhook/end-recording",
-        "api-reference/v2/live/webhook/end-session"
+        {
+          "group": "Lifecycle messages",
+          "pages": [
+            "api-reference/v2/live/webhook/start-session",
+            "api-reference/v2/live/webhook/start-recording",
+            "api-reference/v2/live/webhook/end-recording",
+            "api-reference/v2/live/webhook/end-session"
+          ]
+        }
       ]
     },
     {
