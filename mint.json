@@ -81,23 +81,23 @@
     },
     {
       "source": "/api-reference/api-v2/Webhooks/transcription-created",
-      "destination": "/api-reference/v2/webhooks/transcription-created"
+      "destination": "/api-reference/v2/pre-recorded/webhook/created"
     },
     {
       "source": "/api-reference/api-v2/Webhooks/transcription-success",
-      "destination": "/api-reference/v2/webhooks/transcription-success"
+      "destination": "/api-reference/v2/pre-recorded/webhook/success"
     },
     {
       "source": "/api-reference/api-v2/Webhooks/transcription-error",
-      "destination": "/api-reference/v2/webhooks/transcription-error"
+      "destination": "/api-reference/v2/pre-recorded/webhook/error"
     },
     {
       "source": "/api-reference/api-v2/Callback/transcription-success",
-      "destination": "/api-reference/v2/callback/transcription-success"
+      "destination": "/api-reference/v2/pre-recorded/callback/success"
     },
     {
       "source": "/api-reference/api-v2/Callback/transcription-error",
-      "destination": "/api-reference/v2/callback/transcription-error"
+      "destination": "/api-reference/v2/pre-recorded/callback/error"
     }
   ],
   "navigation": [
@@ -164,7 +164,7 @@
       "pages": ["api-reference/v2/upload/audio-file"]
     },
     {
-      "group": "Pre-recorded transcription",
+      "group": "Pre-recorded endpoints",
       "pages": [
         "api-reference/v2/pre-recorded/init",
         "api-reference/v2/pre-recorded/get",
@@ -176,20 +176,20 @@
     {
       "group": "Pre-recorded webhooks",
       "pages": [
-        "api-reference/v2/webhooks/transcription-created",
-        "api-reference/v2/webhooks/transcription-success",
-        "api-reference/v2/webhooks/transcription-error"
+        "api-reference/v2/pre-recorded/webhook/created",
+        "api-reference/v2/pre-recorded/webhook/success",
+        "api-reference/v2/pre-recorded/webhook/error"
       ]
     },
     {
       "group": "Pre-recorded callbacks",
       "pages": [
-        "api-reference/v2/callback/transcription-success",
-        "api-reference/v2/callback/transcription-error"
+        "api-reference/v2/pre-recorded/callback/success",
+        "api-reference/v2/pre-recorded/callback/error"
       ]
     },
     {
-      "group": "Live transcription",
+      "group": "Live endpoints",
       "pages": [
         "api-reference/v2/live/init",
         "api-reference/v2/live/get",
@@ -199,28 +199,43 @@
       ]
     },
     {
-      "group": "Live messages",
+      "group": "Live WS actions",
       "pages": [
-        "api-reference/v2/websocket/live-audio-chunk",
-        "api-reference/v2/websocket/live-audio-chunk-ack"
+        "api-reference/v2/live/action/audio-chunk",
+        "api-reference/v2/live/action/stop-recording"
       ]
     },
     {
-      "group": "Live webhooks",
+      "group": "Live WS messages",
       "pages": [
-        "api-reference/v2/webhooks/live-start-session",
-        "api-reference/v2/webhooks/live-start-recording",
-        "api-reference/v2/webhooks/live-end-recording",
-        "api-reference/v2/webhooks/live-end-session"
+        "api-reference/v2/live/message/transcript",
+        "api-reference/v2/live/message/audio-chunk-ack",
+        "api-reference/v2/live/message/stop-recording-ack",
+        "api-reference/v2/live/message/start-session",
+        "api-reference/v2/live/message/start-recording",
+        "api-reference/v2/live/message/end-recording",
+        "api-reference/v2/live/message/end-session"
       ]
     },
     {
       "group": "Live callbacks",
       "pages": [
-        "api-reference/v2/callback/live-start-session",
-        "api-reference/v2/callback/live-start-recording",
-        "api-reference/v2/callback/live-end-recording",
-        "api-reference/v2/callback/live-end-session"
+        "api-reference/v2/live/callback/transcript",
+        "api-reference/v2/live/callback/audio-chunk-ack",
+        "api-reference/v2/live/callback/stop-recording-ack",
+        "api-reference/v2/live/callback/start-session",
+        "api-reference/v2/live/callback/start-recording",
+        "api-reference/v2/live/callback/end-recording",
+        "api-reference/v2/live/callback/end-session"
+      ]
+    },
+    {
+      "group": "Live webhooks",
+      "pages": [
+        "api-reference/v2/live/webhook/start-session",
+        "api-reference/v2/live/webhook/start-recording",
+        "api-reference/v2/live/webhook/end-recording",
+        "api-reference/v2/live/webhook/end-session"
       ]
     },
     {

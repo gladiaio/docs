@@ -14,7 +14,7 @@ You can get your transcription results in **3 different ways**:
   You can configure webhooks at https://app.gladia.io/account to be notified when your transcriptions are done.
   <img src='/assets/images/webhooks-1.png'/>
   Once a transcription is done, a `POST` request will be made to the endpoint you configured. The request body is a JSON object containing the transcription `id` that you can use to retrieve your result with [our API](/api-reference/v2/transcription/get).  
-  For the full body definition, check [our API definition](/api-reference/v2/webhooks/transcription-success).  
+  For the full body definition, check [our API definition](/api-reference/v2/pre-recorded/webhook/success).  
   </Accordion>
   <Accordion icon="diagram-project" title="Callback URL">
 
@@ -32,6 +32,6 @@ You can get your transcription results in **3 different ways**:
   ```
 
   Once the transcription is done, a `POST` request will be made to the `callback_url` you provided.  
-  The request body is a JSON object containing the transcription `id` and an `event` property that tells you if it's a [success](/api-reference/v2/callback/transcription-success) or an [error](/api-reference/v2/callback/transcription-error).
+  The request body is a JSON object containing the transcription `id` and an `event` property that tells you if it's a [success](/api-reference/v2/pre-recorded/callback/success) or an [error](/api-reference/v2/pre-recorded/callback/error).
   </Accordion>
 </AccordionGroup>

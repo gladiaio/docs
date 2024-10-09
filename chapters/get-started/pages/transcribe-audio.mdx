@@ -14,7 +14,7 @@ If you are a developer, you probably want to check our [API Documentation](/api-
     You'll need:
 
     - Your local audio file (referred as *YOUR_LOCAL_AUDIO_FILE* in the below example)
-    - Your Gladia API key (referred as *YOUR_GLADIA_API_TOKEN* in the below example)
+    - Your Gladia API key (referred as *YOUR_GLADIA_API_KEY* in the below example)
 
     First, we need to upload your local file to Gladia API : 
 
@@ -22,7 +22,7 @@ If you are a developer, you probably want to check our [API Documentation](/api-
     curl --request POST \
       --url https://api.gladia.io/v2/upload \
       --header 'Content-Type: multipart/form-data' \
-      --header 'x-gladia-key: YOUR_GLADIA_API_TOKEN' \
+      --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
       --form audio=@/path/to/your/audio/conversation.wav
     ```
 
@@ -53,13 +53,13 @@ If you are a developer, you probably want to check our [API Documentation](/api-
     You'll need:
 
     - Your audio link URL (referred as *YOUR_AUDIO_LINK_URL* in the below example)
-    - Your Gladia API key (referred as *YOUR_GLADIA_API_TOKEN* in the below example)
+    - Your Gladia API key (referred as *YOUR_GLADIA_API_KEY* in the below example)
 
     ```bash
     curl --request POST \
       --url https://api.gladia.io/v2/transcription \
       --header 'Content-Type: application/json' \
-      --header 'x-gladia-key: YOUR_GLADIA_API_TOKEN' \
+      --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
       --data '{
       "audio_url": "YOUR_AUDIO_LINK_URL"
       }'
@@ -83,7 +83,7 @@ If you are a developer, you probably want to check our [API Documentation](/api-
     ```bash
     curl --request GET \
       --url https://api.gladia.io/v2/transcription/40aae358-6bfd-4c01-bf1d-0fc7c0f02707 \
-      --header 'x-gladia-key: YOUR_GLADIA_API_TOKEN'
+      --header 'x-gladia-key: YOUR_GLADIA_API_KEY'
     ```
 
     You should get a JSON response like this :

@@ -20,7 +20,7 @@ Discover our state-of-the-art ASR model [ Whisper Zero now.](https://www.gladia.
 
 ## Sending a transcription request
 
-<Tip>Don't forget to update *YOUR_GLADIA_API_TOKEN* and *YOUR_AUDIO_URL* to match yours.</Tip>
+<Tip>Don't forget to update *YOUR_GLADIA_API_KEY* and *YOUR_AUDIO_URL* to match yours.</Tip>
 
 <CodeGroup>
 ```typescript TypeScript
@@ -46,7 +46,7 @@ async function pollForResult(resultUrl: string, headers: any) {
 }
 
 async function startTranscription() {
-  const gladiaKey = "YOUR_GLADIA_API_TOKEN";
+  const gladiaKey = "YOUR_GLADIA_API_KEY";
   const requestData = {
     audio_url:
       "YOUR_AUDIO_URL",
@@ -84,7 +84,7 @@ def make_fetch_request(url, headers, method='GET', data=None):
         response = requests.get(url, headers=headers)
     return response.json()
 
-gladia_key = "YOUR_GLADIA_API_TOKEN"
+gladia_key = "YOUR_GLADIA_API_KEY"
 request_data = {"audio_url": "YOUR_AUDIO_URL"}
 gladia_url = "https://api.gladia.io/v2/transcription/"
 

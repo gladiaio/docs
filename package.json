@@ -12,7 +12,7 @@
     "broken-links": "npm run mintlify -- broken-links"
   },
   "dependencies": {
-    "mintlify": "^4.0.222",
+    "mintlify": "^4.0.237",
     "sharp": "^0.33.5"
   }
 }

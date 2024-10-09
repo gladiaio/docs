@@ -29,7 +29,7 @@ In V2, we addressed this by decomposing the process in multiple steps, and have 
     curl --request POST \
       --url https://api.gladia.io/v2/upload \
       --header 'Content-Type: multipart/form-data' \
-      --header 'x-gladia-key: YOUR_GLADIA_API_TOKEN' \
+      --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
       --form audio=@/path/to/your/audio/conversation.wav
     ```
     
@@ -69,7 +69,7 @@ In V2, we addressed this by decomposing the process in multiple steps, and have 
         --url https://api.gladia.io/audio/text/audio-transcription/ \
         # Content-Type is multipart/form-data, v2 is application/json
         --header 'Content-Type: multipart/form-data' \
-        --header 'x-gladia-key: YOUR_GLADIA_API_TOKEN' \
+        --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
         --form audio_url=http://youraudiofileurl.com/conversation.wav \
         # Diarization toggle & config
         --form toggle_diarization=true \
@@ -89,7 +89,7 @@ In V2, we addressed this by decomposing the process in multiple steps, and have 
         --url https://api.gladia.io/v2/transcription \
         # Content-type is now application/json
         --header 'Content-Type: application/json' \
-        --header 'x-gladia-key: YOUR_GLADIA_API_TOKEN' \
+        --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
         --data '{
         "audio_url": "https://api.gladia.io/file/636c70f6-92c1-4026-a8b6-0dfe3ecf826f",
         "diarization": true,
