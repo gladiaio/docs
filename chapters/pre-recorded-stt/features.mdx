@@ -1,9 +1,7 @@
 ---
-title: Speech Recognition
-description: "Core feature of the Gladia API"
+title: Features
+description: "Core features of the Gladia Pre-recorded STT API"
 ---
-
-import GetTranscriptionResult from '/snippets/get-transcription-result.mdx';
 
 The core functionality of the Gladia API is its Speech Recognition model, designed to convert spoken language
  into written text. This serves as the basis for all Gladia API offerings.
@@ -16,139 +14,6 @@ Discover our state-of-the-art ASR model [ Whisper Zero now.](https://www.gladia.
 
  Additional capabilities, like Speaker Diarization, Summarization, Translation, Custom Prompts and more can be integrated seamlessly
  into the transcription process by including extra parameters in the transcription request.
-
-
-## Sending a transcription request
-
-<Tip>Don't forget to update *YOUR_GLADIA_API_KEY* and *YOUR_AUDIO_URL* to match yours.</Tip>
-
-<CodeGroup>
-```typescript TypeScript
-async function makeFetchRequest(url: string, options: any) {
-  const response = await fetch(url, options);
-  return response.json();
-}
-
-async function pollForResult(resultUrl: string, headers: any) {
-  while (true) {
-    console.log("Polling for results...");
-    const pollResponse = await makeFetchRequest(resultUrl, { headers });
-
-    if (pollResponse.status === "done") {
-      console.log("- Transcription done: \n ");
-      console.log(pollResponse.result.transcription.full_transcript);
-      break;
-    } else {
-      console.log("Transcription status : ", pollResponse.status);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-    }
-  }
-}
-
-async function startTranscription() {
-  const gladiaKey = "YOUR_GLADIA_API_KEY";
-  const requestData = {
-    audio_url:
-      "YOUR_AUDIO_URL",
-  };
-  const gladiaUrl = "https://api.gladia.io/v2/transcription/";
-  const headers = {
-    "x-gladia-key": gladiaKey,
-    "Content-Type": "application/json",
-  };
-
-  console.log("- Sending initial request to Gladia API...");
-  const initialResponse = await makeFetchRequest(gladiaUrl, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(requestData),
-  });
-
-  console.log("Initial response with Transcription ID :", initialResponse);
-
-  if (initialResponse.result_url) {
-    await pollForResult(initialResponse.result_url, headers);
-  }
-}
-
-startTranscription();
-```
-```python Python
-import requests
-import time
-
-def make_fetch_request(url, headers, method='GET', data=None):
-    if method == 'POST':
-        response = requests.post(url, headers=headers, json=data)
-    else:
-        response = requests.get(url, headers=headers)
-    return response.json()
-
-gladia_key = "YOUR_GLADIA_API_KEY"
-request_data = {"audio_url": "YOUR_AUDIO_URL"}
-gladia_url = "https://api.gladia.io/v2/transcription/"
-
-headers = {
-    "x-gladia-key": gladia_key,
-    "Content-Type": "application/json"
-}
-
-print("- Sending initial request to Gladia API...")
-initial_response = make_fetch_request(gladia_url, headers, 'POST', request_data)
-
-print("Initial response with Transcription ID:", initial_response)
-result_url = initial_response.get("result_url")
-
-if result_url:
-    while True:
-        print("Polling for results...")
-        poll_response = make_fetch_request(result_url, headers)
-        
-        if poll_response.get("status") == "done":
-            print("- Transcription done: \n")
-            print(poll_response.get("result", {}).get("transcription", {}).get("full_transcript"))
-            break
-        else:
-            print("Transcription status:", poll_response.get("status"))
-        time.sleep(1)
-
-```
-</CodeGroup>
-
-After that your audio have been processed, here's an example output of what you should get :
-
-```
-Split infinity in a time when less is more, where too much is never enough. There is always hope for the future. The future can be read from the past. The past foreshadows the present, and the present hasn't been written yet.`
-```
-
-
-## Getting the result of a request 
-
-<GetTranscriptionResult />
-
-
-## Transcription job status
-
-The transcription status can have different values :
-
-| Status     | Description                              |
-| --------   | ---------------------------------------- |
-| `queued`     | Audio waiting to be processed            |
-| `processing` | Audio file being processed               |
-| `done`       | Transcription successfully completed     |
-| `error`     | An error occurred on your transcription   |
-
-<Warning>
-
-Transcriptions can fail for various of reasons:
-
-- No audio in the audio file
-- Audio URL unreachable
-- Issues with your file format
-
-If you get another type of failure (most likely a server failure), resubmit the audio file and another server will take care 
-of processing it.
-</Warning>
 
 
 ## Word-level timestamps
@@ -386,7 +251,7 @@ The keys in the dictionary are case sensitive, while the values aren't. Values c
 In this example, the model will ensure that "Gorish" is spelled correctly throughout the transcript, even if it is pronounced in various ways such as "ghorish," "gaurish," or "gaureish."
 
 ## Name consistency
-You can ask the model to enforce consistent spelling of names using the `name_consistency` parameter. Thie will ensure the same name is spelled in the same manner throughout the transcript, at the cost of a small amount of added processing time.
+You can ask the model to enforce consistent spelling of names using the `name_consistency` parameter. This will ensure the same name is spelled in the same manner throughout the transcript, at the cost of a small amount of added processing time.
 
 This is especially useful for scenarios where people's names may be mentioned multiple times, but these names are not known in advance
 (e.g. recruitment call recordings).

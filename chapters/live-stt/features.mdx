@@ -1,0 +1,145 @@
+---
+title: Features
+description: "Core features of the Gladia Live STT API"
+---
+
+<Note>All the configuration properties described below are defined in the [POST /v2/live endpoint](/api-reference/v2/live/init).</Note>
+
+## Language detection
+
+### Spoken language(s)
+
+To obtain the best result (in terms of accuracy and speed), it's important to narrow the list of languages:
+
+```json
+{
+  "language_config": {
+    "languages": ["en"]
+  }
+}
+```
+
+
+### Code switching
+
+If you expect multiple languages to be spoken during the live, enable the code switching option: 
+
+```json
+{
+  "language_config": {
+    "languages": ["en", "fr"],
+    "code_switching": true
+  }
+}
+```
+
+
+## Word-level timestamps
+
+Instead of just getting utterances start and end timestamps, **Gladia** Live Speech-To-Text API provides the
+**Word-level timestamps** feature. It lets you know the exact timestamp for each word and give you a more precise transcription.
+ This feature is particularly useful for detailed analysis, as it allows you to pinpoint the exact moment each word is spoken, facilitating
+  a more accurate synchronization with audio or video files.
+
+To enable it, pass the following configuration:  
+```json
+{
+  "realtime_processing": {
+    "words_accurate_timestamps": true
+  }
+}
+```
+
+Under each utterance, you'll find a `words` property like this:
+
+```json
+{
+  // ... other utterance properties
+  "words": [
+    {
+      "word": "Split",
+      "start": 0.21001999999999998,
+      "end": 0.69015,
+      "confidence": 1
+    },
+    {
+      "word": " infinity",
+      "start": 0.91021,
+      "end": 1.55038,
+      "confidence": 0.95
+    },
+  ]
+}
+```
+
+
+## Custom vocabulary
+
+To enhance the precision of transcription, especially for words or phrases that recur often in your audio stream, you
+ can utilize the `custom_vocabulary` feature in the configuration.<br/>
+ The custom vocabulary has the following limitations:
+
+ - global limit of **10k characters**
+ - no more than **100 elements**
+ - each element should not contain more than **5 words**
+
+```json
+{
+  "realtime_processing": {
+    "custom_vocabulary": true,
+    "custom_vocabulary_config": {
+      "vocabulary": ["Westeros", "Stark", "Night's Watch"]
+    }
+  }
+}
+```
+
+
+## Multiple channels audio stream
+
+If you have multiple channels in your audio stream, specify the count in the configuration:
+
+```json
+{
+  "channels": 2
+}
+```
+
+Gladia Live API will automatically split them and transcribe them separately.  
+For each utterance, you will get a `channel` key corresponding to the channel the transcription came from.
+
+<Warning>
+Sending an audio with 2 channels will be billed twice the audio duration even if channels are identical.
+</Warning>
+
+
+## Attaching custom metadata
+
+You can attach metadata to your live transcription session using the `custom_metadata` property.
+This will allow you to recognize your transcription when you get its data from the [GET `/v2/live/{id}` endpoint](/api-reference/v2/live/get), but more important, it will allow you to use it as a filter in the [GET `/v2/live` list endpoint](/api-reference/v2/live/list).
+For example, you can add the following to your configuration:
+
+```json
+"custom_metadata": {
+    "internalUserId": 2348739875894375,
+    "paymentMethod": {
+        "last4Digits": 4576
+     },
+     "internalUserName": "Spencer"
+}
+```
+
+And then, use the following GET request to filter results like:
+```
+https://api.gladia.io/v2/live?custom_metadata={"internalUserId": "2348739875894375"}
+```
+or
+```
+https://api.gladia.io/v2/live?custom_metadata={"paymentMethod": {"last4Digits": 4576}, "internalUserName": "Spencer"}
+```
+
+<Warning>
+
+`custom_metadata` cannot be longer than 2000 characters when stringified.
+
+</Warning>
