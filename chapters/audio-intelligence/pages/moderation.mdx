@@ -47,7 +47,7 @@ async function pollForResult(resultUrl: string, headers: any) {
 }
 
 async function startModeration() {
-  const gladiaKey = "YOUR_GLADIA_API_TOKEN";
+  const gladiaKey = "YOUR_GLADIA_API_KEY";
   const requestData = {
     audio_url:
       "YOUR_AUDIO_URL",
@@ -88,7 +88,7 @@ def make_fetch_request(url, headers, method='GET', data=None):
     return response.json()
 
 
-gladia_key = "YOUR_GLADIA_API_TOKEN"
+gladia_key = "YOUR_GLADIA_API_KEY"
 request_data = {
     "audio_url": "YOUR_AUDIO_URL",
     "moderation": True

@@ -1,0 +1,475 @@
+---
+title: Migrate from V1 API
+description: "Migration guide from Gladia V1 API to the V2 API"
+---
+
+The Live V2 STT API offers more features and improves significantly latencies over the V1.  
+Here is a guide to migrate to the V2 and benefits from everything it offers.  
+
+
+## Initiating the connection to the WebSocket  
+
+In V1, you always connect to the same WebSocket url (wss://api.gladia.io/audio/text/audio-transcription) and send your configuration through the WebSocket connection.  
+
+In V2, you first generate a unique WS url with a call to our [POST /v2/live endpoint](/api-reference/v2/live/init) and then connects to it.  
+This url contains a token unique to this live session. You'll be able to resume your session in case of lost connection or give the url to a web client without leaking your Gladia API key.  
+
+<AccordionGroup>
+  <Accordion title="V1">
+    <CodeGroup>
+    ```javascript JavaScript
+      import WebSocket from 'ws';
+
+      const socket = new WebSocket('wss://api.gladia.io/audio/text/audio-transcription');
+
+      socket.addEventListener("open", function() {
+        // Send configuration
+        socket.send(JSON.stringify({
+          'x_gladia_key': 'YOUR_GLADIA_API_KEY',
+          // ...config properties
+        }))
+
+        // Start sending audio chunks
+      });
+    ```
+    </CodeGroup>
+  </Accordion>
+  <Accordion title="V2">
+    <CodeGroup>
+    ```javascript JavaScript
+      import WebSocket from 'ws';
+
+      const response = await fetch('https://api.gladia.io/v2/live', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-GLADIA-KEY': '<YOUR_GLADIA_API_KEY>',
+        },
+        body: JSON.stringify({
+          // ...config properties
+        }),
+      });
+      if (!response.ok) {
+        // Look at the error message
+        // It might be a configuration issue
+        console.error(`${response.status}: ${(await response.text()) || response.statusText}`);
+        process.exit(response.status);
+      }
+
+      const {url} = await response.json();
+
+      const socket = new WebSocket(url);
+
+      socket.addEventListener("open", function() {
+        // Start sending audio chunks
+      });
+    ```
+    </CodeGroup>
+  </Accordion>
+</AccordionGroup>
+
+
+## Configuration  
+
+As V2 offers more features, the configuration has to evolve. You can find the full configuration definition in the [POST /v2/live API reference page](/api-reference/v2/live/init).  
+Here, we will show you how to migrate your V1 configuration object to the V2 one.  
+
+### Audio encoding  
+
+`encoding`, `bit_depth` and `sample_rate` are still present in V2 but it supports less options for now.  
+As `wav` and `wav/pcm` are the same `encoding`, V2 dropped `wav` support and default to `wav/pcm` now.  
+`amb`, `mp3`, `flac`, `ogg/vorbis`, `opus`, `sphere` and `amr-nb` are no longer supported.  
+
+We also dropped support for the `bit_depth` option `64`.  
+
+If you are using an unsupported `encoding` or `bit_depth`, please contact us with your use case and in the mean time, keep using the V1 API. 
+
+
+### Model  
+
+Only one model is supported in V2 for now so omit the property `model`.  
+
+
+### Endpointing and maximum audio duration 
+
+`endpointing` is now declared in seconds instead of milliseconds.  
+`maximum_audio_duration` has been renamed to `maximum_duration_without_endpointing`.
+
+<AccordionGroup>
+  <Accordion title="V1">
+    <CodeGroup>
+    ```json
+    {
+      "endpointing": 800,
+      "maximum_audio_duration": 10
+    }
+    ```
+    </CodeGroup>
+  </Accordion>
+  <Accordion title="V2">
+    <CodeGroup>
+    ```json
+    {
+      "endpointing": 0.8,
+      "maximum_duration_without_endpointing": 10
+    } 
+    ```
+    </CodeGroup>
+  </Accordion>
+</AccordionGroup> 
+
+
+### Language  
+
+#### Automatic single language
+
+<Note>Automatic single language behaviour is the default in both V1 and V2 so you can just omit those from your configuration.</Note>
+
+<AccordionGroup>
+  <Accordion title="V1">
+    <CodeGroup>
+    ```json
+    {
+      "language_behaviour": "automatic single language"
+    }
+    ```
+    </CodeGroup>
+  </Accordion>
+  <Accordion title="V2">
+    <CodeGroup>
+    ```json
+    {
+      "language_config": {
+        "languages": [],
+        "code_switching": false
+      }
+    } 
+    ```
+    </CodeGroup>
+  </Accordion>
+</AccordionGroup>
+
+
+#### Automatic multiple languages
+
+<AccordionGroup>
+  <Accordion title="V1">
+    <CodeGroup>
+    ```json
+    {
+      "language_behaviour": "automatic multiple languages"
+    }
+    ```
+    </CodeGroup>
+  </Accordion>
+  <Accordion title="V2">
+    <CodeGroup>
+    ```json
+    {
+      "language_config": {
+        "languages": [], // You can now specify the expected languages in V2 as guidance to improve accuracy and latency
+        "code_switching": true
+      }
+    } 
+    ```
+    </CodeGroup>
+  </Accordion>
+</AccordionGroup>
+
+
+#### Manual
+
+<Note>Language are now specified with a 2-letter code like Pre-recorded API.<br/>Check [this page](/chapters/limits-and-specifications/languages) for a complete list of codes.</Note>
+
+<AccordionGroup>
+  <Accordion title="V1">
+    <CodeGroup>
+    ```json
+    {
+      "language_behaviour": "manual",
+      "language": "english"
+    }
+    ```
+    </CodeGroup>
+  </Accordion>
+  <Accordion title="V2">
+    <CodeGroup>
+    ```json
+    {
+      "language_config": {
+        "languages": ["en"],
+        "code_switching": false
+      }
+    } 
+    ```
+    </CodeGroup>
+  </Accordion>
+</AccordionGroup>
+
+
+### Frames format  
+
+The parameter `frames_format` is no longer present as it became useless.  
+You can send audio chunk as bytes or base64 and we will detect the format automatically.  
+
+
+### Audio enhancer
+
+`audio_enhancer` has been moved into the `pre_processing` object.  
+
+<AccordionGroup>
+  <Accordion title="V1">
+    <CodeGroup>
+    ```json
+    {
+      "audio_enhancer": true
+    }
+    ```
+    </CodeGroup>
+  </Accordion>
+  <Accordion title="V2">
+    <CodeGroup>
+    ```json
+    {
+      "pre_processing": {
+        "audio_enhancer": true
+      }
+    } 
+    ```
+    </CodeGroup>
+  </Accordion>
+</AccordionGroup>
+
+
+### Word timestamps
+
+`word_timestamps` has been renamed to `words_accurate_timestamps` and moved into the `realtime_processing` object.  
+
+<AccordionGroup>
+  <Accordion title="V1">
+    <CodeGroup>
+    ```json
+    {
+      "word_timestamps": true
+    }
+    ```
+    </CodeGroup>
+  </Accordion>
+  <Accordion title="V2">
+    <CodeGroup>
+    ```json
+    {
+      "realtime_processing": {
+        "words_accurate_timestamps": true
+      }
+    } 
+    ```
+    </CodeGroup>
+  </Accordion>
+</AccordionGroup>
+
+
+### Other properties  
+
+`prosody`, `reinject_context` and `transcription_hint` have no equivalent for now as they were not good enough.  
+They may return under another form in the feature.  
+
+
+### Full config migration sample   
+
+<AccordionGroup>
+  <Accordion title="V1">
+    <CodeGroup>
+    ```json
+    {
+      "encoding": "wav",
+      "bit_depth": 8,
+      "sample_rate": 48000,
+      "model": "accurate",
+      "endpointing": 800,
+      "maximum_audio_duration": 10,
+      "language_behaviour": "manual",
+      "language": "english",
+      "audio_enhancer": true,
+      "word_timestamps": true
+    }
+    ```
+    </CodeGroup>
+  </Accordion>
+  <Accordion title="V2">
+    <CodeGroup>
+    ```json
+    {
+      "encoding": "wav/pcm",
+      "bit_depth": 8,
+      "sample_rate": 48000,
+      "endpointing": 0.8,
+      "maximum_duration_without_endpointing": 10,
+      "language_config": {
+        "languages": ["en"]
+      }
+      "pre_processing": {
+        "audio_enhancer": true
+      },
+      "realtime_processing": {
+        "words_accurate_timestamps": true
+      }
+    } 
+    ```
+    </CodeGroup>
+  </Accordion>
+</AccordionGroup>
+
+
+## Send audio chunks  
+
+If you were sending chunks as bytes, nothing changed.  
+If you were sending them as base64, the format of the JSON messages changed in V2. See the [API reference](/api-reference/v2/live/action/audio-chunk) for the full format.
+
+<AccordionGroup>
+  <Accordion title="V1">
+    <CodeGroup>
+    ```json
+    {
+      "frames": "<base64 encoded>"
+    }
+    ```
+    </CodeGroup>
+  </Accordion>
+  <Accordion title="V2">
+    <CodeGroup>
+    ```json
+    {
+      "type": "audio_chunk",
+      "data": {
+        "chunk": "<base64 encoded>"
+      }
+    }
+    ```
+    </CodeGroup>
+  </Accordion>
+</AccordionGroup>
+
+
+## Transcription message
+
+In V1, we send through WebSocket only two kind of messages:
+- the "connected" message  
+- the "transcript" messages
+
+In V2, we send a lot more:  
+- lifecycle event messages
+- acknowledgment messages
+- addon messages
+- post-processing messages
+- ...
+
+To read a transcription message, in V1, you usually test that the `type` field is `"final"` and/or the `transcription` field is not empty.  
+In V2, you should test that the `type` field is `transcript` and `data.is_final` is `true`.  
+
+Below is an example of a transcript message in V1 and V2 so you can see the differences.  
+See the [API reference](/api-reference/v2/live/message/transcript) for the full format.
+
+<AccordionGroup>
+  <Accordion title="V1">
+    <CodeGroup>
+    ```json
+    {
+      "event": "transcript",
+      "request_id": "G-3abade39",
+      "type": "final",
+      "transcription": " Hello world",
+      "time_begin": 1.4376875,
+      "time_end": 2.4696875,
+      "confidence": 0.65,
+      "language": "en",
+      "utterances": [
+        {
+          "transcription": " Hello world",
+          "time_begin": 1.4376875,
+          "time_end": 2.4696875,
+          "language": "en",
+          "confidence": 0.65,
+          "stable": true,
+          "id": 0
+        }
+      ],
+      "inference_time": 0.843909502029419,
+      "duration": 2.5845000000000002
+    }
+    ```
+    </CodeGroup>
+  </Accordion>
+  <Accordion title="V2">
+    <CodeGroup>
+    ```json
+    {
+      "type": "transcript",
+      "session_id": "de0a341d-c69f-4e15-a649-7b3f49e211f0",
+      "created_at": "2024-10-10T14:35:28.387Z",
+      "data": {
+        "id": "00_00000000",
+        "is_final": true,
+        "utterance": {
+          "text": " Hello world",
+          "start": 0.188,
+          "end": 1.284,
+          "language": "en",
+          "confidence": 1,
+          "channel": 0,
+          "words": [
+            { "word": " Hello", "start": 0.188, "end": 0.735, "confidence": 1 },
+            { "word": " world", "start": 0.736, "end": 1.284, "confidence": 1 }
+          ]
+        }
+      }
+    }
+    ```
+    </CodeGroup>
+  </Accordion>
+</AccordionGroup>
+
+Also, if you are not interested in new messages and want the simplicity of V1 API, you can configure what kind of messages you want when calling the [POST /v2/live endpoint](/api-reference/v2/live/init) to initiate the session.  
+With the following configuration, you will only receive final transcript messages:
+<CodeGroup>
+```json
+{
+  "messages_config": {
+    "receive_partial_transcripts": false,
+    "receive_final_transcripts": true,
+    "receive_speech_events": false,
+    "receive_pre_processing_events": false,
+    "receive_realtime_processing_events": false,
+    "receive_post_processing_events": false,
+    "receive_acknowledgments": false,
+    "receive_lifecycle_events": false
+  }
+}
+```
+</CodeGroup>
+
+
+## End the live session
+
+The format of the message also changed. See the [API reference](/api-reference/v2/live/action/stop-recording) for the full format.
+
+<AccordionGroup>
+  <Accordion title="V1">
+    <CodeGroup>
+    ```json
+    {
+      "event": "terminate"
+    }
+    ```
+    </CodeGroup>
+  </Accordion>
+  <Accordion title="V2">
+    <CodeGroup>
+    ```json
+    {
+      "type": "stop_recording"
+    }
+    ```
+    </CodeGroup>
+  </Accordion>
+</AccordionGroup>

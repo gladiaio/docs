@@ -54,31 +54,136 @@
     "maintainOrder": true
   },
   "openapi": "https://api.gladia.io/openapi.json",
+  "redirects": [
+    {
+      "source": "/api-reference/transcription-flow",
+      "destination": "/api-reference/pre-recorded-flow"
+    },
+    {
+      "source": "/api-reference/api-v2/Upload/post-v2upload",
+      "destination": "/api-reference/v2/upload/audio-file"
+    },
+    {
+      "source": "/api-reference/api-v2/Transcription/post-v2transcription",
+      "destination": "/api-reference/v2/transcription/init"
+    },
+    {
+      "source": "/api-reference/api-v2/Transcription/get-v2transcription",
+      "destination": "/api-reference/v2/transcription/get"
+    },
+    {
+      "source": "/api-reference/api-v2/Transcription/list-v2transcription",
+      "destination": "/api-reference/v2/transcription/list"
+    },
+    {
+      "source": "/api-reference/api-v2/Transcription/get-v2transcription-file",
+      "destination": "/api-reference/v2/transcription/get-audio"
+    },
+    {
+      "source": "/api-reference/api-v2/Transcription/delete-v2transcription",
+      "destination": "/api-reference/v2/transcription/delete"
+    },
+    {
+      "source": "/api-reference/api-v2/Webhooks/transcription-created",
+      "destination": "/api-reference/v2/pre-recorded/webhook/created"
+    },
+    {
+      "source": "/api-reference/api-v2/Webhooks/transcription-success",
+      "destination": "/api-reference/v2/pre-recorded/webhook/success"
+    },
+    {
+      "source": "/api-reference/api-v2/Webhooks/transcription-error",
+      "destination": "/api-reference/v2/pre-recorded/webhook/error"
+    },
+    {
+      "source": "/api-reference/api-v2/Callback/transcription-success",
+      "destination": "/api-reference/v2/pre-recorded/callback/success"
+    },
+    {
+      "source": "/api-reference/api-v2/Callback/transcription-error",
+      "destination": "/api-reference/v2/pre-recorded/callback/error"
+    },
+    {
+      "source": "/chapters/introduction/pages/introduction",
+      "destination": "/chapters/introduction/introduction"
+    },
+    {
+      "source": "/chapters/introduction/pages/why-use-gladia",
+      "destination": "/chapters/introduction/why-use-gladia"
+    },
+    {
+      "source": "/chapters/get-started/pages/configure-account",
+      "destination": "/chapters/introduction/getting-started#setup-your-account"
+    },
+    {
+      "source": "/chapters/get-started/pages/transcribe-audio",
+      "destination": "/chapters/introduction/getting-started"
+    },
+    {
+      "source": "/chapters/get-started/pages/next-steps",
+      "destination": "/chapters/introduction/getting-started#next-steps"
+    },
+    {
+      "source": "/chapters/speech-to-text-api/pages/languages",
+      "destination": "/chapters/limits-and-specifications/languages"
+    },
+    {
+      "source": "/chapters/limits-and-specifications/pages/concurrency",
+      "destination": "/chapters/limits-and-specifications/concurrency"
+    },
+    {
+      "source": "/chapters/limits-and-specifications/pages/supported-formats",
+      "destination": "/chapters/limits-and-specifications/supported-formats"
+    },
+    {
+      "source": "/chapters/get-started/pages/integration-guides",
+      "destination": "/chapters/guides/integration"
+    },
+    {
+      "source": "/chapters/use-cases-configuration/pages/meeting recording",
+      "destination": "/chapters/guides/use-cases/meeting-recording"
+    },
+    {
+      "source": "/chapters/speech-to-text-api/pages/speech-recognition",
+      "destination": "/chapters/pre-recorded-stt/features"
+    },
+    {
+      "source": "/chapters/speech-to-text-api/pages/speaker-diarization",
+      "destination": "/chapters/pre-recorded-stt/speaker-diarization"
+    },
+    {
+      "source": "/chapters/get-started/pages/migration-from-v1",
+      "destination": "/chapters/pre-recorded-stt/migration-from-v1"
+    },
+    {
+      "source": "/chapters/speech-to-text-api/pages/live-speech-recognition",
+      "destination": "/chapters/live-stt/migration-from-v1"
+    }
+  ],
   "navigation": [
     {
       "group": "Introduction",
       "pages": [
-        "chapters/introduction/pages/introduction",
-        "chapters/introduction/pages/why-use-gladia",
-        "chapters/get-started/pages/migration-from-v1"
+        "chapters/introduction/introduction",
+        "chapters/introduction/why-use-gladia",
+        "chapters/introduction/getting-started"
       ]
     },
     {
-      "group": "Getting started",
+      "group": "Pre-recorded Speech To Text",
       "pages": [
-        "chapters/get-started/pages/configure-account",
-        "chapters/get-started/pages/transcribe-audio",
-        "chapters/get-started/pages/next-steps",
-        "chapters/get-started/pages/integration-guides"
+        "chapters/pre-recorded-stt/getting-started",
+        "chapters/pre-recorded-stt/features",
+        "chapters/pre-recorded-stt/speaker-diarization",
+        "chapters/pre-recorded-stt/migration-from-v1"
       ]
     },
     {
-      "group": "Speech to Text API",
+      "group": "Live Speech To Text",
       "pages": [
-        "chapters/speech-to-text-api/pages/speech-recognition",
-        "chapters/speech-to-text-api/pages/live-speech-recognition",
-        "chapters/speech-to-text-api/pages/speaker-diarization",
-        "chapters/speech-to-text-api/pages/languages"
+        "chapters/live-stt/getting-started",
+        "chapters/live-stt/features",
+        "chapters/live-stt/migration-from-v1"
       ]
     },
     {
@@ -96,14 +201,21 @@
     {
       "group": "Limits & Specifications",
       "pages": [
-        "chapters/limits-and-specifications/pages/concurrency",
-        "chapters/limits-and-specifications/pages/supported-formats"
+        "chapters/limits-and-specifications/languages",
+        "chapters/limits-and-specifications/concurrency",
+        "chapters/limits-and-specifications/supported-formats"
       ]
     },
     {
-      "group": "Use cases configurations",
+      "group": "Guides",
       "pages": [
-        "chapters/use-cases-configuration/pages/meeting recording"
+        "chapters/guides/integration",
+        {
+          "group": "Use cases",
+          "pages": [
+            "chapters/guides/use-cases/meeting-recording"
+          ]
+        }
       ]
     },
     {
@@ -111,38 +223,132 @@
       "pages": [
         "api-reference/introduction",
         "api-reference/authentication",
-        "api-reference/transcription-flow"
-      ]
-    },
-    {
-      "group": "Transcription",
-      "pages": [
-        "api-reference/api-v2/Transcription/list-v2transcription",
-        "api-reference/api-v2/Transcription/post-v2transcription",
-        "api-reference/api-v2/Transcription/get-v2transcription",
-        "api-reference/api-v2/Transcription/delete-v2transcription",
-        "api-reference/api-v2/Transcription/get-v2transcription-file"
+        "api-reference/pre-recorded-flow",
+        "api-reference/live-flow"
       ]
     },
     {
       "group": "Upload",
+      "pages": ["api-reference/v2/upload/audio-file"]
+    },
+    {
+      "group": "Pre-recorded endpoints",
       "pages": [
-        "api-reference/api-v2/Upload/post-v2upload"
+        "api-reference/v2/pre-recorded/init",
+        "api-reference/v2/pre-recorded/get",
+        "api-reference/v2/pre-recorded/list",
+        "api-reference/v2/pre-recorded/get-audio",
+        "api-reference/v2/pre-recorded/delete"
       ]
     },
     {
-      "group": "Webhooks",
+      "group": "Pre-recorded webhooks",
       "pages": [
-        "api-reference/api-v2/Webhooks/transcription-created",
-        "api-reference/api-v2/Webhooks/transcription-success",
-        "api-reference/api-v2/Webhooks/transcription-error"
+        "api-reference/v2/pre-recorded/webhook/created",
+        "api-reference/v2/pre-recorded/webhook/success",
+        "api-reference/v2/pre-recorded/webhook/error"
       ]
     },
     {
-      "group": "Callbacks",
+      "group": "Pre-recorded callbacks",
       "pages": [
-        "api-reference/api-v2/Callback/transcription-success",
-        "api-reference/api-v2/Callback/transcription-error"
+        "api-reference/v2/pre-recorded/callback/success",
+        "api-reference/v2/pre-recorded/callback/error"
+      ]
+    },
+    {
+      "group": "Live endpoints",
+      "pages": [
+        "api-reference/v2/live/init",
+        "api-reference/v2/live/get",
+        "api-reference/v2/live/list",
+        "api-reference/v2/live/get-audio",
+        "api-reference/v2/live/delete"
+      ]
+    },
+    {
+      "group": "Live WS actions",
+      "pages": [
+        "api-reference/v2/live/action/audio-chunk",
+        "api-reference/v2/live/action/stop-recording"
+      ]
+    },
+    {
+      "group": "Live WS messages",
+      "pages": [
+        {
+          "group": "Realtime messages",
+          "pages": [
+            "api-reference/v2/live/message/transcript"
+          ]
+        },
+        {
+          "group": "Acknowledgment messages",
+          "pages": [
+            "api-reference/v2/live/message/audio-chunk-ack",
+            "api-reference/v2/live/message/stop-recording-ack"
+          ]
+        },
+        {
+          "group": "Lifecycle messages",
+          "pages": [
+            "api-reference/v2/live/message/start-session",
+            "api-reference/v2/live/message/start-recording",
+            "api-reference/v2/live/message/end-recording",
+            "api-reference/v2/live/message/end-session"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Live callbacks",
+      "pages": [
+        {
+          "group": "Realtime messages",
+          "pages": [
+            "api-reference/v2/live/callback/transcript"
+          ]
+        },
+        {
+          "group": "Acknowledgment messages",
+          "pages": [
+            "api-reference/v2/live/callback/audio-chunk-ack",
+            "api-reference/v2/live/callback/stop-recording-ack"
+          ]
+        },
+        {
+          "group": "Lifecycle messages",
+          "pages": [
+            "api-reference/v2/live/callback/start-session",
+            "api-reference/v2/live/callback/start-recording",
+            "api-reference/v2/live/callback/end-recording",
+            "api-reference/v2/live/callback/end-session"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Live webhooks",
+      "pages": [
+        {
+          "group": "Lifecycle messages",
+          "pages": [
+            "api-reference/v2/live/webhook/start-session",
+            "api-reference/v2/live/webhook/start-recording",
+            "api-reference/v2/live/webhook/end-recording",
+            "api-reference/v2/live/webhook/end-session"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "Transcription (deprecated)",
+      "pages": [
+        "api-reference/v2/transcription/init",
+        "api-reference/v2/transcription/get",
+        "api-reference/v2/transcription/list",
+        "api-reference/v2/transcription/get-audio",
+        "api-reference/v2/transcription/delete"
       ]
     }
   ],
