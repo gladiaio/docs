@@ -56,6 +56,10 @@
   "openapi": "https://api.gladia.io/openapi.json",
   "redirects": [
     {
+      "source": "/api-reference/transcription-flow",
+      "destination": "/api-reference/pre-recorded-flow"
+    },
+    {
       "source": "/api-reference/api-v2/Upload/post-v2upload",
       "destination": "/api-reference/v2/upload/audio-file"
     },
@@ -219,7 +223,7 @@
       "pages": [
         "api-reference/introduction",
         "api-reference/authentication",
-        "api-reference/transcription-flow",
+        "api-reference/pre-recorded-flow",
         "api-reference/live-flow"
       ]
     },
