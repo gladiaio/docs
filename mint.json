@@ -98,33 +98,88 @@
     {
       "source": "/api-reference/api-v2/Callback/transcription-error",
       "destination": "/api-reference/v2/pre-recorded/callback/error"
+    },
+    {
+      "source": "/chapters/introduction/pages/introduction",
+      "destination": "/chapters/introduction/introduction"
+    },
+    {
+      "source": "/chapters/introduction/pages/why-use-gladia",
+      "destination": "/chapters/introduction/why-use-gladia"
+    },
+    {
+      "source": "/chapters/get-started/pages/configure-account",
+      "destination": "/chapters/introduction/getting-started#setup-your-account"
+    },
+    {
+      "source": "/chapters/get-started/pages/transcribe-audio",
+      "destination": "/chapters/introduction/getting-started"
+    },
+    {
+      "source": "/chapters/get-started/pages/next-steps",
+      "destination": "/chapters/introduction/getting-started#next-steps"
+    },
+    {
+      "source": "/chapters/speech-to-text-api/pages/languages",
+      "destination": "/chapters/limits-and-specifications/languages"
+    },
+    {
+      "source": "/chapters/limits-and-specifications/pages/concurrency",
+      "destination": "/chapters/limits-and-specifications/concurrency"
+    },
+    {
+      "source": "/chapters/limits-and-specifications/pages/supported-formats",
+      "destination": "/chapters/limits-and-specifications/supported-formats"
+    },
+    {
+      "source": "/chapters/get-started/pages/integration-guides",
+      "destination": "/chapters/guides/integration"
+    },
+    {
+      "source": "/chapters/use-cases-configuration/pages/meeting recording",
+      "destination": "/chapters/guides/use-cases/meeting-recording"
+    },
+    {
+      "source": "/chapters/speech-to-text-api/pages/speech-recognition",
+      "destination": "/chapters/pre-recorded-stt/features"
+    },
+    {
+      "source": "/chapters/speech-to-text-api/pages/speaker-diarization",
+      "destination": "/chapters/pre-recorded-stt/speaker-diarization"
+    },
+    {
+      "source": "/chapters/get-started/pages/migration-from-v1",
+      "destination": "/chapters/pre-recorded-stt/migration-from-v1"
+    },
+    {
+      "source": "/chapters/speech-to-text-api/pages/live-speech-recognition",
+      "destination": "/chapters/live-stt/migration-from-v1"
     }
   ],
   "navigation": [
     {
       "group": "Introduction",
       "pages": [
-        "chapters/introduction/pages/introduction",
-        "chapters/introduction/pages/why-use-gladia",
-        "chapters/get-started/pages/migration-from-v1"
+        "chapters/introduction/introduction",
+        "chapters/introduction/why-use-gladia",
+        "chapters/introduction/getting-started"
       ]
     },
     {
-      "group": "Getting started",
+      "group": "Pre-recorded Speech To Text",
       "pages": [
-        "chapters/get-started/pages/configure-account",
-        "chapters/get-started/pages/transcribe-audio",
-        "chapters/get-started/pages/next-steps",
-        "chapters/get-started/pages/integration-guides"
+        "chapters/pre-recorded-stt/getting-started",
+        "chapters/pre-recorded-stt/features",
+        "chapters/pre-recorded-stt/speaker-diarization",
+        "chapters/pre-recorded-stt/migration-from-v1"
       ]
     },
     {
-      "group": "Speech to Text API",
+      "group": "Live Speech To Text",
       "pages": [
-        "chapters/speech-to-text-api/pages/speech-recognition",
-        "chapters/speech-to-text-api/pages/live-speech-recognition",
-        "chapters/speech-to-text-api/pages/speaker-diarization",
-        "chapters/speech-to-text-api/pages/languages"
+        "chapters/live-stt/getting-started",
+        "chapters/live-stt/features",
+        "chapters/live-stt/migration-from-v1"
       ]
     },
     {
@@ -142,13 +197,22 @@
     {
       "group": "Limits & Specifications",
       "pages": [
-        "chapters/limits-and-specifications/pages/concurrency",
-        "chapters/limits-and-specifications/pages/supported-formats"
+        "chapters/limits-and-specifications/languages",
+        "chapters/limits-and-specifications/concurrency",
+        "chapters/limits-and-specifications/supported-formats"
       ]
     },
     {
-      "group": "Use cases configurations",
-      "pages": ["chapters/use-cases-configuration/pages/meeting recording"]
+      "group": "Guides",
+      "pages": [
+        "chapters/guides/integration",
+        {
+          "group": "Use cases",
+          "pages": [
+            "chapters/guides/use-cases/meeting-recording"
+          ]
+        }
+      ]
     },
     {
       "group": "API Documentation",

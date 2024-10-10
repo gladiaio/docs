@@ -1,0 +1,76 @@
+---
+title: Getting started
+description: "Setup your Gladia account and start using the most reliable state-of-the-art Speech To Text API"
+---
+
+import SetupAccount from '/snippets/setup-account.mdx';
+
+<SetupAccount />
+
+
+## Gladia's playground
+
+Using [Gladia's playground](https://app.gladia.io/playground/1) is a convenient way to test our Speech To Text API. On the playground
+you are able to transcribe remote audio files through URL, and also upload your local audio files, alongside with live 
+audio transcription.
+
+<Steps>
+  <Step title="Select your audio source">
+    Choose your audio source (using an audio link, or upload a local file)
+    <Frame>
+      <img src='/assets/images/playground-1.png'/>
+    </Frame>
+    Then proceed to the next step.
+  </Step>
+  <Step title="Select features">
+    You'll be able to select <Tooltip tip="If you want to see a complete list of the features Gladia's API provide check the Features section">some of 
+    the options</Tooltip> Gladia API provide for your transcription.
+    For this example, we want to detect the speakers, so we turned on **diarization**.
+
+    <Note>
+        Only a few features of Gladia API are available on the playground. For more advanced testing,
+        check [our API documentation](/api-reference/) instead. 
+     </Note>
+
+    <Frame>
+      <img src='/assets/images/playground-2.png'/>
+    </Frame>
+  </Step>
+  <Step title="Transcribe">
+
+    You can see an already formatted and readable results in the default "Transcription" tab, and you'll also find
+     the result in various format (plain text, SRT, VTT) and JSON (the one you’d get with an API call).
+
+    <Frame>
+      <img src='/assets/images/playground-3.png'/>
+    </Frame>
+  </Step>
+</Steps>
+
+
+## Gladia's APIs 
+
+- [Pre-recorded Speech To Text](/chapters/speech-to-text-api/pages/getting-started)
+- [Live Speech To Text](/chapters/speech-to-text-api/pages/live-speech-recognition)
+
+
+## Next steps
+
+Now that you tested Gladia's basic transcription, you might want to extract data, enhance, translate or format your audio
+transcriptions.
+
+On top of its **Speech-to-text API**, Gladia provides a whole set of tools that you might want
+to use for your particular use cases like:
+
+- Speaker recognition (diarization)
+- Audio intelligence models (Translation, Summarization, Chapterization, Custom AI process...)
+- Word level timestamps
+- Subtitles generation
+- Custom vocabulary & Context prompting
+
+
+Here are some links that can help you dive deeper into our powerful API:
+
+- [Speech Recognition usage & parameters](/chapters/speech-to-text-api/pages/speech-recognition)
+- [Gladia code samples GitHub repository](https://github.com/gladiaio/gladia-samples)
+- [API Reference](/api-reference/)
