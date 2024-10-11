@@ -279,7 +279,18 @@
         {
           "group": "Realtime messages",
           "pages": [
-            "api-reference/v2/live/message/transcript"
+            "api-reference/v2/live/message/transcript",
+            "api-reference/v2/live/message/named-entity-recognition",
+            "api-reference/v2/live/message/sentiment-analysis"
+          ]
+        },
+        {
+          "group": "Post-processing messages",
+          "pages": [
+            "api-reference/v2/live/message/post-transcript",
+            "api-reference/v2/live/message/post-final-transcript",
+            "api-reference/v2/live/message/post-chapterization",
+            "api-reference/v2/live/message/post-summarization"
           ]
         },
         {
@@ -306,7 +317,18 @@
         {
           "group": "Realtime messages",
           "pages": [
-            "api-reference/v2/live/callback/transcript"
+            "api-reference/v2/live/callback/transcript",
+            "api-reference/v2/live/callback/named-entity-recognition",
+            "api-reference/v2/live/callback/sentiment-analysis"
+          ]
+        },
+        {
+          "group": "Post-processing messages",
+          "pages": [
+            "api-reference/v2/live/callback/post-transcript",
+            "api-reference/v2/live/callback/post-final-transcript",
+            "api-reference/v2/live/callback/post-chapterization",
+            "api-reference/v2/live/callback/post-summarization"
           ]
         },
         {
