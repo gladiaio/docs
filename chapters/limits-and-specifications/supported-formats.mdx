@@ -19,7 +19,11 @@ Those limits will be gradually lifted to ensure the full stability and performan
 135 minutes. Attempts to transcribe longer audio files will result in an error.
 Direct YouTube links are limited to 120 minutes instead of 135 minutes.
 
-- **File size**: Audio files must not exceed 500 MB in size. Larger files will not be accepted by the API.
+<Tip> 
+  We support up to 4h15 audio length for enterprise plans.
+</Tip>
+
+- **File size**: Audio files must not exceed 1000 MB in size. Larger files will not be accepted by the API.
 
 ### Splitting oversize audio files
 For audio files that are near or exceed the limitations on length and size, it is recommended to split them into smaller chunks of ~60 minutes each. This approach not only adheres to the API constraints but also generally yields better transcription results.
