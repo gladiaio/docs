@@ -1,6 +1,6 @@
 ---
 title: Features
-description: "Core features of the Gladia Live STT API"
+description: "Core features of the Gladia Real Time Speech to Text (STT) API"
 ---
 
 <Note>All the configuration properties described below are defined in the [POST /v2/live endpoint](/api-reference/v2/live/init).</Note>
@@ -22,7 +22,7 @@ To obtain the best result (in terms of accuracy and speed), it's important to na
 
 ### Code switching
 
-If you expect multiple languages to be spoken during the live, enable the code switching option: 
+If you expect multiple languages to be spoken during the real time session, enable the code switching option: 
 
 ```json
 {
@@ -105,7 +105,7 @@ If you have multiple channels in your audio stream, specify the count in the con
 }
 ```
 
-Gladia Live API will automatically split them and transcribe them separately.  
+Gladia Live STT API will automatically split them and transcribe them separately.  
 For each utterance, you will get a `channel` key corresponding to the channel the transcription came from.
 
 <Warning>
@@ -115,8 +115,8 @@ Sending an audio with 2 channels will be billed twice the audio duration even if
 
 ## Attaching custom metadata
 
-You can attach metadata to your live transcription session using the `custom_metadata` property.
-This will allow you to recognize your transcription when you get its data from the [GET `/v2/live/{id}` endpoint](/api-reference/v2/live/get), but more important, it will allow you to use it as a filter in the [GET `/v2/live` list endpoint](/api-reference/v2/live/list).
+You can attach metadatas to your live transcription session using the `custom_metadata` property.
+This will allow you to recognize your transcription when you get its data from the [GET `/v2/live/:id` endpoint](/api-reference/v2/live/get), but more important, it will allow you to use it as a filter in the [GET `/v2/live` list endpoint](/api-reference/v2/live/list).
 For example, you can add the following to your configuration:
 
 ```json

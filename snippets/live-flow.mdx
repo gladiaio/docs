@@ -1,6 +1,6 @@
 import Samples from '/snippets/samples.mdx';
 
-## Initiate your live session
+## Initiate your real time session
 
 First, you need to call the [`POST /v2/live` endpoint](/api-reference/v2/live/init) and pass your configuration.  
 It's important to correctly define the properties `encoding`, `sample_rate`, `bit_depth` and `channels` as we 
@@ -12,7 +12,7 @@ cannot guess them and we use those to parse your audio chunks.
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'X-GLADIA-KEY': '<YOUR_GLADIA_API_KEY>',
+      'X-Gladia-Key': '<YOUR_GLADIA_API_KEY>',
     },
     body: JSON.stringify({
       encoding: 'wav/pcm',
@@ -167,7 +167,7 @@ If you want to get the complete result, you can call the [`GET /v2/live/:id` end
   const response = await fetch(`https://api.gladia.io/v2/live/${id}`, {
     method: 'GET',
     headers: {
-      'X-GLADIA-KEY': '<YOUR_GLADIA_API_KEY>',
+      'X-Gladia-Key': '<YOUR_GLADIA_API_KEY>',
     },
   });
   if (!response.ok) {
