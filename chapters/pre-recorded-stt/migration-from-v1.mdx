@@ -21,7 +21,7 @@ In V2, we addressed this by decomposing the process in multiple steps, and have 
     <Note>This step is **optional** if you are already working with **audio URLs**. </Note>
 
     If you're working with audio or video files, you'll need to upload it first using our `/upload` endpoint with `multipart/form-data`
-    content-type since Gladia `/v2/transcription` endpoint only accept audio URLs now.
+    content-type since Gladia `/v2/pre-recorded` endpoint only accept audio URLs now.
 
     More information about this step [in the API Reference](/api-reference/api-v2/Upload/post-v2upload)
 
@@ -54,10 +54,10 @@ In V2, we addressed this by decomposing the process in multiple steps, and have 
   <Step title="Transcribe">
     We'll now make the transcription request to Gladia's API.
 
-    Instead of `/audio/text/audio-transcription` now we'll use `/v2/transcription`
+    Instead of `/audio/text/audio-transcription` now we'll use `/v2/pre-recorded`
 
     <Note> 
-      Since `/v2/transcription` does not accept any `audio` file, `Content-Type` is not
+      Since `/v2/pre-recorded` does not accept any `audio` file, `Content-Type` is not
      `multipart/form-data` anymore, but `application/json`.
     </Note>
 
@@ -86,7 +86,7 @@ In V2, we addressed this by decomposing the process in multiple steps, and have 
     ```
     ```bash V2
       curl --request POST \
-        --url https://api.gladia.io/v2/transcription \
+        --url https://api.gladia.io/v2/pre-recorded \
         # Content-type is now application/json
         --header 'Content-Type: application/json' \
         --header 'x-gladia-key: YOUR_GLADIA_API_TOKEN' \
