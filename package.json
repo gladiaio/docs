@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Gladia documentation",
   "main": "index.js",
-  "author": "",
+  "author": "Gladia Tech Team <tech@gladia.io>",
   "license": "ISC",
   "scripts": {
     "mintlify": "mintlify",
