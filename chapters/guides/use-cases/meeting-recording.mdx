@@ -25,12 +25,12 @@ Gladia supports 3 different modes of language support:
   ⚠️ **Limitations:** Other languages will be automatically translated to the specified language.
 - **Automatic single language** - For asynchronous audio, this behaviour will automatically detect the most prominent language in the audio and use it to transcribe.Segments of speech in other languages will automatically be translated. For live streaming, language will be automatically detected based on the first chunk of audio and will be used for the remainder of the stream.  
   ⚙️ **Use for:** Most common use cases, including meetings that start in one language and switch to another.  
-  ⚠️ **Limitations:** Secondary languages will be automatically translated to the main language (the one most spoken); Real time transcription will detect based on the first utterance only.
+  ⚠️ **Limitations:** Secondary languages will be automatically translated to the main language (the one most spoken); Real-time transcription will detect based on the first utterance only.
 - **Automatic multiple languages (code-switching)** - This mode will continuously detect the language spoken and support multiple language changes in a single audio.The resulting transcription will be in multiple languages.  
   ⚙️ **Use for:** Use cases with languages being changed multiple times in the audio, e.g. a journalist interviewing someone in one language and getting responses in another.  
   ⚠️ **Limitations:** Currently sensitive to strong accents, which may cause the wrong language to be detected.
 
-2. ### When to use Real time vs asynchronous transcription
+2. ### When to use Real-time vs asynchronous transcription
    **Tl;dr: For most needs, using async transcription will provide the best balance between price, accuracy, and speed. For cases where real-time or very low latency transcription is needed, use live transcription.**
 
 Gladia supports two types of transcription - asynchronous (aka batch) and live. With the asynchronous API, audio files are sent to be transcribed by our AI model, and a transcription is returned in response. Some of the benefits of this method are: the ability to use automatic single language detection (mentioned in the previous section), using a highly accurate transcription model, and being able to use speaker diarization to identify text spoken by different speakers.
