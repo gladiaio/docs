@@ -281,7 +281,7 @@ If your audio has multiple channels but has the same audio content on each chann
 ## Adding custom metadata
 
 You can add metadata to your transcription using the `custom_metadata` input during your POST request on `/v2/transcription` endpoint.
-This will allow you to recognize your transcription when you get its data from the GET `/v2/transcription/{id}` endpoint, but more important, it will allow you to use it as a filter in the GET `/v2/transcription` list endpoint.
+This will allow you to recognize your transcription when you get its data from the GET `/v2/transcription/:id` endpoint, but more important, it will allow you to use it as a filter in the GET `/v2/transcription` list endpoint.
 For example, you can add the following when asking for a transcription:
 
 ```json

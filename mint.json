@@ -179,7 +179,7 @@
       ]
     },
     {
-      "group": "Live Speech To Text",
+      "group": "Real time Speech To Text",
       "pages": [
         "chapters/live-stt/getting-started",
         "chapters/live-stt/features",
@@ -212,9 +212,7 @@
         "chapters/guides/integration",
         {
           "group": "Use cases",
-          "pages": [
-            "chapters/guides/use-cases/meeting-recording"
-          ]
+          "pages": ["chapters/guides/use-cases/meeting-recording"]
         }
       ]
     },
