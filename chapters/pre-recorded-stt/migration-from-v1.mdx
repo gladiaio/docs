@@ -23,7 +23,7 @@ In V2, we addressed this by decomposing the process in multiple steps, and have 
     If you're working with audio or video files, you'll need to upload it first using our `/upload` endpoint with `multipart/form-data`
     content-type since Gladia `/v2/pre-recorded` endpoint only accept audio URLs now.
 
-    More information about this step [in the API Reference](/api-reference/api-v2/Upload/post-v2upload)
+    More information about this step [in the API Reference](/api-reference/v2/upload/audio-file)
 
     ```bash
     curl --request POST \
@@ -61,7 +61,7 @@ In V2, we addressed this by decomposing the process in multiple steps, and have 
      `multipart/form-data` anymore, but `application/json`.
     </Note>
 
-    More information about this step [in the API Reference](/api-reference/api-v2/Transcription/post-v2transcription)
+    More information about this step [in the API Reference](/api-reference/v2/pre-recorded/init)
 
     <CodeGroup>
     ```bash V1 (deprecated)
@@ -291,6 +291,6 @@ Here is a general changelog for the output part of the transcription's core feat
 To dive deeper into the V2 version of the API, please take a look at those next:
 
 - [API Reference](/api-reference/)
-- [Speech Recognition](/chapters/speech-to-text-api/pages/speech-recognition)
+- [Speech Recognition](/chapters/pre-recorded-stt/features)
 - [Translation model](/chapters/audio-intelligence/pages/translation)
 - [Summarization model](/chapters/audio-intelligence/pages/summarization)
