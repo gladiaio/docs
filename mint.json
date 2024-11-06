@@ -23,12 +23,6 @@
     "thumbsRating": true
   },
   "backgroundImage": "/assets/images/background/lightbackground.png",
-  "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "https://gladiaio.typeform.com/support"
-    }
-  ],
   "topbarCtaButton": {
     "name": "Get Started",
     "url": "https://app.gladia.io/auth/signin"
