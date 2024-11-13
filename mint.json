@@ -164,7 +164,7 @@
       ]
     },
     {
-      "group": "Pre-recorded Speech To Text",
+      "group": "Asynchronous Speech-to-Text",
       "pages": [
         "chapters/pre-recorded-stt/getting-started",
         "chapters/pre-recorded-stt/features",
@@ -173,7 +173,7 @@
       ]
     },
     {
-      "group": "Real-time Speech To Text",
+      "group": "Real-time Speech-to-Text",
       "pages": [
         "chapters/live-stt/getting-started",
         "chapters/live-stt/features",
