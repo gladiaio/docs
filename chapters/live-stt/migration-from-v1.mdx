@@ -4,14 +4,14 @@ description: "Migrate to the latest version of Gladia's API"
 ---
 
 Real-time V2 is the latest real-time speech-to-text API from Gladia. It offers more features and has significant improvements in latency compared to V1.
-Here is a guide to migrate to V2 so you can start enjoying all the benefits.
+Here is a guide on to migrate to V2, so you can start enjoying all the benefits.
 
 ## Initiating the connection to the WebSocket
 
-In V1, you always connect to the same WebSocket url (wss://api.gladia.io/audio/text/audio-transcription) and send your configuration through the WebSocket connection.
+In V1, you always connect to the same WebSocket URL (wss://api.gladia.io/audio/text/audio-transcription) and send your configuration through the WebSocket connection.
 
-In V2, you first generate a unique WS url with a call to our [POST /v2/live endpoint](/api-reference/v2/live/init) and then connects to it.
-This url contains a token unique to this live session. You'll be able to resume your session in case of lost connection or give the url to a web client without leaking your Gladia API key.
+In V2, you first generate a unique WebSocket URL with a call to our [POST /v2/live endpoint](/api-reference/v2/live/init), and then connect to it.
+This URL contains a token that is unique to your live session. You'll be able to resume your session in case of lost connection, or give the URL to a web client without exposing your Gladia API key.
 
 <AccordionGroup>
   <Accordion title="V1">
@@ -70,24 +70,24 @@ This url contains a token unique to this live session. You'll be able to resume 
 
 ## Configuration
 
-As V2 offers more features, the configuration has to evolve. You can find the full configuration definition in the [POST /v2/live API reference page](/api-reference/v2/live/init).
-Here, we will show you how to migrate your V1 configuration object to the V2 one.
+With V2 offering more features, the configuration comes with some changes. You can find the full configuration definition in the [POST /v2/live API reference page](/api-reference/v2/live/init).
+Here, we'll show you how to migrate your V1 configuration object to the V2 one.
 
 ### Audio encoding
 
-`encoding`, `bit_depth` and `sample_rate` are still present in V2 but it supports less options for now.
-As `wav` and `wav/pcm` are the same `encoding`, V2 dropped `wav` support and default to `wav/pcm` now.
+`encoding`, `bit_depth` and `sample_rate` are still present in V2, but it supports less options for now.
+As `wav` is the same `encoding` as `wav/pcm`, V2 has dropped support for `wav` and defaults to `wav/pcm`.
 `amb`, `mp3`, `flac`, `ogg/vorbis`, `opus`, `sphere` and `amr-nb` are no longer supported.
 
 We also dropped support for the `bit_depth` option `64`.
 
-If you are using an unsupported `encoding` or `bit_depth`, please contact us with your use case and in the mean time, keep using the V1 API.
+If you're using an unsupported `encoding` or `bit_depth`, please contact us with your use case. In the mean time, keep using V1.
 
 ### Model
 
-Only one model is supported in V2 for now so omit the property `model`.
+Only one model is supported in V2 for now, so omit the property `model`.
 
-### Endpointing and maximum audio duration
+### End-pointing and maximum audio duration
 
 `endpointing` is now declared in seconds instead of milliseconds.
 `maximum_audio_duration` has been renamed to `maximum_duration_without_endpointing`.
@@ -120,7 +120,7 @@ Only one model is supported in V2 for now so omit the property `model`.
 
 #### Automatic single language
 
-<Note>Automatic single language behaviour is the default in both V1 and V2 so you can just omit those from your configuration.</Note>
+<Note>Automatic single language behavior is the default in both V1 and V2, so you can just omit those from your configuration.</Note>
 
 <AccordionGroup>
   <Accordion title="V1">
@@ -176,7 +176,7 @@ Only one model is supported in V2 for now so omit the property `model`.
 
 #### Manual
 
-<Note>Language are now specified with a 2-letter code like Pre-recorded API.<br />Check [this page](/chapters/limits-and-specifications/languages) for a complete list of codes.</Note>
+<Note>Languages are now specified with a 2-letter code, as in the API for pre-recorded speech-to-text.<br />See [this page](/chapters/limits-and-specifications/languages) for a complete list of codes.</Note>
 
 <AccordionGroup>
   <Accordion title="V1">
@@ -206,8 +206,8 @@ Only one model is supported in V2 for now so omit the property `model`.
 
 ### Frames format
 
-The parameter `frames_format` is no longer present as it became useless.
 You can send audio chunk as bytes or base64 and we will detect the format automatically.
+The parameter `frames_format` is hence no longer present.
 
 ### Audio enhancer
 
@@ -268,7 +268,7 @@ You can send audio chunk as bytes or base64 and we will detect the format automa
 ### Other properties
 
 `prosody`, `reinject_context` and `transcription_hint` have no equivalent for now as they were not good enough.
-They may return under another form in the feature.
+They may return in another form in the feature.
 
 ### Full config migration sample
 
@@ -318,7 +318,7 @@ They may return under another form in the feature.
 
 ## Send audio chunks
 
-If you were sending chunks as bytes, nothing changed.
+If you were sending chunks as bytes, nothing has changed.
 If you were sending them as base64, the format of the JSON messages changed in V2. See the [API reference](/api-reference/v2/live/action/audio-chunk) for the full format.
 
 <AccordionGroup>
@@ -348,28 +348,28 @@ If you were sending them as base64, the format of the JSON messages changed in V
 
 ## Transcription message
 
-In V1, we send through WebSocket only two kind of messages:
+In V1, we send only two kinds of messages through WebSocket:
 
 * the "connected" message
 
 * the "transcript" messages
 
-In V2, we send a lot more:
+In V2, we send more:
 
 * lifecycle event messages
 
 * acknowledgment messages
 
-* addon messages
+* add-on messages
 
 * post-processing messages
 
 * ...
 
-To read a transcription message, in V1, you usually test that the `type` field is `"final"` and/or the `transcription` field is not empty.
-In V2, you should test that the `type` field is `transcript` and `data.is_final` is `true`.
+To read a transcription message in V1, you verify that the `type` field is `"final"` and/or the `transcription` field is not empty.
+In V2, you should confirm that the `type` field is `transcript` and `data.is_final` is `true`.
 
-Below is an example of a transcript message in V1 and V2 so you can see the differences.
+Below are examples of transcript messages in V1 and V2, so you can see the differences.
 See the [API reference](/api-reference/v2/live/message/transcript) for the full format.
 
 <AccordionGroup>
@@ -432,7 +432,7 @@ See the [API reference](/api-reference/v2/live/message/transcript) for the full 
   </Accordion>
 </AccordionGroup>
 
-Also, if you are not interested in new messages and want the simplicity of V1 API, you can configure what kind of messages you want when calling the [POST /v2/live endpoint](/api-reference/v2/live/init) to initiate the session.
+If you're not interested in new messages and want the simplicity of the V1 API, you can configure what kind of messages you want when calling the [POST /v2/live endpoint](/api-reference/v2/live/init) to initiate the session.
 With the following configuration, you will only receive final transcript messages:
 
 <CodeGroup>
@@ -454,7 +454,7 @@ With the following configuration, you will only receive final transcript message
 
 ## End the live session
 
-The format of the message also changed. See the [API reference](/api-reference/v2/live/action/stop-recording) for the full format.
+The format of this message also changed. See the [API reference](/api-reference/v2/live/action/stop-recording) for the full format.
 
 <AccordionGroup>
   <Accordion title="V1">
