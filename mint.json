@@ -177,6 +177,12 @@
       "pages": [
         "chapters/live-stt/getting-started",
         "chapters/live-stt/features",
+        {
+          "group": "Features",
+          "pages": ["chapters/live-stt/feature1",
+                    "chapters/live-stt/feature2",
+                    "chapters/live-stt/feature3"]
+        },
         "chapters/live-stt/migration-from-v1"
       ]
     },
