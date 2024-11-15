@@ -376,5 +376,11 @@
   },
   "integrations": {
     "intercom": "zkqf4zax"
+  },
+  "analytics": {
+    "hotjar": {
+      "hjid": "5197599",
+      "hjsv": "6"
+    }
   }
 }
