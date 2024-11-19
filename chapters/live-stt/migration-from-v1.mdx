@@ -3,15 +3,15 @@ title: "Migration guide from V1 to V2"
 description: "Migrate to the latest version of Gladia's API"
 ---
 
-Real-time V2 is the latest real-time speech-to-text API from Gladia. It offers more features and has significant improvements in latency compared to V1.
-Here is a guide on to migrate to V2, so you can start enjoying all the benefits. Please make sure you migrate sooner rather than later as we're looking to remove support for V1 sometime in the future. Before we do so however, we'll of course reach out to those of you who are still on V1.&#x20;
+Real-time V2 is the latest real-time speech-to-text API from Gladia. It offers more features and has significant improvements in latency compared to V1. Here is a guide on how to migrate to V2, so you can start enjoying all the benefits.&#x20;
+
+Please make sure you migrate sooner rather than later as we're looking to remove support for V1 sometime in the future. Before we do so however, we'll of course reach out to those of you who are still on V1.&#x20;
 
 ## Initiating the connection to the WebSocket
 
 In V1, you always connect to the same WebSocket URL (wss://api.gladia.io/audio/text/audio-transcription) and send your configuration through the WebSocket connection.
 
-In V2, you first generate a unique WebSocket URL with a call to our [POST /v2/live endpoint](/api-reference/v2/live/init), and then connect to it.
-This URL contains a token that is unique to your live session. You'll be able to resume your session in case of lost connection, or give the URL to a web client without exposing your Gladia API key.
+In V2, you first generate a unique WebSocket URL with a call to our [POST /v2/live endpoint](/api-reference/v2/live/init), and then connect to it. This URL contains a token that is unique to your live session. You'll be able to resume your session in case of a lost connection, or give the URL to a web client without exposing your Gladia API key.
 
 <AccordionGroup>
   <Accordion title="V1">
@@ -70,16 +70,18 @@ This URL contains a token that is unique to your live session. You'll be able to
 
 ## Configuration
 
-With V2 offering more features, the configuration comes with some changes. You can find the full configuration definition in the [POST /v2/live API reference page](/api-reference/v2/live/init).
+With V2 offering more features, the configuration comes with some changes. You'll find the full configuration definition in the [POST /v2/live API reference page](/api-reference/v2/live/init).
+
 Here, we'll show you how to migrate your V1 configuration object to the V2 one.
 
 ### Audio encoding
 
-`encoding`, `bit_depth` and `sample_rate` are still present in V2, but it supports less options for now.
+`encoding`, `bit_depth` and `sample_rate` are still present in V2, but with less options for now.
+
 As `wav` is the same `encoding` as `wav/pcm`, V2 has dropped support for `wav` and defaults to `wav/pcm`.
 `amb`, `mp3`, `flac`, `ogg/vorbis`, `opus`, `sphere` and `amr-nb` are no longer supported.
 
-We also dropped support for the `bit_depth` option `64`.
+`bit_depth` option `64` is no longer supported.&#x20;
 
 If you're using an unsupported `encoding` or `bit_depth`, please contact us with your use case. In the mean time, keep using V1.
 
@@ -206,8 +208,8 @@ Only one model is supported in V2 for now, so omit the property `model`.
 
 ### Frames format
 
-You can send audio chunk as bytes or base64 and we will detect the format automatically.
-The parameter `frames_format` is hence no longer present.
+You can send audio chunk as bytes or base64 and we'll detect the format automatically.
+The parameter `frames_format` is no longer present.
 
 ### Audio enhancer
 
@@ -348,7 +350,7 @@ If you were sending them as base64, the format of the JSON messages changed in V
 
 ## Transcription message
 
-In V1, we send only two kinds of messages through WebSocket:
+In V1, we only send two kinds of messages through WebSocket:
 
 * the "connected" message
 
@@ -367,7 +369,7 @@ In V2, we send more:
 * ...
 
 To read a transcription message in V1, you verify that the `type` field is `"final"` and/or the `transcription` field is not empty.
-In V2, you should confirm that the `type` field is `transcript` and `data.is_final` is `true`.
+In V2, you should confirm that the `type` field is `transcript` and that `data.is_final` is `true`.
 
 Below are examples of transcript messages in V1 and V2, so you can see the differences.
 See the [API reference](/api-reference/v2/live/message/transcript) for the full format.
@@ -432,7 +434,7 @@ See the [API reference](/api-reference/v2/live/message/transcript) for the full 
   </Accordion>
 </AccordionGroup>
 
-If you're not interested in new messages and simply want the ones from the V1 API, you can configure what kind of messages you want when calling the [POST /v2/live endpoint](/api-reference/v2/live/init) to initiate the session.
+If you're not interested in new messages and simply want the ones from the V1 API, you can always configure what kind of messages you want when calling the [POST /v2/live endpoint](/api-reference/v2/live/init) to initiate the session.
 With the following configuration, you will only receive final transcript messages:
 
 <CodeGroup>
