@@ -43,7 +43,7 @@ It's important to correctly define the properties `encoding`, `sample_rate`, `bi
   ```
 </CodeGroup>
 
-You'll receive a response with a WebSocket URL to connect to. If you loose connection, you can reconnect to that same URL to resume where you left off. Here's an example of a response:
+You'll receive a response with a WebSocket URL to connect to. If you loose connection, you can reconnect to that same URL and resume where you left off. Here's an example of a response:
 
 ```json
 {
@@ -87,7 +87,7 @@ Now that you've initiated the session and have the URL, you can connect to the W
 
 ## Send audio chunks
 
-You can now start sending us your audio chunks through the WebSocket. You can send them directly as binary or in JSON by encoding your chunk in base64, like this:
+You can now start sending us your audio chunks through the WebSocket. You can send them directly as binary, or in JSON by encoding your chunk in base64, like this:
 
 <CodeGroup>
   ```javascript JavaScript
@@ -124,10 +124,7 @@ Here's an example of a [`transcript`](/api-reference/v2/live/message/transcript)
 
 ## Stop the recording
 
-Once you are done, send us the `stop_recording` message.
-We will process remaining audio chunks and start the post-processing phase, in which we put together the final audio file and the add-ons you requested.
-You'll receive a message at every step of the process in the WebSocket, or the callback, if configured.
-Once the post-processing is done, the WebSocket is closed with a code 1000.
+Once you're done, send us the `stop_recording` message. We will process remaining audio chunks and start the post-processing phase, in which we put together the final audio file and results with the add-ons you requested. You'll receive a message at every step of the process in the WebSocket, or in the callback if configured. Once the post-processing is done, the WebSocket is closed with a code 1000.
 
 <CodeGroup>
   ```javascript JavaScript
