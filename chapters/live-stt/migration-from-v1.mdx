@@ -79,6 +79,7 @@ Here, we'll show you how to migrate your V1 configuration object to the V2 one.
 `encoding`, `bit_depth` and `sample_rate` are still present in V2, but with less options for now.
 
 As `wav` is the same `encoding` as `wav/pcm`, V2 has dropped support for `wav` and defaults to `wav/pcm`.
+
 `amb`, `mp3`, `flac`, `ogg/vorbis`, `opus`, `sphere` and `amr-nb` are no longer supported.
 
 `bit_depth` option `64` is no longer supported.&#x20;
@@ -178,7 +179,7 @@ Only one model is supported in V2 for now, so omit the property `model`.
 
 #### Manual
 
-<Note>Languages are now specified with a 2-letter code, as in the API for pre-recorded speech-to-text.<br />See [this page](/chapters/limits-and-specifications/languages) for a complete list of codes.</Note>
+<Note>Languages are now specified with a 2-letter code, as in the API for asynchronous speech-to-text.<br />See [this page](/chapters/limits-and-specifications/languages) for a complete list of codes.</Note>
 
 <AccordionGroup>
   <Accordion title="V1">
@@ -270,7 +271,7 @@ The parameter `frames_format` is no longer present.
 ### Other properties
 
 `prosody`, `reinject_context` and `transcription_hint` are not supported for now.
-They may return in another form in the feature.
+They may return in another form in the future.
 
 ### Full config migration sample
 
@@ -351,24 +352,17 @@ If you were sending them as base64, the format of the JSON messages changed in V
 ## Transcription message
 
 In V1, we only send two kinds of messages through WebSocket:
-
 * the "connected" message
-
 * the "transcript" messages
 
 In V2, we send more:
-
 * lifecycle event messages
-
 * acknowledgment messages
-
 * add-on messages
-
 * post-processing messages
-
 * ...
 
-To read a transcription message in V1, you verify that the `type` field is `"final"` and/or the `transcription` field is not empty.
+To read a transcription message in V1, you verify that the `type` field is `"final"` and/or the `transcription` field is not empty. <br/>
 In V2, you should confirm that the `type` field is `transcript` and that `data.is_final` is `true`.
 
 Below are examples of transcript messages in V1 and V2, so you can see the differences.
@@ -435,6 +429,7 @@ See the [API reference](/api-reference/v2/live/message/transcript) for the full 
 </AccordionGroup>
 
 If you're not interested in new messages and simply want the ones from the V1 API, you can always configure what kind of messages you want when calling the [POST /v2/live endpoint](/api-reference/v2/live/init) to initiate the session.
+
 With the following configuration, you will only receive final transcript messages:
 
 <CodeGroup>
