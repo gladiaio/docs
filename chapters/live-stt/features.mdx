@@ -34,7 +34,7 @@ If you expect multiple languages to be spoken, enable the code-switching. This w
 
 ## Word-level timestamps
 
-Instead of just getting timestamps for when utterances begin and end, Gladia's real-time API provides **word-level timestamps** by default. This lets you know the exact timestamp for each word,  giving you a more precise transcription, facilitating detailed analysis and more accurate synchronization with audio and video files.
+Instead of just getting timestamps for when utterances begin and end, Gladia's real-time API provides **word-level timestamps**. This lets you know the exact timestamp for each word,  giving you a more precise transcription, facilitating detailed analysis and more accurate synchronization with audio and video files.
 
 To enable it, pass the following configuration:
 
@@ -74,9 +74,7 @@ To enhance the precision of words you know will recur often in your transcriptio
 Custom vocabulary has the following limitations:
 
 * Global limit of **10k characters**
-
 * No more than **100 entries**
-
 * Each element can't contain more than **5 words**
 
 ```json
@@ -92,7 +90,7 @@ Custom vocabulary has the following limitations:
 
 ## Multiple channels
 
-If you have multiple channels in your audio you want transcribed, specify the count in the configuration:
+If you have multiple channels in your audio stream, specify the count in the configuration:
 
 ```json
 {
