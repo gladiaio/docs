@@ -1,3 +1,7 @@
+import GetTranscriptionResult from '/snippets/get-transcription-result.mdx';
+import Samples from '/snippets/samples.mdx';
+
+
 ## Upload your file
 
 <Note>This step is **optional** if you are already working with **audio URLs**. </Note>
@@ -33,42 +37,43 @@ Example response:
 
 We will now proceed to the next steps using the returned `audio_url`.
 
+
 ## Transcribe
 
 We'll now POST the transcription request to Gladia's API using the [`POST /v2/pre-recorded` endpoint](/api-reference/v2/pre-recorded/init).
 
-<Note>
+<Note> 
   `/v2/pre-recorded` only accept `application/json` as Content-Type.
 </Note>
 
 <CodeGroup>
-  ```bash cURL
-    curl --request POST \
-      --url https://api.gladia.io/v2/pre-recorded \
-      --header 'Content-Type: application/json' \
-      --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
-      --data '{
-      "audio_url": "YOUR_AUDIO_URL",
-      "diarization": true,
-      "diarization_config": {
-        "number_of_speakers": 3,
-        "min_speakers": 1,
-        "max_speakers": 5
-      },
-      "translation": true,
-      "translation_config": {
-        "model": "base",
-        "target_languages": ["fr", "en"]
-      },
-      "subtitles": true,
-      "subtitles_config": {
-        "formats": ["srt", "vtt"]
-      },
-      "detect_language": true,
-      "enable_code_switching": false
-      }
-    '
-  ```
+```bash cURL
+  curl --request POST \
+    --url https://api.gladia.io/v2/pre-recorded \
+    --header 'Content-Type: application/json' \
+    --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
+    --data '{
+    "audio_url": "YOUR_AUDIO_URL",
+    "diarization": true,
+    "diarization_config": {
+      "number_of_speakers": 3,
+      "min_speakers": 1,
+      "max_speakers": 5
+    },
+    "translation": true,
+    "translation_config": {
+      "model": "base",
+      "target_languages": ["fr", "en"]
+    },
+    "subtitles": true,
+    "subtitles_config": {
+      "formats": ["srt", "vtt"]
+    },
+    "detect_language": true,
+    "enable_code_switching": false
+    }
+  '
+```
 </CodeGroup>
 
 You'll get an instant response from the request with an `id` and a `result_url`. The `id` is your transcription ID that you
@@ -76,8 +81,10 @@ will use to get your transcription result once it's done.
 
 `result_url` is returned for convenience. This is a pre-built url with your transcription id in it that you can use to get your result in the next step.
 
+
 ## Get the transcription result
 
 <GetTranscriptionResult />
+
 
 <Samples />
