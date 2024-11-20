@@ -1,7 +1,9 @@
+import Samples from '/snippets/samples.mdx';
+
 ## Initiate your real-time session
 
 First, call the [`POST /v2/live` endpoint](/api-reference/v2/live/init) and pass your configuration.
-It's important to correctly define the properties `encoding`, `sample_rate`, `bit_depth` and `channels` as we use them to parse your audio chunks.
+It's important to correctly define the properties `encoding`, `sample_rate`, `bit_depth` and `channels` as we need them to parse your audio chunks.
 
 <CodeGroup>
   ```javascript JavaScript
@@ -108,7 +110,7 @@ You can now start sending us your audio chunks through the WebSocket. You can se
 
 During the whole session, we will send various messages through the WebSocket, the callback URL or webhooks. You can specify which kind of messages you want to receive in the initial configuration. See [`messages_config`](/api-reference/v2/live/init) for WebSocket messages and [`callback_config`](/api-reference/v2/live/init) for callback messages.
 
-Here's an example of a [`transcript`](/api-reference/v2/live/message/transcript) message received through a WebSocket:
+Here's an example of how to read a [`transcript`](/api-reference/v2/live/message/transcript) message received through a WebSocket:
 
 <CodeGroup>
   ```javascript JavaScript
@@ -124,7 +126,9 @@ Here's an example of a [`transcript`](/api-reference/v2/live/message/transcript)
 
 ## Stop the recording
 
-Once you're done, send us the `stop_recording` message. We will process remaining audio chunks and start the post-processing phase, in which we put together the final audio file and results with the add-ons you requested. You'll receive a message at every step of the process in the WebSocket, or in the callback if configured. Once the post-processing is done, the WebSocket is closed with a code 1000.
+Once you're done, send us the `stop_recording` message. We will process remaining audio chunks and start the post-processing phase, in which we put together the final audio file and results with the add-ons you requested. 
+
+You'll receive a message at every step of the process in the WebSocket, or in the callback if configured. Once the post-processing is done, the WebSocket is closed with a code 1000.
 
 <CodeGroup>
   ```javascript JavaScript
