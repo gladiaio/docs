@@ -1,6 +1,6 @@
 ---
-title: Features
-description: "Core features of the Gladia Real-time Speech to Text (STT) API"
+title: "Features"
+description: "Core features of Gladia's real-time speech-to-text (STT) API "
 ---
 
 <Note>All the configuration properties described below are defined in the [POST /v2/live endpoint](/api-reference/v2/live/init).</Note>
@@ -9,7 +9,7 @@ description: "Core features of the Gladia Real-time Speech to Text (STT) API"
 
 ### Spoken language(s)
 
-To obtain the best result (in terms of accuracy and speed), it's important to narrow the list of languages:
+To get the best results in terms of accuracy and speed, specify the languages that will be spoken in the conversation you want transcribed:
 
 ```json
 {
@@ -19,10 +19,9 @@ To obtain the best result (in terms of accuracy and speed), it's important to na
 }
 ```
 
+### Code-switching
 
-### Code switching
-
-If you expect multiple languages to be spoken during the Real-time session, enable the code switching option: 
+If you expect multiple languages to be spoken, enable the code-switching. This will allow for switching between languages without the transcription being affected.
 
 ```json
 {
@@ -33,15 +32,12 @@ If you expect multiple languages to be spoken during the Real-time session, enab
 }
 ```
 
-
 ## Word-level timestamps
 
-Instead of just getting utterances start and end timestamps, **Gladia** Live Speech-To-Text API provides the
-**Word-level timestamps** feature. It lets you know the exact timestamp for each word and give you a more precise transcription.
- This feature is particularly useful for detailed analysis, as it allows you to pinpoint the exact moment each word is spoken, facilitating
-  a more accurate synchronization with audio or video files.
+Instead of just getting timestamps for when utterances begin and end, Gladia's real-time API provides **word-level timestamps**. This lets you know the exact timestamp for each word,  giving you a more precise transcription, facilitating detailed analysis and more accurate synchronization with audio and video files.
 
-To enable it, pass the following configuration:  
+To enable it, pass the following configuration:
+
 ```json
 {
   "realtime_processing": {
@@ -50,7 +46,7 @@ To enable it, pass the following configuration:
 }
 ```
 
-Under each utterance, you'll find a `words` property like this:
+Under each utterance, you'll find a `words` property, like this:
 
 ```json
 {
@@ -72,16 +68,14 @@ Under each utterance, you'll find a `words` property like this:
 }
 ```
 
-
 ## Custom vocabulary
 
-To enhance the precision of transcription, especially for words or phrases that recur often in your audio stream, you
- can utilize the `custom_vocabulary` feature in the configuration.<br/>
- The custom vocabulary has the following limitations:
+To enhance the precision of words you know will recur often in your transcription, use the `custom_vocabulary` feature.<br />
+Custom vocabulary has the following limitations:
 
- - global limit of **10k characters**
- - no more than **100 elements**
- - each element should not contain more than **5 words**
+* Global limit of **10k characters**
+* No more than **100 entries**
+* Each element can't contain more than **5 words**
 
 ```json
 {
@@ -94,8 +88,7 @@ To enhance the precision of transcription, especially for words or phrases that 
 }
 ```
 
-
-## Multiple channels audio stream
+## Multiple channels
 
 If you have multiple channels in your audio stream, specify the count in the configuration:
 
@@ -105,18 +98,16 @@ If you have multiple channels in your audio stream, specify the count in the con
 }
 ```
 
-Gladia Live STT API will automatically split them and transcribe them separately.  
-For each utterance, you will get a `channel` key corresponding to the channel the transcription came from.
+Gladia's real-time API will automatically split the channels and transcribe them separately.
+For each utterance, you'll get a `channel` key corresponding to the channel the utterance came from.
 
 <Warning>
-Sending an audio with 2 channels will be billed twice the audio duration even if channels are identical.
+  Transcribing an audio stream with multiple channels will be billed exponentially. For example, an audio stream with 2 channels will be billed as double the audio duration, even if the channels are identical.
 </Warning>
-
 
 ## Attaching custom metadata
 
-You can attach metadata to your live transcription session using the `custom_metadata` property.
-This will allow you to recognize your transcription when you get its data from the [GET `/v2/live/:id` endpoint](/api-reference/v2/live/get), but more important, it will allow you to use it as a filter in the [GET `/v2/live` list endpoint](/api-reference/v2/live/list).
+You can attach metadata to your real-time transcription session using the `custom_metadata` property. This'll make it easy to recognize your transcription when you receive data from the [GET `/v2/live/:id` endpoint](/api-reference/v2/live/get). And more importantly, you'll be able to use it as a filter in the [GET `/v2/live` list endpoint](/api-reference/v2/live/list).
 For example, you can add the following to your configuration:
 
 ```json
@@ -129,17 +120,18 @@ For example, you can add the following to your configuration:
 }
 ```
 
-And then, use the following GET request to filter results like:
+And use a GET request to filter results, like this:
+
 ```
 https://api.gladia.io/v2/live?custom_metadata={"internalUserId": "2348739875894375"}
 ```
-or
+
+or like this:
+
 ```
 https://api.gladia.io/v2/live?custom_metadata={"paymentMethod": {"last4Digits": 4576}, "internalUserName": "Spencer"}
 ```
 
 <Warning>
-
-`custom_metadata` cannot be longer than 2000 characters when stringified.
-
+  `custom_metadata` cannot be longer than 2000 characters when stringified.
 </Warning>
