@@ -19,23 +19,26 @@ Diarization is enabled by sending the `diarization` parameter in the transcripti
 ## Enabling enhanced diarization (beta)
 
 <Note>
-This feature is in a **Beta** state.<br/>
-Breaking changes may still be introduced to this API, but an advanced notice will be sent. 
-
-We're looking for feedback to improve this feature, [share yours here](https://gladiaio.typeform.com/feedback?typeform-source=app.gladia.io).
+This feature is in **Beta**.
+- It may be removed or have restricted access in the future.
+- Breaking changes could still be introduced; however, advanced notice will be provided.
+- Enabling enhanced diarization will increase transcription time.
 </Note>
 
-For improved diarization handling edge cases and challenging audio, you can enable enhanced diarization by using the `diarization_enhanced` parameter.
+For improved diarization handling edge cases and challenging audio, you can enable enhanced diarization by using the `enhanced` parameter in the `diarization_config` object.
 
 ```json
 {
   "audio_url": "<your audio URL>",
-  "diarization_enhanced": true
+  "diarization": true,
+  "diarization_config": {
+    "enhanced": true
+  },
 }
 ```
 
 ## Response
-When `diarization` or `diarization_enhanced` is enabled, each utterance will contain a `speaker` field, whose value is an index representing the speaker.
+When diarization is enabled, each utterance will contain a `speaker` field, whose value is an index representing the speaker.
 Speakers will be assigned indexes by **order of appearance** (i.e. the 1st speaker will be speaker 0, the 2nd speaker 1, etc).
 
 
@@ -59,35 +62,12 @@ Speakers will be assigned indexes by **order of appearance** (i.e. the 1st speak
   }
 }
 ```
-```json diarization_enhanced
-{
-  "transcription": {...},
-  "diarization_enhanced": {
-    "success": true,
-    "is_empty": false,
-    "results": [
-      {
-        "words": [...],
-        "text": "it says you are trained in technology.",
-        "language": "en",
-        "start": 0.7334100000000001,
-        "end": 2.364,
-        "confidence": 0.8914285714285715,
-        "channel": 0,
-        "speaker": 0,
-      },
-      ...
-    ]
-  }
-  ...
-}
-```
 </CodeGroup>
 
 
 ## Improving diarization accuracy
 
-<Tip> The following parameters are only available for the `diarization` model. `diarization_enhanced` does not support those yet. </Tip>
+<Tip> The following parameters are not yet supported by enhanced diarization. </Tip>
 
 You can improve the accuracy of the diarization by providing the model with hints regarding the expected number or lower/upper bounds ofspeakers using the `diarization_config.num_of_speakers`, `diarization_config.min_speakers` and `diarization_config.max_speakers`  parameters respectively.
 
