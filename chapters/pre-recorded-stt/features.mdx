@@ -16,6 +16,30 @@ Discover our state-of-the-art ASR model [ Whisper Zero now.](https://www.gladia.
  into the transcription process by including extra parameters in the transcription request.
 
 
+## Enhanced punctuation
+
+<Note>
+This feature is in **Alpha**.
+- It may have restricted access in the future.
+- Breaking changes could still be introduced; however, advanced notice will be provided.
+- Results may vary as we are updating the feature.
+</Note>
+
+Enhanced punctuation improves both the accuracy and natural flow of punctuation in transcriptions. It ensures precise comma placement, natural sentence break and better handling of quotation marks.
+
+**Standard:** *"hello how are you today I am doing fine thanks"* <br/>
+**Enhanced:** *"Hello, how are you today? I am doing fine, thanks!"*
+
+Enhanced punctuation is enabled by sending the `punctuation_enhanced` parameter in the transcription request:
+
+```json
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "punctuation_enhanced": true
+}
+```
+
+
 ## Word-level timestamps
 
 Instead of just getting utterances start and end timestamps, **Gladia** Speech-to-text API provides by **default** the
