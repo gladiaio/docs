@@ -16,7 +16,11 @@ Discover our state-of-the-art ASR model [ Whisper Zero now.](https://www.gladia.
  into the transcription process by including extra parameters in the transcription request.
 
 ## Enhanced punctuation
-You can enable enhanced punctuation processing to improve the accuracy and naturalness of punctuation in the transcription. This feature is currently in Alpha.
+Enhanced punctuation processing improves the accuracy and naturalness of punctuation in the transcription (currently in Alpha). By default, standard punctuation is used. The enhanced version provides more accurate comma placement, natural sentence breaks, and improved handling of quotes.
+
+Example comparison:
+Standard: "hello how are you today I am doing fine thanks"
+Enhanced: "Hello, how are you today? I am doing fine, thanks!"
 
 To enable enhanced punctuation, set the `punctuation_enhanced` parameter to `true` in your request:
 
