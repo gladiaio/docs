@@ -3,9 +3,9 @@ title: Supported files & duration
 description: "Media files limitations"
 ---
 
-We support almost all types of audio or video files with a tradeoff to be taken into account between the transfer time
- of specific formats that can generate big files and the time to convert the original format to the target one
-  (WAV pcm 16KHz little-endian).
+We support almost all types of audio or video files with a tradeoff to be taken into account between the transfer time of specific formats that can generate big files and the time to convert the original format to the target one (WAV pcm 16KHz little-endian).
+
+You can find an estimate of the conversion times in the table below.
 
 
 ## Gladia API current limitations
@@ -81,5 +81,31 @@ Following these best practices will help you avoid issues due to limitations and
 | LinkedIn       | Video               | Released     |
 | Sharechat      | Video               | Released     |
 | Likee          | Video               | Released     |
-| TikTok (Beta)  | Video               | Beta          |
-| Twitter (Beta) | Video               | Beta          |
+| TikTok (Beta)  | Video               | Beta         |
+| Twitter (Beta) | Video               | Beta         |
+
+
+## Conversion time
+
+| Source Format | Mime Type        | Audio/Video | Estimated File Size (1 Hour) | Estimated Conversion Time (1 Hour) |
+|---------------|------------------|-------------|------------------------------|------------------------------------|
+| 3g2           | video/3gpp2      | Video       | ~300 MB                      | ~30 seconds                        |
+| 3gp           | video/3gpp       | Video       | ~300 MB                      | ~40 seconds                        |
+| aac           | audio/aac        | Audio       | ~60 MB                       | ~36 seconds                        |
+| ac3           | audio/ac3        | Audio       | ~215 MB                      | ~42 seconds                        |
+| avi           | video/x-msvideo  | Video       | ~800 MB                      | ~1 minute                          |
+| eac3          | audio/eac3       | Audio       | ~215 MB                      | ~32 seconds                        |
+| flac          | audio/flac       | Audio       | ~260 MB                      | ~46 seconds                        |
+| flv           | video/x-flv      | Video       | ~400 MB                      | ~40 seconds                        |
+| m4a           | audio/m4a        | Audio       | ~60 MB                       | ~26 seconds                        |
+| x-m4a         | audio/x-m4a      | Audio       | ~60 MB                       | ~26 seconds                        |
+| m4v           | video/x-m4v      | Video       | ~800 MB                      | ~1 minute                          |
+| matroska      | video/x-matroska | Audio/Video | ~800 MB                      | ~1 minute                          |
+| mov           | video/quicktime  | Video       | ~800 MB                      | ~1 minute                          |
+| mp2           | audio/mpeg       | Audio       | ~120 MB                      | ~42 seconds                        |
+| mp3           | audio/mpeg       | Audio       | ~120 MB                      | ~37 seconds                        |
+| mp4           | video/mp4        | Audio/Video | ~800 MB                      | ~1 minute                          |
+| ogg           | application/ogg  | Audio       | ~60 MB                       | ~1 minute                          |
+| opus          | audio/opus       | Audio       | ~30 MB                       | ~1 minute                          |
+| wav           | audio/wav        | Audio       | ~510 MB                      | N/A                                |
+| wmv           | video/x-ms-wmv   | Video       | ~800 MB                      | ~1 minute                          |
