@@ -15,6 +15,21 @@ Discover our state-of-the-art ASR model [ Whisper Zero now.](https://www.gladia.
  Additional capabilities, like Speaker Diarization, Summarization, Translation, Custom Prompts and more can be integrated seamlessly
  into the transcription process by including extra parameters in the transcription request.
 
+## Enhanced punctuation
+You can enable enhanced punctuation processing to improve the accuracy and naturalness of punctuation in the transcription. This feature is currently in Alpha.
+
+To enable enhanced punctuation, set the `punctuation_enhanced` parameter to `true` in your request:
+
+```json request data
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "punctuation_enhanced": true
+}
+```
+
+<Note>
+This feature is currently in Alpha and may be subject to changes or improvements.
+</Note>
 
 ## Word-level timestamps
 
