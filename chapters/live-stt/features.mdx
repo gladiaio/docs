@@ -25,20 +25,20 @@ If the spoken language is unknown, you can:
 
 <CodeGroup>
 
-```json All languages
-{
-  // You can omit the parameter
-  "language_config": {
-    "languages": []
-  }
-}
-```
-
 ```json Limited options
 {
   // Will limit to detect from English, French or Spanish
   "language_config": {
     "languages": ["en", "fr", "es"]
+  }
+}
+```
+
+```json All languages
+{
+  // You can omit the parameter
+  "language_config": {
+    "languages": []
   }
 }
 ```
@@ -53,21 +53,21 @@ As with single-language configuration, you can either let the model detect the l
 
 <CodeGroup>
 
-```json All languages
-{
-  "language_config": {
-    // You can omit the languages parameter
-    "languages": [],
-    "code_switching": true
-  }
-}
-```
-
 ```json Limited options
 {
   "language_config": {
     // Will limit to detect from English, French or Spanish
     "languages": ["en", "fr", "es"],
+    "code_switching": true
+  }
+}
+```
+
+```json All languages
+{
+  "language_config": {
+    // You can omit the languages parameter
+    "languages": [],
     "code_switching": true
   }
 }
