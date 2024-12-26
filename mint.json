@@ -206,7 +206,9 @@
         "chapters/guides/integration",
         {
           "group": "Use cases",
-          "pages": ["chapters/guides/use-cases/meeting-recording"]
+          "pages": [
+            "chapters/guides/use-cases/meeting-recording"
+          ]
         }
       ]
     },
@@ -221,13 +223,11 @@
     },
     {
       "group": "Upload",
-      "pages": ["api-reference/v2/upload/audio-file"]
+      "pages": []
     },
     {
       "group": "Pre-recorded endpoints",
       "pages": [
-        "api-reference/v2/pre-recorded/init",
-        "api-reference/v2/pre-recorded/get",
         "api-reference/v2/pre-recorded/list",
         "api-reference/v2/pre-recorded/get-audio",
         "api-reference/v2/pre-recorded/delete"
@@ -236,7 +236,6 @@
     {
       "group": "Pre-recorded webhooks",
       "pages": [
-        "api-reference/v2/pre-recorded/webhook/created",
         "api-reference/v2/pre-recorded/webhook/success",
         "api-reference/v2/pre-recorded/webhook/error"
       ]
@@ -244,8 +243,7 @@
     {
       "group": "Pre-recorded callbacks",
       "pages": [
-        "api-reference/v2/pre-recorded/callback/success",
-        "api-reference/v2/pre-recorded/callback/error"
+        "api-reference/v2/pre-recorded/callback/success"
       ]
     },
     {
@@ -261,7 +259,6 @@
     {
       "group": "Live WS actions",
       "pages": [
-        "api-reference/v2/live/action/audio-chunk",
         "api-reference/v2/live/action/stop-recording"
       ]
     },
@@ -271,18 +268,14 @@
         {
           "group": "Realtime messages",
           "pages": [
-            "api-reference/v2/live/message/transcript",
-            "api-reference/v2/live/message/named-entity-recognition",
             "api-reference/v2/live/message/sentiment-analysis"
           ]
         },
         {
           "group": "Post-processing messages",
           "pages": [
-            "api-reference/v2/live/message/post-transcript",
             "api-reference/v2/live/message/post-final-transcript",
-            "api-reference/v2/live/message/post-chapterization",
-            "api-reference/v2/live/message/post-summarization"
+            "api-reference/v2/live/message/post-chapterization"
           ]
         },
         {
@@ -295,8 +288,6 @@
         {
           "group": "Lifecycle messages",
           "pages": [
-            "api-reference/v2/live/message/start-session",
-            "api-reference/v2/live/message/start-recording",
             "api-reference/v2/live/message/end-recording",
             "api-reference/v2/live/message/end-session"
           ]
@@ -309,8 +300,6 @@
         {
           "group": "Realtime messages",
           "pages": [
-            "api-reference/v2/live/callback/transcript",
-            "api-reference/v2/live/callback/named-entity-recognition",
             "api-reference/v2/live/callback/sentiment-analysis"
           ]
         },
@@ -319,7 +308,6 @@
           "pages": [
             "api-reference/v2/live/callback/post-transcript",
             "api-reference/v2/live/callback/post-final-transcript",
-            "api-reference/v2/live/callback/post-chapterization",
             "api-reference/v2/live/callback/post-summarization"
           ]
         },
@@ -333,7 +321,6 @@
         {
           "group": "Lifecycle messages",
           "pages": [
-            "api-reference/v2/live/callback/start-session",
             "api-reference/v2/live/callback/start-recording",
             "api-reference/v2/live/callback/end-recording",
             "api-reference/v2/live/callback/end-session"
@@ -347,8 +334,6 @@
         {
           "group": "Lifecycle messages",
           "pages": [
-            "api-reference/v2/live/webhook/start-session",
-            "api-reference/v2/live/webhook/start-recording",
             "api-reference/v2/live/webhook/end-recording",
             "api-reference/v2/live/webhook/end-session"
           ]

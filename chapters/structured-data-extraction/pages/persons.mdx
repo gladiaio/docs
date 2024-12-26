@@ -1,6 +1,6 @@
 ---
 title: 'Persons'
-description: 'Description of your new file.'
+description: 'Public documentation for person data extraction'
 ---
 A list of persons mentioned in the conversation with the following properties:
 - **full_name** (str): The full name of the human person
@@ -8,7 +8,7 @@ A list of persons mentioned in the conversation with the following properties:
 - **middle_name** (str): The middle name of the human person
 - **last_name** (str): The last name of the human person
 - **nickname** (str): The nickname of the person
-- **person_extra** (PersonExtra): Extra information about the person
+- **person_extra** (PersonExtra): Basic information about the person
 
 ```json results
 {
@@ -19,16 +19,9 @@ A list of persons mentioned in the conversation with the following properties:
     "last_name": "str",
     "nickname": "str",
     "person_extra": {
-      "email_address": "str",
       "gender": "Gender(ENUM)",
       "origins": ["str"],
       "attributes": ["str"],
-      "other_attributes": [
-        {
-          "key": "str",
-          "value": "str"
-        }
-      ],
       "keywords": ["str"],
       "marital_status": "MaritalStatus(ENUM)",
       "occupation": "Occupation(ENUM)",
@@ -36,26 +29,13 @@ A list of persons mentioned in the conversation with the following properties:
       "skills": [
         {
           "skill_name": "str",
-          "skill_level": 
-           "SkillLevel(ENUM)"
+          "skill_level": "SkillLevel(ENUM)"
         }
       ],
-      "medical_profession": "MedicalProfession(ENUM)",
-      "employer": "str",
-      "religion": "Religion(ENUM)",
-      "phone_number": "str",
-      "political_affiliation": "PoliticalAffiliation(ENUM)",
-      "passport_number": "str",
-      "username": "str",
-      "password": "str",
-      "ip_address": "str",
-      "social_security_number": "str",
-      "drivers_license_number": "str",
       "languages": ["str"],
-      "zodiac_sign": "ZodiacSign(ENUM)",
       "age": {
         "age_number": 42,
-         "age_unit": "str"
+        "age_unit": "str"
       },
       "age_in_years": 42,
       "age_in_months": 504
@@ -64,76 +44,21 @@ A list of persons mentioned in the conversation with the following properties:
 ```
 
 ### PersonExtra
-- **email_address** (str): The email address
+Basic information about the person:
 - **gender** (Gender): The gender of the person assigned at birth
 - **origins** (List[str]): The origin of the person
 - **attributes** (List[str]): The attributes of the person
-- **other_attributes** (List[OtherAttributes]): The other attributes of the person
 - **keywords** (List[str]): The keywords associated with the person
 - **marital_status** (MaritalStatus): The marital status of the person
 - **occupation** (Occupation): The occupation of the person
 - **education_level** (EducationLevel): The education level of the person
 - **skills** (List[Skill]): The skills of the person
-- **medical_profession** (MedicalProfession): The medical profession of the person
-- **employer** (str): The employer of the person
-- **religion** (Religion): The religion of the person
-- **phone_number** (str): The phone number of the person
-- **political_affiliation** (PoliticalAffiliation): The political affiliation of the person
-- **passport_number** (str): The passport number of the person
-- **username** (str): The username of the person
-- **password** (str): The password of the person
-- **ip_address** (str): The IP address of the person
-- **social_security_number** (str): The social security number of the person
-- **drivers_license_number** (str): The driver's license number of the person
 - **languages** (List[str]): The languages spoken by the person
-- **zodiac_sign** (ZodiacSign): The zodiac sign of the person
 - **age** (Age): The age of the associated person
 - **age_in_years** (int): The age of the associated person in years
 - **age_in_months** (int): The age of the associated person in months
 
-```json results
-{
-  "email_address": "str",
-  "gender": "Gender(ENUM)",
-  "origins": ["str"],
-  "attributes": ["str"],
-  "other_attributes": [
-    {
-      "key": "str",
-      "value": "str"
-    }
-  ],
-  "keywords": ["str"],
-  "marital_status": "MaritalStatus(ENUM)",
-  "occupation": "Occupation(ENUM)",
-  "education_level": "EducationLevel(ENUM)",
-  "skills": [
-    {
-      "skill_name": "str",
-      "skill_level" "SkillLevel(ENUM)"
-    }
-  ],
-  "medical_profession": "MedicalProfession(ENUM)",
-  "employer": "str",
-  "religion": "Religion(ENUM)",
-  "phone_number": "str",
-  "political_affiliation": "PoliticalAffiliation(ENUM)",
-  "passport_number": "str",
-  "username": "str",
-  "password": "str",
-  "ip_address": "str",
-  "social_security_number": "str",
-  "drivers_license_number": "str",
-  "languages": ["str"],
-  "zodiac_sign": "ZodiacSign(ENUM)",
-  "age": {
-    "age_number": 42,
-      "age_unit": "str"
-  },
-  "age_in_years": 42,
-  "age_in_months": 504
-}
-```
+> Note: For internal fields and sensitive data extraction, please refer to the internal documentation (requires organizational login).
 
 #### Age
 - **age_number** (int): The age of the person in years
@@ -149,52 +74,6 @@ A list of persons mentioned in the conversation with the following properties:
 #### Gender (Enum)
 - **MALE**
 - **FEMALE**
-
-#### MedicalProfession (Enum)
-- **PHYSICIAN**
-- **SURGEON**
-- **DENTIST**
-- **NURSE**
-- **OPTOMETRIST**
-- **PHARMACIST**
-- **PSYCHOLOGIST**
-- **DIETITIAN**
-- **VETERINARIAN**
-- **PHYSIOTHERAPIST**
-- **ASSISTANT_PHYSICIAN**
-- **RADIOLOGIST**
-- **MEDICAL_LABORATORY_SCIENTIST**
-- **OTHER**
-
-#### Religion (Enum)
-- **CHRISTIANITY**
-- **ISLAM**
-- **HINDUISM**
-- **BUDDHISM**
-- **JUDAISM**
-- **SIKHISM**
-- **SHINTO**
-- **BAHAISM**
-- **JAINISM**
-- **ZOROASTRIANISM**
-- **TAOISM**
-- **SHAMANISM**
-- **PAGANISM**
-- **OTHER**
-
-#### ZodiacSign (Enum)
-- **ARIES**
-- **TAURUS**
-- **GEMINI**
-- **CANCER**
-- **LEO**
-- **VIRGO**
-- **LIBRA**
-- **SCORPIO**
-- **SAGITTARIUS**
-- **CAPRICORN**
-- **AQUARIUS**
-- **PISCES**
 
 #### MaritalStatus (Enum)
 - **SINGLE**
@@ -221,30 +100,6 @@ A list of persons mentioned in the conversation with the following properties:
 - **DOCTORATE**
 - **OTHER**
 
-#### PoliticalAffiliation (Enum)
-- **DEMOCRAT**
-- **REPUBLICAN**
-- **LIBERTARIAN**
-- **GREEN**
-- **INDEPENDENT**
-- **OTHER**
-
-#### OtherAttributes
-A list of other attributes mentioned in the conversation with the following properties:
-- **attribute_name** (str): The name of the attribute
-- **attribute_value** (str): The value of the attribute
-- **speaker** (str): The speaker mentioning the attribute
-- **subject** (str): The subject to whom the attribute applies
-
-```json result
-{
-  "attribute_name": "str",
-  "attribute_value": "str",
-  "speaker": "str",
-  "subject": "str"
-}
-```
-
 #### Skill
 A list of skills mentioned in the conversation with the following properties:
 - **skill_name** (str): The name of the skill
@@ -252,7 +107,7 @@ A list of skills mentioned in the conversation with the following properties:
 
 ```json result
 {
-  "skill_name": "str,
+  "skill_name": "str",
   "skill_level": "SkillLevel(ENUM)"
 }
 ```
