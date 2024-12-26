@@ -175,8 +175,14 @@
     {
       "group": "Real-time Speech-to-Text",
       "pages": [
+        
         "chapters/live-stt/getting-started",
-        "chapters/live-stt/features",
+        {
+          "group": "Features",
+          "pages": ["chapters/live-stt/configuration",
+                    "chapters/live-stt/live-intelligence",
+                    "chapters/live-stt/post-processing"]
+        },
         "chapters/live-stt/migration-from-v1"
       ]
     },

@@ -1,0 +1,74 @@
+---
+title: "Live Intelligence"
+description: "Core features of Gladia's real-time speech-to-text (STT) API."
+---
+
+## Sentiment and Emotion Analysis
+
+<Note>
+This feature is in **Alpha** - results may vary and changes could be introduced as we are updating the feature.
+</Note>
+
+The sentiment and emotion model examines the live transcript to identify the **overall sentiment** of each sentence and detect **expressed emotions**.
+
+### Configuration
+
+The sentiment analysis configuration is set within the `realtime_processing` object.
+
+```json
+{
+  "realtime_processing": {
+    "sentiment_analysis": "true"
+  }
+}
+```
+
+<Note>
+Ensure that `messages_config.receive_realtime_processing_events` is set to `true` during initialization to receive sentiment analysis messages via the WebSocket.
+</Note>
+
+### Response
+
+You can identify relevant messages by filtering on the `type` key by **sentiment_analysis**. Each message will include the analyzed utterance and a `results` key containing the detected sentiment and emotion.
+
+```json
+{
+    "type": "sentiment_analysis",
+    "session_id": "6054ff67-9eec-44bc-ac42-23b784cec41f",
+    "created_at": "2024-12-26T14:20:55.027Z",
+    "data": {
+        "utterance_id": "1",
+        "utterance": {
+            "text": " And today I have a really good news to tell you.",
+            "start": 3.2960000000000003,
+            "end": 6.4719999999999995,
+            "language": "en",
+            "confidence": 1,
+            "channel": 0,
+            "words": [
+                {
+                ...
+                }
+            ]
+        },
+        "results": [
+            {
+                "text": "And today I have a really good news to tell you.",
+                "sentiment": "positive",
+                "emotion": "elation",
+                "start": 3.296,
+                "end": 6.4719999999999995,
+                "speaker": 0,
+                "channel": 0
+            }
+        ]
+    },
+    "error": null
+}
+```
+
+### Possible values
+
+| Sentiments                         | Emotions                                                                                                                                                                                                                                                              |
+|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| positive; neutral; negative; mixed | adoration; amusement; anger; awe; confusion; contempt; contentment; desire; disappointment; disgust; distress; ecstatic; elation; embarrassment; fear; interest; pain; realization; relief; sadness; negative_surprise; positive_surprise; sympathy; triumph; neutral |
