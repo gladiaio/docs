@@ -1,0 +1,100 @@
+---
+title: "Speaker Reidentification (Alpha)"
+description: "Learn how to use speaker reidentification to track and identify speakers across multiple audio files"
+---
+
+# Speaker Reidentification (Alpha)
+
+
+<Note>
+This feature is on **Alpha** state.
+
+We're looking for feedbacks to improve this feature, [share yours here](https://gladiaio.typeform.com/feedback?typeform-source=app.gladia.io).
+
+</Note>
+
+Speaker reidentification allows you to track and identify speakers across multiple audio files by maintaining a database of speaker voice signatures. This feature is particularly useful for organizations that need to analyze conversations from multiple recordings while maintaining speaker consistency.
+
+## Overview
+
+When speaker reidentification is enabled, the system will:
+1. Extract voice signatures from speakers in the audio
+2. Compare these signatures with previously stored speakers
+3. Assign consistent identifiers to matching speakers
+4. Optionally save new speaker signatures for future identification
+
+## Configuration
+
+To enable speaker reidentification, set `speaker_reidentification` to `true` in your API request and provide the configuration through `speaker_reidentification_config`:
+
+```json
+{
+  "speaker_reidentification": true,
+  "speaker_reidentification_config": {
+    "filters": {
+      "customer_id": "123",
+      "company": "gladia",
+      "department": "tech"
+    },
+    "save_new_speakers": true,
+    "save_new_speaker_similarity_threshold": 0.95,
+    "boost_uuids": []
+  }
+}
+```
+
+### Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `speaker_reidentification` | boolean | Enable/disable speaker reidentification |
+| `speaker_reidentification_config` | object | Configuration object for speaker reidentification |
+
+### Speaker Reidentification Config Options
+
+| Option | Type | Description |
+|--------|------|-------------|
+| `filters` | object | Filters to scope the speaker database search |
+| `filters.customer_id` | string | Example of parameter called "customer_id" for scoping speaker search to a specific customer |
+| `filters.company` | string | Example of parameter called "company" or Company name for scoping speaker search to a specific company that might be customer of your organization |
+| `filters.department` | string | Example of parameter called "department" or Department name for further scoping to a specific department within a company that might be customer of your organization |
+| `filters.whatever` | string | Example of parameter for further whatever scoping you need |
+| `save_new_speakers` | boolean | Whether to save new speaker signatures to the database |
+| `save_new_speaker_similarity_threshold` | float | Minimum similarity threshold (0-1) for saving new speakers (if we don't find a match withing this threshold) |
+| `boost_uuids` | array | List of speaker UUIDs to prioritize in matching |
+
+## Example Usage
+We recommand activating the diarization and speaker reidentification features at the same time if you plan to identify mutliple speakers within the same audio.
+Here's a complete example of using speaker reidentification with the API:
+
+```json
+{
+  "sentences": false,
+  "diarization": true,
+  "speaker_reidentification": true,
+  "speaker_reidentification_config": {
+    "filters": {
+      "customer_id": "123",
+      "company": "gladia",
+      "department": "tech"
+    },
+    "save_new_speakers": true,
+    "save_new_speaker_similarity_threshold": 0.95,
+    "boost_uuids": []
+  },
+  "audio_url": "https://api.gladia.io/audio/sample.wav"
+}
+```
+
+## Best Practices
+
+1. Always enable `diarization` when using speaker reidentification unless you have a specific reason not to (for instance speaker voiceprint registration)
+2. Use appropriate filters to narrow down the speaker database search scope
+3. Set a high `save_new_speaker_similarity_threshold` (e.g., 0.95) to ensure quality matches
+4. Use `boost_uuids` when you want to prioritize matching with specific known speakers
+
+## Limitations
+
+- Speaker reidentification requires good quality audio for accurate matching
+- Performance may vary based on audio quality and background noise
+- The feature works best with clear speech and minimal overlapping voices
