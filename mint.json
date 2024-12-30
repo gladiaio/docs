@@ -175,14 +175,8 @@
     {
       "group": "Real-time Speech-to-Text",
       "pages": [
-        
         "chapters/live-stt/getting-started",
-        {
-          "group": "Features",
-          "pages": ["chapters/live-stt/configuration",
-                    "chapters/live-stt/live-intelligence",
-                    "chapters/live-stt/post-processing"]
-        },
+        "chapters/live-stt/features",
         "chapters/live-stt/migration-from-v1"
       ]
     },
@@ -191,11 +185,11 @@
       "pages": [
         "chapters/audio-intelligence/pages/translation",
         "chapters/audio-intelligence/pages/summarization",
-        "chapters/audio-intelligence/pages/named entity recognition",
-        "chapters/audio-intelligence/pages/sentiment analysis",
+        "chapters/audio-intelligence/pages/named-entity-recognition",
+        "chapters/audio-intelligence/pages/sentiment-analysis",
         "chapters/audio-intelligence/pages/moderation",
         "chapters/audio-intelligence/pages/chapterization",
-        "chapters/audio-intelligence/pages/audio to llm"
+        "chapters/audio-intelligence/pages/audio-to-llm"
       ]
     },
     {
