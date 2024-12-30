@@ -3,136 +3,42 @@ title: Sentiment and Emotion Analysis
 description: "Extract sentiments and emotions from the transcript."
 ---
 
-<Note>
-This feature is in **Alpha** state.<br/>
-Breaking changes may still be introduced to this API, but an advanced notice will be sent. 
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Asynchronous STT** &nbsp; &nbsp; &nbsp;
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Real-Time STT**
 
-We're looking for feedback to improve this feature, [share yours here](https://gladiaio.typeform.com/feedback?typeform-source=app.gladia.io).
+<Note>
+This feature is in **Alpha** - results may vary and changes could be introduced as we are updating the feature.
 </Note>
 
-The sentiment and emotion analysis model analyzes the transcript, detecting the general sentiment which is conveyed in each sentence (positive, neutral or negative) as well as any emotion that is being expressed.
+The sentiment and emotion model analyzes the transcript, detecting the general **sentiment conveyed in each sentence** as well as **emotions that are being expressed**.
+
 
 ## Usage
-To enable sentiment and emotion analysis, set the `"sentiment_analysis"` parameter to true
-```json request data
+
+<Tabs>
+
+<Tab title='Asynchronous STT'>
+
+### Configuration
+
+Enable sentiment and emotion analysis by setting the `sentiment_analysis` parameter to true in your transcription request.
+
+```json
 {
   "audio_url": "<your audio url>"
   "sentiment_analysis": true
 }
 ```
 
-<Accordion icon="code" title="Sample code">
-<CodeGroup>
-```typescript TypeScript
-async function makeFetchRequest(url: string, options: any) {
-  const response = await fetch(url, options);
-  return response.json();
-}
+### Results
 
-async function pollForResult(resultUrl: string, headers: any) {
-  while (true) {
-    console.log("Polling for results...");
-    const pollResponse = await makeFetchRequest(resultUrl, { headers });
+Your transcription result will contain a `sentiment_analysis` key which will contain an array of all sentences in the audio, and for each one the conveyed sentiment and expressed emotion.
 
-    if (pollResponse.status === "done") {
-      console.log("- Transcription done: \n");
-      const audioToLlmResults = pollResponse.result.sentiment_analysis;
-      console.log(audioToLlmResults);
-      break;
-    } else {
-      console.log("Transcription status : ", pollResponse.status);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-    }
-  }
-}
-
-async function startTranscription() {
-  const gladiaKey = "YOUR_GLADIA_API_KEY";
-  const requestData = {
-    audio_url: "YOUR_AUDIO_URL",
-    sentiment_analysis: true
-  };
-  const gladiaUrl = "https://api.gladia.io/v2/pre-recorded/";
-  const headers = {
-    "x-gladia-key": gladiaKey,
-    "Content-Type": "application/json",
-  };
-
-  console.log("- Sending initial request to Gladia API...");
-  const initialResponse = await makeFetchRequest(gladiaUrl, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(requestData),
-  });
-
-  console.log("Initial response with Transcription ID :", initialResponse);
-
-  if (initialResponse.result_url) {
-    await pollForResult(initialResponse.result_url, headers);
-  }
-}
-
-startTranscription();
-
-````
-```python Python
-import requests
-import time
-
-
-def make_fetch_request(url, headers, method='GET', data=None):
-    if method == 'POST':
-        response = requests.post(url, headers=headers, json=data)
-    else:
-        response = requests.get(url, headers=headers)
-    return response.json()
-
-
-gladia_key = "YOUR_GLADIA_API_KEY"
-request_data = {
-  "audio_url": "YOUR_AUDIO_URL",
-  "sentiment_analysis": True
-}
-gladia_url = "https://api.gladia.io/v2/pre-recorded/"
-
-headers = {
-    "x-gladia-key": gladia_key,
-    "Content-Type": "application/json"
-}
-
-print("- Sending initial request to Gladia API...")
-initial_response = make_fetch_request(
-    gladia_url, headers, 'POST', request_data)
-
-print("Initial response with Transcription ID:", initial_response)
-result_url = initial_response.get("result_url")
-
-if result_url:
-    while True:
-        print("Polling for results...")
-        poll_response = make_fetch_request(result_url, headers)
-
-        if poll_response.get("status") == "done":
-            print("- Transcription done: \n")
-            sentiment_results = poll_response.get("result", {}).get(
-                "sentiment_results", {})
-            print(sentiment_results)
-            break
-        else:
-            print("Transcription status:", poll_response.get("status"))
-        time.sleep(1)
-````
-
-</CodeGroup>
-</Accordion>
-
-## Result
-
-Your transcription result will contain a `sentiment_analysis` key which will contain an array of all sentences in the audio, and for each one the conveyed sentiment and expressed emotion. See possible values below.
 <Tip>
-When `diarization` is enabled, the sentiment analysis output will contain the `speaker`  as well, allowing you to analyze each speaker sperately.
+When `diarization` is enabled, the sentiment analysis output will contain the `speaker` as well, allowing you to analyze each speaker sperately.
 </Tip>
-```json result
+
+```json
 {
   "transcription":{...},
   "sentiment_analysis": {
@@ -164,40 +70,77 @@ When `diarization` is enabled, the sentiment analysis output will contain the `s
 }
 ```
 
+</Tab>
+
+<Tab title='Real-Time STT'>
+
+### Configuration
+
+The sentiment analysis configuration is set within the `realtime_processing` object.
+
+```json
+{
+  "realtime_processing": {
+    "sentiment_analysis": true
+  }
+}
+```
+
+<Note>
+Ensure that `messages_config.receive_realtime_processing_events` is set to `true` during initialization to receive sentiment analysis messages via the WebSocket.
+</Note>
+
+### Results
+
+You can identify relevant messages by filtering on the `type` key by **sentiment_analysis**. Each message will include the analyzed utterance and a `results` key containing the detected sentiment and emotion.
+
+```json
+{
+    "type": "sentiment_analysis",
+    "session_id": "6054ff67-9eec-44bc-ac42-23b784cec41f",
+    "created_at": "2024-12-26T14:20:55.027Z",
+    "data": {
+        "utterance_id": "1",
+        "utterance": {
+            "text": " And today I have a really good news to tell you.",
+            "start": 3.2960000000000003,
+            "end": 6.4719999999999995,
+            "language": "en",
+            "confidence": 1,
+            "channel": 0,
+            "words": [
+                {
+                ...
+                }
+            ]
+        },
+        "results": [
+            {
+                "text": "And today I have a really good news to tell you.",
+                "sentiment": "positive",
+                "emotion": "elation",
+                "start": 3.296,
+                "end": 6.4719999999999995,
+                "speaker": 0,
+                "channel": 0
+            }
+        ]
+    },
+    "error": null
+}
+```
+
+</Tab>
+
+</Tabs>
+
 
 ## Possible values
 
-### Sentiments
-  - positive
-  - negative
-  - neutral
-  - mixed
+| Sentiments                         | Emotions                                                                                                                                                                                                                                                              |
+|------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| positive; neutral; negative; mixed | adoration; amusement; anger; awe; confusion; contempt; contentment; desire; disappointment; disgust; distress; ecstatic; elation; embarrassment; fear; interest; pain; realization; relief; sadness; negative_surprise; positive_surprise; sympathy; triumph; neutral |
 
-### Emotions
-  - adoration
-  - amusement
-  - anger
-  - awe
-  - confusion
-  - contempt
-  - contentment
-  - desire
-  - disappointment
-  - disgust
-  - distress
-  - ecstatic
-  - elation
-  - embarrassment
-  - fear
-  - interest
-  - pain
-  - realization
-  - relief
-  - sadness
-  - negative_surprise
-  - positive_surprise
-  - sympathy
-  - triumph
-  - neutral
+
 
 
