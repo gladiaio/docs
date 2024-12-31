@@ -1,0 +1,67 @@
+---
+title: "Speaker Reidentification"
+description: "Track and identify speakers across multiple audio files."
+---
+
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Asynchronous STT** &nbsp; &nbsp; &nbsp;
+<Icon icon="xmark" iconType="solid" color="red" size="20" /> **Real-Time STT**
+
+<Note>
+This feature is in **Alpha** - results may vary and changes could be introduced as we are updating the feature.
+</Note>
+
+Speaker reidentification enables tracking and identifying speakers across multiple audio files by maintaining a database of speaker voice signatures. This feature is especially valuable for organizations analyzing conversations from different recordings while ensuring speaker consistency.
+
+When speaker reidentification is enabled, the system will:
+1. Extract voice signatures from speakers in the audio
+2. Compare these signatures with previously stored speakers
+3. Assign consistent identifiers to matching speakers
+4. Optionally save new speaker signatures for future identification
+
+### Configuration
+
+Enable speaker reidentification by setting the `speaker_reidentification` parameter to true in your transcription request and provide the configuration through `speaker_reidentification_config`.
+
+```json
+{
+  "speaker_reidentification": true,
+  "speaker_reidentification_config": {
+    "filters": {
+      // Check options details for more information
+      "customer_id": "123",
+      "company": "gladia",
+      "department": "tech"
+    },
+    "save_new_speakers": true,
+    "save_new_speaker_similarity_threshold": 0.95,
+    "boost_uuids": []
+  }
+}
+```
+
+**Options**
+
+| Name | Type | Description |
+|--------|------|-------------|
+| `filters` | object | Filters to scope the speaker database search |
+| `filters.customer_id` | string | Example of parameter called "customer_id" for scoping speaker search to a specific customer |
+| `filters.company` | string | Example of parameter called "company" for scoping speaker search to a specific company that might be customer of your organization |
+| `filters.department` | string | Example of parameter called "department" for further scoping to a specific department within a company that might be customer of your organization |
+| `filters.xxx` | string | Example of parameter for further scoping you might need |
+| `save_new_speakers` | boolean | Whether to save new speaker signatures to the database |
+| `save_new_speaker_similarity_threshold` | float | Minimum similarity threshold (0-1) for saving new speakers (if we don't find a match withing this threshold) |
+| `boost_uuids` | array | List of speaker UUIDs to prioritize in matching |
+
+
+### Best Practices
+
+- Always enable `diarization` when using speaker reidentification unless you have a specific reason not to (for instance speaker voiceprint registration)
+- Use appropriate filters to narrow down the speaker database search scope
+- Set a high `save_new_speaker_similarity_threshold` (e.g., 0.95) to ensure quality matches
+- Use `boost_uuids` when you want to prioritize matching with specific known speakers
+
+### Limitations
+
+- Speaker reidentification requires good quality audio for accurate matching
+- Performance may vary based on audio quality and background noise
+- The feature works best with clear speech and minimal overlapping voices
