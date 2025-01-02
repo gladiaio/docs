@@ -1,0 +1,165 @@
+---
+title: Language options
+description: "Configure the language(s) in your audio file."
+---
+
+<Note>
+Access the list of all supported languages and ISO values [here](/chapters/limits-and-specifications/languages).
+</Note>
+
+<Tip>
+It is recommended to limit the number of languages to avoid incorrect detection, either in single or multiple languages configuration. Some languages, such as those from Eastern European countries, have similar sounds, which may cause the model to confuse them and produce a transcription in the wrong language.
+</Tip>
+
+## Single language 
+
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Asynchronous STT** &nbsp; &nbsp; &nbsp;
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Real-Time STT**
+
+If you know the language of the conversation in advance, you should always specify it to ensure the best transcription results.
+
+<Tabs>
+
+<Tab title='Asynchronous STT'>
+
+With automatic language detection, Gladia will identify the dominant language spoken in an audio file and use it during the transcription. This behaviour is set with the `detect_language` parameter.
+
+If you know the dominant language, you should disable language detection by setting `detect_language` to false and set the the language with the `language` key.
+
+<CodeGroup>
+
+```json Manual configuration
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "detect_language": false,
+  "language": "fr"
+}
+```
+
+```json Auto detection
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  // You can omit the parameter, it is enabled by default
+  "detect_language": true 
+}
+```
+
+</CodeGroup>
+
+API reference is available [here](https://docs.gladia.io/api-reference/v2/pre-recorded/init#body-language).
+
+</Tab>
+
+<Tab title='Real-Time STT'>
+
+If you know the language of the conversation in advance, specify it in the `language_config.languages` parameter.
+
+```json
+{
+  "language_config": {
+    "languages": ["en"]
+  }
+}
+```
+
+If the spoken language is unknown, you can:
+- Omit the `language_config.languages` parameter; the model will automatically detect the language from the first few seconds of audio **across all supported languages**.
+- Specify multiple languages in the `language_config.languages` parameter; the model will detect the language from the first few seconds of audio **within the provided options**.
+
+<CodeGroup>
+
+```json Limited options
+{
+  // Will limit to detect from English, French or Spanish
+  "language_config": {
+    "languages": ["en", "fr", "es"]
+  }
+}
+```
+
+```json All languages
+{
+  // You can omit the parameter
+  "language_config": {
+    "languages": []
+  }
+}
+```
+
+</CodeGroup>
+
+API reference is available [here](https://docs.gladia.io/api-reference/v2/live/init#body-language-config).
+
+</Tab>
+
+</Tabs>
+
+## Multiple languages (Code-switching)
+
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Asynchronous STT** &nbsp; &nbsp; &nbsp;
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Real-Time STT**
+
+If you expect multiple languages to be spoken during the conversation, enable the Code Switching feature. This will allow the model to switch languages dynamically and reflect it in the transcription results.
+
+<Tabs>
+
+<Tab title='Asynchronous STT'>
+
+Set the `enable_code_switching` parameter to true in your transcription request. You can either let the model detect the language from **all supported languages** or specify a **set of options** to narrow down the selection.
+
+<CodeGroup>
+
+```json Limited options
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "enable_code_switching": true,
+  "code_switching_config": {
+    "languages": ["en", "es", "fr"]
+  }
+}
+```
+
+```json All languages
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "enable_code_switching": true
+}
+```
+
+</CodeGroup>
+
+</Tab>
+
+<Tab title='Real-Time STT'>
+
+Set the `language_config.code_switching` parameter to true in your transcription request. As with single-language configuration, you can either let the model detect the language from **all supported languages** or specify a **set of options** to narrow down the selection.
+
+<CodeGroup>
+
+```json Limited options
+{
+  "language_config": {
+    // Will limit to detect from English, French or Spanish
+    "languages": ["en", "fr", "es"],
+    "code_switching": true
+  }
+}
+```
+
+```json All languages
+{
+  "language_config": {
+    // You can omit the languages parameter
+    "languages": [],
+    "code_switching": true
+  }
+}
+```
+
+</CodeGroup>
+
+<br/>
+
+</Tab>
+
+</Tabs>

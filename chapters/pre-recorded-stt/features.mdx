@@ -116,63 +116,6 @@ The result will contain a `sentences` key (in addition to `utterances`):
     }
 ```
 
-## Automatic language detection
-
-With automatic language detection, Gladia will identify the dominant language spoken in an audio file and use it during the transcription. This behaviour can be toggled with the `detect_language` parameter.
-
-**Automatic language detection is turned on by default.**
-
-```json request data
-{
-  "audio_url": "YOUR_AUDIO_URL",
-  "detect_language": true
-}
-```
-
-## Multiple languages detection <br/>(Code switching)
-By enabling code switching, the model will continuously detect the spoken language and switch the transcription language accordingly.
-This behaviour is recommended for specific scenarios where the language is changed multiple times throughout the audio (e.g. a conversation between 2 people, each speaking a different language.), 
-
-Please note that certain strong accents may  possibly cause this mode to transcribe to the wrong language.
-
-To enable or disable it, set `enable_code_switching` to true in the request body parameters. (default to `false`)
-
-```json request data
-{
-  "audio_url": "YOUR_AUDIO_URL",
-  "enable_code_switching": true
-}
-```
-
-### Guided code switching
-When code switching is enabled, you may provide a list of languages to the model, ensuring the model will only detect these languages.
-
-```json request data
-{
-  "audio_url": "YOUR_AUDIO_URL",
-  "enable_code_switching": true,
-  "code_switching_config": {
-    "languages": ["en", "es", "fr"]
-  }
-}
-```
-
-
-## Manual transcription language
-If you already know the dominant language, you can disable language detection by setting `detect_language` to `false` and manually set the the language with the `language` key.
-
-<Warning>
-In order to use manual language `detect_language` must be disabled, otherwise the `language` parameter will be ignored.
-</Warning>
-
-```json request data
-{
-  "audio_url": "YOUR_AUDIO_URL",
-  "detect_language": false,
-  "language": "fr"
-}
-```
-
 
 ## Export SRT or VTT caption files
 

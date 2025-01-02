@@ -181,6 +181,12 @@
       ]
     },
     {
+      "group": "Settings",
+      "pages": [
+        "chapters/settings/language-options"
+      ]
+    },
+    {
       "group": "Audio Intelligence",
       "pages": [
         "chapters/audio-intelligence/pages/translation",

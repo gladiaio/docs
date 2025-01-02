@@ -3,8 +3,12 @@ title: "Features"
 description: "Features overview of Gladia's Real-Time speech-to-text (STT) API."
 ---
 
+| **Setting**                                                                       | **Description**                                                                                            |
+|-----------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
+| [Language(s)](/chapters/settings/language-options) | Configure the model languages and/or enable multi-languages transcription.                                |
 
-| **Feature**                                                                       | **Description**                                                                                            |
+
+| **Audio Intelligence**                                                                       | **Description**                                                                                            |
 |-----------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
 | [Sentiment and Emotion Analysis](/chapters/audio-intelligence/pages/sentiment-analysis) | Extract sentiments and emotions from the audio, like confusion or interest.                                |
 | [Name Entity Recognition](/chapters/audio-intelligence/pages/named-entity-recognition)  | Automatically identifies and categorizes key information in the audio, like phone number or email address. |
@@ -17,81 +21,7 @@ description: "Features overview of Gladia's Real-Time speech-to-text (STT) API."
 
 <Note>All the configuration properties described below are defined in the [POST /v2/live endpoint](/api-reference/v2/live/init).</Note>
 
-## Language configuration
 
-### Single language
-
-If you know the language of the conversation in advance, specify it in the `language_config.languages` parameter to ensure the best transcription results.
-
-```json
-{
-  "language_config": {
-    "languages": ["en"]
-  }
-}
-```
-
-If the spoken language is unknown, you can:
-- Omit the `language_config.languages` parameter; the model will automatically detect the language from the first few seconds of audio **across all supported languages**.
-- Specify multiple languages in the `language_config.languages` parameter; the model will detect the language from the first few seconds of audio **within the provided options**.
-
-<CodeGroup>
-
-```json Limited options
-{
-  // Will limit to detect from English, French or Spanish
-  "language_config": {
-    "languages": ["en", "fr", "es"]
-  }
-}
-```
-
-```json All languages
-{
-  // You can omit the parameter
-  "language_config": {
-    "languages": []
-  }
-}
-```
-
-</CodeGroup>
-
-### Multiple languages <br/>(Code-switching)
-
-If you expect multiple languages to be spoken during the conversation, enable the `language_config.code_switching` parameter. This will allow the model to switch languages dynamically and reflect it in the transcription results.
-
-As with single-language configuration, you can either let the model detect the language from **all supported languages** or specify a **set of options** to narrow down the selection.
-
-<CodeGroup>
-
-```json Limited options
-{
-  "language_config": {
-    // Will limit to detect from English, French or Spanish
-    "languages": ["en", "fr", "es"],
-    "code_switching": true
-  }
-}
-```
-
-```json All languages
-{
-  "language_config": {
-    // You can omit the languages parameter
-    "languages": [],
-    "code_switching": true
-  }
-}
-```
-
-</CodeGroup>
-
-<br/>
-
-<Tip>
-It is recommended to limit the number of languages to avoid incorrect detection, either in single or multiple languages configuration. Some languages, such as those from Eastern European countries, have similar sounds, which may cause the model to confuse them and produce a transcription in the wrong language.
-</Tip>
 
 ## Word-level timestamps
 
