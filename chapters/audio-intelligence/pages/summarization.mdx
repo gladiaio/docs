@@ -1,157 +1,45 @@
 ---
 title: Summarization
-description: "Get important information from your audio files"
+description: "Get important information from your audio files."
 ---
 
-<Note>
-This feature is on **Beta** state.
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Asynchronous STT** &nbsp; &nbsp; &nbsp;
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Real-Time STT**
 
-We're looking for feedbacks to improve this feature, [share yours here](https://gladiaio.typeform.com/feedback?typeform-source=app.gladia.io).
+<Note>
+This feature is in **Beta** - results may vary and changes could be introduced as we are updating the feature.
 </Note>
 
-
-The **Summarization** model generates a summary of your transcript.
-
-You choose one of our summary type to customize the summarization based on your preference.
-
-**3 summarization types** are available:
-
-- `general` : A regular summary of the transcription
-- `concise` : A shorter summary for quick overview
-- `bullet_points` : Retrieve the key points in a list
-
-If no summarization_config is provided, `general` type will be used by default.
-Find all this information in the [API Reference](/api-reference/v2/pre-recorded/init) (see `summarization_config`).
+The summarization model generates a summary of your audio file. You can customize the result to match your preferences:
+- general: a regular summary of the transcription. This is the default configuration.
+- concise: a shorter summary for quick overview.
+- bullet_points: retrieve the key points in a list.
 
 ## Usage
-To enable summarization simply set the `"summarization"` parameter to true
-```json request data
+
+<Tabs>
+
+<Tab title='Asynchronous STT'>
+
+### Configuration
+
+Enable summarization by setting the `summarization` parameter to true in your transcription request. API reference is available [here](https://docs.gladia.io/api-reference/v2/pre-recorded/init#body-summarization).
+
+```json
 {
   "audio_url": "<your audio url>"
-  "summarization": true
-}
-```
-
-<Accordion icon="code" title="Sample code">
-
-
-In the following examples, we're using `concise` type.
-
-<CodeGroup>
-```typescript TypeScript
-async function makeFetchRequest(url: string, options: any) {
-  const response = await fetch(url, options);
-  return response.json();
-}
-
-async function pollForResult(resultUrl: string, headers: any) {
-  while (true) {
-    console.log("Polling for results...");
-    const pollResponse = await makeFetchRequest(resultUrl, { headers });
-
-    if (pollResponse.status === "done") {
-      console.log("- Transcription done: \n");
-      const summarization = pollResponse.result.summarization;
-      console.log(summarization);
-      break;
-    } else {
-      console.log("Transcription status : ", pollResponse.status);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+  "summarization": true,
+  "summarization_config": {
+      "type": "general"
     }
-  }
 }
-
-async function startTranscription() {
-  const gladiaKey = "YOUR_GLADIA_API_KEY";
-  const requestData = {
-    audio_url:
-      "YOUR_AUDIO_URL",
-    summarization: true,
-    summarization_config: { 
-      type: "concise" // can be 'general', 'concise' or 'bullet_points'
-      // use 'general' if no summarization_config is provided
-    }
-  };
-  const gladiaUrl = "https://api.gladia.io/v2/pre-recorded/";
-  const headers = {
-    "x-gladia-key": gladiaKey,
-    "Content-Type": "application/json",
-  };
-
-  console.log("- Sending initial request to Gladia API...");
-  const initialResponse = await makeFetchRequest(gladiaUrl, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(requestData),
-  });
-
-  console.log("Initial response with Transcription ID :", initialResponse);
-
-  if (initialResponse.result_url) {
-    await pollForResult(initialResponse.result_url, headers);
-  }
-}
-
-startTranscription();
 ```
-```python Python
-import requests
-import time
 
+### Results
 
-def make_fetch_request(url, headers, method='GET', data=None):
-    if method == 'POST':
-        response = requests.post(url, headers=headers, json=data)
-    else:
-        response = requests.get(url, headers=headers)
-    return response.json()
+Your transcription result will have a `summarization` key containing your audio file's summary.
 
-
-gladia_key = "YOUR_GLADIA_API_KEY"
-request_data = {
-    "audio_url": "YOUR_AUDIO_URL",
-    "summarization": True,
-    "summarization_config": { 
-      "type": "concise" # can be 'general', 'concise' or 'bullet_points'
-      # use 'general' if no summarization_config is provided
-}
-gladia_url = "https://api.gladia.io/v2/pre-recorded/"
-
-headers = {
-    "x-gladia-key": gladia_key,
-    "Content-Type": "application/json"
-}
-
-print("- Sending initial request to Gladia API...")
-initial_response = make_fetch_request(
-    gladia_url, headers, 'POST', request_data)
-
-print("Initial response with Transcription ID:", initial_response)
-result_url = initial_response.get("result_url")
-
-if result_url:
-    while True:
-        print("Polling for results...")
-        poll_response = make_fetch_request(result_url, headers)
-
-        if poll_response.get("status") == "done":
-            print("- Transcription done: \n")
-            summarization = poll_response.get("result", {}).get(
-                "summarization", {})
-            print(summarization)
-            break
-        else:
-            print("Transcription status:", poll_response.get("status"))
-        time.sleep(1)
-```
-</CodeGroup>
-</Accordion>
-
-## Result
-The transcription result will contain a ```"summarization"``` key with the output of the model:
-
-
-```json result
+```json
 {
   "transcription": {...},
   "summarization": {
@@ -164,4 +52,45 @@ The transcription result will contain a ```"summarization"``` key with the outpu
 }
 ```
 
-You'll find the summarization of your audio under the `results` key.
+</Tab>
+
+<Tab title='Real-Time STT'>
+
+### Configuration
+
+The summarization configuration is set within the `post_processing` object. API reference is available [here](https://docs.gladia.io/api-reference/v2/live/init#body-post-processing).
+
+```json
+{
+  "post_processing": {
+    "summarization": true,
+    "summarization_config": {
+      "type": "general"
+    }
+  }
+}
+```
+
+<Note>
+Ensure that `messages_config.receive_post_processing_events` is set to true during initialization to receive summarization messages via the WebSocket.
+</Note>
+
+### Results
+
+You can identify relevant messages by filtering on the `type` key by **post_summarization**.
+
+```json
+{
+  "type": "post_summarization",
+  "session_id": "242ac259-91b8-4e28-8bf6-761ab06eafc5",
+  "created_at": "2025-01-02T11:19:04.399Z",
+  "data": {
+    "results": "Certains clients signalent un manque de réactivité du support client pour les demandes de prise en charge des véhicules. Un meeting est prévu la semaine prochaine pour résoudre ce problème en révisant les processus internes."
+  },
+  "error": null
+},
+```
+
+</Tab>
+
+</Tabs>

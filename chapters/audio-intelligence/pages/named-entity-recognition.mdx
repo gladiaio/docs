@@ -22,7 +22,7 @@ When combined with Real-Time Speech-to-Text, this functionality allows your syst
 
 ### Configuration
 
-Enable named entity recognition by setting ```named_entity_recognition``` to true in your transcription request.
+Enable named entity recognition by setting ```named_entity_recognition``` to true in your transcription request. API reference is available [here](https://docs.gladia.io/api-reference/v2/pre-recorded/init#body-named-entity-recognition).
 
 ```json
 {
@@ -66,7 +66,7 @@ The transcription result will contain a ```named_entity_recognition``` key. Each
 
 ### Configuration
 
-The named entity recognition configuration is set within the `realtime_processing` object in your transcription request.
+The named entity recognition configuration is set within the `realtime_processing` object in your transcription request. API reference is available [here](https://docs.gladia.io/api-reference/v2/live/init#body-realtime-processing).
 
 ```json
 {
@@ -86,34 +86,34 @@ You can identify relevant messages by filtering on the `type` key by `named_enti
 
 ```json
 {
-    "type": "named_entity_recognition",
-    "session_id": "530f7540-aa1d-4847-98a6-79a21a609a98",
-    "created_at": "2024-12-26T15:18:46.709Z",
-    "data": {
-        "utterance_id": "1",
-        "utterance": {
-            "text": " Mon numéro de téléphone est le 06 09 23 70 70",
-            "start": 3.5735625,
-            "end": 7.6455625,
-            "language": "fr",
-            "confidence": 1,
-            "channel": 0,
-            "words": [
-                {
-                    ...
-                }
-            ]
-        },
-        "results": [
-            {
-                "entity_type": "PHONE_NUMBER",
-                "text": "06 09 23 70 70",
-                "start": 5.794,
-                "end": 7.6455625
-            }
-        ]
+  "type": "named_entity_recognition",
+  "session_id": "530f7540-aa1d-4847-98a6-79a21a609a98",
+  "created_at": "2024-12-26T15:18:46.709Z",
+  "data": {
+    "utterance_id": "1",
+    "utterance": {
+      "text": " Mon numéro de téléphone est le 06 09 23 70 70",
+      "start": 3.5735625,
+      "end": 7.6455625,
+      "language": "fr",
+      "confidence": 1,
+      "channel": 0,
+      "words": [
+        {
+            ...
+        }
+      ]
     },
-    "error": null
+    "results": [
+      {
+        "entity_type": "PHONE_NUMBER",
+        "text": "06 09 23 70 70",
+        "start": 5.794,
+        "end": 7.6455625
+      }
+    ]
+  },
+  "error": null
 }
 ```
 
