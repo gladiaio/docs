@@ -173,64 +173,6 @@ If you know the context of the audio you're sending, you can provide it in the `
 }
 ```
 
-## Custom vocabulary
-
-To enhance the precision of transcription, especially for words or phrases that recur often in your audio file, you
- can utilize the `custom_vocabulary` feature in the transcription configuration settings.<br/>
- The custom vocabulary has the following limitation:
-
- - global limit of **10k characters**
- - no more than **100 elements**
- - each element should not contain more than **5 words**
-
-```json request data
-{
-  "audio_url": "YOUR_AUDIO_URL",
-  "custom_vocabulary": ["westeros", "stark", "night's watch"]
-}
-```
-
-## Custom spelling
-You can customize how certain words, names or phrases are spelled in the final transcript.
-<br/>To use custom spelling, provide a dictionary through the `custom_spelling_config` parameter. This dictionary should contain the correct spelling as the key and a list of one or more possible variations as the value.
-
-Custom spelling is useful in scenarios where consistent spelling of specific words is crucial (e.g., technical terms in industry-specific recordings).
-
-<Note>
-The keys in the dictionary are case sensitive, while the values aren't. Values can contain multiple words.
-</Note>
-
-
-```json request data
-{
-  "custom_spelling": true,
-  "custom_spelling_config": {
-    "spelling_dictionary": {
-        "Gorish": ["ghorish", "gaurish", "gaureish"],
-        "Data Science": ["data-science", "data science"],
-        ".": ["period", "full stop"],
-        "SQL": ["sequel"]
-    }
-  }
-}
-```
-
-In this example, the model will ensure that "Gorish" is spelled correctly throughout the transcript, even if it is pronounced in various ways such as "ghorish," "gaurish," or "gaureish."
-
-## Name consistency
-You can ask the model to enforce consistent spelling of names using the `name_consistency` parameter. This will ensure the same name is spelled in the same manner throughout the transcript, at the cost of a small amount of added processing time.
-
-This is especially useful for scenarios where people's names may be mentioned multiple times, but these names are not known in advance
-(e.g. recruitment call recordings).
-To ensure correct spelling of names which are known in advance, use the [custom vocabulary](#custom-vocabulary).
-
-```json request data
-{
-  "audio_url": "YOUR_AUDIO_URL",
-  "name_consistency": true
-}
-```
-
 
 ## Dual-channel or Multiple channels transcription
 

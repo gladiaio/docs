@@ -5,7 +5,8 @@ description: "Features overview of Gladia's Real-Time speech-to-text (STT) API."
 
 | **Setting**                                                                       | **Description**                                                                                            |
 |-----------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
-| [Language(s)](/chapters/settings/language-options) | Configure the model languages and/or enable multi-languages transcription.                                |
+| [Language(s)](/chapters/settings/language-options) | Configure the model languages and/or enable multi-languages transcription. |
+| [Custom Vocabulary](/chapters/settings/vocabulary-spelling) | Enhance the transcription precision of words you know.|
 
 
 | **Audio Intelligence**                                                                       | **Description**                                                                                            |
@@ -56,26 +57,6 @@ Under each utterance, you'll find a `words` property, like this:
       "confidence": 0.95
     },
   ]
-}
-```
-
-## Custom vocabulary
-
-To enhance the precision of words you know will recur often in your transcription, use the `custom_vocabulary` feature.<br />
-Custom vocabulary has the following limitations:
-
-* Global limit of **10k characters**
-* No more than **100 entries**
-* Each element can't contain more than **5 words**
-
-```json
-{
-  "realtime_processing": {
-    "custom_vocabulary": true,
-    "custom_vocabulary_config": {
-      "vocabulary": ["Westeros", "Stark", "Night's Watch"]
-    }
-  }
 }
 ```
 

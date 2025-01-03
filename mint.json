@@ -183,7 +183,8 @@
     {
       "group": "Settings",
       "pages": [
-        "chapters/settings/language-options"
+        "chapters/settings/language-options",
+        "chapters/settings/vocabulary-spelling"
       ]
     },
     {

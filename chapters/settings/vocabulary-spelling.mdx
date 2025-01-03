@@ -1,0 +1,111 @@
+---
+title: Vocabulary and Spelling
+description: "Improve precision and consistency accross your transcriptions."
+---
+
+
+## Custom Vocabulary
+
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Asynchronous STT** &nbsp; &nbsp; &nbsp;
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Real-Time STT**
+
+Custom Vocabulary enhances transcription accuracy by prioritizing specific words or phrases that might not be easily recognized by default models. Ideal for proper nouns, brand names, or industry-specific terms, it ensures these keywords are accurately captured.
+
+<Note>
+Custom vocabulary has the following limitations:
+* Global limit of **10k characters**
+* No more than **100 entries**
+* Each element can't contain more than **5 words**
+</Note>
+
+<Tabs>
+
+<Tab title='Asynchronous STT'>
+
+The custom vocabulary is configured in the `custom_vocabulary` key in your transcription request. API reference is available [here](https://docs.gladia.io/api-reference/v2/pre-recorded/init#body-custom-vocabulary).
+
+```json
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "custom_vocabulary": ["westeros", "stark", "night's watch"]
+}
+```
+
+</Tab>
+
+<Tab title='Real-Time STT'>
+
+The custom vocabulary configuration is set within the `realtime_processing` object in your transcription request. API reference is available [here](https://docs.gladia.io/api-reference/v2/live/init#body-realtime-processing-custom-vocabulary).
+
+```json
+{
+  "realtime_processing": {
+    "custom_vocabulary": true,
+    "custom_vocabulary_config": {
+      "vocabulary": ["Westeros", "Stark", "Night's Watch"]
+    }
+  }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Custom Spelling
+
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Asynchronous STT** &nbsp; &nbsp; &nbsp;
+<Icon icon="xmark" iconType="solid" color="red" size="20" /> **Real-Time STT**
+
+<Note>
+This feature is in **Alpha** - results may vary and changes could be introduced as we are updating the feature.
+</Note>
+
+With Custom Spelling, you can ensure consistent and accurate spelling of specific words, names, or phrases in your transcripts. This feature is particularly useful for maintaining consistency in technical terms, brand names, or industry-specific vocabulary across your transcriptions.
+
+Provide a dictionary via the `custom_spelling_config` parameter, where each key represents the desired spelling and the value contains one or more possible variations. API reference is available [here](https://docs.gladia.io/api-reference/v2/pre-recorded/init#body-custom-spelling).
+
+<Note>
+The keys in the dictionary are case sensitive, while the values aren't. Values can contain multiple words.
+</Note>
+
+```json
+{
+  "custom_spelling": true,
+  "custom_spelling_config": {
+    "spelling_dictionary": {
+        "Gorish": ["ghorish", "gaurish", "gaureish"],
+        "Data Science": ["data-science", "data science"],
+        ".": ["period", "full stop"],
+        "SQL": ["sequel"]
+    }
+  }
+}
+```
+
+In this example, the model will ensure that *Gorish* is spelled correctly throughout the transcript, even if it is pronounced in various ways such as *ghorish*, *gaurish*, or *gaureish*.
+
+## Name Consistency
+
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Asynchronous STT** &nbsp; &nbsp; &nbsp;
+<Icon icon="xmark" iconType="solid" color="red" size="20" /> **Real-Time STT**
+
+<Note>
+This feature is in **Alpha** - results may vary and changes could be introduced as we are updating the feature.
+</Note>
+
+Name Consistency ensure that names mentioned multiple times in a transcript are spelled consistently. While this may add a slight increase in processing time, it guarantees uniformity across the text. This feature is particularly valuable in scenarios where names are frequently mentioned but not known in advance, such as recruitment call recordings.
+
+<Tip>
+For cases where key names or terms are already known beforehand, consider using Custom Vocabulary for optimal accuracy.
+</Tip>
+
+Enable name consistency by setting `name_consistency` to true in your transcription request. API reference is available [here](https://docs.gladia.io/api-reference/v2/pre-recorded/init#body-name-consistency).
+
+
+```json
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "name_consistency": true
+}
+```
