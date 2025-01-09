@@ -1,0 +1,178 @@
+# Gladia Enterprise Portal API Documentation
+
+## Introduction
+
+The Gladia Enterprise Portal API provides comprehensive functionality for managing subaccounts, API keys, usage monitoring, and data retention settings. This documentation covers all available endpoints and their usage.
+
+## Base URL
+
+All API paths described below should be appended to your base API URL.
+
+## Authentication
+
+Authentication details should be provided by your system administrator.
+
+## API Endpoints
+
+### Subaccount Management
+
+#### Create Subaccount
+`POST /subaccount`
+
+Creates a new subaccount in the system.
+
+**Request Body:**
+```json
+{
+  "email": "string",
+  "account_name": "string",
+  "usage_notification_threshold": "number",
+  "notification_emails": "string",
+  "monthly_limit_consumption_in_hours": "number"
+}
+```
+
+All fields are required.
+
+### Notification Settings
+
+#### Set Notification Emails
+`POST /set-notification-emails`
+
+Configure email notifications for a user account.
+
+**Query Parameters:**
+- `email` (required): The email of the user
+- `emails` (required): Comma-separated list of email addresses to receive notifications
+
+#### Set Monthly Limit Consumption
+`POST /set-monthly-limit-consumption-in-hours`
+
+Set the monthly usage limit for a user account.
+
+**Query Parameters:**
+- `email` (required): The email of the user
+- `limit` (required): Monthly limit in hours (numeric value)
+
+#### Set Usage Notification Threshold
+`POST /set-usage-notification-threshold`
+
+Configure the threshold at which usage notifications are triggered.
+
+**Query Parameters:**
+- `email` (required): The email of the user
+- `threshold` (required): Threshold value (numeric)
+
+### Usage Monitoring
+
+#### Get Account Consumption
+`GET /consumption`
+
+Retrieve consumption data for a specific account.
+
+**Query Parameters:**
+- `email` (required): The email of the user to get consumption data for
+
+#### Get All Accounts Consumption
+`GET /consumptions`
+
+Retrieve consumption data for all subaccounts under the master account.
+
+#### Export Consumption Data
+`GET /export-consumption-csv`
+
+Export consumption data for a specific account in CSV format.
+
+**Query Parameters:**
+- `email` (required): The email of the user
+
+#### Export All Consumptions
+`GET /export-consumptions-csv`
+
+Export consumption data for all accounts in CSV format, with dates as rows and users as columns.
+
+### API Key Management
+
+#### Get API Keys
+`GET /account-api-keys`
+
+Retrieve all API keys for an account.
+
+**Query Parameters:**
+- `email` (required): The email of the user
+
+#### Create API Key
+`POST /account-api-keys`
+
+Create a new API key for an account.
+
+**Query Parameters:**
+- `email` (required): The email of the user
+- `name` (optional): Name for the API key
+
+#### Update API Key Name
+`PATCH /account-api-keys`
+
+Update the name of an existing API key.
+
+**Query Parameters:**
+- `email` (required): The email of the user
+- `api_key` (required): The API key to update
+- `new_name` (required): New name for the API key
+
+#### Delete API Key
+`DELETE /account-api-keys`
+
+Mark an API key as deleted.
+
+**Query Parameters:**
+- `email` (required): The email of the user
+- `api_key` (required): The API key to delete
+
+#### Reactivate API Key
+`PATCH /reactivate-account-api-key`
+
+Reactivate a previously deleted API key.
+
+**Query Parameters:**
+- `email` (required): The email of the user
+- `api_key` (required): The API key to reactivate
+
+### Data Retention
+
+#### Update Data Retention Period
+`PATCH /user-data-retention`
+
+Set the data retention period for a user account.
+
+**Query Parameters:**
+- `email` (required): The email of the user
+- `data_retention_in_days` (required): Number of days to retain data
+
+## Error Handling
+
+The API uses standard HTTP response codes to indicate success or failure of requests. In case of validation errors, the response will include detailed information about the error in the following format:
+
+```json
+{
+  "detail": [
+    {
+      "loc": ["field_name"],
+      "msg": "error message",
+      "type": "error type"
+    }
+  ]
+}
+```
+
+## Best Practices
+
+1. Always handle API responses appropriately and check for error conditions
+2. Store API keys securely and never expose them in client-side code
+3. Implement proper retry logic for failed requests
+4. Monitor consumption regularly to avoid hitting usage limits
+5. Keep notification email lists up to date
+
+## Support
+
+For additional support or questions about the API, please contact your account manager.
