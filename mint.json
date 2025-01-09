@@ -381,6 +381,9 @@
     "hotjar": {
       "hjid": "5197599",
       "hjsv": "6"
+    },
+    "gtm": {
+        "tagId": "GTM-MKBBGXGP"
     }
   }
 }
