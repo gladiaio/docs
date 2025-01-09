@@ -73,16 +73,61 @@ Here's a complete example of using speaker reidentification with the API:
   "diarization": true,
   "speaker_reidentification": true,
   "speaker_reidentification_config": {
-    "filters": {
-      "customer_id": "123",
-      "company": "gladia",
-      "department": "tech"
-    },
+    "filters": {},
     "save_new_speakers": true,
     "save_new_speaker_similarity_threshold": 0.95,
     "boost_uuids": []
   },
-  "audio_url": "https://api.gladia.io/audio/sample.wav"
+  "audio_url": "https://files.gladia.io/example/audio-transcription/split_infinity.wav"
+}
+```
+
+### Example Output for a Known Speaker
+```json
+"speaker_reidentification": {
+  "success": true,
+  "is_empty": false,
+  "results": {
+    "0": [
+      {
+        "score": 1.0000001,
+        "created_at_timestamp": 1736419219.108255,
+        "updated_at_timestamp": null,
+        "created_at_iso": "2025-01-09T10:40:19.108256",
+        "updated_at_iso": null,
+        "last_accessed_timestamp": 1736419347.55111,
+        "last_accessed_iso": "2025-01-09T10:42:27.551116",
+        "is_new_speaker": false,
+        "uuid": "fc04030f-5ad4-46f6-b9a0-8c238675165f",
+        "filters": {}
+      }
+      // More matched speakers...
+    ]
+  }
+}
+```
+
+### Example Output for an Unknown Speaker newly enrolled
+```json
+"speaker_reidentification": {
+  "success": true,
+  "is_empty": false,
+  "results": {
+    "6": [
+      {
+        "score": 1.0000001,
+        "created_at_timestamp": 1736419302.801952,
+        "updated_at_timestamp": null,
+        "created_at_iso": "2025-01-09T10:41:42.801953",
+        "updated_at_iso": null,
+        "last_accessed_timestamp": 1736419500.189427,
+        "last_accessed_iso": "2025-01-09T10:45:00.189431",
+        "is_new_speaker": true,  # true if the speaker is not found in the database but has been enrolled
+        "uuid": "c24c1436-6139-46f9-bcd8-4d633889661a",
+        "filters": {}
+      }
+    ]
+  }
 }
 ```
 
