@@ -184,7 +184,8 @@
       "group": "Settings",
       "pages": [
         "chapters/settings/language-options",
-        "chapters/settings/vocabulary-spelling"
+        "chapters/settings/vocabulary-spelling",
+        "chapters/settings/formatting"
       ]
     },
     {
@@ -196,8 +197,7 @@
         "chapters/audio-intelligence/pages/sentiment-analysis",
         "chapters/audio-intelligence/pages/moderation",
         "chapters/audio-intelligence/pages/chapterization",
-        "chapters/audio-intelligence/pages/audio-to-llm",
-        "chapters/audio-intelligence/pages/speaker-reidentification"
+        "chapters/audio-intelligence/pages/audio-to-llm"
       ]
     },
     {

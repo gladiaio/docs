@@ -1,0 +1,79 @@
+---
+title: Formatting
+description: "Improve the transcript readability."
+---
+
+## Enhanced Punctuation
+
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Asynchronous STT** &nbsp; &nbsp; &nbsp;
+<Icon icon="xmark" iconType="solid" color="red" size="20" /> **Real-Time STT**
+
+<Note>
+This feature is in **Alpha** - results may vary and changes could be introduced as we are updating the feature.
+</Note>
+
+Enhanced Punctuation ensures accurate and natural punctuation placement. It improves comma usage, introduces logical sentence breaks, and ensures proper handling of quotation marks, resulting in transcripts that are both precise and easy to read.
+
+**Standard:** *"hello how are you today I am doing fine thanks"* <br/>
+**Enhanced:** *"Hello, how are you today? I am doing fine, thanks!"*
+
+Enable enhanced punctuation by setting the `punctuation_enhanced` parameter to true in the transcription request.
+
+```json
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "punctuation_enhanced": true
+}
+```
+
+## Sentences
+
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Asynchronous STT** &nbsp; &nbsp; &nbsp;
+<Icon icon="xmark" iconType="solid" color="red" size="20" /> **Real-Time STT**
+
+In addition to splitting the transcription by utterances, you can enable semantic segmentation to structure the text into sentences. This ensures a more natural and human-readable result.
+
+Enable sentences output by setting the `sentences` parameter to true in the transcription request.
+
+```json
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "sentences": true
+}
+```
+
+Your transcription result will contain a `sentences` key, in addition to the `utterances` key.
+
+<Tip>
+You can get translated sentences by enabling both `sentences` and `translation`. This will provide sentence-level output for the original transcript, and each translation will include sentences structured in the translated language.
+</Tip>
+
+```json
+  "sentences": {
+    "success": true,
+    "is_empty": false,
+    "results": [
+      {
+        "sentence": "Amy, it says you are trained in technology.",
+        "start": 0.4681999999999999,
+        "end": 2.45525,
+        "words": [...],
+        "confidence": 0.95,
+        "language": "en",
+        "speaker": 0,
+        "channel": 0
+      },
+      {
+        "sentence": "That's very good.",
+        "start": 2.51546,
+        "end": 3.5992999999999995,
+        "words": [...],
+        "confidence": 0.96,
+        "language": "en",
+        "speaker": 0,
+        "channel": 0
+      },
+      ...
+    ]
+  }
+```

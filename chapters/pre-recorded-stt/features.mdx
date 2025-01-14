@@ -16,29 +16,6 @@ Discover our state-of-the-art ASR model [ Whisper Zero now.](https://www.gladia.
  into the transcription process by including extra parameters in the transcription request.
 
 
-## Enhanced punctuation
-
-<Note>
-This feature is in **Alpha**.
-- It may have restricted access in the future.
-- Breaking changes could still be introduced; however, advanced notice will be provided.
-- Results may vary as we are updating the feature.
-</Note>
-
-Enhanced punctuation improves both the accuracy and natural flow of punctuation in transcriptions. It ensures precise comma placement, natural sentence break and better handling of quotation marks.
-
-**Standard:** *"hello how are you today I am doing fine thanks"* <br/>
-**Enhanced:** *"Hello, how are you today? I am doing fine, thanks!"*
-
-Enhanced punctuation is enabled by sending the `punctuation_enhanced` parameter in the transcription request:
-
-```json
-{
-  "audio_url": "YOUR_AUDIO_URL",
-  "punctuation_enhanced": true
-}
-```
-
 
 ## Word-level timestamps
 
@@ -72,49 +49,6 @@ Under each utterance, you'll find a `words` property like this:
   ]
 ```
 
-## Sentences
-In addition to getting the transcription split by utterances, you can request to semantically segment the transcription to sentences, providing a more human readable result. 
-
-<Tip>
-You can get translated sentences by enabling both `sentences` and `translation`! You'll receive sentences output for the the original transcript, and **also** each `translation` result will contain the sentences output in the translated language!
-</Tip>
-
-```json request data
-{
-  "sentences": true
-}
-```
-
-The result will contain a `sentences` key (in addition to `utterances`):
-```json
-		"sentences": {
-			"success": true,
-			"is_empty": false,
-			"results": [
-				{
-					"sentence": "Amy, it says you are trained in technology.",
-					"start": 0.4681999999999999,
-					"end": 2.45525,
-					"words": [...],
-					"confidence": 0.95,
-					"language": "en",
-					"speaker": 0,
-					"channel": 0
-				},
-				{
-					"sentence": "That's very good.",
-					"start": 2.51546,
-					"end": 3.5992999999999995,
-					"words": [...],
-					"confidence": 0.96,
-					"language": "en",
-					"speaker": 0,
-					"channel": 0
-				},
-        ...
-      ]
-    }
-```
 
 
 ## Export SRT or VTT caption files
