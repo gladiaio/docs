@@ -109,3 +109,21 @@ Enable name consistency by setting `name_consistency` to true in your transcript
   "name_consistency": true
 }
 ```
+
+## Context Prompt
+
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Asynchronous STT** &nbsp; &nbsp; &nbsp;
+<Icon icon="xmark" iconType="solid" color="red" size="20" /> **Real-Time STT**
+
+<Note>
+This feature is in **Alpha** - results may vary and changes could be introduced as we are updating the feature.
+</Note>
+
+This setting allows you to provide additional context to the model prior doing the transcription. Compare to the `custom_vocabulary` feature, the content should be more generic and should not include custom words or names.
+
+```json
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "context_prompt": "A conversation between Sansa Stark and Peter Baelish from the Game of Thrones series.",
+}
+```
