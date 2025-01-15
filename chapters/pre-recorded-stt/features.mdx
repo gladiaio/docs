@@ -16,41 +16,6 @@ Discover our state-of-the-art ASR model [ Whisper Zero now.](https://www.gladia.
  into the transcription process by including extra parameters in the transcription request.
 
 
-
-## Word-level timestamps
-
-Instead of just getting utterances start and end timestamps, **Gladia** Speech-to-text API provides by **default** the
-**Word-level timestamps** feature. It lets you know the exact timestamp for each word and give you a more precise transcription.
- This feature is particularly useful for detailed analysis, as it allows you to pinpoint the exact moment each word is spoken, facilitating
-  a more accurate synchronization with audio or video files.
-
-Under each utterance, you'll find a `words` property like this:
-
-```json
-// other properties...
-"utterances": [
-    {
-      "words": [
-        {
-          "word": "Split",
-          "start": 0.21001999999999998,
-          "end": 0.69015,
-          "confidence": 1
-        },
-        {
-          "word": " infinity",
-          "start": 0.91021,
-          "end": 1.55038,
-          "confidence": 0.95
-        },
-        ...
-      ]
-    }
-  ]
-```
-
-
-
 ## Export SRT or VTT caption files
 
 You can export completed transcripts in both SRT and VTT format, which can be used for subtitles and captions in videos.

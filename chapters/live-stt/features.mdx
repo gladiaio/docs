@@ -7,6 +7,7 @@ description: "Features overview of Gladia's Real-Time speech-to-text (STT) API."
 |-----------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
 | [Language(s)](/chapters/settings/language-options) | Configure the model languages and/or enable multi-languages transcription. |
 | [Custom Vocabulary](/chapters/settings/vocabulary-spelling) | Enhance the transcription precision of words you know.|
+| [Word-level timestamps](/chapters/settings/word-timestamps) | Know the exact timestamp for each word, giving you a more precise transcription. |
 
 
 | **Audio Intelligence**                                                                       | **Description**                                                                                            |
@@ -22,43 +23,6 @@ description: "Features overview of Gladia's Real-Time speech-to-text (STT) API."
 
 <Note>All the configuration properties described below are defined in the [POST /v2/live endpoint](/api-reference/v2/live/init).</Note>
 
-
-
-## Word-level timestamps
-
-Instead of just getting timestamps for when utterances begin and end, Gladia's real-time API provides **word-level timestamps**. This lets you know the exact timestamp for each word,  giving you a more precise transcription, facilitating detailed analysis and more accurate synchronization with audio and video files.
-
-To enable it, pass the following configuration:
-
-```json
-{
-  "realtime_processing": {
-    "words_accurate_timestamps": true
-  }
-}
-```
-
-Under each utterance, you'll find a `words` property, like this:
-
-```json
-{
-  // ... other utterance properties
-  "words": [
-    {
-      "word": "Split",
-      "start": 0.21001999999999998,
-      "end": 0.69015,
-      "confidence": 1
-    },
-    {
-      "word": " infinity",
-      "start": 0.91021,
-      "end": 1.55038,
-      "confidence": 0.95
-    },
-  ]
-}
-```
 
 ## Multiple channels
 

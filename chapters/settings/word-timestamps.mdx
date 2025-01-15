@@ -1,0 +1,59 @@
+---
+title: Word-level timestamps
+description: "Get the exact timestamp for each word in your audio file."
+---
+
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Asynchronous STT** &nbsp; &nbsp; &nbsp;
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Real-Time STT**
+
+Instead of providing only the start and end timestamps of an utterance, Gladia API delivers precise timestamps for each individual word. This feature is useful for detailed analyses, enabling you to pinpoint the exact moment each word is spoken. It also facilitates synchronization with audio or video files for enhanced accuracy.
+
+## Configuration
+
+<Tabs>
+
+<Tab title='Asynchronous STT'>
+
+Word-level timestamps is always enabled for asynchronous STT.
+
+</Tab>
+
+<Tab title='Real-Time STT'>
+
+World-level configuration is set within the `realtime_processing` object in your transcription request. API reference is available [here](https://docs.gladia.io/api-reference/v2/live/init#body-realtime-processing-words-accurate-timestamps).
+
+```json
+{
+  "realtime_processing": {
+    "words_accurate_timestamps": true
+  }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Results
+
+Each utterance will contains a `words` property:
+
+```json
+{
+  // ... other utterance properties
+  "words": [
+    {
+      "word": "Split",
+      "start": 0.21001999999999998,
+      "end": 0.69015,
+      "confidence": 1
+    },
+    {
+      "word": " infinity",
+      "start": 0.91021,
+      "end": 1.55038,
+      "confidence": 0.95
+    },
+  ]
+}
+```
