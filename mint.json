@@ -186,7 +186,8 @@
         "chapters/settings/language-options",
         "chapters/settings/vocabulary-spelling",
         "chapters/settings/formatting",
-        "chapters/settings/word-timestamps"
+        "chapters/settings/word-timestamps",
+        "chapters/settings/custom-metadata"
       ]
     },
     {

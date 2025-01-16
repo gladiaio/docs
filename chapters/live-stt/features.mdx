@@ -7,7 +7,8 @@ description: "Features overview of Gladia's Real-Time speech-to-text (STT) API."
 |-----------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
 | [Language(s)](/chapters/settings/language-options) | Configure the model languages and/or enable multi-languages transcription. |
 | [Custom Vocabulary](/chapters/settings/vocabulary-spelling) | Enhance the transcription precision of words you know.|
-| [Word-level timestamps](/chapters/settings/word-timestamps) | Know the exact timestamp for each word, giving you a more precise transcription. |
+| [Word-level Timestamps](/chapters/settings/word-timestamps) | Know the exact timestamp for each word, giving you a more precise transcription. |
+| [Custom Metadata](/chapters/settings/custom-metadata) | Add metadata to track and filter your requests. |
 
 
 | **Audio Intelligence**                                                                       | **Description**                                                                                            |
@@ -39,35 +40,4 @@ For each utterance, you'll get a `channel` key corresponding to the channel the 
 
 <Warning>
   Transcribing an audio stream with multiple channels will be billed exponentially. For example, an audio stream with 2 channels will be billed as double the audio duration, even if the channels are identical.
-</Warning>
-
-## Attaching custom metadata
-
-You can attach metadata to your real-time transcription session using the `custom_metadata` property. This'll make it easy to recognize your transcription when you receive data from the [GET `/v2/live/:id` endpoint](/api-reference/v2/live/get). And more importantly, you'll be able to use it as a filter in the [GET `/v2/live` list endpoint](/api-reference/v2/live/list).
-For example, you can add the following to your configuration:
-
-```json
-"custom_metadata": {
-    "internalUserId": 2348739875894375,
-    "paymentMethod": {
-        "last4Digits": 4576
-     },
-     "internalUserName": "Spencer"
-}
-```
-
-And use a GET request to filter results, like this:
-
-```
-https://api.gladia.io/v2/live?custom_metadata={"internalUserId": "2348739875894375"}
-```
-
-or like this:
-
-```
-https://api.gladia.io/v2/live?custom_metadata={"paymentMethod": {"last4Digits": 4576}, "internalUserName": "Spencer"}
-```
-
-<Warning>
-  `custom_metadata` cannot be longer than 2000 characters when stringified.
 </Warning>

@@ -74,34 +74,3 @@ If your audio has multiple channels but has the same audio content on each chann
 
 **TLDR**: We charge every unique channel in an audio file, we do not charge if channels are duplicates.
 </Warning>
-
-## Adding custom metadata
-
-You can add metadata to your transcription using the `custom_metadata` input during your POST request on `/v2/pre-recorded` endpoint.
-This will allow you to recognize your transcription when you get its data from the GET `/v2/pre-recorded/:id` endpoint, but more important, it will allow you to use it as a filter in the GET `/v2/pre-recorded` list endpoint.
-For example, you can add the following when asking for a transcription:
-
-```json
-"custom_metadata": {
-    "internalUserId": 2348739875894375,
-    "paymentMethod": {
-        "last4Digits": 4576
-     },
-     "internalUserName": "Spencer"
-}
-```
-
-And then, use the following GET request to filter results like:
-```
-https://api.gladia.io/v2/pre-recorded?custom_metadata={"internalUserId": "2348739875894375"}
-```
-or
-```
-https://api.gladia.io/v2/pre-recorded?custom_metadata={"paymentMethod": {"last4Digits": 4576}, "internalUserName": "Spencer"}
-```
-
-<Warning>
-
-`custom_metadata` cannot be longer than 2000 characters when stringified.
-
-</Warning>

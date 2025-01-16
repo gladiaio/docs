@@ -1,0 +1,68 @@
+---
+title: Custom Metadata
+description: "Add metadata to track and filter your requests."
+---
+
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Asynchronous STT** &nbsp; &nbsp; &nbsp;
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Real-Time STT**
+
+You can include key-value pairs in your transcription requests, which will be attached to the API response for further processing.
+These custom data can also be used to **filter requests through the GET endpoints**.
+
+<Note>
+  `custom_metadata` cannot be longer than 2000 characters when stringified.
+</Note>
+
+<Tabs>
+
+<Tab title='Asynchronous STT'>
+
+Add your key-value pairs in the `custom_metadata` object in your transcription request. API reference is available [here](https://docs.gladia.io/api-reference/v2/pre-recorded/init#body-custom-metadata).
+
+```json
+"custom_metadata": {
+    "internalUserId": 2348739875894375,
+    "paymentMethod": {
+        "last4Digits": 4576
+     },
+     "internalUserName": "Spencer"
+}
+```
+
+These metadata will be added to the API response.
+
+You can also filter corresponding results via a `GET` request:
+
+```
+https://api.gladia.io/v2/pre-recorded?custom_metadata={"internalUserId": "2348739875894375"}
+https://api.gladia.io/v2/pre-recorded?custom_metadata={"paymentMethod": {"last4Digits": 4576}, "internalUserName": "Spencer"}
+```
+
+</Tab>
+
+<Tab title='Real-Time STT'>
+
+Add your key-value pairs in the `custom_metadata` object in your transcription request. API reference is available [here](https://docs.gladia.io/api-reference/v2/live/init#body-custom-metadata).
+
+```json
+"custom_metadata": {
+    "internalUserId": 2348739875894375,
+    "paymentMethod": {
+        "last4Digits": 4576
+     },
+     "internalUserName": "Spencer"
+}
+```
+
+These metadata will be added to every message returned by Gladia through the websocket.
+
+You can also filter corresponding results via a `GET` request:
+
+```
+https://api.gladia.io/v2/live?custom_metadata={"internalUserId": "2348739875894375"}
+https://api.gladia.io/v2/live?custom_metadata={"paymentMethod": {"last4Digits": 4576}, "internalUserName": "Spencer"}
+```
+
+</Tab>
+
+</Tabs>
