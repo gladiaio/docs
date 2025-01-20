@@ -168,7 +168,6 @@
       "pages": [
         "chapters/pre-recorded-stt/getting-started",
         "chapters/pre-recorded-stt/features",
-        "chapters/pre-recorded-stt/speaker-diarization",
         "chapters/pre-recorded-stt/migration-from-v1"
       ]
     },
@@ -186,6 +185,7 @@
         "chapters/settings/language-options",
         "chapters/settings/vocabulary-spelling",
         "chapters/settings/formatting",
+        "chapters/settings/diarization",
         "chapters/settings/word-timestamps",
         "chapters/settings/custom-metadata"
       ]
