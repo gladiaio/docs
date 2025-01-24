@@ -182,6 +182,7 @@
     {
       "group": "Settings",
       "pages": [
+        "chapters/settings/media",
         "chapters/settings/language-options",
         "chapters/settings/vocabulary-spelling",
         "chapters/settings/formatting",

@@ -1,0 +1,93 @@
+---
+title: Media Input
+description: "Define audio media's parameters sent to the API."
+---
+
+## Multi-channels
+
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Asynchronous STT** &nbsp; &nbsp; &nbsp;
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Real-Time STT**
+
+
+<Tabs>
+
+<Tab title='Asynchronous STT'>
+
+### Configuration
+
+You have nothing to configure. If you have multiple channels in your audio file with different content, the API will automatically transcribe each of them.
+
+### Results
+
+Each utterance will include a `channel` key, indicating the channel from which the utterance came from.
+
+```json
+{
+  "utterances": [
+    {
+      "text": "Vi tester en ganske kort melding.",
+      "language": "no",
+      "start": 1.02077,
+      "end": 3.9749399999999997,
+      "confidence": 0.86,
+      "channel": 0,
+      "speaker": 0,
+      "words": [...]
+    },
+    {...}
+  ],
+}
+```
+
+<Note>
+The cost of transcribing an audio with multiple channels increases proportionally to the number of channels. For instance, a 2-channel audio will be billed double the audio duration, unless both channels are identical.
+</Note>
+
+</Tab>
+
+<Tab title='Real-Time STT'>
+
+### Configuration
+
+If you have multiple channels in your audio stream, specify it in the `channels` parameter.
+
+```json
+{
+  "channels": 2
+}
+```
+
+### Results
+
+Each utterance will include a `channel` key, indicating the channel from which the utterance came from.
+
+```json Real-Time
+{
+  {
+    "type": "transcript",
+    "session_id": "...",
+    "created_at": "2025-01-17T09:01:30.197Z",
+    "data": {
+      "id": "00_00000006",
+      "is_final": true,
+      "utterance": {
+        "text": "Bye.",
+        "start": 22.539534999999994,
+        "end": 22.729984999999996,
+        "language": "en",
+        "confidence": 1,
+        "channel": 0,
+        "words": [...]
+      }
+    }
+  },
+}
+```
+
+<Note>
+The cost of transcribing an audio stream with multiple channels increases proportionally to the number of channels. For instance, a 2-channel audio stream will be billed as double the audio duration, even if both channels contain identical audio.
+</Note>
+
+</Tab>
+
+</Tabs>

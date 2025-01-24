@@ -60,17 +60,3 @@ With the given example, `subtitles` will contains 2 items of shape:
   "subtitles": "1\n00:00:00,210 --> 00:00:04,711....." // subtitles
 }
 ```
-
-
-## Dual-channel or Multiple channels transcription
-
-If you have multiples channels in your audio file with different content each, Gladia API automatically transcribe them.
-In the transcription result, you will get for each utterances a `channel` key corresponding to the channels the transcription
- came from.
-
-<Warning>
-Sending an audio with 2 different channels (that does not contains the same audio data), will be billed twice as 2 different audios.
-If your audio has multiple channels but has the same audio content on each channels, it will only billed once.
-
-**TLDR**: We charge every unique channel in an audio file, we do not charge if channels are duplicates.
-</Warning>
