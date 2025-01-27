@@ -1,0 +1,70 @@
+---
+title: Messages
+description: Understand and configure the messages that can be sent during a live session.
+---
+
+## Messages you will send
+
+### Sending data
+
+To send audio content, use the `audio_chunk` message and encode your audio chunk in base64.
+
+```json
+{
+  "type": "audio_chunk",
+  "data": {
+    "chunk": "<base64 encoded>"
+  }
+}
+```
+
+You will then receive an acknowledgment message, if configured (see bellow).
+
+### Closing the session
+
+The WebSocket automatically closes if no audio is received for 30 seconds. However, we recommend always closing your session manually once the live session is complete.
+
+To do this, send the `stop_recording` message. This will trigger the processing of any remaining audio chunks and initiate the post-processing phase, during which we compile the final audio file and results, including the add-ons you selected.
+
+```json
+{
+  "type": "stop_recording"
+}
+```
+
+You will receive a message at each step of the process either through the WebSocket or via the callback if configured. Once the post-processing is complete, the WebSocket will close with code 1000.
+
+
+## Messages you will receive
+
+During real-time audio processing, various messages will be sent to provide data or update you on the system’s status. While you can choose to disable some of these messages, we recommend receiving all of them and filtering the ones that interest you on your end.
+
+API reference is available [here](https://docs.gladia.io/api-reference/v2/live/init#body-messages-config).
+
+```json
+{
+  "messages_config": {
+    "receive_partial_transcripts": true,
+    "receive_final_transcripts": true,
+    "receive_speech_events": true,
+    "receive_pre_processing_events": true,
+    "receive_realtime_processing_events": true,
+    "receive_post_processing_events": true,
+    "receive_acknowledgments": true,
+    "receive_errors": true,
+    "receive_lifecycle_events": true
+  }
+}
+```
+
+| **Type**            | **Description**                                                                                               |
+|---------------------|---------------------------------------------------------------------------------------------------------------|
+| Partial             | Contains a partial transcript                                                                                 |
+| Final               | Contains a final transcript                                                                                   |
+| Speech event        | Informs you when someone is speaking. More info [here](/chapters/live-stt/speech-management)                  |
+| Pre-processing      | Currently not used                                                                                            |
+| Realtime-processing | Contains data from real-time addons, such as `named_entity_recognition` and `sentiment_analysis`              |
+| Post-processing     | Contains data from post-processing addons, such as `summarization`                                            |
+| Acknowledgment      | Confirms you when receiving your message                                                                      |
+| Errors              | Informs you when an error occured                                                                             |
+| Lifecyle events     | Informs you about session's status with `start_session`, `start_recording`, `end_recording` and `end_session` |

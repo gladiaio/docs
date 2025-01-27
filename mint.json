@@ -176,6 +176,8 @@
       "pages": [
         "chapters/live-stt/getting-started",
         "chapters/live-stt/features",
+        "chapters/live-stt/messages-config",
+        "chapters/live-stt/speech-management",
         "chapters/live-stt/migration-from-v1"
       ]
     },
