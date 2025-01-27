@@ -3,6 +3,30 @@ title: Media Input
 description: "Define audio media's parameters sent to the API."
 ---
 
+## Encoding, Bit depth and Sample rate
+
+<Icon icon="xmark" iconType="solid" color="red" size="20" /> **Asynchronous STT** &nbsp; &nbsp; &nbsp;
+<Icon icon="check" iconType="solid" color="green" size="20" /> **Real-Time STT**
+
+When submitting audio to Gladia’s Real-Time API, you must provide additional information as headerless audio packets are sent to the streaming endpoint. <br/>
+**Make sure to provide the correct information.**
+
+We are currently supporting:
+- PCM: 8, 16, 24, and 32 bits
+- A-law: 8 bits
+- μ-law: 8 bits
+
+You don't need to add WAV headers to the raw audio as the API supports both formats. For the sample rate, the available options are 8000, 16000, 32000, 44100, 48000.
+
+```json
+{
+  "encoding": "wav/pcm",
+  "bit_depth": 16,
+  "sample_rate": 16000,
+}
+```
+
+
 ## Multi-channels
 
 <Icon icon="check" iconType="solid" color="green" size="20" /> **Asynchronous STT** &nbsp; &nbsp; &nbsp;
