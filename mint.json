@@ -168,6 +168,7 @@
       "pages": [
         "chapters/pre-recorded-stt/getting-started",
         "chapters/pre-recorded-stt/features",
+        "chapters/pre-recorded-stt/captions",
         "chapters/pre-recorded-stt/migration-from-v1"
       ]
     },

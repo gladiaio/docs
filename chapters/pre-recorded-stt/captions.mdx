@@ -1,0 +1,113 @@
+---
+title: "Captions"
+description: "Automatically generate WebVTT & SRT captions content."
+---
+
+You can export completed transcripts in both SRT and VTT format, which can be used for subtitles and captions in videos.
+
+## Usage
+
+The subtitles are configured in the `subtitles` and `subtitles_config` keys in your transcription request. API reference is available [here](https://docs.gladia.io/api-reference/v2/pre-recorded/init#body-subtitles).
+
+```json
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "subtitles": true,
+  "subtitles_config": {
+    "formats": ["srt", "vtt"],
+    "minimum_duration": 1,
+    "maximum_duration": 5,
+    "maximum_characters_per_row": 42,
+    "maximum_rows_per_caption": 2,
+    "style": "compliance"
+  }
+}
+```
+
+The `subtitles_config` object supports the following options:
+
+| **Option**                 | **Description**                                                                                                                                                                                                                                            |
+|----------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| formats                    | Array of subtitle formats to generate (options: "srt", "vtt")                                                                                                                                                                                              |
+| minimum_duration           | Minimum duration of a subtitle in seconds (minimum: 0)                                                                                                                                                                                                     |
+| maximum_duration           | Maximum duration of a subtitle in seconds (minimum: 1, maximum: 30)                                                                                                                                                                                        |
+| maximum_characters_per_row | Maximum number of characters per row in a subtitle (minimum: 1)                                                                                                                                                                                            |
+| maximum_rows_per_caption   | Maximum number of rows per caption (minimum: 1, maximum: 5)                                                                                                                                                                                                |
+| style                      | Style of the subtitles. <br/> - "default": Standard subtitle style <br/> - "compliance": Follows the compliance mode as described in [Library of Congress Recommended Format Statement](https://loc.gov/preservation/digital/formats//fdd/fdd000569.shtml) |
+
+
+## Results
+
+Your transcription result will have a `subtitles` key containing your captions.
+
+```json
+{
+  "transcription": {
+    "utterances": [...],
+    "full_transcript": "..."
+    "languages": [...],
+    "subtitles": [
+      {
+        "format": "srt",
+        "subtitles": "1\n00:00:01.832 --> 00:00:04.573\nBonjour,\n\n2\n00:00:04.833 --> 00:00:09.675\nje vous remets sur un autre vol.\n\n3\n00:00:09.955 --> 00:00:11.195\nJe vous donne le n..."
+      }
+    ]
+  }
+}
+```
+
+## Translate your captions
+
+You can use the `subtitles` feature alongside the `translation` feature. You'll have your subtitles in the original language and also in the languages you targeted for the translation.
+
+```json
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "subtitles": true,
+  "subtitles_config": {
+    "formats": ["srt"]
+  },
+  "translation": true,
+  "translation_config": {
+    "target_languages": ["en"]
+  }
+}
+```
+
+Your transcription result will have a `subtitles` key containing your captions in the original language, and a `subtitles` key in the `translation` object containing your captions in the targeted language(s).
+
+```json
+{
+  "transcription": {
+    "utterances": [...],
+    "full_transcript": "..."
+    "languages": [...],
+    "subtitles": [
+      {
+        "format": "srt",
+        "subtitles": "1\n00:00:01.832 --> 00:00:04.573\nBonjour,\n\n2\n00:00:04.833 --> 00:00:09.675\nje vous remets sur un autre vol.\n\n3\n00:00:09.955 --> 00:00:11.195\nJe vous donne le n..."
+      }
+    ]
+  }
+  "translation": {
+    "success": true,
+    "is_empty": false,
+    "results": [
+      {
+        "languages": [...],
+        "full_transcript": "..."
+        "utterances": [...],
+        "error": null,
+        "subtitles": [
+          {
+            "format": "srt",
+            "subtitles": "1\n00:00:01.832 --> 00:00:04.573\nHello,\n\n2\n00:00:04.833 --> 00:00:09.675\nI'm putting you on another flight.\n\n3\n00:00:09.955 --> 00:00:11.195\nI'm giving you the reservat..."
+          }
+        ]
+      }
+    ],
+    "exec_time": 3.316187063999474,
+    "error": null
+	}
+}
+```
