@@ -2,3 +2,63 @@
 title: "Speech Management"
 description: "Understand and configure how we detect speech during a live session."
 ---
+
+## Voice Activity Detection sensitivity
+
+Gladia’s API allows you to control the speech sensitivity threshold applied to the audio. A value close to 1 will apply stricter thresholds, making it less likely to detect background sounds as speech. 
+
+For challenging audio with background noise, we recommend setting a value close to 1, such as 0.95. Lower values should only be used if the audio is clean and does not contain silent segments; otherwise, the model may generate hallucinations.
+
+The VAD configuration is set within the `pre_processing` object. API reference is available [here](https://docs.gladia.io/api-reference/v2/live/init#body-pre-processing).
+
+```json
+{
+  "pre_processing": {
+    "speech_threshold": 0.85
+  }
+}
+```
+
+## Endpointing
+
+Endpointing detects pauses in streaming audio to determine when speech starts and ends. It identifies sufficiently long silences, signaling the likely end of a spoken segment, and trigger the transcription process.
+
+By default, the value is set to 300ms. You can customize it between 10ms and 10s using the `endpointing` parameter. API reference is available [here](https://docs.gladia.io/api-reference/v2/live/init#body-endpointing).
+
+You can also customize the maximum duration before a transcript is forced to be generated, even if no sufficiently long pause is detected in the audio.
+
+By default, the value is set to 30s. You can customize it between 5s and 60s using the `maximum_duration_without_endpointing` parameter. API reference is available [here](https://docs.gladia.io/api-reference/v2/live/init#body-maximum-duration-without-endpointing).
+
+```json
+{
+  "endpointing": 0.3,
+  "maximum_duration_without_endpointing": 30,
+}
+```
+
+## Speech start and end messages
+
+Knowing when someone is speaking can be useful in various scenarios, such as interruption management. You can opt to receive a message when speech is detected and another when it ends.
+
+First, make sure to enable receiving the corresponding [messages](/chapters/live-stt/messages-config) when opening the WebSocket.
+
+```json
+{
+  "messages_config": {
+    "receive_speech_events": true,
+  }
+}
+```
+
+You can then listen for the two message types `speech_start` and `speech_end` which will be sent via the WebSocket. <br/>
+Each message will contain a `data` object with the event time and the corresponding channel.
+
+```json
+{
+  "type": "speech_start",
+  "data": {
+    "time": 3684,
+    "channel": 0
+  }
+}
+```
