@@ -189,7 +189,8 @@
         "chapters/audio-intelligence/pages/sentiment analysis",
         "chapters/audio-intelligence/pages/moderation",
         "chapters/audio-intelligence/pages/chapterization",
-        "chapters/audio-intelligence/pages/audio to llm"
+        "chapters/audio-intelligence/pages/audio to llm",
+        "chapters/audio-intelligence/speaker-reidentification"
       ]
     },
     {
