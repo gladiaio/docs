@@ -3,6 +3,8 @@ title: "Features"
 description: "Core features of Gladia's real-time speech-to-text (STT) API "
 ---
 
+import CustomVocabularyInputDescription from '/snippets/custom-vocabulary-input-description.mdx';
+
 <Note>All the configuration properties described below are defined in the [POST /v2/live endpoint](/api-reference/v2/live/init).</Note>
 
 ## Language configuration
@@ -120,23 +122,28 @@ Under each utterance, you'll find a `words` property, like this:
 ## Custom vocabulary
 
 To enhance the precision of words you know will recur often in your transcription, use the `custom_vocabulary` feature.<br />
-Custom vocabulary has the following limitations:
-
-* Global limit of **10k characters**
-* No more than **100 entries**
-* Each element can't contain more than **5 words**
 
 ```json
 {
   "realtime_processing": {
     "custom_vocabulary": true,
     "custom_vocabulary_config": {
-      "vocabulary": ["Westeros", "Stark", "Night's Watch"]
+      "vocabulary": [
+        "Westeros", 
+        {"value": "Stark"}, 
+        { 
+          "value": "Night's Watch",
+          "pronunciations": ["Nightz Watch"],
+          "intensity": 0.4,
+          "language": "en"
+        }
+      ],
+      "default_intensity": 0.6
     }
   }
 }
 ```
-
+<CustomVocabularyInputDescription />
 ## Multiple channels
 
 If you have multiple channels in your audio stream, specify the count in the configuration:
