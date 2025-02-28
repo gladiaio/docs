@@ -274,6 +274,7 @@
             "api-reference/v2/live/message/transcript",
             "api-reference/v2/live/message/speech-start",
             "api-reference/v2/live/message/speech-end",
+            "api-reference/v2/live/message/translation",
             "api-reference/v2/live/message/named-entity-recognition",
             "api-reference/v2/live/message/sentiment-analysis"
           ]
@@ -314,6 +315,7 @@
             "api-reference/v2/live/callback/transcript",
             "api-reference/v2/live/callback/speech-start",
             "api-reference/v2/live/callback/speech-end",
+            "api-reference/v2/live/callback/translation",
             "api-reference/v2/live/callback/named-entity-recognition",
             "api-reference/v2/live/callback/sentiment-analysis"
           ]

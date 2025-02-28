@@ -144,6 +144,24 @@ To enhance the precision of words you know will recur often in your transcriptio
 }
 ```
 <CustomVocabularyInputDescription />
+
+## Translation
+
+This feature allows you to get both the original transcription and its translation in your specified target language(s) in real-time.
+
+```json
+{
+  "realtime_processing": {
+    "translation": true,
+    "translation_config": {
+      "target_languages": ["fr", "es"]  // Translate to French and Spanish
+    }
+  }
+}
+```
+
+With this feature enabled, you'll receive a [`translation` message](/api-reference/v2/live/message/translation) for each [`transcript` message](/api-reference/v2/live/message/transcript) and target language.
+
 ## Multiple channels
 
 If you have multiple channels in your audio stream, specify the count in the configuration:
