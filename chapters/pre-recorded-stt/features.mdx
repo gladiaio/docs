@@ -4,6 +4,8 @@ description: "Core features of the Gladia Pre-recorded STT API"
 ---
 
 import CustomVocabularyInputDescription from '/snippets/custom-vocabulary-input-description.mdx';
+import CustomSpellingStartDescription from '/snippets/custom-spelling-start-description.mdx';
+import CustomSpellingEndDescription from '/snippets/custom-spelling-end-description.mdx';
 
 The core functionality of the Gladia API is its Speech Recognition model, designed to convert spoken language
  into written text. This serves as the basis for all Gladia API offerings.
@@ -259,15 +261,7 @@ To enhance the precision of transcription, especially for words or phrases that 
 <CustomVocabularyInputDescription />
 
 ## Custom spelling
-You can customize how certain words, names or phrases are spelled in the final transcript.
-<br/>To use custom spelling, provide a dictionary through the `custom_spelling_config` parameter. This dictionary should contain the correct spelling as the key and a list of one or more possible variations as the value.
-
-Custom spelling is useful in scenarios where consistent spelling of specific words is crucial (e.g., technical terms in industry-specific recordings).
-
-<Note>
-The keys in the dictionary are case sensitive, while the values aren't. Values can contain multiple words.
-</Note>
-
+<CustomSpellingStartDescription/>
 
 ```json request data
 {
@@ -282,8 +276,7 @@ The keys in the dictionary are case sensitive, while the values aren't. Values c
   }
 }
 ```
-
-In this example, the model will ensure that "Gorish" is spelled correctly throughout the transcript, even if it is pronounced in various ways such as "ghorish," "gaurish," or "gaureish."
+<CustomSpellingEndDescription/>
 
 ## Name consistency
 You can ask the model to enforce consistent spelling of names using the `name_consistency` parameter. This will ensure the same name is spelled in the same manner throughout the transcript, at the cost of a small amount of added processing time.
