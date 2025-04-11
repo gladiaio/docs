@@ -4,8 +4,8 @@ description: "Core features of Gladia's real-time speech-to-text (STT) API "
 ---
 
 import CustomVocabularyInputDescription from '/snippets/custom-vocabulary-input-description.mdx'
-import CustomSpellingStartDescription from '/snippets/custom-spelling-start-description.mdx';
-import CustomSpellingEndDescription from '/snippets/custom-spelling-end-description.mdx';
+import CustomSpellingStartDescription from '/snippets/custom-spelling-start-description.mdx'
+import CustomSpellingEndDescription from '/snippets/custom-spelling-end-description.mdx'
 
 <Note>All the configuration properties described below are defined in the [POST /v2/live endpoint](/api-reference/v2/live/init).</Note>
 
@@ -31,7 +31,6 @@ If the spoken language is unknown, you can:
 
 ```json Limited options
 {
-  // Will limit to detect from English, French or Spanish
   "language_config": {
     "languages": ["en", "fr", "es"]
   }
@@ -40,7 +39,6 @@ If the spoken language is unknown, you can:
 
 ```json All languages
 {
-  // You can omit the parameter
   "language_config": {
     "languages": []
   }
@@ -49,7 +47,7 @@ If the spoken language is unknown, you can:
 
 </CodeGroup>
 
-### Multiple languages <br/>(Code-switching)
+### Multiple languages (Code-switching)
 
 If you expect multiple languages to be spoken during the conversation, enable the `language_config.code_switching` parameter. This will allow the model to switch languages dynamically and reflect it in the transcription results.
 
@@ -60,7 +58,6 @@ As with single-language configuration, you can either let the model detect the l
 ```json Limited options
 {
   "language_config": {
-    // Will limit to detect from English, French or Spanish
     "languages": ["en", "fr", "es"],
     "code_switching": true
   }
@@ -70,7 +67,6 @@ As with single-language configuration, you can either let the model detect the l
 ```json All languages
 {
   "language_config": {
-    // You can omit the languages parameter
     "languages": [],
     "code_switching": true
   }
@@ -78,8 +74,6 @@ As with single-language configuration, you can either let the model detect the l
 ```
 
 </CodeGroup>
-
-<br/>
 
 <Tip>
 It is recommended to limit the number of languages to avoid incorrect detection, either in single or multiple languages configuration. Some languages, such as those from Eastern European countries, have similar sounds, which may cause the model to confuse them and produce a transcription in the wrong language.
@@ -103,7 +97,6 @@ Under each utterance, you'll find a `words` property, like this:
 
 ```json
 {
-  // ... other utterance properties
   "words": [
     {
       "word": "Split",
@@ -116,14 +109,14 @@ Under each utterance, you'll find a `words` property, like this:
       "start": 0.91021,
       "end": 1.55038,
       "confidence": 0.95
-    },
+    }
   ]
 }
 ```
 
 ## Custom vocabulary
 
-To enhance the precision of words you know will recur often in your transcription, use the `custom_vocabulary` feature.<br />
+To enhance the precision of words you know will recur often in your transcription, use the `custom_vocabulary` feature.
 
 ```json
 {
@@ -148,9 +141,9 @@ To enhance the precision of words you know will recur often in your transcriptio
 <CustomVocabularyInputDescription />
 
 ## Custom spelling
-<CustomSpellingStartDescription/>
+<CustomSpellingStartDescription />
 
-```json request data
+```json
 {
   "realtime_processing": {
     "custom_spelling": true,
@@ -165,8 +158,7 @@ To enhance the precision of words you know will recur often in your transcriptio
   }
 }
 ```
-<CustomSpellingEndDescription/>
-
+<CustomSpellingEndDescription />
 
 ## Translation
 
@@ -177,7 +169,7 @@ This feature allows you to get both the original transcription and its translati
   "realtime_processing": {
     "translation": true,
     "translation_config": {
-      "target_languages": ["fr", "es"]  // Translate to French and Spanish
+      "target_languages": ["fr", "es"]
     }
   }
 }
@@ -212,12 +204,14 @@ You can attach metadata to your real-time transcription session using the `custo
 For example, you can add the following to your configuration:
 
 ```json
-"custom_metadata": {
+{
+  "custom_metadata": {
     "internalUserId": 2348739875894375,
     "paymentMethod": {
         "last4Digits": 4576
      },
      "internalUserName": "Spencer"
+  }
 }
 ```
 
