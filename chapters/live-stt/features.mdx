@@ -4,8 +4,8 @@ description: "Core features of Gladia's real-time speech-to-text (STT) API "
 ---
 
 import CustomVocabularyInputDescription from '/snippets/custom-vocabulary-input-description.mdx'
-import CustomSpellingStartDescription from '/snippets/custom-spelling-start-description.mdx';
-import CustomSpellingEndDescription from '/snippets/custom-spelling-end-description.mdx';
+import CustomSpellingStartDescription from '/snippets/custom-spelling-start-description.mdx'
+import CustomSpellingEndDescription from '/snippets/custom-spelling-end-description.mdx'
 
 <Note>All the configuration properties described below are defined in the [POST /v2/live endpoint](/api-reference/v2/live/init).</Note>
 
@@ -148,7 +148,7 @@ To enhance the precision of words you know will recur often in your transcriptio
 <CustomVocabularyInputDescription />
 
 ## Custom spelling
-<CustomSpellingStartDescription/>
+<CustomSpellingStartDescription />
 
 ```json request data
 {
@@ -165,8 +165,7 @@ To enhance the precision of words you know will recur often in your transcriptio
   }
 }
 ```
-<CustomSpellingEndDescription/>
-
+<CustomSpellingEndDescription />
 
 ## Translation
 
@@ -201,6 +200,10 @@ For each utterance, you'll get a `channel` key corresponding to the channel the 
 <Warning>
   Transcribing an audio stream with multiple channels will be billed exponentially. For example, an audio stream with 2 channels will be billed as double the audio duration, even if the channels are identical.
 </Warning>
+
+<Note>
+  For a detailed guide on how to merge multiple audio tracks into a single multi-channel stream and send it over a WebSocket, see the [Sending multiple audio tracks over a single WebSocket](/api-reference/live-flow#sending-multiple-audio-tracks-over-a-single-websocket) section.
+</Note>
 
 ## Attaching custom metadata
 
