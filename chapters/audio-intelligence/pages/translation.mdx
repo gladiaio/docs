@@ -20,6 +20,10 @@ The list of the languages covered by the Translation feature are listed in the [
 - `base` : Fast, cover most use cases
 - `enhanced` : Slower, but higher quality and with context awareness
 
+The translation feature now supports enhanced word splitting functionality through the `split_words` parameter:
+
+- This parameter can be activated in API calls to ensure Gladia doesn't group words but keep the word by word format. However the translation will not match the original prosody which can lead to desynchronization in lypsinc use case.
+
 ## Usage
 To enable translation simply set the `"translation"` parameter to true
 ```json request data
@@ -65,7 +69,8 @@ async function startTranscription() {
     translation: true,
     translation_config: {
       target_languages: [ "fr", "es"],
-      model: "base" // "enhanced" is slower but of better quality
+      model: "base", // "enhanced" is slower but of better quality
+      split_words: true // Enables enhanced word splitting to remove extra spaces and adjust timing details
     }
   };
   const gladiaUrl = "https://api.gladia.io/v2/pre-recorded/";
@@ -110,7 +115,8 @@ request_data = {
     "translation_config":
     {
       "target_languages": ['fr', 'es'],
-      "model": "base" ## "enhanced" is slower but of better quality
+      "model": "base", ## "enhanced" is slower but of better quality
+      "split_words": True  ## Enables enhanced word level timing splits
     }
 }
 gladia_url = "https://api.gladia.io/v2/pre-recorded/"

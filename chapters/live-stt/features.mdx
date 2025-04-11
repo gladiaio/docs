@@ -171,12 +171,15 @@ To enhance the precision of words you know will recur often in your transcriptio
 
 This feature allows you to get both the original transcription and its translation in your specified target language(s) in real-time.
 
+You can now enable enhanced word splitting functionality with the `split_words` parameter. This feature effectively adjusts timing details during text processing, resulting in more word-level translations but can lead to mis-synchronization for lipsync.
+
 ```json
 {
   "realtime_processing": {
     "translation": true,
     "translation_config": {
-      "target_languages": ["fr", "es"]  // Translate to French and Spanish
+      "target_languages": ["fr", "es"],  // Translate to French and Spanish
+      "split_words": true  // Enables enhanced word splitting functionality
     }
   }
 }
