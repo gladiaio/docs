@@ -202,6 +202,10 @@ For each utterance, you'll get a `channel` key corresponding to the channel the 
   Transcribing an audio stream with multiple channels will be billed exponentially. For example, an audio stream with 2 channels will be billed as double the audio duration, even if the channels are identical.
 </Warning>
 
+<Note>
+  For a detailed guide on how to merge multiple audio tracks into a single multi-channel stream and send it over a WebSocket, see the [Sending multiple audio tracks over a single WebSocket](/api-reference/live-flow#sending-multiple-audio-tracks-over-a-single-websocket) section.
+</Note>
+
 ## Attaching custom metadata
 
 You can attach metadata to your real-time transcription session using the `custom_metadata` property. This'll make it easy to recognize your transcription when you receive data from the [GET `/v2/live/:id` endpoint](/api-reference/v2/live/get). And more importantly, you'll be able to use it as a filter in the [GET `/v2/live` list endpoint](/api-reference/v2/live/list).
