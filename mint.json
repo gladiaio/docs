@@ -131,7 +131,7 @@
     },
     {
       "source": "/chapters/get-started/pages/integration-guides",
-      "destination": "/chapters/guides/integration"
+      "destination": "/chapters/guides/integrations"
     },
     {
       "source": "/chapters/use-cases-configuration/pages/meeting recording",
@@ -370,6 +370,10 @@
         "api-reference/v2/transcription/get-audio",
         "api-reference/v2/transcription/delete"
       ]
+    },
+    {
+      "group": "Integration",
+      "pages": ["chapters/integration/recall-ai"]
     }
   ],
   "footerSocials": {
