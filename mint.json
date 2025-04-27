@@ -131,7 +131,11 @@
     },
     {
       "source": "/chapters/get-started/pages/integration-guides",
-      "destination": "/chapters/guides/integrations"
+      "destination": "/chapters/guides/integration"
+    },
+    {
+      "source": "/chapters/partners-integrations/pages/meeting-recorders/recall-ai",
+      "destination": "/chapters/partners-integrations/meeting-recorders/recall-ai"
     },
     {
       "source": "/chapters/use-cases-configuration/pages/meeting recording",
