@@ -377,7 +377,10 @@
     },
     {
       "group": "Integration",
-      "pages": ["chapters/integration/recall-ai"]
+      "pages": [
+        "chapters/partners-integrations/meeting-recorders/recall-ai",
+        "chapters/partners-integrations/meeting-recorders/meeting-baas"
+      ]
     }
   ],
   "footerSocials": {
