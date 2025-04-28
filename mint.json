@@ -134,6 +134,10 @@
       "destination": "/chapters/guides/integration"
     },
     {
+      "source": "/chapters/partners-integrations/pages/meeting-recorders/recall-ai",
+      "destination": "/chapters/partners-integrations/meeting-recorders/recall-ai"
+    },
+    {
       "source": "/chapters/use-cases-configuration/pages/meeting recording",
       "destination": "/chapters/guides/use-cases/meeting-recording"
     },
@@ -369,6 +373,13 @@
         "api-reference/v2/transcription/list",
         "api-reference/v2/transcription/get-audio",
         "api-reference/v2/transcription/delete"
+      ]
+    },
+    {
+      "group": "Integration",
+      "pages": [
+        "chapters/partners-integrations/meeting-recorders/recall-ai",
+        "chapters/partners-integrations/meeting-recorders/meeting-baas"
       ]
     }
   ],
