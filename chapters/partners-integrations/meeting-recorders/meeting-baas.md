@@ -38,7 +38,7 @@ curl -X POST "https://api.meetingbaas.com/bots/retranscribe" \
   -d '{
     "bot_uuid": "string",
     "speech_to_text": {
-      "api_key": "string",
+      "api_key": "<GLADIA_API_KEY>",
       "provider": "Gladia"
     },
     "webhook_url": "string"
