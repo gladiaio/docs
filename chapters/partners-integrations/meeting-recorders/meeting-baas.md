@@ -33,7 +33,7 @@ For existing recordings, you can use the Retranscribe Bot API to process audio w
 
 ```bash
 curl -X POST "https://api.meetingbaas.com/bots/retranscribe" \
-  -H "x-meeting-baas-api-key: <token>" \
+  -H "x-meeting-baas-api-key: <MEETING_BAAS_API_KEY>" \
   -H "Content-Type: application/json" \
   -d '{
     "bot_uuid": "string",
