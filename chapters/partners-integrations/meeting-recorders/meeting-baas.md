@@ -18,23 +18,6 @@ There are two main ways to use Gladia with Meeting BaaS:
 
 When creating a bot to join a meeting, you can specify Gladia as the speech-to-text provider:
 
-```bash
-#!/bin/bash
-API_KEY=$1
-MEETING_URL=$2
-curl -X POST "https://api.meetingbaas.com/bots" \
-     -H "Content-Type: application/json" \
-     -H "x-spoke-api-key: $API_KEY" \
-     -d '{
-           "meeting_url": "'"$MEETING_URL"'",
-           "reserved": false,
-           "bot_name": "My first bot",
-           "bot_image": "{FULL_URL_TO_YOUR_BRAND}.png",
-           "entry_message": "Hello. I will be recording this meeting 🐟.",
-           "speech_to_text": "Gladia",
-           "deduplication_key":"null"
-         }'
-```
 
 ### 2. Retranscribing with Gladia
 
