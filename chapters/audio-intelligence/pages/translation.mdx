@@ -56,17 +56,17 @@ The `translation` feature can be further customized using the `translation_confi
     *   When `false`, the translation might be more fluid or natural-sounding in the target language but could deviate from the original utterance segmentation.
 *   **Use Case:** Keep as `true` for most subtitling or dubbing use cases where alignment with original speech is crucial. Set to `false` if you prioritize a more natural flow in the translated text over strict temporal alignment.
 
-#### `lypsync` (Default: `true`)
+#### `lipsync` (Default: `true`)
 
 This option controls the behavior of the translation's alignment with visual cues, specifically lip movements.
 
-*   **How it works:** When `lypsync` is set to `true` (the default value), the translation process utilizes an advanced lip synchronization matching algorithm. This algorithm is designed to align the translated audio or subtitles with the speaker's lip movements by leveraging timestamps derived from lip activity.
+*   **How it works:** When `lipsync` is set to `true` (the default value), the translation process utilizes an advanced lip synchronization matching algorithm. This algorithm is designed to align the translated audio or subtitles with the speaker's lip movements by leveraging timestamps derived from lip activity.
 
 *   **Advantages:** The primary benefit is an improved synchronization between the translated output and the visual of the speaker. This can significantly enhance the viewing experience, especially for dubbed content or when precise visual timing with speech is important.
 
 *   **Potential Trade-off:** Due to its focus on matching lip movements, the algorithm might occasionally aggregate two distinct spoken words into a single "word" object within the translated output. This means that while the timing aligns well with the lips, the direct one-to-one correspondence between source words and translated words might sometimes be altered to achieve better visual sync.
 
-*   **When to disable:** If a strict, word-for-word translation format is an absolute requirement, and minor deviations for the sake of lip synchronization are not acceptable, you should set `lypsync` to `False`. This will instruct the system to prioritize literal word mapping over visual timing synchronization.
+*   **When to disable:** If a strict, word-for-word translation format is an absolute requirement, and minor deviations for the sake of lip synchronization are not acceptable, you should set `lipsync` to `False`. This will instruct the system to prioritize literal word mapping over visual timing synchronization.
 
 <Accordion icon="code" title="Sample code">
 
