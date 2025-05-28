@@ -68,9 +68,44 @@ This option controls the behavior of the translation's alignment with visual cue
 
 *   **When to disable:** If a strict, word-for-word translation format is an absolute requirement, and minor deviations for the sake of lip synchronization are not acceptable, you should set `lipsync` to `false`. This will instruct the system to prioritize literal word mapping over visual timing synchronization.
 
+#### `context_adaptation` (Default: `true`)
+
+*   **Description:** Enables or disables context-aware translation features that allow the model to adapt translations based on provided context and formality settings.
+*   **Default:** `true`.
+*   **Behavior:**
+    *   When `true`, the translation model can utilize contextual information and formality preferences to produce more accurate and appropriate translations.
+    *   When `false`, the translation will be performed without context adaptation, using only the source content for translation decisions.
+*   **Use Case:** Keep as `true` for most use cases to benefit from enhanced translation quality. Set to `false` only if you need purely literal translations without any contextual adjustments.
+
+When `context_adaptation` is enabled, you can use the following additional parameters:
+
+##### `context` (Default: `""`)
+
+*   **Description:** Provides additional context to improve translation quality and accuracy. This string parameter allows you to supply contextual information about the content being translated.
+*   **Default:** `""` (empty string).
+*   **Behavior:** When provided, the translation model uses this context to better understand domain-specific terminology, proper nouns, or situational context that might influence the translation choices.
+*   **Use Case:** Particularly useful for:
+    *   Technical content where specific terminology is important
+    *   Content with ambiguous terms that could be translated differently based on context
+    *   Providing background information about speakers, topics, or settings
+*   **Example:** For a medical conversation, you might set `context: "Medical consultation between doctor and patient discussing cardiology"`.
+
+##### `informal` (Default: `false`)
+
+*   **Description:** Forces the translation to use informal language forms when available in the target language.
+*   **Default:** `false`.
+*   **Behavior:**
+    *   When `true`, the translation will use informal pronouns, verb conjugations, and speech patterns appropriate for casual conversation.
+    *   When `false`, the translation will default to formal or neutral language forms.
+*   **Use Case:** Essential for:
+    *   Casual conversations or social media content
+    *   Content targeting younger audiences
+    *   Maintaining the tone of informal source material
+*   **Language Note:** This parameter is particularly relevant for languages with formal/informal distinctions (e.g., French "tu/vous", German "du/Sie", Spanish "tú/usted", ducth:"U/jij").
+
 <Accordion icon="code" title="Sample code">
 
-In the following examples, we're using `base` model.
+In the following examples, we're using `base` model with additional context and informal settings.
 
 <CodeGroup>
 ```typescript TypeScript
@@ -104,7 +139,10 @@ async function startTranscription() {
     translation: true,
     translation_config: {
       target_languages: [ "fr", "es"],
-      model: "base" // "enhanced" is slower but of better quality
+      model: "base", // "enhanced" is slower but of better quality
+      context_adaptation: true, // Enable context-aware translation
+      context: "This is a medical transcription",
+      informal: true // Use informal language in translations
     }
   };
   const gladiaUrl = "https://api.gladia.io/v2/pre-recorded/";
@@ -145,11 +183,13 @@ def make_fetch_request(url, headers, method='GET', data=None):
 gladia_key = "YOUR_GLADIA_API_KEY"
 request_data = {
     "audio_url": "YOUR_AUDIO_URL",
-    "translation": True
-    "translation_config":
-    {
-      "target_languages": ['fr', 'es'],
-      "model": "base" ## "enhanced" is slower but of better quality
+    "translation": True,
+    "translation_config": {
+        "target_languages": ['fr', 'es'],
+        "model": "base",  # "enhanced" is slower but of better quality
+        "context_adaptation": True,  # Enable context-aware translation
+        "context": "This is a medical transcription.",
+        "informal": True  # Force the informal language in translations
     }
 }
 gladia_url = "https://api.gladia.io/v2/pre-recorded/"

@@ -101,7 +101,12 @@ In V2, we addressed this by decomposing the process in multiple steps, and have 
         "translation": true,
         "translation_config": {
           "model": "base",
-          "target_languages": ["fr", "en"]
+          "target_languages": ["fr", "en"],
+          "match_original_utterances": true,
+          "lipsync": true,
+          "context_adaptation": true,
+          "context": "Technical discussion about software development",
+          "informal": false
         },
         "subtitles": true,
         "subtitles_config": {
