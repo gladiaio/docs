@@ -103,11 +103,23 @@ This feature allows you to get both the original transcription and its translati
   "realtime_processing": {
     "translation": true,
     "translation_config": {
-      "target_languages": ["fr", "es"]  // Translate to French and Spanish
+      "target_languages": ["fr", "es"],  // Translate to French and Spanish
+      "model": "base",                    // "base" or "enhanced"
+      "context_adaptation": true,         // Enable context-aware translation
+      "context": "Technical support call about software issues",
+      "informal": false                   // Use formal language
     }
   }
 }
 ```
+
+### Translation Configuration Options:
+
+- **`target_languages`**: Array of language codes for translation outputs (e.g., `["fr", "es"]`)
+- **`model`**: Translation model - `"base"` (fast) or `"enhanced"` (higher quality, context-aware)
+- **`context_adaptation`**: Boolean to enable/disable context-aware translation features (default: `true`)
+- **`context`**: String providing context to improve translation accuracy (default: `""`)
+- **`informal`**: Boolean to force informal language forms when available (default: `false`)
 
 With this feature enabled, you'll receive a [`translation` message](/api-reference/v2/live/message/translation) for each [`transcript` message](/api-reference/v2/live/message/transcript) and target language.
 
