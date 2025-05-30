@@ -191,7 +191,6 @@
         "chapters/audio-intelligence/pages/summarization",
         "chapters/audio-intelligence/pages/named entity recognition",
         "chapters/audio-intelligence/pages/sentiment analysis",
-        "chapters/audio-intelligence/pages/moderation",
         "chapters/audio-intelligence/pages/chapterization",
         "chapters/audio-intelligence/pages/audio to llm"
       ]
