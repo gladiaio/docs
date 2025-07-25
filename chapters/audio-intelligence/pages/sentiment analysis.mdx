@@ -3,13 +3,6 @@ title: Sentiment and Emotion Analysis
 description: "Extract sentiments and emotions from the transcript."
 ---
 
-<Note>
-This feature is in **Alpha** state.<br/>
-Breaking changes may still be introduced to this API, but an advanced notice will be sent. 
-
-We're looking for feedback to improve this feature, [share yours here](https://gladiaio.typeform.com/feedback?typeform-source=app.gladia.io).
-</Note>
-
 The sentiment and emotion analysis model analyzes the transcript, detecting the general sentiment which is conveyed in each sentence (positive, neutral or negative) as well as any emotion that is being expressed.
 
 ## Usage
@@ -102,7 +95,8 @@ headers = {
 
 print("- Sending initial request to Gladia API...")
 initial_response = make_fetch_request(
-    gladia_url, headers, 'POST', request_data)
+    gladia_url, headers, 'POST', request_data
+)
 
 print("Initial response with Transcription ID:", initial_response)
 result_url = initial_response.get("result_url")
@@ -130,7 +124,7 @@ if result_url:
 
 Your transcription result will contain a `sentiment_analysis` key which will contain an array of all sentences in the audio, and for each one the conveyed sentiment and expressed emotion. See possible values below.
 <Tip>
-When `diarization` is enabled, the sentiment analysis output will contain the `speaker`  as well, allowing you to analyze each speaker sperately.
+When `diarization` is enabled, the sentiment analysis output will contain the `speaker` as well, allowing you to analyze each speaker separately.
 </Tip>
 ```json result
 {
@@ -172,6 +166,7 @@ When `diarization` is enabled, the sentiment analysis output will contain the `s
   - negative
   - neutral
   - mixed
+  - unknown
 
 ### Emotions
   - adoration
