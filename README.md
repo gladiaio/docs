@@ -2,7 +2,6 @@
 
 Welcome to [Gladia Documentation](https://docs.gladia.io)
 
-
 ### Installing dependencies
 
 ```bash
@@ -36,12 +35,6 @@ npm i -g mintlify
 ##### Other common issues
 
 - Mintlify dev isn't running - Run `mintlify install` it'll re-install dependencies.
-- Page loads as a 404 - Make sure you are running in a folder with `mint.json`
+- Page loads as a 404 - Make sure you are running in a folder with `docs.json`
 - Openapi.json not taken in account in API Reference, stop and relaunch server
-- 'Error: Could not load the "sharp" module using the darwin-arm64 runtime':
-
-```bash
-  npm uninstall -g mintlify
-  npm update -g
-  npm i -g mintlify
-```
+- 'Error: Could not load the "sharp" module using the darwin-arm64 runtime' => See [here](https://mintlify.com/docs/installation#error-could-not-load-the-sharp-module-using-the-darwin-arm64-runtime)

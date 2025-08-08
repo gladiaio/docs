@@ -1,0 +1,25 @@
+name: Security
+
+on:
+  pull_request:
+    paths-ignore:
+      - ".github/**"
+
+concurrency:
+  group: "${{ github.workflow }} @ ${{ github.head_ref || github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  security:
+    name: Security check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+      - name: Audit for vulnerabilities
+        run: npx audit-ci@^7 --config ./audit-ci.jsonc
