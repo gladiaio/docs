@@ -137,7 +137,7 @@ Gladia's real-time API will automatically split the channels and transcribe them
 For each utterance, you'll get a `channel` key corresponding to the channel the utterance came from.
 
 <Warning>
-  Transcribing an audio stream with multiple channels will be billed exponentially. For example, an audio stream with 2 channels will be billed as double the audio duration, even if the channels are identical.
+  Transcribing an audio stream with multiple channels is billed per channel. For example, an audio stream with 2 channels will be billed as double the audio duration, even if the channels are identical.
 </Warning>
 
 <Note>
