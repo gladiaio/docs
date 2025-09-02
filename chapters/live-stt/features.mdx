@@ -50,14 +50,14 @@ Under each utterance, you'll find a `words` property, like this:
 
 ## Partial transcripts
 
-Partial transcripts provide a word-by-word streaming transcription as words are spoken, offering immediate insights before the final, high-accuracy transcript is ready. [c] While these intermediate results are subject to change, they are essential for use cases like Voice AI Agents where low latency is critical.
+Partial transcripts provide a low-latency streaming transcription as words are spoken, offering immediate insights before the final, high-accuracy transcript is ready. While these intermediate results are subject to change, they are essential for use cases like Voice AI Agents where low latency is critical.
 
-By processing partial transcripts as they arrive, a voice agent can understand user intent faster—often from the first few words (e.g., "Stop, this is not...")—and begin generating a response more quickly. [c] This significantly reduces the total response time and creates a more fluid user experience. [c] To achieve this speed, partial transcripts use a faster, smaller model than the one used for final transcripts, trading a small amount of accuracy for a large gain in latency. [k]
-Configuration
+By processing partial transcripts as they arrive, a voice agent can understand user intent faster—often from the first few words (e.g., "Stop, this is not...") and begin generating a response more quickly. 
+This significantly reduces the total response time and creates a more fluid user experience. 
+To achieve this speed, partial transcripts use a faster, smaller model than the one used for final transcripts, trading a small amount of accuracy for a large gain in latency.
 
-Partial transcripts are not returned by default. To enable them, you must add the receive_partial_transcripts property to the messages_config object in your request.
 
-Here is an example of a configuration with partial transcripts enabled:
+To enable the partial transcripts, you must add the `receive_partial_transcripts` property to the `messages_config` object in your request.
 
 ```json
 {
@@ -77,15 +77,15 @@ Here is an example of a configuration with partial transcripts enabled:
 ```
   
 With this configuration, you will receive both the partial transcripts as they are generated and the final, most accurate version of each utterance.
-Transcript Message
 
-When you set receive_partial_transcripts to true, the real-time API will send transcript messages for both intermediate and final results. To distinguish between them, the message payload includes the is_final boolean field.
+When you set `receive_partial_transcripts` to `true`, the real-time API will send transcript messages for both intermediate and final results. 
+To distinguish between them, the message payload includes the [`is_final`](https://docs.gladia.io/api-reference/v2/live/message/transcript#schema-data-is-final) boolean field.
 
 - `"is_final": false`: The message contains a partial transcript, which is subject to change.
 
 - `"is_final": true`: The message contains the final, most accurate transcript for an utterance. This transcript will not change.
 
-For a detailed breakdown of the API response, please consult the Transcript Message API Reference.
+<Note>We recommend limiting the number of languages when using partials, as the minimal audio context makes language detection more sensitive.</Note>
 
 ## Custom vocabulary
 
