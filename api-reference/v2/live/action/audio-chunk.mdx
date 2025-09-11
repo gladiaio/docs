@@ -1,4 +1,36 @@
 ---
 title: Audio chunk
-description: Payload definition for sending an audio chunk in JSON format. You can also send it as binary directly.
+description: Payload definition for sending an audio chunk.
 ---
+
+Send raw audio to your live transcription session over WebSocket. You can stream audio either as binary frames or as JSON messages containing a base64-encoded chunk.
+
+## Send audio chunks
+
+There are two ways to stream audio:
+
+1. As binary WebSocket frames:
+
+```ts
+// `buffer` is a Node.js Buffer / Uint8Array with raw audio bytes
+socket.send(buffer);
+```
+
+2. As JSON, base64-encoding the audio chunk
+
+```ts
+socket.send(
+	JSON.stringify({
+		type: "audio_chunk",
+		data: {
+			chunk: buffer.toString("base64"),
+		},
+	})
+);
+```
+
+## Tips
+
+-   Keep chunks reasonably sized (≃ 100ms) and consecutive for low latency.
+-   Make sure your chunks are contiguous audio frames with the same format as configured during session initiation.
+-   On recoverable disconnects, reconnect using the same `url` to continue streaming.
