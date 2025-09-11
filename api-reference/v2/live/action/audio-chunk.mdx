@@ -1,9 +1,9 @@
 ---
-title: Audio chunk
-description: Payload definition for sending an audio chunk.
+title: "Audio chunk"
+description: "Payload definition for sending an audio chunk."
 ---
 
-Send raw audio to your live transcription session over WebSocket. You can stream audio either as binary frames or as JSON messages containing a base64-encoded chunk.
+When streaming audio to Gladia API, you can stream it either as binary frames or as JSON messages containing a base64-encoded chunk.
 
 ## Send audio chunks
 
@@ -31,6 +31,6 @@ socket.send(
 
 ## Tips
 
--   Keep chunks reasonably sized (≃ 100ms) and consecutive for low latency.
--   Make sure your chunks are contiguous audio frames with the same format as configured during session initiation.
--   On recoverable disconnects, reconnect using the same `url` to continue streaming.
+- Keep chunks reasonably sized (≃ 100ms) and consecutive for low latency.
+- Make sure your chunks are contiguous audio frames with the same format as configured during session initiation.
+- On recoverable disconnects, reconnect using the same `url` to continue streaming.
