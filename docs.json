@@ -17,7 +17,7 @@
     "default": "system",
     "strict": false
   },
-  "favicon": "/assets/images/logos/black-bg-white-icon.svg",
+  "favicon": "/assets/icons/favicon.svg",
   "navigation": {
     "anchors": [
       {
@@ -430,6 +430,22 @@
     {
       "source": "/chapters/speech-to-text-api/pages/live-speech-recognition",
       "destination": "/chapters/live-stt/migration-from-v1"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/",
+      "destination": "/chapters/pre-recorded-stt/quickstart"
+    },
+    {
+      "source": "/chapters/live-stt/",
+      "destination": "/chapters/live-stt/quickstart"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/getting-started",
+      "destination": "/chapters/pre-recorded-stt/quickstart"
+    },
+    {
+      "source": "/chapters/live-stt/getting-started",
+      "destination": "/chapters/live-stt/quickstart"
     }
   ]
 }
