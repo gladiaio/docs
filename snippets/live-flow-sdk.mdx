@@ -4,11 +4,11 @@ import Samples from '/snippets/samples.mdx';
 
 <CodeGroup>
 
-```sh JavaScript SDK
+```sh JavaScript
 npm install @gladiaio/sdk
 ```
 
-```sh Python SDK
+```sh Python
 # Coming soon
 ```
 
@@ -16,11 +16,11 @@ npm install @gladiaio/sdk
 
 <CodeGroup>
 
-```javascript JavaScript SDK
+```javascript JavaScript
 import { GladiaClient } from "@gladiaio/sdk";
 ```
 
-```python Python SDK
+```python Python
 # Coming soon
 ```
 
@@ -33,7 +33,7 @@ It's important to correctly define the properties `encoding`, `sample_rate`, `bi
 
 <CodeGroup>
 
-```typescript JavaScript SDK
+```typescript JavaScript
 const gladiaClient = new GladiaClient({
   apiKey: <YOUR_GLADIA_API_KEY>,
 });
@@ -53,7 +53,7 @@ const gladiaConfig = {
 const liveSession = gladiaClient.liveV2().startSession(gladiaConfig);
 ```
 
-```python Python SDK
+```python Python
 # Coming soon
 ```
 
@@ -66,7 +66,7 @@ Now that you've initiated the session and have the URL, you can connect to the W
 
 <CodeGroup>
 
-```typescript JavaScript SDK
+```typescript JavaScript
 liveSession.on("message", (message) => {
   // Handle messages from the API
 });
@@ -81,7 +81,7 @@ liveSession.on("error", (message) => {
 });
 ```
 
-```python Python SDK
+```python Python
   # Coming soon
 ```
 
@@ -94,11 +94,11 @@ You can now start sending us your audio chunks through the WebSocket:
 <CodeGroup>
 
 
-```typescript JavaScript SDK
+```typescript JavaScript
 liveSession.sendAudio(buffer)
 ```
 
-```python Python SDK
+```python Python
 # Coming soon
 ```
 
@@ -111,14 +111,14 @@ Here's an example of how to read a [`transcript`](/api-reference/v2/live/message
 
 <CodeGroup>
 
-```javascript JavaScript SDK
+```javascript JavaScript
 liveSession.on("message", (message) => {
   if (message.type === 'transcript' && message.data.is_final) {
     console.log(`${message.data.id}: ${message.data.utterance.text}`)
 });
 ```
 
-```python Python SDK
+```python Python
 # Coming soon
 ```
 </CodeGroup>
@@ -132,11 +132,11 @@ You'll receive a message at every step of the process in the WebSocket, or in th
 <CodeGroup>
 
 
-```javascript JavaScript SDK
+```javascript JavaScript
 liveSession.stopRecording()
 ```
 
-```python Python SDK
+```python Python
 # Coming soon
 ```
 
