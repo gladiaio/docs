@@ -98,10 +98,8 @@
           {
             "group": "API Documentation",
             "pages": [
-              "api-reference/introduction",
-              "api-reference/authentication",
-              "api-reference/pre-recorded-flow",
-              "api-reference/live-flow"
+              "api-reference/index",
+              "api-reference/authentication"
             ]
           },
           {
