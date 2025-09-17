@@ -257,21 +257,6 @@
             ]
           }
         ]
-      },
-      {
-        "anchor": "Support",
-        "href": "https://support.gladia.io/",
-        "icon": "comment-question"
-      },
-      {
-        "anchor": "Community",
-        "href": "https://discord.gg/T22a4ETUQp",
-        "icon": "discord"
-      },
-      {
-        "anchor": "Blog",
-        "href": "https://www.gladia.io/blog",
-        "icon": "newspaper"
       }
     ]
   },
@@ -293,16 +278,32 @@
     }
   },
   "navbar": {
+    "primary": {
+      "label": "Try Gladia",
+      "type": "button",
+      "href": "https://app.gladia.io/"
+    },
     "links": [
       {
-        "label": "Try Gladia",
-        "href": "https://app.gladia.io/auth/signin",
-        "icon": "rocket"
+        "label": "Support",
+        "href": "https://support.gladia.io/",
+        "icon": "comment-question"
+      },
+      {
+        "label": "Community",
+        "href": "https://discord.gg/T22a4ETUQp",
+        "icon": "discord"
+      },
+      {
+        "label": "Blog",
+        "href": "https://www.gladia.io/blog",
+        "icon": "newspaper"
       }
     ]
   },
   "seo": {
-    "indexing": "navigable"  },
+    "indexing": "navigable"
+  },
   "footer": {
     "socials": {
       "twitter": "https://twitter.com/gladia_io",
