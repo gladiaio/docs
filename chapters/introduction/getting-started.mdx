@@ -15,7 +15,7 @@ audio transcription.
 
 <Steps>
   <Step title="Select your audio source">
-    Choose your audio source (using an audio link, or upload a local file)
+    Choose your audio source (stream from you microphone, or upload a local file)
 
     <Frame>
       <img src="/assets/images/playground-1.png" />
@@ -26,12 +26,12 @@ audio transcription.
 
   <Step title="Select features">
     You'll be able to select <Tooltip tip="If you want to see a complete list of the features Gladia's API provide check the Features section">some of
-    the options</Tooltip> Gladia API provide for your transcription.
-    For this example, we want to detect the speakers, so we turned on **diarization**.
+    the options</Tooltip> Gladia API provide for your transcription. \
+    For this example, we want to detect the named entity (like email adresses, phone numbers, etc.), so we turned on **named entity recognition**.
 
     <Note>
       Only a few features of Gladia API are available on the playground. For more advanced testing,
-      check [our API documentation](/api-reference/) instead.
+      check [our API documentation](/api-reference/introduction/) instead.
     </Note>
 
     <Frame>
@@ -39,12 +39,22 @@ audio transcription.
     </Frame>
   </Step>
 
-  <Step title="Transcribe">
-    You can see an already formatted and readable results in the default "Transcription" tab, and you'll also find
-    the result in various format (plain text, SRT, VTT) and JSON (the one you’d get with an API call).
-
+  <Step title="Talk to Gladia">
+    You can talk to Gladia by clicking on the "Start transcribing" button, and you'll be able to see the transcription of your voice in the "Transcription" tab.
+    <Note>
+      Text in italic in the transcription represents [partials transcripts](/chapters/live-stt/features#partial-transcripts).
+    </Note>
     <Frame>
       <img src="/assets/images/playground-3.png" />
+    </Frame>
+  </Step>
+
+  <Step title="Transcribe">
+    You can see an already formatted and readable results in the default "Transcription" tab, and you'll also find
+    the result in JSON format (the one you'd get with an API call).
+
+    <Frame>
+      <img src="/assets/images/playground-4.png" />
     </Frame>
   </Step>
 </Steps>
