@@ -142,19 +142,6 @@ liveSession.stopRecording()
 
 </CodeGroup>
 
-<Note>
-  Instead of sending the `stop_recording` message, you can also close the WebSocket with the code 1000.
-  We will still do the post-processing in background and send you the messages through the callback you defined.
-
-  <CodeGroup>
-
-  ```javascript JavaScript
-  socket.close(1000);
-  ```
-
-  </CodeGroup>
-</Note>
-
 ## Get the final results
 
 If you want to get the complete result, you can call the [`GET /v2/live/:id` endpoint](/api-reference/v2/live/get) with the `id` you received from the initial request.
