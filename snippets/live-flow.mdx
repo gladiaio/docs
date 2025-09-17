@@ -8,27 +8,27 @@ It's important to correctly define the properties `encoding`, `sample_rate`, `bi
 <CodeGroup>
 
 ```javascript JavaScript
-  const response = await fetch('https://api.gladia.io/v2/live', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Gladia-Key': '<YOUR_GLADIA_API_KEY>',
-    },
-    body: JSON.stringify({
-      encoding: 'wav/pcm',
-      sample_rate: 16000,
-      bit_depth: 16,
-      channels: 1,
-    }),
-  });
-  if (!response.ok) {
-    // Look at the error message
-    // It might be a configuration issue
-    console.error(`${response.status}: ${(await response.text()) || response.statusText}`);
-    process.exit(response.status);
-  }
+const response = await fetch('https://api.gladia.io/v2/live', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-Gladia-Key': '<YOUR_GLADIA_API_KEY>',
+  },
+  body: JSON.stringify({
+    encoding: 'wav/pcm',
+    sample_rate: 16000,
+    bit_depth: 16,
+    channels: 1,
+  }),
+});
+if (!response.ok) {
+  // Look at the error message
+  // It might be a configuration issue
+  console.error(`${response.status}: ${(await response.text()) || response.statusText}`);
+  process.exit(response.status);
+}
 
-  const {id, url} = await response.json();
+const {id, url} = await response.json();
 ```
 
 
@@ -64,30 +64,30 @@ Now that you've initiated the session and have the URL, you can connect to the W
 <CodeGroup>
 
 ```javascript JavaScript
-  import WebSocket from "ws";
+import WebSocket from "ws";
 
-  const socket = new WebSocket(url);
+const socket = new WebSocket(url);
 
-  socket.addEventListener("open", function() {
-    // Connection is opened. You can start sending audio chunks.
-  });
+socket.addEventListener("open", function() {
+  // Connection is opened. You can start sending audio chunks.
+});
 
-  socket.addEventListener("error", function(error) {
-    // An error occurred during the connection.
-    // Check the error to understand why
-  });
+socket.addEventListener("error", function(error) {
+  // An error occurred during the connection.
+  // Check the error to understand why
+});
 
-  socket.addEventListener("close", function({code, reason}) {
-    // The connection has been closed
-    // If the "code" is equal to 1000, it means we closed intentionally the connection (after the end of the session for example).
-    // Otherwise, you can reconnect to the same url.
-  });
+socket.addEventListener("close", function({code, reason}) {
+  // The connection has been closed
+  // If the "code" is equal to 1000, it means we closed intentionally the connection (after the end of the session for example).
+  // Otherwise, you can reconnect to the same url.
+});
 
-  socket.addEventListener("message", function(event) {
-    // All the messages we are sending are in JSON format
-    const message = JSON.parse(event.data.toString());
-    console.log(message);
-  });
+socket.addEventListener("message", function(event) {
+  // All the messages we are sending are in JSON format
+  const message = JSON.parse(event.data.toString());
+  console.log(message);
+});
 ```
 
 </CodeGroup>
@@ -99,16 +99,16 @@ You can now start sending us your audio chunks through the WebSocket. You can se
 <CodeGroup>
 
 ```javascript JavaScript
-  // as binary
-  socket.send(buffer);
+// as binary
+socket.send(buffer);
 
-  // as json
-  socket.send(JSON.stringify({
-    type: 'audio_chunk',
-    data: {
-      chunk: buffer.toString("base64"),
-    },
-  }));
+// as json
+socket.send(JSON.stringify({
+  type: 'audio_chunk',
+  data: {
+    chunk: buffer.toString("base64"),
+  },
+}));
 ```
 
 </CodeGroup>
@@ -120,13 +120,13 @@ Here's an example of how to read a [`transcript`](/api-reference/v2/live/message
 
 <CodeGroup>
 ```javascript JavaScript
-  socket.addEventListener("message", function(event) {
-    // All the messages we are sending are in JSON format
-    const message = JSON.parse(event.data.toString());
-    if (message.type === 'transcript' && message.data.is_final) {
-      console.log(`${message.data.id}: ${message.data.utterance.text}`)
-    }
-  });
+socket.addEventListener("message", function(event) {
+  // All the messages we are sending are in JSON format
+  const message = JSON.parse(event.data.toString());
+  if (message.type === 'transcript' && message.data.is_final) {
+    console.log(`${message.data.id}: ${message.data.utterance.text}`)
+  }
+});
 ```
 </CodeGroup>
 ## Sending multiple audio tracks in real-time
@@ -151,31 +151,31 @@ To combine multiple audio tracks into a single multi-channel stream, you need to
 <CodeGroup>
 
 ```typescript TypeScript
-  export function interleaveAudio(
-    channelsData: Buffer[],
-    bitDepth = 16,
-  ): Buffer {
-    const nbChannels = channelsData.length;
-    if (nbChannels === 1) {
-      return channelsData[0];
-    }
-
-    const bytesPerSample = bitDepth / 8;
-    const samplesPerChannel = channelsData[0].byteLength / bytesPerSample;
-    const audio = Buffer.alloc(nbChannels * samplesPerChannel * bytesPerSample);
-
-    for (let i = 0; i < samplesPerChannel; i++) {
-      for (let j = 0; j < nbChannels; j++) {
-        const sample = channelsData[j].subarray(
-          i * bytesPerSample,
-          (i + 1) * bytesPerSample,
-        );
-        audio.set(sample, (i * nbChannels + j) * bytesPerSample);
-      }
-    }
-
-    return audio;
+export function interleaveAudio(
+  channelsData: Buffer[],
+  bitDepth = 16,
+): Buffer {
+  const nbChannels = channelsData.length;
+  if (nbChannels === 1) {
+    return channelsData[0];
   }
+
+  const bytesPerSample = bitDepth / 8;
+  const samplesPerChannel = channelsData[0].byteLength / bytesPerSample;
+  const audio = Buffer.alloc(nbChannels * samplesPerChannel * bytesPerSample);
+
+  for (let i = 0; i < samplesPerChannel; i++) {
+    for (let j = 0; j < nbChannels; j++) {
+      const sample = channelsData[j].subarray(
+        i * bytesPerSample,
+        (i + 1) * bytesPerSample,
+      );
+      audio.set(sample, (i * nbChannels + j) * bytesPerSample);
+    }
+  }
+
+  return audio;
+}
 ```
 
 </CodeGroup>
@@ -192,38 +192,38 @@ Consider a scenario with three participants in a room: Sami, Maxime, and Mark. I
 <CodeGroup>
 
 ```typescript TypeScript
-  // Collect audio buffers from each participant
-  const samiAudio = getSamiAudioBuffer();
-  const maximeAudio = getMaximeAudioBuffer();
-  const markAudio = getMarkAudioBuffer();
-  
-  // Merge into a multi-channel audio
-  // Channel ordering: [0]=Sami, [1]=Maxime, [2]=Mark
-  const channelsData = [samiAudio, maximeAudio, markAudio];
-  const mergedAudio = interleaveAudio(channelsData, 16); // 16-bit depth
-  
-  // Initialize a single WebSocket session with multi-channel config
-  const response = await fetch('https://api.gladia.io/v2/live', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Gladia-Key': '<YOUR_GLADIA_API_KEY>',
-    },
-    body: JSON.stringify({
-      encoding: 'wav/pcm',
-      sample_rate: 16000,
-      bit_depth: 16,
-      channels: 3, // Specify the number of channels
-    }),
-  });
-  
-  const {url} = await response.json();
-  const socket = new WebSocket(url);
-  
-  // Send the merged audio over a single WebSocket
-  socket.addEventListener("open", function() {
-    socket.send(mergedAudio);
-  });
+// Collect audio buffers from each participant
+const samiAudio = getSamiAudioBuffer();
+const maximeAudio = getMaximeAudioBuffer();
+const markAudio = getMarkAudioBuffer();
+
+// Merge into a multi-channel audio
+// Channel ordering: [0]=Sami, [1]=Maxime, [2]=Mark
+const channelsData = [samiAudio, maximeAudio, markAudio];
+const mergedAudio = interleaveAudio(channelsData, 16); // 16-bit depth
+
+// Initialize a single WebSocket session with multi-channel config
+const response = await fetch('https://api.gladia.io/v2/live', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-Gladia-Key': '<YOUR_GLADIA_API_KEY>',
+  },
+  body: JSON.stringify({
+    encoding: 'wav/pcm',
+    sample_rate: 16000,
+    bit_depth: 16,
+    channels: 3, // Specify the number of channels
+  }),
+});
+
+const {url} = await response.json();
+const socket = new WebSocket(url);
+
+// Send the merged audio over a single WebSocket
+socket.addEventListener("open", function() {
+  socket.send(mergedAudio);
+});
 ```
 
 </CodeGroup>
@@ -309,13 +309,13 @@ Here's an example of how to read a  message received through a WebSocket:
 <CodeGroup>
 
 ```javascript JavaScript
-  socket.addEventListener("message", function(event) {
-    // All the messages we are sending are in JSON format
-    const message = JSON.parse(event.data.toString());
-    if (message.type === 'transcript' && message.data.is_final) {
-      console.log(`${message.data.id}: ${message.data.utterance.text}`)
-    }
-  });
+socket.addEventListener("message", function(event) {
+  // All the messages we are sending are in JSON format
+  const message = JSON.parse(event.data.toString());
+  if (message.type === 'transcript' && message.data.is_final) {
+    console.log(`${message.data.id}: ${message.data.utterance.text}`)
+  }
+});
 ```
 
 </CodeGroup>
@@ -329,9 +329,9 @@ You'll receive a message at every step of the process in the WebSocket, or in th
 <CodeGroup>
 
 ```javascript JavaScript
-  socket.send(JSON.stringify({
-    type: "stop_recording",
-  }));
+socket.send(JSON.stringify({
+  type: "stop_recording",
+}));
 ```
 
 </CodeGroup>
@@ -356,21 +356,21 @@ If you want to get the complete result, you can call the [`GET /v2/live/:id` end
 <CodeGroup>
 
 ```javascript JavaScript
-  const response = await fetch(`https://api.gladia.io/v2/live/${id}`, {
-    method: 'GET',
-    headers: {
-      'X-Gladia-Key': '<YOUR_GLADIA_API_KEY>',
-    },
-  });
-  if (!response.ok) {
-    // Look at the error message
-    // It might be a configuration issue
-    console.error(`${response.status}: ${(await response.text()) || response.statusText}`)
-    return;
-  }
+const response = await fetch(`https://api.gladia.io/v2/live/${id}`, {
+  method: 'GET',
+  headers: {
+    'X-Gladia-Key': '<YOUR_GLADIA_API_KEY>',
+  },
+});
+if (!response.ok) {
+  // Look at the error message
+  // It might be a configuration issue
+  console.error(`${response.status}: ${(await response.text()) || response.statusText}`)
+  return;
+}
 
-  const result = await response.json();
-  console.log(result)
+const result = await response.json();
+console.log(result)
 ```
 
 
@@ -381,5 +381,3 @@ curl --request GET \
 ```
 
 </CodeGroup>
-
-<Samples />

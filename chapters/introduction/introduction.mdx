@@ -1,32 +1,32 @@
 ---
 title: Welcome to Gladia
 description: "The most reliable state-of-the-art Speech to Text API provider"
+mode: "center"
 ---
+import SttCards from '/snippets/stt-cards.mdx';
+
+<img 
+  className="block dark:hidden rounded-lg" 
+  noZoom
+  height="10"
+  src="/assets/dark-banner.png" 
+/>
+<img 
+  className="hidden dark:block rounded-lg" 
+  noZoom
+  src="/assets/light-banner.png"
+/>
+
+
 
 Gladia is a state-of-the-art audio transcription and intelligence provider. We offer a simple API to get transcription from your audios and videos,
 in both Real-time and asynchronous ways, with audio intelligence tools to extract, analyze and understand data from your audios.
 
-<Frame>
-  <img src='/assets/images/gladia-cover.png'/>
-</Frame>
-## Getting started
 
-<CardGroup cols={2}>
-  <Card
-    title="Setup your account"
-    icon="gear"
-    href="/chapters/introduction/getting-started#setup-your-account"
-  >
-    Setup your account quickly and get your API key.
-  </Card>
-  <Card
-    title="Transcribe an audio file"
-    icon="microphone-lines"
-    href="/chapters/introduction/getting-started#gladias-playground"
-  >
-    Get your first audio transcribed in less than a minute.
-  </Card>
-  <Card
+
+<CardGroup cols={3}>
+  <SttCards />
+    <Card
     title="Apply audio intelligence"
     icon="magnifying-glass-chart"
     href="/chapters/audio-intelligence/"
@@ -34,13 +34,51 @@ in both Real-time and asynchronous ways, with audio intelligence tools to extrac
     Use the power of LLMs directly on your audios without a third party service.
   </Card>
   <Card
+    title="Setup your account"
+    icon="gear"
+    href="/chapters/introduction/getting-started#setup-your-account"
+  >
+    Setup your account quickly and get your API key.
+  </Card>
+    <Card
+    title="Test gladia playground"
+    icon="list-music"
+    href="https://app.gladia.io/"
+    arrow={false}
+  >
+    Test gladia quickly on our playground.
+  </Card>
+    <Card
     title="Using Gladia API?"
     icon="code"
-    href="/api-reference/"
+    href="/api-reference/introduction/"
   >
     Visit our technical documentation for more details.
   </Card>
+
 </CardGroup>
 
+# SDKs
 
-<br/>
+<CardGroup cols={2}>
+  <Card
+    title="Javascript SDK"
+    icon="square-js"
+    horizontal={true}
+    href="https://www.npmjs.com/package/@gladiaio/sdk"
+  >
+  {}
+  </Card>
+  <Card
+    title="Python SDK"
+    icon="python"
+    horizontal={true}
+    arrow={true}
+    href="#"
+  >
+    _Coming soon_
+  </Card>
+
+</CardGroup>
+
+-----

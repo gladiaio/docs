@@ -1,11 +1,21 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "almond",
   "name": "Gladia",
+  "description": "Gladia is a state-of-the-art audio transcription and intelligence provider. We offer a simple API to get transcription from your audios and videos, in both Real-time and asynchronous ways, with audio intelligence tools to extract, analyze and understand data from your audios.",
   "colors": {
-    "primary": "#1065fe",
-    "light": "#1065fe",
-    "dark": "#1065fe"
+    "primary": "#2e343e",
+    "light": "#FFFFFF",
+    "dark": "#2e343e"
+  },
+  "styling": {
+    "eyebrows": "breadcrumbs",
+    "codeblocks": "system"
+  },
+  "fonts": { "family": "Inter" },
+  "appearance": {
+    "default": "system",
+    "strict": false
   },
   "favicon": "/assets/images/logos/black-bg-white-icon.svg",
   "navigation": {
@@ -23,20 +33,25 @@
             ]
           },
           {
-            "group": "Asynchronous Speech-to-Text",
+            "group": "Speech-to-Text",
             "pages": [
-              "chapters/pre-recorded-stt/getting-started",
-              "chapters/pre-recorded-stt/features",
-              "chapters/pre-recorded-stt/speaker-diarization",
-              "chapters/pre-recorded-stt/migration-from-v1"
-            ]
-          },
-          {
-            "group": "Real-time Speech-to-Text",
-            "pages": [
-              "chapters/live-stt/getting-started",
-              "chapters/live-stt/features",
-              "chapters/live-stt/migration-from-v1"
+              {
+                "group": "Real-time Transcription",
+                "pages": [
+                  "chapters/live-stt/quickstart",
+                  "chapters/live-stt/features",
+                  "chapters/live-stt/migration-from-v1"
+                ]
+              },
+              {
+                "group": "Pre-recorded Transcription",
+                "pages": [
+                  "chapters/pre-recorded-stt/quickstart",
+                  "chapters/pre-recorded-stt/features",
+                  "chapters/pre-recorded-stt/speaker-diarization",
+                  "chapters/pre-recorded-stt/migration-from-v1"
+                ]
+              }
             ]
           },
           {
@@ -264,22 +279,26 @@
     "openapi": "https://api.gladia.io/openapi.json"
   },
   "background": {
-    "image": "/assets/images/background/lightbackground.png",
+    "image": {
+      "light": "/assets/images/background/lightbackground.png",
+      "dark": ""
+    },
     "color": {
-      "light": "#FAF7ED",
-      "dark": "#000000"
+      "light": "#FFFFFF",
+      "dark": "#15181d"
     }
   },
   "navbar": {
-    "primary": {
-      "type": "button",
-      "label": "Get Started",
-      "href": "https://app.gladia.io/auth/signin"
-    }
+    "links": [
+      {
+        "label": "Try Gladia",
+        "href": "https://app.gladia.io/auth/signin",
+        "icon": "rocket"
+      }
+    ]
   },
   "seo": {
-    "indexing": "navigable"
-  },
+    "indexing": "navigable"  },
   "footer": {
     "socials": {
       "twitter": "https://twitter.com/gladia_io",
