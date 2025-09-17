@@ -260,6 +260,11 @@
         ]
       },
       {
+        "anchor": "Support",
+        "href": "https://support.gladia.io/",
+        "icon": "comment-question"
+      },
+      {
         "anchor": "Community",
         "href": "https://discord.gg/T22a4ETUQp",
         "icon": "discord"
