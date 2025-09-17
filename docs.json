@@ -27,8 +27,7 @@
           {
             "group": "Introduction",
             "pages": [
-              "chapters/introduction/introduction",
-              "chapters/introduction/why-use-gladia",
+              "chapters/introduction/",
               "chapters/introduction/getting-started"
             ]
           },
