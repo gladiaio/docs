@@ -59,27 +59,57 @@ To enable translation, set `translation` to `true` on your request, and add a `t
 ```
 </CodeGroup>
 
-### translation_config options
+### Translation configuration fields
 
-| Option                      | Default | Description                                                                                             | Example                             |
-| --------------------------- | ------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------- |
-| `target_languages`          | —       | Target language codes. See [supported languages](/chapters/language/supported-languages).               | `["fr", "es"]`                      |
-| `model`                     | "base"  | The translation model to be used.                                                                       | `"base"`                            |
-| `match_original_utterances` | true    | Keep translated utterances aligned with the source segmentation.                                        | `true`                              |
-| `lipsync`                   | true    | Optimize timing to match lip movements (see details below).                                             |
-| `context_adaptation`        | true    | Enables context-aware translation that allow the model to adapt translations based on provided context. | `true`                              |
-| `context`                   | ""      | Extra context to improve terminology.                                                                   | `"Don't translate technical terms"` |
-| `informal`                  | false   | Prefer informal forms when available.                                                                   | `true`                              |
+<ParamField body="target_languages" type="string[]">
+  Target language codes for translation output. See the list of supported
+  language codes in [>Supported
+  Languages](/chapters/language/supported-languages).
+</ParamField>
 
-The `translation` feature can be customized using the `translation_config` object. Use the table above for values and defaults; the notes below add only extra guidance to avoid repetition.
+<ParamField body="model" type='enum["base", "enhanced"]' default="base">
+  Specifies the translation model to be used.
+</ParamField>
 
-### Notes on options
+<ParamField body="match_original_utterances" type="boolean" default>
+  Keep translated segments aligned with source segmentation. Use `true` for subtitles/dubbing; set `false` for a more natural flow in the target language.
+  - When **true**, the system attempts to match the translated segments (utterances, sentences) to the timing and structure of the original detected speech segments.
+  - When **false**, the translation might be more fluid or natural-sounding in the target language but could deviate from the original utterance segmentation.
 
-- **match_original_utterances**: Keeps translations aligned to source segmentation. Use `true` for subtitles/dubbing; set `false` for more natural flow in the target language.
-- **lipsync**: Optimizes timing to match lip movements for dubbing/precise subtitles. May merge words to preserve timing. Disable if you need strict word-by-word mapping over visual sync.
-- **context_adaptation**: When `true`, the model leverages extra context and style preferences for better accuracy. Turn off only if you want purely literal translations.
-- **context** (requires `context_adaptation: true`): Provide domain hints, proper nouns, or situational info to improve terminology and disambiguation. Example: `"Medical consultation between doctor and patient discussing cardiology"`.
-- **informal** (requires `context_adaptation: true`): Uses casual register when available; useful for chatty UX or youth audiences. Especially relevant for languages with formal/informal distinctions (e.g., French "tu/vous", German "du/Sie", Spanish "tú/usted", Dutch "U/jij").
+</ParamField>
+
+<ParamField body="lipsync" type="boolean" default="true">
+  Controls alignment with visual cues, specifically lip movements. When enabled
+  (default), uses an advanced lip synchronization algorithm that aligns
+  translated output with speaker's lip movements using timestamps from lip
+  activity. \ This enhances viewing experience for dubbed content but may
+  occasionally merge distinct words into single objects to achieve better visual
+  sync. Set to `false` if strict word-for-word mapping is required over visual
+  timing synchronization.
+</ParamField>
+
+<ParamField body="context_adaptation" type="boolean" default>
+  Enable context-aware translation. When `true`, the model leverages extra
+  context and style preferences for better accuracy. Turn off for purely literal
+  translations.
+</ParamField>
+
+<ParamField
+  body="context"
+  type="string"
+  default
+  placeholder='"Medical consultation between doctor and patient discussing cardiology"'
+>
+  Additional context to improve terminology, proper nouns, or disambiguation.
+  Effective with `context_adaptation: true`. \
+  **Example**: `"Medical consultation between doctor and patient discussing cardiology"`
+</ParamField>
+
+<ParamField body="informal" type="boolean" default="false">
+  Prefer informal register when available; useful for chatty UX or youth
+  audiences. Especially relevant for languages with formal/informal distinctions
+  (e.g., French "tu/vous", German "du/Sie", Spanish "tú/usted", Dutch "U/jij").
+</ParamField>
 
 ## Result
 
