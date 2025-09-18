@@ -4,7 +4,7 @@ description: 'The Chapterization model segments the audio into distinct chapters
 ---
 <Note>
 This feature is in **Alpha** state.<br/>
-Breaking changes may still be introduced to this API, but an advanced notice will be sent. 
+Breaking changes may still be introduced to this API, but advance notice will be sent.
 
 We're looking for feedback to improve this feature, [share yours on Discord](https://discord.gg/T22a4ETUQp).
 </Note>
@@ -14,19 +14,31 @@ into logical chapters based on the audio and content, and makes it easier to nav
 Each chapter will contain its start and end time, as well as a summary, headline, bottom line "gist" and keywords.
 
 ## Usage
-Enable chapterization by simply setting ```chapterization``` to ```true``` in your transcription request.
-```json request data
+Enable chapterization by setting the appropriate flag:
+
+<CodeGroup>
+```json Real-time
 {
-  "audio_url": "<your audio URL>"
+  "post_processing": {
+    "chapterization": true
+  },
+  "messages_config": {
+    "receive_post_processing_events": true
+  }
+}
+```
+```json Pre-recorded
+{
   "chapterization": true
 }
 ```
+</CodeGroup>
 ## Result
-The transcription result will contain a ```"chapterization"``` key with the output of the model:
+The transcription result will contain a `"chapterization"` key with the output of the model:
 
 ```json result
 {
-  "transcription":{...}
+  "transcription":{...},
   "chapterization": {
     "success": true,
     "is_empty": false,
@@ -49,6 +61,4 @@ The transcription result will contain a ```"chapterization"``` key with the outp
     "error": null
   }
 }
-```
-```json
 ```
