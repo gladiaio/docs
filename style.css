@@ -23,7 +23,7 @@
     padding-left: 5rem;
     padding-right: 3rem;
   }
-  #content-container div {
+  #content-container > div {
     padding-left: 0rem;
   }
 }
