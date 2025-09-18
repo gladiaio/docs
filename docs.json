@@ -51,16 +51,15 @@
                 "expanded": false,
                 "pages": [
                   "chapters/pre-recorded-stt/quickstart",
-                  "chapters/pre-recorded-stt/features/enhanced-punctuation",
-                  "chapters/pre-recorded-stt/features/sentences",
+                  "chapters/pre-recorded-stt/features/speaker-diarization",
                   "chapters/pre-recorded-stt/features/subtitles",
-                  "chapters/pre-recorded-stt/features/context-prompt",
                   "chapters/pre-recorded-stt/features/custom-vocabulary",
                   "chapters/pre-recorded-stt/features/custom-spelling",
+                  "chapters/pre-recorded-stt/features/enhanced-punctuation",
+                  "chapters/pre-recorded-stt/features/sentences",
                   "chapters/pre-recorded-stt/features/name-consistency",
                   "chapters/pre-recorded-stt/features/multiple-channels",
-                  "chapters/pre-recorded-stt/features/custom-metadata",
-                  "chapters/pre-recorded-stt/features/speaker-diarization"
+                  "chapters/pre-recorded-stt/features/custom-metadata"
                 ]
               }
             ]

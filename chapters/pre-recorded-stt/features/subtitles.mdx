@@ -25,13 +25,25 @@ You can use the `subtitles` feature alongside `translation`. You'll have subtitl
 ```
 
 The `subtitles_config` object supports:
+<ParamField body="format" type='enum["srt", "vtt"]'>
+  The format of the subtitles.
+</ParamField>
+<ParamField body="minimum_duration" type="number">
+  The minimum duration of the subtitles in seconds (min 0).
+</ParamField>
+<ParamField body="maximum_duration" type="number">
+  The maximum duration of the subtitles in seconds (min 1, max 30).
+</ParamField>
+<ParamField body="maximum_characters_per_row" type="number">
+  The maximum number of characters per row (min 1).
+</ParamField>
+<ParamField body="maximum_rows_per_caption" type="number">
+  The maximum number of rows per caption (min 1, max 5).
+</ParamField>
+<ParamField body="style" type='enum["default", "compliance"]'>
+  The style of the subtitles ("default" or "compliance").
+</ParamField>
 
-- `formats`: "srt", "vtt"
-- `minimum_duration`: seconds (min 0)
-- `maximum_duration`: seconds (min 1, max 30)
-- `maximum_characters_per_row`: min 1
-- `maximum_rows_per_caption`: min 1, max 5
-- `style`: "default" or "compliance"
 
 The JSON response adds a `subtitles` array with items like:
 
