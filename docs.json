@@ -38,8 +38,7 @@
                 "group": "Real-time Transcription",
                 "pages": [
                   "chapters/live-stt/quickstart",
-                  "chapters/live-stt/features",
-                  "chapters/live-stt/migration-from-v1"
+                  "chapters/live-stt/features"
                 ]
               },
               {
@@ -47,8 +46,7 @@
                 "pages": [
                   "chapters/pre-recorded-stt/quickstart",
                   "chapters/pre-recorded-stt/features",
-                  "chapters/pre-recorded-stt/speaker-diarization",
-                  "chapters/pre-recorded-stt/migration-from-v1"
+                  "chapters/pre-recorded-stt/speaker-diarization"
                 ]
               }
             ]
@@ -70,6 +68,13 @@
               "chapters/limits-and-specifications/languages",
               "chapters/limits-and-specifications/concurrency",
               "chapters/limits-and-specifications/supported-formats"
+            ]
+          },
+          {
+            "group": "Migrations",
+            "pages": [
+              "chapters/live-stt/migration-from-v1",
+              "chapters/pre-recorded-stt/migration-from-v1"
             ]
           },
           {
