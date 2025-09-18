@@ -23,7 +23,7 @@ To enable translation, set `translation` to `true` on your request, and add a `t
 ```json Real-time
 {
   "realtime_processing": {
-    "translation": false,
+    "translation": true,
     "translation_config": {
       "target_languages": [
         "fr"
@@ -43,7 +43,7 @@ To enable translation, set `translation` to `true` on your request, and add a `t
 ```
 ```json Pre-recorded
 {
-  "translation": false,
+  "translation": true,
   "translation_config": {
     "target_languages": [
       "fr"
@@ -69,19 +69,17 @@ To enable translation, set `translation` to `true` on your request, and add a `t
 | `lipsync`                   | true    | Optimize timing to match lip movements (see details below).                                             |
 | `context_adaptation`        | true    | Enables context-aware translation that allow the model to adapt translations based on provided context. | `true`                              |
 | `context`                   | ""      | Extra context to improve terminology.                                                                   | `"Don't translate technical terms"` |
-| `informal`                  | false   | Prefer informal forms when available.                                                                   | `true`                             |
+| `informal`                  | false   | Prefer informal forms when available.                                                                   | `true`                              |
 
 The `translation` feature can be customized using the `translation_config` object. Use the table above for values and defaults; the notes below add only extra guidance to avoid repetition.
 
 ### Notes on options
-
 
 - **match_original_utterances**: Keeps translations aligned to source segmentation. Use `true` for subtitles/dubbing; set `false` for more natural flow in the target language.
 - **lipsync**: Optimizes timing to match lip movements for dubbing/precise subtitles. May merge words to preserve timing. Disable if you need strict word-by-word mapping over visual sync.
 - **context_adaptation**: When `true`, the model leverages extra context and style preferences for better accuracy. Turn off only if you want purely literal translations.
 - **context** (requires `context_adaptation: true`): Provide domain hints, proper nouns, or situational info to improve terminology and disambiguation. Example: `"Medical consultation between doctor and patient discussing cardiology"`.
 - **informal** (requires `context_adaptation: true`): Uses casual register when available; useful for chatty UX or youth audiences. Especially relevant for languages with formal/informal distinctions (e.g., French "tu/vous", German "du/Sie", Spanish "tú/usted", Dutch "U/jij").
-
 
 ## Result
 
