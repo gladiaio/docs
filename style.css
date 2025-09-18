@@ -3,7 +3,7 @@
   /* Mintlify applies Tailwind Typography's .prose to page content */
   .prose {
     /* Increase readable line length but avoid super-long lines */
-    max-width: 85ch;         /* ~85 characters per line */
+    max-width: 88ch;         /* ~88 characters per line */
   }
 
   /* Loosen container caps commonly used for the center column */
@@ -12,7 +12,6 @@
   }
 
   /* Defensive overrides for common Almond wrappers */
-  #content-container,
   #content-area,
   #mintlify-content {
     max-width: 1180px !important;
@@ -22,9 +21,6 @@
   #content-container {
     padding-left: 5rem;
     padding-right: 3rem;
-  }
-  #content-container > div {
-    padding-left: 0rem;
   }
 }
 
