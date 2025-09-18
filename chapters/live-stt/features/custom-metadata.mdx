@@ -1,0 +1,36 @@
+---
+title: "Custom metadata"
+description: "Attach metadata to real-time sessions for filtering and retrieval"
+---
+
+You can attach metadata to your real-time transcription session using the `custom_metadata` property. This makes it easy to recognize your transcription when you receive data from the [GET `/v2/live/:id` endpoint](/api-reference/v2/live/get), and enables filtering in the [GET `/v2/live` list endpoint](/api-reference/v2/live/list).
+
+For example, add the following to your configuration:
+
+```json
+"custom_metadata": {
+  "internalUserId": 2348739875894375,
+  "paymentMethod": {
+    "last4Digits": 4576
+  },
+  "internalUserName": "Spencer"
+}
+```
+
+Then filter results with a GET request, like:
+
+```
+https://api.gladia.io/v2/live?custom_metadata={"internalUserId": "2348739875894375"}
+```
+
+or:
+
+```
+https://api.gladia.io/v2/live?custom_metadata={"paymentMethod": {"last4Digits": 4576}, "internalUserName": "Spencer"}
+```
+
+<Warning>
+  `custom_metadata` cannot be longer than 2000 characters when stringified.
+</Warning>
+
+

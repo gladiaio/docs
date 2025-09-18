@@ -1,0 +1,29 @@
+---
+title: "Enhanced punctuation"
+description: "Improve punctuation accuracy and readability in transcripts"
+---
+
+<Note>
+This feature is in **Alpha**.
+- It may have restricted access in the future.
+- Breaking changes could still be introduced; however, advanced notice will be provided.
+- Results may vary as we are updating the feature.
+</Note>
+
+Enhanced punctuation improves both the accuracy and natural flow of punctuation in transcriptions. It ensures precise comma placement, natural sentence breaks, and better handling of quotation marks.
+
+Example:
+
+**Standard:** "hello how are you today I am doing fine thanks"  
+**Enhanced:** "Hello, how are you today? I am doing fine, thanks!"
+
+Enable it by sending the `punctuation_enhanced` parameter:
+
+```json
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "punctuation_enhanced": true
+}
+```
+
+

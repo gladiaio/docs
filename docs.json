@@ -36,17 +36,31 @@
             "pages": [
               {
                 "group": "Real-time Transcription",
+                "expanded": true,
                 "pages": [
                   "chapters/live-stt/quickstart",
-                  "chapters/live-stt/features"
+                  "chapters/live-stt/features/partial-transcripts",
+                  "chapters/live-stt/features/custom-vocabulary",
+                  "chapters/live-stt/features/custom-spelling",
+                  "chapters/live-stt/features/multiple-channels",
+                  "chapters/live-stt/features/custom-metadata"
                 ]
               },
               {
                 "group": "Pre-recorded Transcription",
+                "expanded": false,
                 "pages": [
                   "chapters/pre-recorded-stt/quickstart",
-                  "chapters/pre-recorded-stt/features",
-                  "chapters/pre-recorded-stt/speaker-diarization"
+                  "chapters/pre-recorded-stt/features/enhanced-punctuation",
+                  "chapters/pre-recorded-stt/features/sentences",
+                  "chapters/pre-recorded-stt/features/subtitles",
+                  "chapters/pre-recorded-stt/features/context-prompt",
+                  "chapters/pre-recorded-stt/features/custom-vocabulary",
+                  "chapters/pre-recorded-stt/features/custom-spelling",
+                  "chapters/pre-recorded-stt/features/name-consistency",
+                  "chapters/pre-recorded-stt/features/multiple-channels",
+                  "chapters/pre-recorded-stt/features/custom-metadata",
+                  "chapters/pre-recorded-stt/features/speaker-diarization"
                 ]
               }
             ]
@@ -452,5 +466,18 @@
       "source": "/chapters/live-stt/getting-started",
       "destination": "/chapters/live-stt/quickstart"
     }
+    ,
+    { "source": "/chapters/live-stt/translation", "destination": "/chapters/audio-intelligence/translation" },
+    { "source": "/chapters/pre-recorded-stt/translation", "destination": "/chapters/audio-intelligence/translation" },
+    { "source": "/chapters/live-stt/summarization", "destination": "/chapters/audio-intelligence/summarization" },
+    { "source": "/chapters/pre-recorded-stt/summarization", "destination": "/chapters/audio-intelligence/summarization" },
+    { "source": "/chapters/live-stt/named-entity-recognition", "destination": "/chapters/audio-intelligence/named-entity-recognition" },
+    { "source": "/chapters/pre-recorded-stt/named-entity-recognition", "destination": "/chapters/audio-intelligence/named-entity-recognition" },
+    { "source": "/chapters/live-stt/sentiment-analysis", "destination": "/chapters/audio-intelligence/sentiment-analysis" },
+    { "source": "/chapters/pre-recorded-stt/sentiment-analysis", "destination": "/chapters/audio-intelligence/sentiment-analysis" },
+    { "source": "/chapters/live-stt/chapterization", "destination": "/chapters/audio-intelligence/chapterization" },
+    { "source": "/chapters/pre-recorded-stt/chapterization", "destination": "/chapters/audio-intelligence/chapterization" },
+    { "source": "/chapters/live-stt/audio-to-llm", "destination": "/chapters/audio-intelligence/audio-to-llm" },
+    { "source": "/chapters/pre-recorded-stt/audio-to-llm", "destination": "/chapters/audio-intelligence/audio-to-llm" }
   ]
 }

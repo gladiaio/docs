@@ -1,0 +1,45 @@
+---
+title: "Export subtitles (SRT/VTT)"
+description: "Generate caption files directly from transcripts"
+---
+
+You can export completed transcripts in both SRT and VTT formats for subtitles and captions.
+
+<Tip>
+You can use the `subtitles` feature alongside `translation`. You'll have subtitles in the original language, and in each targeted translation language.
+</Tip>
+
+```json request data
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "subtitles": true,
+  "subtitles_config": {
+    "formats": ["srt", "vtt"],
+    "minimum_duration": 1,
+    "maximum_duration": 5,
+    "maximum_characters_per_row": 42,
+    "maximum_rows_per_caption": 2,
+    "style": "compliance"
+  }
+}
+```
+
+The `subtitles_config` object supports:
+
+- `formats`: "srt", "vtt"
+- `minimum_duration`: seconds (min 0)
+- `maximum_duration`: seconds (min 1, max 30)
+- `maximum_characters_per_row`: min 1
+- `maximum_rows_per_caption`: min 1, max 5
+- `style`: "default" or "compliance"
+
+The JSON response adds a `subtitles` array with items like:
+
+```json
+{
+  "format": "srt",
+  "subtitles": "1\n00:00:00,210 --> 00:00:04,711....."
+}
+```
+
+
