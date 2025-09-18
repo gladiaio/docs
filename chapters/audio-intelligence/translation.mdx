@@ -1,0 +1,157 @@
+---
+title: Translation
+description: "Translate your transcriptions & subtitles"
+---
+
+The **Translation** model generates translations of your transcriptions to one or more targeted languages. If [subtitles](/chapters/pre-recorded-stt/features#export-srt-or-vtt-caption-files) and/or [sentences](/chapters/pre-recorded-stt/features#sentences) are enabled, the translations will also include translated results for them.
+You can translate your transcription to **multiple languages** in a single API call.
+
+The list of the languages covered by the Translation feature are listed in [Supported Languages](/chapters/language/supported-languages).
+
+---
+
+**2 translation models** are available:
+
+- `base` : Fast, cover most use cases
+- `enhanced` : Slower, but higher quality and with context awareness
+
+## Quickstart
+
+To enable translation, set `translation` to `true` on your request, and add a `translation_config` object :
+
+<CodeGroup>
+```json Real-time
+{
+  "realtime_processing": {
+    "translation": false,
+    "translation_config": {
+      "target_languages": [
+        "fr"
+      ],
+      "model": "base",
+      "match_original_utterances": true,
+      "lipsync": true,
+      "context_adaptation": true,
+      "context": "<string>",
+      "informal": false
+    }
+  },
+  "messages_config": {
+    "receive_realtime_processing_events": true
+  }
+}
+```
+```json Pre-recorded
+{
+  "translation": false,
+  "translation_config": {
+    "target_languages": [
+      "fr"
+    ],
+    "model": "base",
+    "match_original_utterances": true,
+    "lipsync": true,
+    "context_adaptation": true,
+    "context": "<string>",
+    "informal": false
+  }
+}
+```
+</CodeGroup>
+
+### translation_config options
+
+| Option                      | Default | Description                                                                                             | Example                             |
+| --------------------------- | ------- | ------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| `target_languages`          | —       | Target language codes. See [supported languages](/chapters/language/supported-languages).               | `["fr", "es"]`                      |
+| `model`                     | "base"  | The translation model to be used.                                                                       | `"base"`                            |
+| `match_original_utterances` | true    | Keep translated utterances aligned with the source segmentation.                                        | `true`                              |
+| `lipsync`                   | true    | Optimize timing to match lip movements (see details below).                                             |
+| `context_adaptation`        | true    | Enables context-aware translation that allow the model to adapt translations based on provided context. | `true`                              |
+| `context`                   | ""      | Extra context to improve terminology.                                                                   | `"Don't translate technical terms"` |
+| `informal`                  | false   | Prefer informal forms when available.                                                                   | `true`                             |
+
+The `translation` feature can be customized using the `translation_config` object. Use the table above for values and defaults; the notes below add only extra guidance to avoid repetition.
+
+### Notes on options
+
+
+- **match_original_utterances**: Keeps translations aligned to source segmentation. Use `true` for subtitles/dubbing; set `false` for more natural flow in the target language.
+- **lipsync**: Optimizes timing to match lip movements for dubbing/precise subtitles. May merge words to preserve timing. Disable if you need strict word-by-word mapping over visual sync.
+- **context_adaptation**: When `true`, the model leverages extra context and style preferences for better accuracy. Turn off only if you want purely literal translations.
+- **context** (requires `context_adaptation: true`): Provide domain hints, proper nouns, or situational info to improve terminology and disambiguation. Example: `"Medical consultation between doctor and patient discussing cardiology"`.
+- **informal** (requires `context_adaptation: true`): Uses casual register when available; useful for chatty UX or youth audiences. Especially relevant for languages with formal/informal distinctions (e.g., French "tu/vous", German "du/Sie", Spanish "tú/usted", Dutch "U/jij").
+
+
+## Result
+
+The transcription result will contain a `"translation"` key with the output of the model:
+
+```json
+{
+  "transcription":{...},
+  "translation": {
+    success: true,
+    is_empty: false,
+    results: [
+      {
+        words: [
+          {
+            word: "Diviser",
+            start: 0.20043,
+            end: 0.7008000000000001,
+            confidence: 1
+          },
+          {
+            word: "l'infini",
+            start: 0.9009500000000001,
+            end: 1.5614400000000002,
+            confidence: 1
+          },
+          ...
+        ],
+        languages: ["fr"],
+        full_transcript: "Diviser l'infini dans un temps où moins est plus...",
+        utterances: [Array], // Also translated
+        error: null
+      },
+      {
+        words: [
+          {
+            word: "Dividir",
+            start: 0.20043,
+            end: 0.7008000000000001,
+            confidence: 1
+          },
+          {
+            word: "la infinidad",
+            start: 0.9009500000000001,
+            end: 1.5614400000000002,
+            confidence: 1
+          },
+          ...
+        ],
+        languages: ["es"],
+        full_transcript: "Dividir la infinidad en un tiempo en que menos es más...",
+        utterances: [Array], // Also translated
+        error: null
+      }
+    ],
+    exec_time: 0.6475496292114258,
+    error: null
+  }
+}
+```
+
+<Tip>
+  If you enabled the `subtitles` generation, those will also benefits from the
+  translation model.
+</Tip>
+
+## Best practices
+
+- Set `target_languages` to only the languages you need.
+- Use `enhanced` with `context_adaptation` for high-accuracy, domain-heavy content.
+- Provide a meaningful `context` to improve terminology and named entities.
+- Keep `match_original_utterances: true` for subtitles; set to `false` for a more natural flow.
+- Pair with [language detection](/chapters/language/language-detection) and [code switching](/chapters/language/code-switching) when source language may vary.

@@ -62,12 +62,12 @@
           {
             "group": "Audio Intelligence",
             "pages": [
-              "chapters/audio-intelligence/pages/translation",
-              "chapters/audio-intelligence/pages/summarization",
-              "chapters/audio-intelligence/pages/named-entity-recognition",
-              "chapters/audio-intelligence/pages/sentiment-analysis",
-              "chapters/audio-intelligence/pages/chapterization",
-              "chapters/audio-intelligence/pages/audio-to-llm"
+              "chapters/audio-intelligence/translation",
+              "chapters/audio-intelligence/summarization",
+              "chapters/audio-intelligence/named-entity-recognition",
+              "chapters/audio-intelligence/sentiment-analysis",
+              "chapters/audio-intelligence/chapterization",
+              "chapters/audio-intelligence/audio-to-llm"
             ]
           },
           {
