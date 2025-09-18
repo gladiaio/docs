@@ -19,7 +19,8 @@
             "pages": [
               "chapters/introduction/introduction",
               "chapters/introduction/why-use-gladia",
-              "chapters/introduction/getting-started"
+              "chapters/introduction/getting-started",
+              "chapters/introduction/our-sdk"
             ]
           },
           {
