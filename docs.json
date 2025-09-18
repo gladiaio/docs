@@ -52,6 +52,14 @@
             ]
           },
           {
+            "group": "Language",
+            "pages": [
+              "chapters/language/language-detection",
+              "chapters/language/code-switching",
+              "chapters/language/supported-languages"
+            ]
+          },
+          {
             "group": "Audio Intelligence",
             "pages": [
               "chapters/audio-intelligence/pages/translation",
@@ -65,7 +73,6 @@
           {
             "group": "Limits & Specifications",
             "pages": [
-              "chapters/limits-and-specifications/languages",
               "chapters/limits-and-specifications/concurrency",
               "chapters/limits-and-specifications/supported-formats"
             ]

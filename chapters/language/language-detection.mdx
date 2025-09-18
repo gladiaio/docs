@@ -1,0 +1,56 @@
+---
+title: Automatic language detection
+description: "How to let Gladia detect the spoken language automatically"
+---
+
+Gladia can automatically detect the spoken language from audio, either within a candidate set you provide or across all supported languages.
+
+<Note>
+  Provide a small list of likely languages when possible. It improves accuracy and reduces latency.
+</Note>
+
+## How to use language detection ?
+
+You can either omit `language_config.languages` to search across all supported languages, or pass a constrained list:
+
+<CodeGroup>
+
+```json Detect across all languages
+{
+  "encoding": "wav/pcm",
+  "sample_rate": 16000,
+  "bit_depth": 16,
+  "channels": 1,
+  "language_config": {
+    "languages": [],
+    "code_switching": false
+  }
+}
+```
+
+```json Detect within a set of languages
+{
+  "encoding": "wav/pcm",
+  "sample_rate": 16000,
+  "bit_depth": 16,
+  "channels": 1,
+  "language_config": {
+    "languages": ["en", "de", "fr"],
+    "code_switching": false
+  }
+}
+```
+
+
+
+</CodeGroup>
+
+The detected `language` is returned on each utterance and can vary over time if you also enable <a href="/chapters/language/code-switching">code switching</a>.
+
+## Tips
+
+- Use <a href="/chapters/language/supported-languages">supported languages</a> to pick valid ISO 639-1 codes.
+- Combine with `messages_config.receive_partial_transcripts` in real time to get immediate feedback.
+- For mixed-language conversations, enable <a href="/chapters/language/code-switching">code switching</a>.
+
+
