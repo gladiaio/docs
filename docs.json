@@ -97,39 +97,7 @@
         "groups": [
           {
             "group": "API Documentation",
-            "pages": [
-              "api-reference/index",
-              "api-reference/authentication"
-            ]
-          },
-          {
-            "group": "Upload",
-            "pages": ["api-reference/v2/upload/audio-file"]
-          },
-          {
-            "group": "Pre-recorded endpoints",
-            "pages": [
-              "api-reference/v2/pre-recorded/init",
-              "api-reference/v2/pre-recorded/get",
-              "api-reference/v2/pre-recorded/list",
-              "api-reference/v2/pre-recorded/get-audio",
-              "api-reference/v2/pre-recorded/delete"
-            ]
-          },
-          {
-            "group": "Pre-recorded webhooks",
-            "pages": [
-              "api-reference/v2/pre-recorded/webhook/created",
-              "api-reference/v2/pre-recorded/webhook/success",
-              "api-reference/v2/pre-recorded/webhook/error"
-            ]
-          },
-          {
-            "group": "Pre-recorded callbacks",
-            "pages": [
-              "api-reference/v2/pre-recorded/callback/success",
-              "api-reference/v2/pre-recorded/callback/error"
-            ]
+            "pages": ["api-reference/index", "api-reference/authentication"]
           },
           {
             "group": "Live endpoints",
@@ -240,6 +208,32 @@
                   "api-reference/v2/live/webhook/start-recording",
                   "api-reference/v2/live/webhook/end-recording",
                   "api-reference/v2/live/webhook/end-session"
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Pre-recorded endpoints",
+            "pages": [
+              "api-reference/v2/upload/audio-file",
+              "api-reference/v2/pre-recorded/init",
+              "api-reference/v2/pre-recorded/get",
+              "api-reference/v2/pre-recorded/list",
+              "api-reference/v2/pre-recorded/get-audio",
+              "api-reference/v2/pre-recorded/delete",
+              {
+                "group": "Webhooks",
+                "pages": [
+                  "api-reference/v2/pre-recorded/webhook/created",
+                  "api-reference/v2/pre-recorded/webhook/success",
+                  "api-reference/v2/pre-recorded/webhook/error"
+                ]
+              },
+              {
+                "group": "Callbacks",
+                "pages": [
+                  "api-reference/v2/pre-recorded/callback/success",
+                  "api-reference/v2/pre-recorded/callback/error"
                 ]
               }
             ]
