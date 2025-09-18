@@ -6,119 +6,27 @@ description: "Extract sentiments and emotions from the transcript."
 The sentiment and emotion analysis model analyzes the transcript, detecting the general sentiment which is conveyed in each sentence (positive, neutral or negative) as well as any emotion that is being expressed.
 
 ## Usage
-To enable sentiment and emotion analysis, set the `"sentiment_analysis"` parameter to true
-```json request data
+To enable sentiment and emotion analysis simply set the appropriate flag:
+
+<CodeGroup>
+```json Real-time
 {
-  "audio_url": "<your audio url>"
+  "realtime_processing": {
+    "sentiment_analysis": true
+  },
+  "messages_config": {
+    "receive_realtime_processing_events": true
+  }
+}
+```
+```json Pre-recorded
+{
   "sentiment_analysis": true
 }
 ```
-
-<Accordion icon="code" title="Sample code">
-<CodeGroup>
-```typescript TypeScript
-async function makeFetchRequest(url: string, options: any) {
-  const response = await fetch(url, options);
-  return response.json();
-}
-
-async function pollForResult(resultUrl: string, headers: any) {
-  while (true) {
-    console.log("Polling for results...");
-    const pollResponse = await makeFetchRequest(resultUrl, { headers });
-
-    if (pollResponse.status === "done") {
-      console.log("- Transcription done: \n");
-      const audioToLlmResults = pollResponse.result.sentiment_analysis;
-      console.log(audioToLlmResults);
-      break;
-    } else {
-      console.log("Transcription status : ", pollResponse.status);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-    }
-  }
-}
-
-async function startTranscription() {
-  const gladiaKey = "YOUR_GLADIA_API_KEY";
-  const requestData = {
-    audio_url: "YOUR_AUDIO_URL",
-    sentiment_analysis: true
-  };
-  const gladiaUrl = "https://api.gladia.io/v2/pre-recorded/";
-  const headers = {
-    "x-gladia-key": gladiaKey,
-    "Content-Type": "application/json",
-  };
-
-  console.log("- Sending initial request to Gladia API...");
-  const initialResponse = await makeFetchRequest(gladiaUrl, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(requestData),
-  });
-
-  console.log("Initial response with Transcription ID :", initialResponse);
-
-  if (initialResponse.result_url) {
-    await pollForResult(initialResponse.result_url, headers);
-  }
-}
-
-startTranscription();
-
-````
-```python Python
-import requests
-import time
-
-
-def make_fetch_request(url, headers, method='GET', data=None):
-    if method == 'POST':
-        response = requests.post(url, headers=headers, json=data)
-    else:
-        response = requests.get(url, headers=headers)
-    return response.json()
-
-
-gladia_key = "YOUR_GLADIA_API_KEY"
-request_data = {
-  "audio_url": "YOUR_AUDIO_URL",
-  "sentiment_analysis": True
-}
-gladia_url = "https://api.gladia.io/v2/pre-recorded/"
-
-headers = {
-    "x-gladia-key": gladia_key,
-    "Content-Type": "application/json"
-}
-
-print("- Sending initial request to Gladia API...")
-initial_response = make_fetch_request(
-    gladia_url, headers, 'POST', request_data
-)
-
-print("Initial response with Transcription ID:", initial_response)
-result_url = initial_response.get("result_url")
-
-if result_url:
-    while True:
-        print("Polling for results...")
-        poll_response = make_fetch_request(result_url, headers)
-
-        if poll_response.get("status") == "done":
-            print("- Transcription done: \n")
-            sentiment_results = poll_response.get("result", {}).get(
-                "sentiment_results", {})
-            print(sentiment_results)
-            break
-        else:
-            print("Transcription status:", poll_response.get("status"))
-        time.sleep(1)
-````
-
 </CodeGroup>
-</Accordion>
+
+
 
 ## Result
 
@@ -161,6 +69,8 @@ When `diarization` is enabled, the sentiment analysis output will contain the `s
 
 ## Possible values
 
+<Accordion icon="list" title="Supported sentiments and emotions">
+
 ### Sentiments
   - positive
   - negative
@@ -194,5 +104,7 @@ When `diarization` is enabled, the sentiment analysis output will contain the `s
   - sympathy
   - triumph
   - neutral
+
+</Accordion>
 
 
