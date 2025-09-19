@@ -32,6 +32,16 @@
             ]
           },
           {
+            "group": "Integration",
+            "pages": [
+              "chapters/integration/pipecat",
+              "chapters/integration/livekit",
+              "chapters/integration/vapi",
+              "chapters/integration/recall",
+              "chapters/integration/meeting-baas"
+            ]
+          },
+          {
             "group": "Speech-to-Text",
             "pages": [
               {
@@ -82,23 +92,6 @@
             "pages": [
               "chapters/live-stt/migration-from-v1",
               "chapters/pre-recorded-stt/migration-from-v1"
-            ]
-          },
-          {
-            "group": "Guides",
-            "pages": [
-              "chapters/guides/integration",
-              {
-                "group": "Use cases",
-                "pages": ["chapters/guides/use-cases/meeting-recording"]
-              }
-            ]
-          },
-          {
-            "group": "Integration",
-            "pages": [
-              "chapters/partners-integrations/meeting-recorders/recall-ai",
-              "chapters/partners-integrations/meeting-recorders/meeting-baas"
             ]
           }
         ]
