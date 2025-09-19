@@ -1,6 +1,7 @@
 ---
 title: Getting started
 description: "Setup your Gladia account and start using the most reliable state-of-the-art Speech To Text API"
+mode: "wide"
 ---
 
 import SetupAccount from "/snippets/setup-account.mdx";
@@ -8,21 +9,29 @@ import SttCards from "/snippets/stt-cards.mdx";
 import GettingStartedPlayground from "/snippets/getting-started-playground.mdx";
 import IntegrationsCards from "/snippets/integrations-cards.mdx";
 
-<SetupAccount />
-# With one of our partners
-<IntegrationsCards />
-# With our SDK / API
+<Steps titleSize="h2">
+  <Step title="Setup account">
+    <SetupAccount />
+  </Step>
+  <Step title="Start building with Gladia!">
+    ### With one of our partners
+    <IntegrationsCards />
+    ### With our SDK / API
 
-Want to build your integration yourself ? Use our SDK or our API directly:
+    Want to build your integration yourself ? Use our SDK or our API directly:
 
-<CardGroup cols={2}>
-  <SttCards />
-</CardGroup>
+    <CardGroup cols={2}>
+      <SttCards />
+    </CardGroup>
 
-# With gladia's playground
+    ### With gladia's playground
 
-You want to test Gladia's basic transcription and features fast ? Use our playground
-<GettingStartedPlayground />
+    You want to test Gladia's basic transcription and features fast ? Use our playground
+
+    <GettingStartedPlayground />
+
+  </Step>
+</Steps>
 
 ## Next steps
 
@@ -33,14 +42,14 @@ On top of its **Speech-to-text API**, Gladia provides a whole set of tools that 
 to use for your particular use cases like:
 
 - Speaker recognition (diarization)
-- Audio intelligence models (Translation, Summarization, Chapterization, Custom AI process...)
+- [Audio intelligence](/chapters/audio-intelligence/) features (Translation, Summarization, Chapterization, Custom AI process...)
 - Word level timestamps
 - Subtitles generation
 - Custom vocabulary & Context prompting
 
 Here are some links that can help you dive deeper into our powerful API:
 
-- [Pre-recorded Speech To Text (STT) features](/chapters/pre-recorded-stt/features)
-- [Live STT features](/chapters/live-stt/features)
+- [Pre-recorded Speech-To-Text features](/chapters/pre-recorded-stt/features)
+- [Real-time Speech-To-Text features](/chapters/live-stt/features)
 - [Gladia code samples GitHub repository](https://github.com/gladiaio/gladia-samples)
 - [API Reference](/api-reference/)
