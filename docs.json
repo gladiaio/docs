@@ -248,6 +248,7 @@
               "api-reference/v2/pre-recorded/delete",
               {
                 "group": "Webhooks",
+                "icon": "webhook",
                 "pages": [
                   "api-reference/v2/pre-recorded/webhook/created",
                   "api-reference/v2/pre-recorded/webhook/success",
@@ -256,6 +257,7 @@
               },
               {
                 "group": "Callbacks",
+                "icon": "reply-all",
                 "pages": [
                   "api-reference/v2/pre-recorded/callback/success",
                   "api-reference/v2/pre-recorded/callback/error"
