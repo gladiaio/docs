@@ -1,0 +1,39 @@
+---
+title: "Sentences"
+description: "Semantic sentence segmentation for more readable results"
+---
+
+In addition to getting the transcription split by utterances, you can request semantic sentence segmentation for more readable results.
+
+<Tip>
+You can get translated sentences by enabling both `sentences` and `translation`! You'll receive sentences output for the original transcript, and each `translation` result will also contain sentences in the translated language.
+</Tip>
+
+```json request data
+{
+  "sentences": true
+}
+```
+
+The result will contain a `sentences` key (in addition to `utterances`):
+
+```json
+"sentences": {
+  "success": true,
+  "is_empty": false,
+  "results": [
+    {
+      "sentence": "Amy, it says you are trained in technology.",
+      "start": 0.4681999999999999,
+      "end": 2.45525,
+      "words": [...],
+      "confidence": 0.95,
+      "language": "en",
+      "speaker": 0,
+      "channel": 0
+    }
+  ]
+}
+```
+
+

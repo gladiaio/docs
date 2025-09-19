@@ -1,0 +1,27 @@
+---
+title: "Custom spelling"
+description: "Normalize spelling variants in pre-recorded transcripts"
+---
+
+import CustomSpellingStartDescription from '/snippets/custom-spelling-start-description.mdx'
+import CustomSpellingEndDescription from '/snippets/custom-spelling-end-description.mdx'
+
+<CustomSpellingStartDescription />
+
+```json request data
+{
+  "custom_spelling": true,
+  "custom_spelling_config": {
+    "spelling_dictionary": {
+      "Gorish": ["ghorish", "gaurish", "gaureish"],
+      "Data Science": ["data-science", "data science"],
+      ".": ["period", "full stop"],
+      "SQL": ["sequel"]
+    }
+  }
+}
+```
+
+<CustomSpellingEndDescription />
+
+

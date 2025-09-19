@@ -1,10 +1,11 @@
-import GetTranscriptionResult from '/snippets/get-transcription-result.mdx';
-import Samples from '/snippets/samples.mdx';
-
+import GetTranscriptionResult from "/snippets/get-transcription-result.mdx";
+import Samples from "/snippets/samples.mdx";
 
 ## Upload your file
 
-<Note>This step is **optional** if you are already working with **audio URLs**. </Note>
+<Note>
+  This step is **optional** if you are already working with **audio URLs**.{" "}
+</Note>
 
 If you're working with audio or video files, you'll need to upload it first using our [`POST /v2/upload` endpoint](/api-reference/v2/upload/audio-file) with `multipart/form-data`
 content-type since the [`POST /v2/pre-recorded` endpoint](/api-reference/v2/pre-recorded/init) only accept audio URLs.
@@ -37,14 +38,11 @@ Example response:
 
 We will now proceed to the next steps using the returned `audio_url`.
 
-
 ## Transcribe
 
 We'll now POST the transcription request to Gladia's API using the [`POST /v2/pre-recorded` endpoint](/api-reference/v2/pre-recorded/init).
 
-<Note> 
-  `/v2/pre-recorded` only accept `application/json` as Content-Type.
-</Note>
+<Note>`/v2/pre-recorded` only accept `application/json` as Content-Type.</Note>
 
 <CodeGroup>
 ```bash cURL
@@ -84,10 +82,6 @@ will use to get your transcription result once it's done.
 
 `result_url` is returned for convenience. This is a pre-built url with your transcription id in it that you can use to get your result in the next step.
 
-
 ## Get the transcription result
 
 <GetTranscriptionResult />
-
-
-<Samples />

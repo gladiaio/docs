@@ -1,0 +1,68 @@
+---
+title: Audio to LLM
+description: "Ask any question or analysis, as you would do with an assistant"
+---
+
+<Note>
+This feature is in **Alpha** state.
+
+We're looking for feedback to improve this feature, [share yours on Discord](https://discord.gg/T22a4ETUQp).
+</Note>
+
+The **Audio to LLM** feature applies your own prompts to the audio transcription. For now, it is only available for **pre-recorded** audio.
+
+## Usage
+Enable Audio to LLM by setting the appropriate flag and providing your prompts:
+
+<CodeGroup>
+```json Pre-recorded
+{
+  "audio_to_llm": true,
+  "audio_to_llm_config": {
+    "prompts": [
+      "Extract the key points from the transcription as bullet points",
+      "Generate a title from this transcription"
+    ]
+  }
+}
+```
+
+```json Real-time
+// Not available for real-time
+```
+</CodeGroup>
+
+With this code, your output will look like this:
+
+```json
+{
+  "success": true,
+  "is_empty": false,
+  "results": [
+    {
+      "success": true,
+      "is_empty": false,
+      "results": {
+        "prompt": "Extract the key points from the transcription as bullet points",
+        "response": "The main entities key points from the transcription are:\n- ..."
+      },
+      "exec_time": 1.7726809978485107,
+      "error": null
+    },
+    {
+      "success": true,
+      "is_empty": false,
+      "results": {
+        "prompt": "Generate a title from this transcription",
+        "response": "The Great Title"
+      },
+      "exec_time": 1.7832809978258485,
+      "error": null
+    }
+  ],
+  "exec_time": 6.127103805541992,
+  "error": null
+}
+```
+
+You'll find the results for each prompt under the `results` key.
