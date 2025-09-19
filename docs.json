@@ -27,7 +27,7 @@
           {
             "group": "Introduction",
             "pages": [
-              "chapters/introduction/",
+              "chapters/introduction/index",
               "chapters/introduction/getting-started"
             ]
           },
