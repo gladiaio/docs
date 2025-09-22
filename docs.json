@@ -32,7 +32,7 @@
             ]
           },
           {
-            "group": "Integration",
+            "group": "Integrations",
             "pages": [
               "chapters/integration/pipecat",
               "chapters/integration/livekit",
