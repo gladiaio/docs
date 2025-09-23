@@ -28,17 +28,8 @@
             "group": "Introduction",
             "pages": [
               "chapters/introduction/index",
-              "chapters/introduction/getting-started"
-            ]
-          },
-          {
-            "group": "Integrations",
-            "pages": [
-              "chapters/integration/pipecat",
-              "chapters/integration/livekit",
-              "chapters/integration/vapi",
-              "chapters/integration/recall",
-              "chapters/integration/meeting-baas"
+              "chapters/introduction/getting-started",
+              "chapters/introduction/webapp"
             ]
           },
           {
@@ -74,6 +65,18 @@
               }
             ]
           },
+          {
+            "group": "Integrations",
+            "pages": [
+              "chapters/integration/sdk",
+              "chapters/integration/pipecat",
+              "chapters/integration/livekit",
+              "chapters/integration/vapi",
+              "chapters/integration/recall",
+              "chapters/integration/meeting-baas"
+            ]
+          },
+
           {
             "group": "Language",
             "pages": [
@@ -291,7 +294,7 @@
   },
   "navbar": {
     "primary": {
-      "label": "Try Gladia",
+      "label": "Signup",
       "type": "button",
       "href": "https://app.gladia.io/"
     },
@@ -459,19 +462,54 @@
     {
       "source": "/chapters/live-stt/getting-started",
       "destination": "/chapters/live-stt/quickstart"
+    },
+    {
+      "source": "/chapters/live-stt/translation",
+      "destination": "/chapters/audio-intelligence/translation"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/translation",
+      "destination": "/chapters/audio-intelligence/translation"
+    },
+    {
+      "source": "/chapters/live-stt/summarization",
+      "destination": "/chapters/audio-intelligence/summarization"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/summarization",
+      "destination": "/chapters/audio-intelligence/summarization"
+    },
+    {
+      "source": "/chapters/live-stt/named-entity-recognition",
+      "destination": "/chapters/audio-intelligence/named-entity-recognition"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/named-entity-recognition",
+      "destination": "/chapters/audio-intelligence/named-entity-recognition"
+    },
+    {
+      "source": "/chapters/live-stt/sentiment-analysis",
+      "destination": "/chapters/audio-intelligence/sentiment-analysis"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/sentiment-analysis",
+      "destination": "/chapters/audio-intelligence/sentiment-analysis"
+    },
+    {
+      "source": "/chapters/live-stt/chapterization",
+      "destination": "/chapters/audio-intelligence/chapterization"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/chapterization",
+      "destination": "/chapters/audio-intelligence/chapterization"
+    },
+    {
+      "source": "/chapters/live-stt/audio-to-llm",
+      "destination": "/chapters/audio-intelligence/audio-to-llm"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/audio-to-llm",
+      "destination": "/chapters/audio-intelligence/audio-to-llm"
     }
-    ,
-    { "source": "/chapters/live-stt/translation", "destination": "/chapters/audio-intelligence/translation" },
-    { "source": "/chapters/pre-recorded-stt/translation", "destination": "/chapters/audio-intelligence/translation" },
-    { "source": "/chapters/live-stt/summarization", "destination": "/chapters/audio-intelligence/summarization" },
-    { "source": "/chapters/pre-recorded-stt/summarization", "destination": "/chapters/audio-intelligence/summarization" },
-    { "source": "/chapters/live-stt/named-entity-recognition", "destination": "/chapters/audio-intelligence/named-entity-recognition" },
-    { "source": "/chapters/pre-recorded-stt/named-entity-recognition", "destination": "/chapters/audio-intelligence/named-entity-recognition" },
-    { "source": "/chapters/live-stt/sentiment-analysis", "destination": "/chapters/audio-intelligence/sentiment-analysis" },
-    { "source": "/chapters/pre-recorded-stt/sentiment-analysis", "destination": "/chapters/audio-intelligence/sentiment-analysis" },
-    { "source": "/chapters/live-stt/chapterization", "destination": "/chapters/audio-intelligence/chapterization" },
-    { "source": "/chapters/pre-recorded-stt/chapterization", "destination": "/chapters/audio-intelligence/chapterization" },
-    { "source": "/chapters/live-stt/audio-to-llm", "destination": "/chapters/audio-intelligence/audio-to-llm" },
-    { "source": "/chapters/pre-recorded-stt/audio-to-llm", "destination": "/chapters/audio-intelligence/audio-to-llm" }
   ]
 }
