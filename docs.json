@@ -50,9 +50,9 @@
                 "pages": [
                   "chapters/live-stt/quickstart",
                   "chapters/live-stt/features/partial-transcripts",
+                  "chapters/live-stt/features/multiple-channels",
                   "chapters/live-stt/features/custom-vocabulary",
                   "chapters/live-stt/features/custom-spelling",
-                  "chapters/live-stt/features/multiple-channels",
                   "chapters/live-stt/features/custom-metadata"
                 ]
               },
@@ -61,14 +61,14 @@
                 "expanded": false,
                 "pages": [
                   "chapters/pre-recorded-stt/quickstart",
+                  "chapters/pre-recorded-stt/features/sentences",
                   "chapters/pre-recorded-stt/features/speaker-diarization",
                   "chapters/pre-recorded-stt/features/subtitles",
+                  "chapters/pre-recorded-stt/features/multiple-channels",
+                  "chapters/pre-recorded-stt/features/name-consistency",
+                  "chapters/pre-recorded-stt/features/enhanced-punctuation",
                   "chapters/pre-recorded-stt/features/custom-vocabulary",
                   "chapters/pre-recorded-stt/features/custom-spelling",
-                  "chapters/pre-recorded-stt/features/enhanced-punctuation",
-                  "chapters/pre-recorded-stt/features/sentences",
-                  "chapters/pre-recorded-stt/features/name-consistency",
-                  "chapters/pre-recorded-stt/features/multiple-channels",
                   "chapters/pre-recorded-stt/features/custom-metadata"
                 ]
               }
