@@ -1,4 +1,5 @@
 import Samples from '/snippets/samples.mdx';
+import PartialsTip from '/snippets/partials-tip.mdx';
 
 ## Initiate your real-time session
 
@@ -129,6 +130,9 @@ socket.addEventListener("message", function(event) {
 });
 ```
 </CodeGroup>
+
+<PartialsTip />
+
 ## Sending multiple audio tracks in real-time
 
 If you have multiple audio sources (like different participants in a conversation) that you need to transcribe simultaneously, you can merge these separate audio tracks into a single multi-channel audio stream and send it over one WebSocket connection.
