@@ -74,7 +74,8 @@
               "chapters/integration/livekit",
               "chapters/integration/vapi",
               "chapters/integration/recall",
-              "chapters/integration/meeting-baas"
+              "chapters/integration/meeting-baas",
+              "chapters/integration/twilio"
             ]
           },
 
