@@ -36,7 +36,7 @@
             "group": "Speech-to-Text",
             "pages": [
               {
-                "group": "Real-time Transcription",
+                "group": "Live Transcription",
                 "expanded": true,
                 "pages": [
                   "chapters/live-stt/quickstart",
