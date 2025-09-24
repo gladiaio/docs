@@ -62,7 +62,8 @@
                   "chapters/pre-recorded-stt/features/custom-spelling",
                   "chapters/pre-recorded-stt/features/custom-metadata"
                 ]
-              }
+              },
+              "chapters/use-cases"
             ]
           },
           {

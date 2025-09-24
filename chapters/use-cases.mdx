@@ -1,0 +1,67 @@
+---
+title: Recommended Parameters by Use Case
+sidebarTitle: Use Cases
+description: Best parameter configurations for realtime transcription depending on your application (Voice Agents, Meeting Recorders, Subtitles).
+---
+
+When building realtime transcription applications, the **right configuration** of parameters can make a big difference regarding the transcription quality and latency. This guide provides **recommended values** for common use cases so you can get started quickly with settings optimized for **latency, readability, or accuracy**.
+
+<Info>
+  These recommendations apply to the **[Realtime API](/chapters/live-stt/quickstart)** and can be passed during
+  session initialization. They are starting points — feel free to
+  fine-tune them to your needs.
+</Info>
+
+---
+
+## Voice Agents
+
+For callbots, customer service assistants, or voice-driven chatbots, the top priority is **low latency**. The agent should respond quickly, even if sentence boundaries are not perfect.
+
+**Recommended parameters:**
+
+- **`endpointing`: 0.05 - 0.1**  
+  Keeps conversations snappy by closing utterances quickly.
+- **`maximum_duration_without_endpointing`: 15s**  
+  Prevents very long utterances from staying open, without cutting off the conversation.
+- **`messages_config.partial_transcripts`: true**  
+  Enables interim results for early reactions. For that, you can use the speech_stop event to know when the user has stopped speaking.
+- **`language_config.language`: fixed if known**  
+  Skips auto-detection for faster response.
+
+<Tip>
+  This setup is best when **fast turn-taking** is essential!
+</Tip>
+
+---
+
+## Meeting Recorders
+
+For meetings, lectures, and conferences, the focus shifts to **readability and completeness**. Latency is less critical than producing well-punctuated, accurate transcripts.
+
+**Recommended parameters:**
+
+- **`endpointing`: 0.3 - 0.5**  
+  Captures sentences fully before closing.
+- **`maximum_duration_without_endpointing`: 60s**  
+  Allows for longer interventions or presentations.
+- **`messages_config.partial_transcripts`: `true`**  
+  Shows live transcripts while waiting for finals.
+- **`realtime_processing.custom_vocabulary`: add company-specific terms**  
+  Ensures correct spelling of jargon, acronyms, or product names.
+
+---
+
+## Subtitles / Captioning
+
+When providing live subtitles, the goal is to **sync text with the speaker**. For post-production subtitles, readability and sentence integrity matter more.
+
+**Recommended parameters:**
+
+- **`endpointing`:**
+  - `0.3` → for **live captions** (minimal lag)
+  - `0.8` → for **clean subtitles** (post-production or recordings)
+- **`maximum_duration_without_endpointing`: 30s**  
+  Prevents excessively long subtitle blocks.
+- **`messages_config.partial_transcripts`: true**  
+  Shows words as they're spoken, then refines them.
