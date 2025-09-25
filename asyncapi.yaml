@@ -406,9 +406,6 @@ components:
         channel:
           type: integer
           description: Audio channel index (0-based) if multiple channels are present.
-        speaker:
-          type: integer
-          description: Speaker label when diarization is enabled.
         words:
           type: array
           items:
@@ -420,13 +417,12 @@ components:
         language:
           type: string
           description: BCP-47 language tag detected for the utterance (e.g. "en").
-      description: Continuous segment of speech with timing, text and optional speaker/channel.
+      description: Continuous segment of speech with timing, text and optional channel.
       examples:
         - start: 1.02
           end: 3.44
           confidence: 0.93
           channel: 0
-          speaker: 1
           words:
             - word: "good"
               start: 1.02
@@ -486,7 +482,6 @@ components:
               end: 0.48
               confidence: 0.91
               channel: 0
-              speaker: 0
               words:
                 - word: "Hello"
                   start: 0.0
