@@ -4,4 +4,10 @@ description: Initiate a live transcription WebSocket session.
 openapi: POST /v2/live
 --- 
 
- Use the returned WebSocket url to connect to the WebSocket and start sending audio chunks. Use the returned `id` and the [GET /v2/live/:id](/api-reference/v2/live/get) endpoint to obtain the status and results.
+Use the returned WebSocket url to connect to the WebSocket and start sending audio chunks. Use the returned `id` and the [GET /v2/live/:id](/api-reference/v2/live/get) endpoint to obtain the status and results.
+
+### Why initiate with POST instead of connecting directly to the WebSocket?
+
+- **Security**: Generate the WebSocket URL on your backend and keep your API key private. The init call returns a connectable URL and a session `id` that you can safely pass to web, iOS, or Android clients without exposing credentials in the app.
+- **Lower infrastructure load**: The secure URL is generated on your backend, the client can connect directly to Gladia's WebSocket server without a pass-through on your side, saving your own resources.
+- **Resilient reconnection and session continuity**: If the WebSocket disconnects (which can happen on unreliable networks), the session created by the init call lets the client reconnect without losing context. Traditional flows that open a socket first typically force a brand‑new session on disconnect, dropping in‑progress state.
