@@ -1,5 +1,6 @@
-import Samples from '/snippets/samples.mdx';
-import PartialsTip from '/snippets/partials-tip.mdx';
+import Samples from "/snippets/samples.mdx";
+import PartialsTip from "/snippets/partials-tip.mdx";
+import WhyPostToOpenWebSocket from "/snippets/why-post-to-open-websocket.mdx";
 
 ## Initiate your real-time session
 
@@ -9,14 +10,14 @@ It's important to correctly define the properties `encoding`, `sample_rate`, `bi
 <CodeGroup>
 
 ```javascript JavaScript
-const response = await fetch('https://api.gladia.io/v2/live', {
-  method: 'POST',
+const response = await fetch("https://api.gladia.io/v2/live", {
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json',
-    'x-gladia-key': '<YOUR_GLADIA_API_KEY>',
+    "Content-Type": "application/json",
+    "x-gladia-key": "<YOUR_GLADIA_API_KEY>",
   },
   body: JSON.stringify({
-    encoding: 'wav/pcm',
+    encoding: "wav/pcm",
     sample_rate: 16000,
     bit_depth: 16,
     channels: 1,
@@ -25,13 +26,14 @@ const response = await fetch('https://api.gladia.io/v2/live', {
 if (!response.ok) {
   // Look at the error message
   // It might be a configuration issue
-  console.error(`${response.status}: ${(await response.text()) || response.statusText}`);
+  console.error(
+    `${response.status}: ${(await response.text()) || response.statusText}`
+  );
   process.exit(response.status);
 }
 
-const {id, url} = await response.json();
+const { id, url } = await response.json();
 ```
-
 
 ```bash cURL
 curl --request POST \
@@ -51,12 +53,15 @@ curl --request POST \
 
 You'll receive a response with a WebSocket URL to connect to. If you loose connection, you can reconnect to that same URL and resume where you left off. Here's an example of a response:
 
+<WhyPostToOpenWebSocket />
+
 ```json
 {
   "id": "636c70f6-92c1-4026-a8b6-0dfe3ecf826f",
   "url": "wss://api.gladia.io/v2/live?token=636c70f6-92c1-4026-a8b6-0dfe3ecf826f"
 }
 ```
+
 
 ## Connect to the WebSocket
 
@@ -69,22 +74,22 @@ import WebSocket from "ws";
 
 const socket = new WebSocket(url);
 
-socket.addEventListener("open", function() {
+socket.addEventListener("open", function () {
   // Connection is opened. You can start sending audio chunks.
 });
 
-socket.addEventListener("error", function(error) {
+socket.addEventListener("error", function (error) {
   // An error occurred during the connection.
   // Check the error to understand why
 });
 
-socket.addEventListener("close", function({code, reason}) {
+socket.addEventListener("close", function ({ code, reason }) {
   // The connection has been closed
   // If the "code" is equal to 1000, it means we closed intentionally the connection (after the end of the session for example).
   // Otherwise, you can reconnect to the same url.
 });
 
-socket.addEventListener("message", function(event) {
+socket.addEventListener("message", function (event) {
   // All the messages we are sending are in JSON format
   const message = JSON.parse(event.data.toString());
   console.log(message);
@@ -104,17 +109,20 @@ You can now start sending us your audio chunks through the WebSocket. You can se
 socket.send(buffer);
 
 // as json
-socket.send(JSON.stringify({
-  type: 'audio_chunk',
-  data: {
-    chunk: buffer.toString("base64"),
-  },
-}));
+socket.send(
+  JSON.stringify({
+    type: "audio_chunk",
+    data: {
+      chunk: buffer.toString("base64"),
+    },
+  })
+);
 ```
 
 </CodeGroup>
 
 ## Read messages
+
 During the whole session, we will send various messages through the WebSocket, the callback URL or webhooks. You can specify which kind of messages you want to receive in the initial configuration. See [`messages_config`](/api-reference/v2/live/init) for WebSocket messages and [`callback_config`](/api-reference/v2/live/init) for callback messages.
 
 Here's an example of how to read a [`transcript`](/api-reference/v2/live/message/transcript) message received through a WebSocket:
@@ -155,10 +163,7 @@ To combine multiple audio tracks into a single multi-channel stream, you need to
 <CodeGroup>
 
 ```typescript TypeScript
-export function interleaveAudio(
-  channelsData: Buffer[],
-  bitDepth = 16,
-): Buffer {
+export function interleaveAudio(channelsData: Buffer[], bitDepth = 16): Buffer {
   const nbChannels = channelsData.length;
   if (nbChannels === 1) {
     return channelsData[0];
@@ -172,7 +177,7 @@ export function interleaveAudio(
     for (let j = 0; j < nbChannels; j++) {
       const sample = channelsData[j].subarray(
         i * bytesPerSample,
-        (i + 1) * bytesPerSample,
+        (i + 1) * bytesPerSample
       );
       audio.set(sample, (i * nbChannels + j) * bytesPerSample);
     }
@@ -207,25 +212,25 @@ const channelsData = [samiAudio, maximeAudio, markAudio];
 const mergedAudio = interleaveAudio(channelsData, 16); // 16-bit depth
 
 // Initialize a single WebSocket session with multi-channel config
-const response = await fetch('https://api.gladia.io/v2/live', {
-  method: 'POST',
+const response = await fetch("https://api.gladia.io/v2/live", {
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json',
-    'x-gladia-key': '<YOUR_GLADIA_API_KEY>',
+    "Content-Type": "application/json",
+    "x-gladia-key": "<YOUR_GLADIA_API_KEY>",
   },
   body: JSON.stringify({
-    encoding: 'wav/pcm',
+    encoding: "wav/pcm",
     sample_rate: 16000,
     bit_depth: 16,
     channels: 3, // Specify the number of channels
   }),
 });
 
-const {url} = await response.json();
+const { url } = await response.json();
 const socket = new WebSocket(url);
 
 // Send the merged audio over a single WebSocket
-socket.addEventListener("open", function() {
+socket.addEventListener("open", function () {
   socket.send(mergedAudio);
 });
 ```
@@ -248,7 +253,7 @@ When you send a multi-channel audio stream to Gladia, the channel order is prese
       "start": 0.188,
       "end": 2.852,
       "language": "en",
-      "channel": 0,  // This indicates the first channel (Sami)
+      "channel": 0 // This indicates the first channel (Sami)
     }
   }
 }
@@ -266,7 +271,7 @@ When you send a multi-channel audio stream to Gladia, the channel order is prese
       "start": 3.468,
       "end": 6.132,
       "language": "en",
-      "channel": 1,  // This indicates the second channel (Maxime)
+      "channel": 1 // This indicates the second channel (Maxime)
     }
   }
 }
@@ -284,7 +289,7 @@ When you send a multi-channel audio stream to Gladia, the channel order is prese
       "start": 8.614,
       "end": 10.574,
       "language": "en",
-      "channel": 2,  // This indicates the third channel (Mark)
+      "channel": 2 // This indicates the third channel (Mark)
     }
   }
 }
@@ -297,27 +302,31 @@ The channel numbers directly correspond to the order in which you added the audi
 - Channel 2 → Mark (third in the array)
 
 <Warning>
-  Remember to keep track of channel assignments in your application to properly attribute transcriptions to the correct participants.
+  Remember to keep track of channel assignments in your application to properly
+  attribute transcriptions to the correct participants.
 </Warning>
 
 <Warning>
-  As mentioned in the [Multiple channels](/chapters/live-stt/features#multiple-channels) section, transcribing a multi-channel audio stream will be billed based on the total duration multiplied by the number of channels.
+  As mentioned in the [Multiple
+  channels](/chapters/live-stt/features#multiple-channels) section, transcribing
+  a multi-channel audio stream will be billed based on the total duration
+  multiplied by the number of channels.
 </Warning>
 
 ## Read messages
 
-During the whole session, we will send various messages through the WebSocket, the callback URL or webhooks. You can specify which kind of messages you want to receive in the initial configuration. See  for WebSocket messages and  for callback messages.
+During the whole session, we will send various messages through the WebSocket, the callback URL or webhooks. You can specify which kind of messages you want to receive in the initial configuration. See for WebSocket messages and for callback messages.
 
-Here's an example of how to read a  message received through a WebSocket:
+Here's an example of how to read a message received through a WebSocket:
 
 <CodeGroup>
 
 ```javascript JavaScript
-socket.addEventListener("message", function(event) {
+socket.addEventListener("message", function (event) {
   // All the messages we are sending are in JSON format
   const message = JSON.parse(event.data.toString());
-  if (message.type === 'transcript' && message.data.is_final) {
-    console.log(`${message.data.id}: ${message.data.utterance.text}`)
+  if (message.type === "transcript" && message.data.is_final) {
+    console.log(`${message.data.id}: ${message.data.utterance.text}`);
   }
 });
 ```
@@ -333,9 +342,11 @@ You'll receive a message at every step of the process in the WebSocket, or in th
 <CodeGroup>
 
 ```javascript JavaScript
-socket.send(JSON.stringify({
-  type: "stop_recording",
-}));
+socket.send(
+  JSON.stringify({
+    type: "stop_recording",
+  })
+);
 ```
 
 </CodeGroup>
@@ -346,9 +357,9 @@ socket.send(JSON.stringify({
 
   <CodeGroup>
 
-  ```javascript JavaScript
-    socket.close(1000);
-  ```
+```javascript JavaScript
+socket.close(1000);
+```
 
   </CodeGroup>
 </Note>
@@ -361,22 +372,23 @@ If you want to get the complete result, you can call the [`GET /v2/live/:id` end
 
 ```javascript JavaScript
 const response = await fetch(`https://api.gladia.io/v2/live/${id}`, {
-  method: 'GET',
+  method: "GET",
   headers: {
-    'x-gladia-key': '<YOUR_GLADIA_API_KEY>',
+    "x-gladia-key": "<YOUR_GLADIA_API_KEY>",
   },
 });
 if (!response.ok) {
   // Look at the error message
   // It might be a configuration issue
-  console.error(`${response.status}: ${(await response.text()) || response.statusText}`)
+  console.error(
+    `${response.status}: ${(await response.text()) || response.statusText}`
+  );
   return;
 }
 
 const result = await response.json();
-console.log(result)
+console.log(result);
 ```
-
 
 ```bash cURL
 curl --request GET \
