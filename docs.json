@@ -75,7 +75,9 @@
               "chapters/integration/vapi",
               "chapters/integration/recall",
               "chapters/integration/meeting-baas",
-              "chapters/integration/twilio"
+              "chapters/integration/twilio",
+              "chapters/integration/n8n",
+              "chapters/integration/zapier"
             ]
           },
 

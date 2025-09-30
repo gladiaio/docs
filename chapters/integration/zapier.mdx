@@ -1,0 +1,40 @@
+---
+title: "Zapier"
+description: "How to integrate Gladia with Zapier"
+---
+
+## How to integrate Gladia with Zapier
+### What is Zapier?
+Zapier is a no-code automation platform that connects more than 6,000 apps and services. With Zapier, you can build automated workflows (called Zaps) that trigger actions in one app based on events in another—without writing custom code.
+
+By connecting Zapier with **Gladia’s speech-to-text (STT) service**, you can automatically transcribe, translate, and analyze audio and send the results into your everyday productivity apps.
+
+### What you can build
+- Automated transcription workflows that save meeting recordings into Google Docs or Notion.
+- Podcast and video content pipelines that generate transcripts and push them to CMS tools.
+- Customer support bots and CRMs that log call transcripts directly into HubSpot or Salesforce.
+- Multilingual operations with automatic translation of audio for global teams.
+
+
+### Quickstart with Gladia + Zapier
+### 1. Get Set Up
+    - Create a Gladia account
+    - Get your API key from the dashboard
+    - Set up a webhook URL in your dashboard so Gladia can send back transcription events
+### 2. Send Audio to Gladia
+
+You have two options:
+- If your audio file is **not** publicly accessible → Use the Gladia Upload Block to send your file to Gladia. It will return a file URL you can use in the next step.
+- If your audio file is publicly accessible → You can skip this step and directly use the file URL in the transcription request.
+
+### 3. Request a Transcription
+    - Add a Gladia Transcription Block in Zapier
+
+    Provide either:
+        - The file URL you received from the Upload block, or
+        - A publicly accessible audio file URL
+
+### 4. Receive the Webhook Event
+Once Gladia finishes processing, it will send a webhook event to the URL you configured in your dashboard
+This webhook can trigger another Zap in Zapier
+👉 If the event is a success, it will include an id you can use to make a GET request and retrieve the final transcription result
