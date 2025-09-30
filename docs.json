@@ -69,13 +69,13 @@
           {
             "group": "Integrations",
             "pages": [
-              "chapters/integration/sdk",
-              "chapters/integration/pipecat",
-              "chapters/integration/livekit",
-              "chapters/integration/vapi",
-              "chapters/integration/recall",
-              "chapters/integration/meeting-baas",
-              "chapters/integration/twilio"
+              "chapters/integrations/sdk",
+              "chapters/integrations/pipecat",
+              "chapters/integrations/livekit",
+              "chapters/integrations/vapi",
+              "chapters/integrations/recall",
+              "chapters/integrations/meeting-baas",
+              "chapters/integrations/twilio"
             ]
           },
 
