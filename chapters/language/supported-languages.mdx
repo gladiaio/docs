@@ -10,7 +10,7 @@ mode: "wide"
   languages, see [Code switching](/chapters/language/code-switching).
 </Note>
 
-In our APIs and results, languages use 2-letter ISO 639-1 codes.
+In our APIs and results, languages use 2-letter ISO 639-1 codes. When no 639-1 code exists, we use the corresponding ISO 639-3 three-letter code (e.g., `yue` for Cantonese, `haw` for Hawaiian).
 
 <Tip>
   Use the 2-letter code in <code>language_config.languages</code> (e.g.{" "}
@@ -25,7 +25,6 @@ In our APIs and results, languages use 2-letter ISO 639-1 codes.
 |     Arabic     |  ar  |                 Yes                 |     Yes     |
 |    Armenian    |  hy  |                 Yes                 |     Yes     |
 |    Assamese    |  as  |                 Yes                 |     Yes     |
-|    Asturian    | ast  |                 No                  |     Yes     |
 |  Azerbaijani   |  az  |                 Yes                 |     Yes     |
 |    Bashkir     |  ba  |                 Yes                 |     Yes     |
 |     Basque     |  eu  |                 Yes                 |     Yes     |
@@ -34,9 +33,8 @@ In our APIs and results, languages use 2-letter ISO 639-1 codes.
 |    Bosnian     |  bs  |                 Yes                 |     Yes     |
 |     Breton     |  br  |                 Yes                 |     Yes     |
 |   Bulgarian    |  bg  |                 Yes                 |     Yes     |
-|    Burmese     | mymr |                 Yes                 |     Yes     |
+|   Cantonese    | yue  |                 Yes                 |     Yes     |
 |    Catalan     |  ca  |                 Yes                 |     Yes     |
-|   Castilian    |  es  |                 Yes                 |     Yes     |
 |    Chinese     |  zh  |                 Yes                 |     Yes     |
 |    Croatian    |  hr  |                 Yes                 |     Yes     |
 |     Czech      |  cs  |                 Yes                 |     Yes     |
@@ -46,14 +44,12 @@ In our APIs and results, languages use 2-letter ISO 639-1 codes.
 |    Estonian    |  et  |                 Yes                 |     Yes     |
 |    Faroese     |  fo  |                 Yes                 |     Yes     |
 |    Finnish     |  fi  |                 Yes                 |     Yes     |
-|    Flemish     |  nl  |                 Yes                 |     Yes     |
 |     French     |  fr  |                 Yes                 |     Yes     |
 |    Galician    |  gl  |                 Yes                 |     Yes     |
 |    Georgian    |  ka  |                 Yes                 |     Yes     |
 |     German     |  de  |                 Yes                 |     Yes     |
 |     Greek      |  el  |                 Yes                 |     Yes     |
 |    Gujarati    |  gu  |                 Yes                 |     Yes     |
-|    Haitian     |  ht  |                 Yes                 |     Yes     |
 | Haitian Creole |  ht  |                 Yes                 |     Yes     |
 |     Hausa      |  ha  |                 Yes                 |     Yes     |
 |    Hawaiian    | haw  |                 Yes                 |     Yes     |
@@ -64,7 +60,7 @@ In our APIs and results, languages use 2-letter ISO 639-1 codes.
 |   Indonesian   |  id  |                 Yes                 |     Yes     |
 |    Italian     |  it  |                 Yes                 |     Yes     |
 |    Japanese    |  ja  |                 Yes                 |     Yes     |
-|    Javanese    |  jv  |                 Yes                 |     Yes     |
+|    Javanese    |  jw  |                 Yes                 |     Yes     |
 |    Kannada     |  kn  |                 Yes                 |     Yes     |
 |     Kazakh     |  kk  |                 Yes                 |     Yes     |
 |     Khmer      |  km  |                 Yes                 |     Yes     |
@@ -72,7 +68,6 @@ In our APIs and results, languages use 2-letter ISO 639-1 codes.
 |      Lao       |  lo  |                 Yes                 |     Yes     |
 |     Latin      |  la  |                 Yes                 |     Yes     |
 |    Latvian     |  lv  |                 Yes                 |     Yes     |
-| Letzeburgesch  |  lb  |                 Yes                 |     Yes     |
 |    Lingala     |  ln  |                 Yes                 |     Yes     |
 |   Lithuanian   |  lt  |                 Yes                 |     Yes     |
 | Luxembourgish  |  lb  |                 Yes                 |     Yes     |
@@ -83,29 +78,24 @@ In our APIs and results, languages use 2-letter ISO 639-1 codes.
 |    Maltese     |  mt  |                 Yes                 |     Yes     |
 |     Maori      |  mi  |                 Yes                 |     Yes     |
 |    Marathi     |  mr  |                 Yes                 |     Yes     |
-|   Moldavian    |  ro  |                 Yes                 |     Yes     |
-|    Moldovan    |  ro  |                 Yes                 |     Yes     |
 |   Mongolian    |  mn  |                 Yes                 |     Yes     |
-|    Myanmar     | mymr |                 Yes                 |     Yes     |
+|    Myanmar     |  my  |                 Yes                 |     Yes     |
 |     Nepali     |  ne  |                 Yes                 |     Yes     |
 |   Norwegian    |  no  |                 Yes                 |     Yes     |
 |    Nynorsk     |  nn  |                 Yes                 |     Yes     |
 |    Occitan     |  oc  |                 Yes                 |     Yes     |
-|    Panjabi     |  pa  |                 Yes                 |     Yes     |
 |     Pashto     |  ps  |                 Yes                 |     Yes     |
 |    Persian     |  fa  |                 Yes                 |     Yes     |
 |     Polish     |  pl  |                 Yes                 |     Yes     |
 |   Portuguese   |  pt  |                 Yes                 |     Yes     |
 |    Punjabi     |  pa  |                 Yes                 |     Yes     |
-|     Pushto     |  ps  |                 Yes                 |     Yes     |
 |    Romanian    |  ro  |                 Yes                 |     Yes     |
 |    Russian     |  ru  |                 Yes                 |     Yes     |
-|    Sanskrit    |  sa  |                 Yes                 |     No      |
+|    Sanskrit    |  sa  |                 Yes                 |     Yes     |
 |    Serbian     |  sr  |                 Yes                 |     Yes     |
 |     Shona      |  sn  |                 Yes                 |     Yes     |
 |     Sindhi     |  sd  |                 Yes                 |     Yes     |
 |    Sinhala     |  si  |                 Yes                 |     Yes     |
-|   Sinhalese    |  si  |                 Yes                 |     Yes     |
 |     Slovak     |  sk  |                 Yes                 |     Yes     |
 |   Slovenian    |  sl  |                 Yes                 |     Yes     |
 |     Somali     |  so  |                 Yes                 |     Yes     |
@@ -125,8 +115,8 @@ In our APIs and results, languages use 2-letter ISO 639-1 codes.
 |   Ukrainian    |  uk  |                 Yes                 |     Yes     |
 |      Urdu      |  ur  |                 Yes                 |     Yes     |
 |     Uzbek      |  uz  |                 Yes                 |     Yes     |
-|   Valencian    |  ca  |                 Yes                 |     Yes     |
 |   Vietnamese   |  vi  |                 Yes                 |     Yes     |
 |     Welsh      |  cy  |                 Yes                 |     Yes     |
+|     Wolof      |  wo  |                 No                  |     Yes     |
 |    Yiddish     |  yi  |                 Yes                 |     Yes     |
 |     Yoruba     |  yo  |                 Yes                 |     Yes     |
