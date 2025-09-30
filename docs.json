@@ -462,6 +462,10 @@
     {
       "source": "/chapters/pre-recorded-stt/audio-to-llm",
       "destination": "/chapters/audio-intelligence/audio-to-llm"
+    },
+    {
+      "source": "/chapters/limits-and-specifications/languages",
+      "destination": "/chapters/language/supported-languages"
     }
   ]
 }
