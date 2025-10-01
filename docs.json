@@ -341,7 +341,7 @@
     },
     {
       "source": "/chapters/introduction/pages/introduction",
-      "destination": "/chapters/introduction/introduction"
+      "destination": "/chapters/introduction"
     },
     {
       "source": "/chapters/introduction/pages/why-use-gladia",
