@@ -466,6 +466,10 @@
     {
       "source": "/chapters/limits-and-specifications/languages",
       "destination": "/chapters/language/supported-languages"
+    },
+    {
+      "source": "/api-reference/introduction",
+      "destination": "/api-reference"
     }
   ]
 }
