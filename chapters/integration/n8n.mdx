@@ -28,8 +28,8 @@ Here’s the recommended workflow:
 
 In n8n:
     - Add an HTTP Request node
-    - Configure it to send a POST request to Gladia’s Upload endpoint if your file is not public:
-    `POST` https://api.gladia.io/audio/text/audio-transcription/
+    - Configure it to send a POST request to Gladia’s upload endpoint if your file is not public:
+    `POST` https://api.gladia.io/v2/upload
     - Add your API Key in the headers (Authorization: `Bearer YOUR_API_KEY`)
     - Send the audio file as `multipart/form-data`
 If your file is already publicly accessible → you can skip this upload step and directly provide the URL in the transcription request (see next step).
