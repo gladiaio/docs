@@ -1,0 +1,121 @@
+---
+title: "Meeting BaaS"
+description: "How to integrate Gladia with Meeting BaaS"
+---
+
+## What is Meeting BaaS?
+
+Meeting BaaS provides a unified API for Google Meet, Zoom, and Microsoft Teams so you can record and transcribe meetings through one service. By connecting Gladia STT, you leverage Gladia’s accurate, feature‑rich transcription for your meeting recordings without building the capture and RTC plumbing yourself.
+
+<Tip>
+  Looking for API details and options? See the Meeting BaaS docs:
+  [docs.meetingbaas.com](https://docs.meetingbaas.com/) and the Gladia docs
+  [docs.gladia.io](https://docs.gladia.io/).
+</Tip>
+
+## Benefits of integration
+
+- **Single API for Multiple Platforms**: Record and transcribe meetings from Google Meet, Zoom, and Microsoft Teams through one consistent API
+- **Advanced Transcription**: Utilize Gladia's accurate and feature-rich transcription service
+- **Instant Availability**: Get video recordings and transcriptions immediately after meetings
+- **Custom Branding**: Display your user's branding with custom names and chat messages
+- **GDPR Compliance**: Meeting BaaS provides a DPA and focuses on data minimization
+
+## What you can build
+
+- Use the generated transcripts in your applications
+- Set up webhook notifications for transcription events
+- Explore LLM summaries and metadata extraction features
+- Build custom interfaces using the provided transcription data
+
+## Quickstart via API
+
+There are two main ways to use Gladia with Meeting BaaS.
+
+### Create a bot with Gladia as the STT provider
+
+When creating a bot to join a meeting, specify Gladia as the speech‑to‑text provider:
+
+```bash
+curl -X POST "https://api.meetingbaas.com/bots" \
+  -H "x-meeting-baas-api-key: <MEETING_BAAS_API_KEY>" \
+  -H "Content-Type: application/json" \
+  -d '{
+          "meeting_url": "https://meet.google.com/xyz-abc",
+          "speech_to_text": "Gladia",
+          "webhook_url": "https://yourapp.com/webhook"
+       }'
+```
+
+### Retranscribe an existing recording with Gladia
+
+For existing recordings, use the Retranscribe Bot API to process audio with Gladia:
+
+```bash
+curl -X POST "https://api.meetingbaas.com/bots/retranscribe" \
+  -H "x-meeting-baas-api-key: <MEETING_BAAS_API_KEY>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "bot_uuid": "string",
+    "speech_to_text": {
+      "api_key": "<GLADIA_API_KEY>",
+      "provider": "Gladia"
+    },
+    "webhook_url": "string"
+  }'
+```
+
+## Setup instructions
+
+### Prerequisites
+
+1. A Meeting BaaS account with an API key
+2. A Gladia account with an API key
+
+### Integration steps
+
+1. **Get your Gladia API key**
+   - [Sign up for a Gladia account](https://app.gladia.io/auth/signin) if you don't have one
+   - Navigate to your API keys section and copy your key
+
+2. **Create a Meeting BaaS bot with Gladia**
+   - Use the API endpoint `/bots` with your Meeting BaaS API key
+   - Set `"speech_to_text": "Gladia"` in your request body as shown in the example above
+
+3. **Retranscribe with Gladia**
+   - Use the `/bots/retranscribe` endpoint
+   - Provide your Gladia API key in the `speech_to_text.api_key` field
+   - Set `"provider": "Gladia"` to specify Gladia as the transcription service
+
+## Response handling
+
+Upon successful integration, Meeting BaaS will return a response with status code 200 or 202, containing details about the transcription job.
+
+## What's next?
+
+After integrating with Meeting BaaS, you can:
+
+- Use the generated transcripts in your applications
+- Set up webhook notifications for transcription events
+- Explore additional Meeting BaaS features like LLM summaries and metadata extraction
+- Build custom interfaces using the provided transcription data
+
+<CardGroup cols={3}>
+  <Card title="Get your API key" href="https://app.gladia.io/apikeys" icon="key">
+    Get your API key on the Gladia dashboard
+  </Card>
+  <Card
+    title="Meeting BaaS docs"
+    icon="book"
+    href="https://docs.meetingbaas.com/"
+  >
+    Explore service options and API details
+  </Card>
+  <Card
+    title="Gladia docs"
+    icon="book"
+    href="https://docs.gladia.io/"
+  >
+    Learn about STT options and parameters
+  </Card>
+</CardGroup>

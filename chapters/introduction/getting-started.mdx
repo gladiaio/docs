@@ -1,68 +1,32 @@
 ---
 title: Getting started
-description: "Setup your Gladia account and start using the most reliable state-of-the-art Speech To Text API"
+description: "Setup your Gladia account and start using the most reliable state-of-the-art Speech-To-Text API"
+mode: "wide"
 ---
 
-import SetupAccount from '/snippets/setup-account.mdx';
+import SetupAccount from "/snippets/setup-account.mdx";
+import SttCards from "/snippets/stt-cards.mdx";
+import GettingStartedPlayground from "/snippets/getting-started-playground.mdx";
+import IntegrationsCards from "/snippets/integrations-cards.mdx";
 
-<SetupAccount />
-
-## Gladia's playground
-
-Using [Gladia's playground](https://app.gladia.io/playground/1) is a convenient way to test our Speech To Text API. On the playground
-you are able to transcribe remote audio files through URL, and also upload your local audio files, alongside with live
-audio transcription.
-
-<Steps>
-  <Step title="Select your audio source">
-    Choose your audio source (stream from you microphone, or upload a local file)
-
-    <Frame>
-      <img src="/assets/images/playground-1.png" />
-    </Frame>
-
-    Then proceed to the next step.
+<Steps titleSize="h2">
+  <Step title="Setup account">
+    <SetupAccount />
   </Step>
+  <Step title="Start building with Gladia!">
+    ### With our SDK / API
 
-  <Step title="Select features">
-    You'll be able to select <Tooltip tip="If you want to see a complete list of the features Gladia's API provide check the Features section">some of
-    the options</Tooltip> Gladia API provide for your transcription. \
-    For this example, we want to detect the named entity (like email adresses, phone numbers, etc.), so we turned on **named entity recognition**.
+    Want to build your integration yourself ? Use our SDK or our API directly:
 
-    <Note>
-      Only a few features of Gladia API are available on the playground. For more advanced testing,
-      check [our API documentation](/api-reference/introduction/) instead.
-    </Note>
+    <CardGroup cols={2}>
+      <SttCards />
+    </CardGroup>
 
-    <Frame>
-      <img src="/assets/images/playground-2.png" />
-    </Frame>
-  </Step>
+    ### With one of our partners
+    <IntegrationsCards />
 
-  <Step title="Talk to Gladia">
-    You can talk to Gladia by clicking on the "Start transcribing" button, and you'll be able to see the transcription of your voice in the "Transcription" tab.
-    <Note>
-      Text in italic in the transcription represents [partials transcripts](/chapters/live-stt/features#partial-transcripts).
-    </Note>
-    <Frame>
-      <img src="/assets/images/playground-3.png" />
-    </Frame>
-  </Step>
-
-  <Step title="Transcribe">
-    You can see an already formatted and readable results in the default "Transcription" tab, and you'll also find
-    the result in JSON format (the one you'd get with an API call).
-
-    <Frame>
-      <img src="/assets/images/playground-4.png" />
-    </Frame>
   </Step>
 </Steps>
-
-## Gladia's APIs
-
-* [Pre-recorded Speech To Text (STT)](/chapters/pre-recorded-stt/getting-started)
-* [Real-time Speech To Text (STT)](/chapters/live-stt/getting-started)
 
 ## Next steps
 
@@ -72,15 +36,33 @@ transcriptions.
 On top of its **Speech-to-text API**, Gladia provides a whole set of tools that you might want
 to use for your particular use cases like:
 
-* Speaker recognition (diarization)
-* Audio intelligence models (Translation, Summarization, Chapterization, Custom AI process...)
-* Word level timestamps
-* Subtitles generation
-* Custom vocabulary & Context prompting
-
-Here are some links that can help you dive deeper into our powerful API:
-
-* [Pre-recorded Speech To Text (STT) features](/chapters/pre-recorded-stt/features)
-* [Live STT features](/chapters/live-stt/features)
-* [Gladia code samples GitHub repository](https://github.com/gladiaio/gladia-samples)
-* [API Reference](/api-reference/)
+<CardGroup cols={2}>
+  <Card
+    title="Pre-recorded transcription features"
+    icon="file-arrow-up"
+    href="/chapters/pre-recorded-stt/features"
+    arrow={false}
+    horizontal={true}
+  />
+  <Card
+    title="Realtime transcription features"
+    icon="bolt"
+    href="/chapters/live-stt/features"
+    arrow={false}
+    horizontal={true}
+  />
+  <Card
+    title="Code samples"
+    icon="file-code"
+    href="https://github.com/gladiaio/gladia-samples"
+    arrow={true}
+    horizontal={true}
+  />
+  <Card
+    title="API Reference"
+    icon="code"
+    href="/api-reference"
+    arrow={false}
+    horizontal={true}
+  />
+</CardGroup>

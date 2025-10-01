@@ -1,0 +1,1159 @@
+asyncapi: 3.0.0
+info:
+  title: Gladia real-time WebSocket
+  version: 1.0.0
+  description: |-
+    Use the Gladia WebSocket to stream audio and receive real-time transcription,
+    events, add-on results, and post-processing outputs.
+servers:
+  real-time:
+    host: api.gladia.io/v2/live?token={SESSION}
+    protocol: wss
+    description: |-
+      Connect using the session token returned by POST /v2/live.
+      The same URL can be reused after recoverable disconnects.
+
+channels:
+  liveTranscription:
+    address: liveTranscription
+    description: Single WebSocket channel for all client->server and server->client messages.
+    messages:
+      # Client -> Server
+      audioChunkJson:
+        $ref: "#/components/messages/audioChunkJson"
+      audioChunkBinary:
+        $ref: "#/components/messages/audioChunkBinary"
+      stopRecording:
+        $ref: "#/components/messages/stopRecording"
+      # Server -> Client (Realtime)
+      transcript:
+        $ref: "#/components/messages/transcript"
+      speechStart:
+        $ref: "#/components/messages/speechStart"
+      speechEnd:
+        $ref: "#/components/messages/speechEnd"
+      translation:
+        $ref: "#/components/messages/translation"
+      namedEntityRecognition:
+        $ref: "#/components/messages/namedEntityRecognition"
+      sentimentAnalysis:
+        $ref: "#/components/messages/sentimentAnalysis"
+      # Server -> Client (Post-processing)
+      postTranscript:
+        $ref: "#/components/messages/postTranscript"
+      postFinalTranscript:
+        $ref: "#/components/messages/postFinalTranscript"
+      postChapterization:
+        $ref: "#/components/messages/postChapterization"
+      postSummarization:
+        $ref: "#/components/messages/postSummarization"
+      # Server -> Client (Acks)
+      audioChunkAck:
+        $ref: "#/components/messages/audioChunkAck"
+      stopRecordingAck:
+        $ref: "#/components/messages/stopRecordingAck"
+      # Server -> Client (Lifecycle)
+      startSession:
+        $ref: "#/components/messages/startSession"
+      startRecording:
+        $ref: "#/components/messages/startRecording"
+      endRecording:
+        $ref: "#/components/messages/endRecording"
+      endSession:
+        $ref: "#/components/messages/endSession"
+
+operations:
+  sendAudioChunkJson:
+    action: receive
+    channel:
+      $ref: "#/channels/liveTranscription"
+    summary: Send an audio chunk as JSON (base64).
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/audioChunkJson"
+  sendAudioChunkBinary:
+    action: receive
+    channel:
+      $ref: "#/channels/liveTranscription"
+    summary: Send an audio chunk as a binary frame.
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/audioChunkBinary"
+  sendStopRecording:
+    action: receive
+    channel:
+      $ref: "#/channels/liveTranscription"
+    summary: Stop recording.
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/stopRecording"
+
+  onTranscript:
+    action: send
+    channel:
+      $ref: "#/channels/liveTranscription"
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/transcript"
+  onSpeechStart:
+    action: send
+    channel:
+      $ref: "#/channels/liveTranscription"
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/speechStart"
+  onSpeechEnd:
+    action: send
+    channel:
+      $ref: "#/channels/liveTranscription"
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/speechEnd"
+  onTranslation:
+    action: send
+    channel:
+      $ref: "#/channels/liveTranscription"
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/translation"
+  onNamedEntityRecognition:
+    action: send
+    channel:
+      $ref: "#/channels/liveTranscription"
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/namedEntityRecognition"
+  onSentimentAnalysis:
+    action: send
+    channel:
+      $ref: "#/channels/liveTranscription"
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/sentimentAnalysis"
+  onPostTranscript:
+    action: send
+    channel:
+      $ref: "#/channels/liveTranscription"
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/postTranscript"
+  onPostFinalTranscript:
+    action: send
+    channel:
+      $ref: "#/channels/liveTranscription"
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/postFinalTranscript"
+  onPostChapterization:
+    action: send
+    channel:
+      $ref: "#/channels/liveTranscription"
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/postChapterization"
+  onPostSummarization:
+    action: send
+    channel:
+      $ref: "#/channels/liveTranscription"
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/postSummarization"
+  onAudioChunkAck:
+    action: send
+    channel:
+      $ref: "#/channels/liveTranscription"
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/audioChunkAck"
+  onStopRecordingAck:
+    action: send
+    channel:
+      $ref: "#/channels/liveTranscription"
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/stopRecordingAck"
+  onStartSession:
+    action: send
+    channel:
+      $ref: "#/channels/liveTranscription"
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/startSession"
+  onStartRecording:
+    action: send
+    channel:
+      $ref: "#/channels/liveTranscription"
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/startRecording"
+  onEndRecording:
+    action: send
+    channel:
+      $ref: "#/channels/liveTranscription"
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/endRecording"
+  onEndSession:
+    action: send
+    channel:
+      $ref: "#/channels/liveTranscription"
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/endSession"
+
+components:
+  messages:
+    # Client -> Server
+    audioChunkJson:
+      name: audio_chunk
+      title: Audio Chunk (JSON)
+      contentType: application/json
+      summary: Send audio bytes as base64-encoded chunk.
+      payload:
+        type: object
+        required: [type, data]
+        properties:
+          type:
+            type: string
+            const: audio_chunk
+          data:
+            type: object
+            required: [chunk]
+            properties:
+              chunk:
+                type: string
+                description: Base64-encoded raw audio bytes.
+      description: Client payload to stream audio in JSON when binary frames are not convenient.
+      examples:
+        - payload:
+            type: audio_chunk
+            data:
+              chunk: "UklGRiQAAABXQVZFZm10IBIAAAABAAEAESsAACJWAAACABAAZGF0YQAAAA=="
+    audioChunkBinary:
+      name: audio_chunk_binary
+      title: Audio Chunk (Binary frame)
+      contentType: application/octet-stream
+      summary: Send audio bytes as a binary WebSocket frame.
+      payload:
+        type: string
+        format: binary
+        description: Raw audio bytes matching the session encoding/bit_depth/sample_rate/channels.
+      description: Client streams raw audio as binary frames for lowest overhead transport.
+    stopRecording:
+      name: stop_recording
+      title: Stop Recording
+      contentType: application/json
+      summary: Inform Gladia that recording is over.
+      payload:
+        type: object
+        required: [type]
+        properties:
+          type:
+            type: string
+            const: stop_recording
+      description: Client command indicating no more audio frames will be sent for this session.
+      examples:
+        - payload:
+            type: stop_recording
+
+    # Realtime
+    transcript:
+      name: transcript
+      title: Transcript
+      contentType: application/json
+      summary: This message contains the informations about the transcript of the audio chunk.
+      payload:
+        $ref: "#/components/schemas/TranscriptMessage"
+    speechStart:
+      name: speech_start
+      title: Speech Start
+      contentType: application/json
+      summary: Indicates the start of detected speech activity on a given channel.
+      payload:
+        $ref: "#/components/schemas/SpeechEventMessage"
+    speechEnd:
+      name: speech_end
+      title: Speech End
+      contentType: application/json
+      summary: Indicates the end of detected speech activity.
+      payload:
+        $ref: "#/components/schemas/SpeechEventMessageEnd"
+    translation:
+      name: translation
+      title: Translation
+      contentType: application/json
+      summary: This message contains the informations about the translation of the audio chunk.
+      payload:
+        $ref: "#/components/schemas/TranslationMessage"
+    namedEntityRecognition:
+      name: named_entity_recognition
+      title: Named Entity Recognition
+      contentType: application/json
+      summary: This message contains the informations about the named entity recognition of the audio chunk.
+      payload:
+        $ref: "#/components/schemas/NamedEntityRecognitionMessage"
+    sentimentAnalysis:
+      name: sentiment_analysis
+      title: Sentiment Analysis
+      contentType: application/json
+      summary: This message contains the informations about the sentiment analysis of the audio chunk.
+      payload:
+        $ref: "#/components/schemas/SentimentAnalysisMessage"
+
+    # Post-processing
+    postTranscript:
+      name: post_transcript
+      title: Post Transcript
+      contentType: application/json
+      summary: This message contains the informations about the post transcript of the audio chunk.
+      payload:
+        $ref: "#/components/schemas/PostTranscriptMessage"
+    postFinalTranscript:
+      name: post_final_transcript
+      title: Final transcript (aggregated)
+      contentType: application/json
+      summary: This message contains the informations about the post final transcript of the audio chunk.
+      payload:
+        $ref: "#/components/schemas/PostFinalTranscriptMessage"
+    postChapterization:
+      name: post_chapterization
+      title: Chapterization
+      contentType: application/json
+      summary: This message contains the informations about the post chapterization of the audio chunk.
+      payload:
+        $ref: "#/components/schemas/PostChapterizationMessage"
+    postSummarization:
+      name: post_summarization
+      title: Summarization
+      contentType: application/json
+      summary: This message contains the informations about the post summarization of the audio chunk.
+      payload:
+        $ref: "#/components/schemas/PostSummarizationMessage"
+
+    # Acknowledgment
+    audioChunkAck:
+      name: audio_chunk_ack
+      title: Audio Chunk Acknowledgment
+      contentType: application/json
+      summary: This message contains the informations about the audio chunk acknowledgment of the audio chunk.
+      payload:
+        $ref: "#/components/schemas/AudioChunkAckMessage"
+    stopRecordingAck:
+      name: stop_recording_ack
+      title: Stop Recording Acknowledgment
+      contentType: application/json
+      summary: This message contains the informations about the stop recording acknowledgment of the audio chunk.
+      payload:
+        $ref: "#/components/schemas/StopRecordingAckMessage"
+
+    # Lifecycle
+    startSession:
+      name: start_session
+      title: Start Session
+      contentType: application/json
+      summary: This message contains the informations about the start session of the audio chunk.
+      payload:
+        $ref: "#/components/schemas/SimpleLifecycleMessage"
+    startRecording:
+      name: start_recording
+      title: Start Recording
+      contentType: application/json
+      summary: This message contains the informations about the start recording of the audio chunk.
+      payload:
+        $ref: "#/components/schemas/SimpleLifecycleMessageStart"
+    endRecording:
+      name: end_recording
+      title: End Recording
+      contentType: application/json
+      summary: This message contains the informations about the end recording of the audio chunk.
+      payload:
+        $ref: "#/components/schemas/EndRecordingMessage"
+    endSession:
+      name: end_session
+      title: End Session
+      contentType: application/json
+      summary: This message contains the informations about the end session of the audio chunk.
+      payload:
+        $ref: "#/components/schemas/SimpleLifecycleMessageEndSession"
+
+  schemas:
+    UUID:
+      type: string
+      format: uuid
+      description: UUID identifying the session.
+      examples:
+        - "550e8400-e29b-41d4-a716-446655440000"
+    ISODateTime:
+      type: string
+      format: date-time
+      description: ISO 8601 timestamp in UTC.
+      examples:
+        - "2025-09-19T12:34:56Z"
+    Word:
+      type: object
+      properties:
+        word:
+          type: string
+          description: Recognized token as spoken in the audio.
+        start:
+          type: number
+          description: Start time of the word in seconds from session start.
+        end:
+          type: number
+          description: End time of the word in seconds from session start.
+        confidence:
+          type: number
+          description: Confidence score for the token between 0 and 1.
+      description: Word-level timing and confidence for a token in the transcript.
+      examples:
+        - word: "hello"
+          start: 0.12
+          end: 0.38
+          confidence: 0.97
+    Utterance:
+      type: object
+      properties:
+        start:
+          type: number
+          description: Start time of the utterance in seconds from session start.
+        end:
+          type: number
+          description: End time of the utterance in seconds from session start.
+        confidence:
+          type: number
+          description: Confidence score for the utterance between 0 and 1.
+        channel:
+          type: integer
+          description: Audio channel index (0-based) if multiple channels are present.
+        words:
+          type: array
+          items:
+            $ref: "#/components/schemas/Word"
+          description: Word-level details for this utterance.
+        text:
+          type: string
+          description: The transcribed text for the utterance.
+        language:
+          type: string
+          description: BCP-47 language tag detected for the utterance (e.g. "en").
+      description: Continuous segment of speech with timing, text and optional channel.
+      examples:
+        - start: 1.02
+          end: 3.44
+          confidence: 0.93
+          channel: 0
+          words:
+            - word: "good"
+              start: 1.02
+              end: 1.21
+              confidence: 0.96
+            - word: "morning"
+              start: 1.22
+              end: 1.55
+              confidence: 0.95
+          text: "good morning"
+          language: "en"
+    ErrorObject:
+      type: object
+      properties:
+        status_code:
+          oneOf:
+            - { type: integer }
+            - { type: string }
+          description: HTTP-like code or provider-specific status string.
+        exception:
+          type: string
+          description: Short machine-readable error name.
+        message:
+          type: string
+          description: Human-readable error explanation.
+      description: Standard error container included in payloads when an operation fails.
+      examples:
+        - status_code: 400
+          exception: InvalidArgument
+          message: Unsupported sample rate
+
+    # Realtime payloads
+    TranscriptMessage:
+      type: object
+      required: [session_id, created_at, type, data]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        type: { type: string, const: transcript }
+        data:
+          type: object
+          required: [id, is_final, utterance]
+          properties:
+            id: { type: string }
+            is_final: { type: boolean, description: Indicates if the transcript is final or partial. }
+            utterance: { $ref: "#/components/schemas/Utterance" }
+      description: Realtime transcript update for an utterance; may be interim or final.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:34:10Z"
+          type: transcript
+          data:
+            id: "00-00000011"
+            is_final: true
+            utterance:
+              start: 0.0
+              end: 0.48
+              confidence: 0.91
+              channel: 0
+              words:
+                - word: "Hello"
+                  start: 0.0
+                  end: 0.35
+                  confidence: 0.91
+                - word: "world"
+                  start: 0.36
+                  end: 0.48
+                  confidence: 0.91
+              text: "Hello world."
+              language: "en"
+
+    SpeechEventData:
+      type: object
+      properties:
+        time:
+          type: number
+          description: Time in seconds from session start when the event occurred.
+        channel:
+          type: integer
+          description: Audio channel index (0-based) for which the event applies.
+      description: Timing information for speech start/end events.
+      examples:
+        - time: 1.24
+          channel: 0
+    SpeechEventMessage:
+      type: object
+      required: [session_id, created_at, type, data]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        type: { type: string, const: speech_start }
+        data: { $ref: "#/components/schemas/SpeechEventData" }
+      description: Indicates the start of detected speech activity on a given channel.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:34:06Z"
+          type: speech_start
+          data:
+            time: 1.24
+            channel: 0
+    SpeechEventMessageEnd:
+      type: object
+      required: [session_id, created_at, type, data]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        type: { type: string, const: speech_end }
+        data: { $ref: "#/components/schemas/SpeechEventData" }
+      description: Indicates the end of detected speech activity.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:34:09Z"
+          type: speech_end
+          data:
+            time: 3.10
+            channel: 0
+
+    # Alias schema for documentation pages referencing "SpeechEndMessage"
+    SpeechEndMessage:
+      title: Speech End
+      type: object
+      required: [session_id, created_at, type, data]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        type: { type: string, const: speech_end }
+        data:
+          type: object
+          properties:
+            time:
+              type: number
+              description: Time in seconds from session start when the event occurred.
+            channel:
+              type: integer
+              description: Audio channel index (0-based) for which the event applies.
+          description: Timing information for the end of detected speech.
+      description: Indicates the end of detected speech activity on a channel, with timing metadata.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:34:09Z"
+          type: speech_end
+          data:
+            time: 3.10
+            channel: 0
+
+    SpeechStartMessage:
+      title: Speech Start
+      type: object
+      required: [session_id, created_at, type, data]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        type: { type: string, const: speech_start }
+        data:
+          type: object
+          properties:
+            time:
+              type: number
+              description: Time in seconds from session start when the event occurred.
+            channel:
+              type: integer
+              description: Audio channel index (0-based) for which the event applies.
+          description: Timing information for the start of detected speech.
+      description: Indicates the start of detected speech activity on a channel, with timing metadata.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:34:06Z"
+          type: speech_start
+          data:
+            time: 1.24
+            channel: 0
+
+    TranslationMessage:
+      type: object
+      required: [session_id, created_at, type, data]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        error:
+          oneOf:
+            - { type: "null" }
+            - { $ref: "#/components/schemas/ErrorObject" }
+        type: { type: string, const: translation }
+        data:
+          type: object
+          required:
+            [
+              utterance_id,
+              utterance,
+              original_language,
+              target_language,
+              translated_utterance,
+            ]
+          properties:
+            utterance_id: { type: string }
+            utterance: { $ref: "#/components/schemas/Utterance" }
+            original_language: { type: string }
+            target_language: { type: string }
+            translated_utterance: { $ref: "#/components/schemas/Utterance" }
+      description: Translation result for an utterance into the requested target language.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:34:20Z"
+          type: translation
+          error: null
+          data:
+            utterance_id: "utt_001"
+            utterance:
+              text: "buenos días"
+              language: "es"
+              start: 4.2
+              end: 6.1
+            original_language: "es"
+            target_language: "en"
+            translated_utterance:
+              text: "good morning"
+              language: "en"
+              start: 4.2
+              end: 6.1
+
+    NamedEntityRecognitionMessage:
+      type: object
+      required: [session_id, created_at, type, data]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        error:
+          oneOf:
+            - { type: "null" }
+            - { $ref: "#/components/schemas/ErrorObject" }
+        type: { type: string, const: named_entity_recognition }
+        data:
+          type: object
+          required: [utterance_id, utterance, results]
+          properties:
+            utterance_id: { type: string }
+            utterance: { $ref: "#/components/schemas/Utterance" }
+            results:
+              type: array
+              items:
+                type: object
+                properties:
+                  entity_type: { type: string }
+                  text: { type: string }
+                  start: { type: number }
+                  end: { type: number }
+      description: Named entity recognition results extracted from the given utterance.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:34:30Z"
+          type: named_entity_recognition
+          error: null
+          data:
+            utterance_id: "utt_002"
+            utterance:
+              text: "meeting with Alice at 3pm"
+              start: 7.0
+              end: 10.5
+            results:
+              - entity_type: PERSON
+                text: "Alice"
+                start: 2.0
+                end: 2.5
+              - entity_type: TIME
+                text: "3pm"
+                start: 3.0
+                end: 3.3
+
+    SentimentAnalysisMessage:
+      type: object
+      required: [session_id, created_at, type, data]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        error:
+          oneOf:
+            - { type: "null" }
+            - { $ref: "#/components/schemas/ErrorObject" }
+        type: { type: string, const: sentiment_analysis }
+        data:
+          type: object
+          required: [utterance_id, utterance, results]
+          properties:
+            utterance_id: { type: string }
+            utterance: { $ref: "#/components/schemas/Utterance" }
+            results:
+              type: array
+              items:
+                type: object
+                properties:
+                  sentiment: { type: string }
+                  emotion: { type: string }
+                  text: { type: string }
+                  start: { type: number }
+                  end: { type: number }
+                  channel: { type: integer }
+      description: Sentiment and emotion analysis associated with segments of an utterance.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:34:35Z"
+          type: sentiment_analysis
+          error: null
+          data:
+            utterance_id: "utt_003"
+            utterance:
+              text: "I love this product!"
+              start: 11.0
+              end: 13.2
+            results:
+              - sentiment: positive
+                emotion: joy
+                text: "love this product"
+                start: 11.4
+                end: 12.9
+                channel: 0
+
+    # Post-processing payloads
+    SentenceResult:
+      type: object
+      properties:
+        success: { type: boolean }
+        is_empty: { type: boolean }
+        exec_time: { type: number }
+        error:
+          oneOf:
+            - { type: "null" }
+            - { $ref: "#/components/schemas/ErrorObject" }
+        results:
+          type: array
+          items: { type: string }
+      description: Result container for sentence-level operations such as punctuation or translation.
+      examples:
+        - success: true
+          is_empty: false
+          exec_time: 0.12
+          error: null
+          results:
+            - "Hello, world."
+    SubtitleBlock:
+      type: object
+      properties:
+        format: { type: string, enum: [srt, vtt, ass] }
+        subtitles: { type: string }
+      description: Subtitle payload for a specific format.
+      examples:
+        - format: vtt
+          subtitles: "WEBVTT\n\n00:00:00.000 --> 00:00:01.000\nHello world\n"
+
+    PostTranscriptData:
+      type: object
+      properties:
+        full_transcript: { type: string }
+        languages:
+          type: array
+          items: { type: string }
+        sentences:
+          type: array
+          items: { $ref: "#/components/schemas/SentenceResult" }
+        subtitles:
+          type: array
+          items: { $ref: "#/components/schemas/SubtitleBlock" }
+        utterances:
+          type: array
+          items: { $ref: "#/components/schemas/Utterance" }
+      description: Aggregated transcription artifacts produced after the session completes.
+      examples:
+        - full_transcript: "hello world"
+          languages: ["en"]
+          sentences:
+            - success: true
+              is_empty: false
+              exec_time: 0.11
+              error: null
+              results: ["Hello world."]
+          subtitles:
+            - format: srt
+              subtitles: "1\n00:00:00,000 --> 00:00:01,000\nHello world\n"
+          utterances:
+            - start: 0.0
+              end: 0.9
+              text: "hello world"
+
+    PostTranscriptMessage:
+      type: object
+      required: [session_id, created_at, type, data]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        type: { type: string, const: post_transcript }
+        data: { $ref: "#/components/schemas/PostTranscriptData" }
+      description: Post-processing transcript payload containing full text and artifacts.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:40:00Z"
+          type: post_transcript
+          data:
+            full_transcript: "hello world"
+
+    PostFinalTranscriptMessage:
+      type: object
+      required: [session_id, created_at, type, data]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        type: { type: string, const: post_final_transcript }
+        data:
+          type: object
+          properties:
+            metadata:
+              type: object
+              properties:
+                audio_duration: { type: number }
+                number_of_distinct_channels: { type: integer }
+                billing_time: { type: number }
+                transcription_time: { type: number }
+            transcription: { $ref: "#/components/schemas/PostTranscriptData" }
+            translation:
+              type: object
+              properties:
+                success: { type: boolean }
+                is_empty: { type: boolean }
+                exec_time: { type: number }
+                error:
+                  oneOf:
+                    - { type: "null" }
+                    - { $ref: "#/components/schemas/ErrorObject" }
+                results:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      error:
+                        oneOf:
+                          - { type: "null" }
+                          - { $ref: "#/components/schemas/ErrorObject" }
+                      full_transcript: { type: string }
+                      languages:
+                        type: array
+                        items: { type: string }
+                      sentences:
+                        type: array
+                        items: { $ref: "#/components/schemas/SentenceResult" }
+                      subtitles:
+                        type: array
+                        items: { $ref: "#/components/schemas/SubtitleBlock" }
+                      utterances:
+                        type: array
+                        items: { $ref: "#/components/schemas/Utterance" }
+            summarization:
+              type: object
+              properties:
+                success: { type: boolean }
+                is_empty: { type: boolean }
+                exec_time: { type: number }
+                error:
+                  oneOf:
+                    - { type: "null" }
+                    - { $ref: "#/components/schemas/ErrorObject" }
+                results: { type: string }
+            named_entity_recognition:
+              type: object
+              properties:
+                success: { type: boolean }
+                is_empty: { type: boolean }
+                exec_time: { type: number }
+                error:
+                  oneOf:
+                    - { type: "null" }
+                    - { $ref: "#/components/schemas/ErrorObject" }
+                entity: { type: string }
+            sentiment_analysis:
+              type: object
+              properties:
+                success: { type: boolean }
+                is_empty: { type: boolean }
+                exec_time: { type: number }
+                error:
+                  oneOf:
+                    - { type: "null" }
+                    - { $ref: "#/components/schemas/ErrorObject" }
+                results: { type: string }
+            chapterization:
+              type: object
+              properties:
+                success: { type: boolean }
+                is_empty: { type: boolean }
+                exec_time: { type: number }
+                error:
+                  oneOf:
+                    - { type: "null" }
+                    - { $ref: "#/components/schemas/ErrorObject" }
+                results: { type: object }
+      description: Final aggregated output for the session, including metadata and add-on results.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:45:00Z"
+          type: post_final_transcript
+          data:
+            metadata:
+              audio_duration: 123.45
+              number_of_distinct_channels: 1
+              billing_time: 120.0
+              transcription_time: 3.2
+            transcription:
+              full_transcript: "hello world"
+
+    PostChapterizationMessage:
+      type: object
+      required: [session_id, created_at, type, data]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        error:
+          oneOf:
+            - { type: "null" }
+            - { $ref: "#/components/schemas/ErrorObject" }
+        type: { type: string, const: post_chapterization }
+        data:
+          type: object
+          properties:
+            results:
+              type: array
+              items:
+                type: object
+                properties:
+                  abstractive_summary: { type: string }
+                  extractive_summary: { type: string }
+                  summary: { type: string }
+                  headline: { type: string }
+                  gist: { type: string }
+                  keywords:
+                    type: array
+                    items: { type: string }
+                  start: { type: number }
+                  end: { type: number }
+                  sentences:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        sentence: { type: string }
+                        start: { type: number }
+                        end: { type: number }
+                        words:
+                          type: array
+                          items: { $ref: "#/components/schemas/Word" }
+                  text: { type: string }
+      description: Post-processing output with chapter-level summaries and metadata.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:46:00Z"
+          type: post_chapterization
+          error: null
+          data:
+            results:
+              - headline: "Project kickoff"
+                start: 0.0
+                end: 60.0
+                keywords: ["timeline", "owner"]
+
+    PostSummarizationMessage:
+      type: object
+      required: [session_id, created_at, type, data]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        error:
+          oneOf:
+            - { type: "null" }
+            - { $ref: "#/components/schemas/ErrorObject" }
+        type: { type: string, const: post_summarization }
+        data:
+          type: object
+          properties:
+            results: { type: string }
+      description: Post-processing abstractive summary of the conversation.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:47:00Z"
+          type: post_summarization
+          error: null
+          data:
+            results: "The team aligned on goals and next steps for the quarter."
+
+    # Ack payloads
+    AudioChunkAckMessage:
+      type: object
+      required: [session_id, created_at, type, acknowledged, data]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        acknowledged:
+          type: boolean
+          description: True if the server successfully received and buffered the audio chunk.
+        error:
+          oneOf:
+            - { type: "null" }
+            - { $ref: "#/components/schemas/ErrorObject" }
+        type:
+          type: string
+          const: audio_chunk
+          description: Event type for audio chunk acknowledgments.
+        data:
+          type: object
+          properties:
+            byte_range:
+              type: array
+              items: { type: number }
+              minItems: 2
+              maxItems: 2
+              description: Inclusive byte offsets [start, end] acknowledged for this chunk.
+            time_range:
+              type: array
+              items: { type: number }
+              minItems: 2
+              maxItems: 2
+              description: Inclusive audio time range in seconds [start, end] covered by this chunk.
+      description: Acknowledges receipt of an audio chunk and indicates the acknowledged byte/time ranges.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:34:56Z"
+          type: audio_chunk
+          acknowledged: true
+          error: null
+          data:
+            byte_range: [0, 4095]
+            time_range: [0.0, 0.256]
+
+    StopRecordingAckMessage:
+      type: object
+      required: [session_id, created_at, type, acknowledged, data]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        acknowledged:
+          type: boolean
+          description: True if stop_recording was accepted; false if rejected.
+        error:
+          oneOf:
+            - { type: "null" }
+            - { $ref: "#/components/schemas/ErrorObject" }
+        type:
+          type: string
+          const: stop_recording
+          description: Event type for stop recording acknowledgments.
+        data:
+          type: object
+          description: Additional context provided by the provider; may be empty when acknowledged is true.
+      description: Acknowledges the stop recording command with optional provider details.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:35:10Z"
+          type: stop_recording
+          acknowledged: true
+          error: null
+          data: {}
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:35:12Z"
+          type: stop_recording
+          acknowledged: false
+          error:
+            status_code: 409
+            exception: ConflictError
+            message: Recording already stopped
+          data: {}
+
+    # Lifecycle payloads
+    SimpleLifecycleMessage:
+      type: object
+      required: [session_id, created_at, type]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        type:
+          type: string
+          const: start_session
+          description: Lifecycle event emitted once when the session is created and ready.
+      description: Base lifecycle event for session start.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:34:00Z"
+          type: start_session
+    SimpleLifecycleMessageStart:
+      type: object
+      required: [session_id, created_at, type]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        type:
+          type: string
+          const: start_recording
+          description: Lifecycle event emitted when audio capture/streaming begins.
+      description: Lifecycle event indicating the start of recording.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:34:05Z"
+          type: start_recording
+    EndRecordingMessage:
+      type: object
+      required: [session_id, created_at, type, data]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        type:
+          type: string
+          const: end_recording
+          description: Lifecycle event emitted when the provider has stopped receiving audio.
+        data:
+          type: object
+          additionalProperties: true
+          description: Provider-defined object with optional metadata related to the end of recording.
+      description: Lifecycle event sent when recording has ended, optionally carrying provider metadata.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:36:00Z"
+          type: end_recording
+          data:
+            reason: user_request
+            received_total_bytes: 1048576
+    SimpleLifecycleMessageEndSession:
+      type: object
+      required: [session_id, created_at, type]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        type:
+          type: string
+          const: end_session
+          description: Lifecycle event emitted when the session is closed and no further data will be sent.
+      description: Lifecycle event for session termination.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2025-09-19T12:36:05Z"
+          type: end_session

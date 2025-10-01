@@ -1,0 +1,22 @@
+<ParamField body="default_intensity" type="number">
+  The global intensity of the feature (minimum 0, maximum 1, default 0.5).
+</ParamField>
+<ParamField body="vocabulary" type="object">
+  <Expandable title="properties">
+    <ParamField body="value" type="string" required>
+      The text used to replace in the transcription
+    </ParamField>
+    
+    <ParamField body="pronunciations" type="string">
+      The pronunciations used in the transcription language, or `vocabulary.language` if present.
+    </ParamField>
+
+    <ParamField body="intensity" type="number">
+      The intensity of the feature for this particular word (minimum 0, maximum 1, default 0.5).
+    </ParamField>
+
+    <ParamField body="language" type="string">
+      Specify the language in which it will be pronounced when sound comparison occurs. Default to transcription language.
+    </ParamField>
+  </Expandable>
+</ParamField>

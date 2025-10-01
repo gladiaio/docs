@@ -1,0 +1,110 @@
+---
+title: Sentiment and Emotion Analysis
+description: "Extract sentiments and emotions from the transcript."
+---
+
+The sentiment and emotion analysis model analyzes the transcript, detecting the general sentiment which is conveyed in each sentence (positive, neutral or negative) as well as any emotion that is being expressed.
+
+## Usage
+To enable sentiment and emotion analysis simply set the appropriate flag:
+
+<CodeGroup>
+```json Live transcription
+{
+  "realtime_processing": {
+    "sentiment_analysis": true
+  },
+  "messages_config": {
+    "receive_realtime_processing_events": true
+  }
+}
+```
+```json Pre-recorded
+{
+  "sentiment_analysis": true
+}
+```
+</CodeGroup>
+
+
+
+## Result
+
+Your transcription result will contain a `sentiment_analysis` key which will contain an array of all sentences in the audio, and for each one the conveyed sentiment and expressed emotion. See possible values below.
+<Tip>
+When `diarization` is enabled, the sentiment analysis output will contain the `speaker` as well, allowing you to analyze each speaker separately.
+</Tip>
+```json result
+{
+  "transcription":{...},
+  "sentiment_analysis": {
+    "success": true,
+    "is_empty": false,
+    "results": [
+      {
+        "text": "Jonathan, it says you are trained in technology.",
+        "sentiment": "neutral",
+        "emotion": "neutral",
+        "start": 0.45158000000000004,
+        "end": 2.364,
+        "channel": 0,
+        "speaker": 0,
+      },
+      {
+        "text": "That's very good.",
+        "sentiment": "positive",
+        "emotion": "positive_surprise",
+        "start": 2.54438,
+        "end": 3.5432300000000003,
+        "channel": 0,
+        "speaker": 0,
+      }
+    ],
+    "exec_time": 1.127103805541992,
+    "error": null
+  }
+}
+```
+
+
+## Possible values
+
+<Accordion icon="list" title="Supported sentiments and emotions">
+
+### Sentiments
+  - positive
+  - negative
+  - neutral
+  - mixed
+  - unknown
+
+### Emotions
+  - adoration
+  - amusement
+  - anger
+  - awe
+  - confusion
+  - contempt
+  - contentment
+  - desire
+  - disappointment
+  - disgust
+  - distress
+  - ecstatic
+  - elation
+  - embarrassment
+  - fear
+  - interest
+  - pain
+  - realization
+  - relief
+  - sadness
+  - negative_surprise
+  - positive_surprise
+  - sympathy
+  - triumph
+  - neutral
+
+</Accordion>
+
+

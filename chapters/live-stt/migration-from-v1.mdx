@@ -1,9 +1,10 @@
 ---
-title: "Migration guide from V1 to V2"
-description: "Migrate to the latest version of Gladia's API"
+title: "Live transcription - Migration guide from V1 to V2"
+sidebarTitle: "Live transcription - V1 to V2"
+description: "Migrate to the latest version of Gladia's real-time speech-to-text API"
 ---
 
-Real-time V2 is the latest real-time speech-to-text API from Gladia. It offers more features and has significant improvements in latency compared to V1. Here is a guide on how to migrate to V2, so you can start enjoying all the benefits.&#x20;
+Live transcription V2 is the latest real-time speech-to-text API from Gladia. It offers more features and has significant improvements in latency compared to V1. Here is a guide on how to migrate to V2, so you can start enjoying all the benefits.&#x20;
 
 Please make sure you migrate sooner rather than later as we're looking to remove support for V1 sometime in the future. Before we do so however, we'll of course reach out to those of you who are still on V1.&#x20;
 
@@ -43,7 +44,7 @@ In V2, you first generate a unique WebSocket URL with a call to our [POST /v2/li
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'X-Gladia-Key': '<YOUR_GLADIA_API_KEY>',
+            'x-gladia-key': '<YOUR_GLADIA_API_KEY>',
           },
           body: JSON.stringify({
             // ...config properties
@@ -179,7 +180,7 @@ Only one model is supported in V2 for now, so omit the property `model`.
 
 #### Manual
 
-<Note>Languages are now specified with a 2-letter code, as in the API for asynchronous speech-to-text.<br />See [this page](/chapters/limits-and-specifications/languages) for a complete list of codes.</Note>
+<Note>Languages are now specified with a 2-letter code, as in the API for asynchronous speech-to-text.<br />See [this page](/chapters/language/supported-languages) for a complete list of codes.</Note>
 
 <AccordionGroup>
   <Accordion title="V1">

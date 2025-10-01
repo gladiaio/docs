@@ -1,0 +1,41 @@
+---
+title: "Partial transcripts"
+description: "Low-latency streaming transcripts before the final result"
+---
+
+Partial transcripts provide a low-latency streaming transcription as words are spoken, offering immediate insights before the final, high-accuracy transcript is ready.
+
+To enable partial transcripts, add the `receive_partial_transcripts` property to the `messages_config` object:
+
+```json
+{
+  "encoding": "wav/pcm",
+  "sample_rate": 16000,
+  "bit_depth": 16,
+  "channels": 1,
+  "language_config": {
+    "languages": ["en"],
+    "code_switching": false
+  },
+  "messages_config": {
+    "receive_partial_transcripts": true,
+    "receive_final_transcripts": true
+  }
+}
+```
+
+With this configuration, you will receive both partial transcripts as they are generated and the final, most accurate version of each utterance.
+
+To reduce the total response time and create a more fluid user experience, partial transcripts use a faster, smaller model than the one used for final transcripts, trading a small amount of accuracy for a large gain in latency (< 100ms).
+
+<Note>Partial transcripts accuracy deteriorates when multiple languages and/or code switching are enabled. For best results, limit the number of languages.</Note>
+
+When `receive_partial_transcripts` is `true`, the real-time API will send transcript messages for both intermediate and final results. 
+To distinguish between them, the message payload includes the [`is_final`](/api-reference/v2/live/message/transcript#schema-data-is-final) boolean field.
+
+- `"is_final": false`: The message contains a partial transcript, which is subject to change.
+- `"is_final": true`: The message contains the final, most accurate transcript for an utterance. This transcript will not change.
+
+In the same utterance, the partial and final transcripts share the same `data.id`.
+
+

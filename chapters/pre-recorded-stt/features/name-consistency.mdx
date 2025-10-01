@@ -1,0 +1,18 @@
+---
+title: "Name consistency"
+description: "Ensure consistent spelling of names across the transcript"
+---
+
+You can ask the model to enforce consistent spelling of names using the `name_consistency` parameter. This ensures the same name is spelled the same way throughout the transcript, at the cost of a small amount of added processing time.
+
+This is especially useful where people's names may be mentioned multiple times but are not known in advance (e.g., recruitment call recordings).
+To ensure correct spelling of names known in advance, use [custom vocabulary](/chapters/pre-recorded-stt/features/custom-vocabulary).
+
+```json request data
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "name_consistency": true
+}
+```
+
+

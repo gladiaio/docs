@@ -1,0 +1,32 @@
+---
+title: "Custom vocabulary"
+description: "Improve recognition of expected vocabulary in your files"
+---
+
+import CustomVocabularyParams from '/snippets/custom-vocabulary-params.mdx'
+
+To enhance the precision of transcription, especially for recurring words or phrases, use `custom_vocabulary`.
+
+```json request data
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "custom_vocabulary": true,
+  "custom_vocabulary_config": {
+    "vocabulary": [
+      "Westeros",
+      {"value": "Stark"},
+      {
+        "value": "Night's Watch",
+        "pronunciations": ["Nightz Vatch"],
+        "intensity": 0.4,
+        "language": "de"
+      }
+    ],
+    "default_intensity": 0.6
+  }
+}
+```
+
+<CustomVocabularyParams />
+
+

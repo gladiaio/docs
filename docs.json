@@ -1,13 +1,23 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
+  "theme": "almond",
   "name": "Gladia",
+  "description": "Gladia is a state-of-the-art audio transcription and intelligence provider. We offer a simple API to get transcription from your audios and videos, in both Real-time and asynchronous ways, with audio intelligence tools to extract, analyze and understand data from your audios.",
   "colors": {
-    "primary": "#1065fe",
-    "light": "#1065fe",
-    "dark": "#1065fe"
+    "primary": "#2e343e",
+    "light": "#FFFFFF",
+    "dark": "#2e343e"
   },
-  "favicon": "/assets/images/logos/black-bg-white-icon.svg",
+  "styling": {
+    "eyebrows": "breadcrumbs",
+    "codeblocks": "system"
+  },
+  "fonts": { "family": "Inter" },
+  "appearance": {
+    "default": "system",
+    "strict": false
+  },
+  "favicon": "/assets/icons/favicon.svg",
   "navigation": {
     "anchors": [
       {
@@ -17,62 +27,89 @@
           {
             "group": "Introduction",
             "pages": [
-              "chapters/introduction/introduction",
-              "chapters/introduction/why-use-gladia",
-              "chapters/introduction/getting-started"
+              "chapters/introduction/index",
+              "chapters/introduction/getting-started",
+              "chapters/introduction/playground"
             ]
           },
           {
-            "group": "Asynchronous Speech-to-Text",
+            "group": "Speech-to-Text",
             "pages": [
-              "chapters/pre-recorded-stt/getting-started",
-              "chapters/pre-recorded-stt/features",
-              "chapters/pre-recorded-stt/speaker-diarization",
-              "chapters/pre-recorded-stt/migration-from-v1"
+              {
+                "group": "Live Transcription",
+                "expanded": true,
+                "pages": [
+                  "chapters/live-stt/quickstart",
+                  "chapters/live-stt/features/partial-transcripts",
+                  "chapters/live-stt/features/multiple-channels",
+                  "chapters/live-stt/features/custom-vocabulary",
+                  "chapters/live-stt/features/custom-spelling",
+                  "chapters/live-stt/features/custom-metadata"
+                ]
+              },
+              {
+                "group": "Pre-recorded Transcription",
+                "expanded": false,
+                "pages": [
+                  "chapters/pre-recorded-stt/quickstart",
+                  "chapters/pre-recorded-stt/features/sentences",
+                  "chapters/pre-recorded-stt/features/speaker-diarization",
+                  "chapters/pre-recorded-stt/features/subtitles",
+                  "chapters/pre-recorded-stt/features/multiple-channels",
+                  "chapters/pre-recorded-stt/features/name-consistency",
+                  "chapters/pre-recorded-stt/features/enhanced-punctuation",
+                  "chapters/pre-recorded-stt/features/custom-vocabulary",
+                  "chapters/pre-recorded-stt/features/custom-spelling",
+                  "chapters/pre-recorded-stt/features/custom-metadata"
+                ]
+              },
+              "chapters/recommended-parameters"
             ]
           },
           {
-            "group": "Real-time Speech-to-Text",
+            "group": "Integrations",
             "pages": [
-              "chapters/live-stt/getting-started",
-              "chapters/live-stt/features",
-              "chapters/live-stt/migration-from-v1"
+              "chapters/integrations/sdk",
+              "chapters/integrations/pipecat",
+              "chapters/integrations/livekit",
+              "chapters/integrations/vapi",
+              "chapters/integrations/recall",
+              "chapters/integrations/meeting-baas",
+              "chapters/integrations/twilio"
+            ]
+          },
+
+          {
+            "group": "Language",
+            "pages": [
+              "chapters/language/language-detection",
+              "chapters/language/code-switching",
+              "chapters/language/supported-languages"
             ]
           },
           {
             "group": "Audio Intelligence",
             "pages": [
-              "chapters/audio-intelligence/pages/translation",
-              "chapters/audio-intelligence/pages/summarization",
-              "chapters/audio-intelligence/pages/named-entity-recognition",
-              "chapters/audio-intelligence/pages/sentiment-analysis",
-              "chapters/audio-intelligence/pages/chapterization",
-              "chapters/audio-intelligence/pages/audio-to-llm"
+              "chapters/audio-intelligence/translation",
+              "chapters/audio-intelligence/summarization",
+              "chapters/audio-intelligence/named-entity-recognition",
+              "chapters/audio-intelligence/sentiment-analysis",
+              "chapters/audio-intelligence/chapterization",
+              "chapters/audio-intelligence/audio-to-llm"
             ]
           },
           {
             "group": "Limits & Specifications",
             "pages": [
-              "chapters/limits-and-specifications/languages",
               "chapters/limits-and-specifications/concurrency",
               "chapters/limits-and-specifications/supported-formats"
             ]
           },
           {
-            "group": "Guides",
+            "group": "Migrations",
             "pages": [
-              "chapters/guides/integration",
-              {
-                "group": "Use cases",
-                "pages": ["chapters/guides/use-cases/meeting-recording"]
-              }
-            ]
-          },
-          {
-            "group": "Integration",
-            "pages": [
-              "chapters/partners-integrations/meeting-recorders/recall-ai",
-              "chapters/partners-integrations/meeting-recorders/meeting-baas"
+              "chapters/live-stt/migration-from-v1",
+              "chapters/pre-recorded-stt/migration-from-v1"
             ]
           }
         ]
@@ -83,151 +120,95 @@
         "groups": [
           {
             "group": "API Documentation",
-            "pages": [
-              "api-reference/introduction",
-              "api-reference/authentication",
-              "api-reference/pre-recorded-flow",
-              "api-reference/live-flow"
-            ]
-          },
-          {
-            "group": "Upload",
-            "pages": ["api-reference/v2/upload/audio-file"]
-          },
-          {
-            "group": "Pre-recorded endpoints",
-            "pages": [
-              "api-reference/v2/pre-recorded/init",
-              "api-reference/v2/pre-recorded/get",
-              "api-reference/v2/pre-recorded/list",
-              "api-reference/v2/pre-recorded/get-audio",
-              "api-reference/v2/pre-recorded/delete"
-            ]
-          },
-          {
-            "group": "Pre-recorded webhooks",
-            "pages": [
-              "api-reference/v2/pre-recorded/webhook/created",
-              "api-reference/v2/pre-recorded/webhook/success",
-              "api-reference/v2/pre-recorded/webhook/error"
-            ]
-          },
-          {
-            "group": "Pre-recorded callbacks",
-            "pages": [
-              "api-reference/v2/pre-recorded/callback/success",
-              "api-reference/v2/pre-recorded/callback/error"
-            ]
+            "pages": ["api-reference/index", "api-reference/authentication"]
           },
           {
             "group": "Live endpoints",
             "pages": [
               "api-reference/v2/live/init",
+              "api-reference/v2/live/websocket",
               "api-reference/v2/live/get",
               "api-reference/v2/live/list",
               "api-reference/v2/live/get-audio",
-              "api-reference/v2/live/delete"
-            ]
-          },
-          {
-            "group": "Live WS actions",
-            "pages": [
-              "api-reference/v2/live/action/audio-chunk",
-              "api-reference/v2/live/action/stop-recording"
-            ]
-          },
-          {
-            "group": "Live WS messages",
-            "pages": [
+              "api-reference/v2/live/delete",
               {
-                "group": "Realtime messages",
-                "pages": [
-                  "api-reference/v2/live/message/transcript",
-                  "api-reference/v2/live/message/speech-start",
-                  "api-reference/v2/live/message/speech-end",
-                  "api-reference/v2/live/message/translation",
-                  "api-reference/v2/live/message/named-entity-recognition",
-                  "api-reference/v2/live/message/sentiment-analysis"
-                ]
-              },
-              {
-                "group": "Post-processing messages",
-                "pages": [
-                  "api-reference/v2/live/message/post-transcript",
-                  "api-reference/v2/live/message/post-final-transcript",
-                  "api-reference/v2/live/message/post-chapterization",
-                  "api-reference/v2/live/message/post-summarization"
-                ]
-              },
-              {
-                "group": "Acknowledgment messages",
-                "pages": [
-                  "api-reference/v2/live/message/audio-chunk-ack",
-                  "api-reference/v2/live/message/stop-recording-ack"
-                ]
-              },
-              {
-                "group": "Lifecycle messages",
-                "pages": [
-                  "api-reference/v2/live/message/start-session",
-                  "api-reference/v2/live/message/start-recording",
-                  "api-reference/v2/live/message/end-recording",
-                  "api-reference/v2/live/message/end-session"
-                ]
-              }
-            ]
-          },
-          {
-            "group": "Live callbacks",
-            "pages": [
-              {
-                "group": "Realtime messages",
-                "pages": [
-                  "api-reference/v2/live/callback/transcript",
-                  "api-reference/v2/live/callback/speech-start",
-                  "api-reference/v2/live/callback/speech-end",
-                  "api-reference/v2/live/callback/translation",
-                  "api-reference/v2/live/callback/named-entity-recognition",
-                  "api-reference/v2/live/callback/sentiment-analysis"
-                ]
-              },
-              {
-                "group": "Post-processing messages",
-                "pages": [
-                  "api-reference/v2/live/callback/post-transcript",
-                  "api-reference/v2/live/callback/post-final-transcript",
-                  "api-reference/v2/live/callback/post-chapterization",
-                  "api-reference/v2/live/callback/post-summarization"
-                ]
-              },
-              {
-                "group": "Acknowledgment messages",
-                "pages": [
-                  "api-reference/v2/live/callback/audio-chunk-ack",
-                  "api-reference/v2/live/callback/stop-recording-ack"
-                ]
-              },
-              {
-                "group": "Lifecycle messages",
-                "pages": [
-                  "api-reference/v2/live/callback/start-session",
-                  "api-reference/v2/live/callback/start-recording",
-                  "api-reference/v2/live/callback/end-recording",
-                  "api-reference/v2/live/callback/end-session"
-                ]
-              }
-            ]
-          },
-          {
-            "group": "Live webhooks",
-            "pages": [
-              {
-                "group": "Lifecycle messages",
+                "group": "Webhooks",
+                "icon": "webhook",
                 "pages": [
                   "api-reference/v2/live/webhook/start-session",
                   "api-reference/v2/live/webhook/start-recording",
                   "api-reference/v2/live/webhook/end-recording",
                   "api-reference/v2/live/webhook/end-session"
+                ]
+              },
+              {
+                "group": "Callbacks",
+                "icon": "reply-all",
+                "pages": [
+                  {
+                    "group": "Realtime messages",
+                    "pages": [
+                      "api-reference/v2/live/callback/transcript",
+                      "api-reference/v2/live/callback/speech-start",
+                      "api-reference/v2/live/callback/speech-end",
+                      "api-reference/v2/live/callback/translation",
+                      "api-reference/v2/live/callback/named-entity-recognition",
+                      "api-reference/v2/live/callback/sentiment-analysis"
+                    ]
+                  },
+                  {
+                    "group": "Post-processing messages",
+                    "pages": [
+                      "api-reference/v2/live/callback/post-transcript",
+                      "api-reference/v2/live/callback/post-final-transcript",
+                      "api-reference/v2/live/callback/post-chapterization",
+                      "api-reference/v2/live/callback/post-summarization"
+                    ]
+                  },
+                  {
+                    "group": "Acknowledgment messages",
+                    "pages": [
+                      "api-reference/v2/live/callback/audio-chunk-ack",
+                      "api-reference/v2/live/callback/stop-recording-ack"
+                    ]
+                  },
+                  {
+                    "group": "Lifecycle messages",
+                    "pages": [
+                      "api-reference/v2/live/callback/start-session",
+                      "api-reference/v2/live/callback/start-recording",
+                      "api-reference/v2/live/callback/end-recording",
+                      "api-reference/v2/live/callback/end-session"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "group": "Pre-recorded endpoints",
+            "pages": [
+              "api-reference/v2/upload/audio-file",
+              "api-reference/v2/pre-recorded/init",
+              "api-reference/v2/pre-recorded/get",
+              "api-reference/v2/pre-recorded/list",
+              "api-reference/v2/pre-recorded/get-audio",
+              "api-reference/v2/pre-recorded/delete",
+              {
+                "group": "Webhooks",
+                "icon": "webhook",
+                "pages": [
+                  "api-reference/v2/pre-recorded/webhook/created",
+                  "api-reference/v2/pre-recorded/webhook/success",
+                  "api-reference/v2/pre-recorded/webhook/error"
+                ]
+              },
+              {
+                "group": "Callbacks",
+                "icon": "reply-all",
+                "pages": [
+                  "api-reference/v2/pre-recorded/callback/success",
+                  "api-reference/v2/pre-recorded/callback/error"
                 ]
               }
             ]
@@ -243,16 +224,6 @@
             ]
           }
         ]
-      },
-      {
-        "anchor": "Community",
-        "href": "https://discord.gg/T22a4ETUQp",
-        "icon": "discord"
-      },
-      {
-        "anchor": "Blog",
-        "href": "https://www.gladia.io/blog",
-        "icon": "newspaper"
       }
     ]
   },
@@ -264,18 +235,38 @@
     "openapi": "https://api.gladia.io/openapi.json"
   },
   "background": {
-    "image": "/assets/images/background/lightbackground.png",
+    "image": {
+      "light": "/assets/images/background/lightbackground.png",
+      "dark": ""
+    },
     "color": {
-      "light": "#FAF7ED",
-      "dark": "#000000"
+      "light": "#FFFFFF",
+      "dark": "#15181d"
     }
   },
   "navbar": {
     "primary": {
+      "label": "Signup",
       "type": "button",
-      "label": "Get Started",
-      "href": "https://app.gladia.io/auth/signin"
-    }
+      "href": "https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up"
+    },
+    "links": [
+      {
+        "label": "Support",
+        "href": "https://support.gladia.io/",
+        "icon": "comment-question"
+      },
+      {
+        "label": "Community",
+        "href": "https://discord.gg/T22a4ETUQp",
+        "icon": "discord"
+      },
+      {
+        "label": "Blog",
+        "href": "https://www.gladia.io/blog",
+        "icon": "newspaper"
+      }
+    ]
   },
   "seo": {
     "indexing": "navigable"
@@ -407,6 +398,74 @@
     {
       "source": "/chapters/speech-to-text-api/pages/live-speech-recognition",
       "destination": "/chapters/live-stt/migration-from-v1"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/",
+      "destination": "/chapters/pre-recorded-stt/quickstart"
+    },
+    {
+      "source": "/chapters/live-stt/",
+      "destination": "/chapters/live-stt/quickstart"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/getting-started",
+      "destination": "/chapters/pre-recorded-stt/quickstart"
+    },
+    {
+      "source": "/chapters/live-stt/getting-started",
+      "destination": "/chapters/live-stt/quickstart"
+    },
+    {
+      "source": "/chapters/live-stt/translation",
+      "destination": "/chapters/audio-intelligence/translation"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/translation",
+      "destination": "/chapters/audio-intelligence/translation"
+    },
+    {
+      "source": "/chapters/live-stt/summarization",
+      "destination": "/chapters/audio-intelligence/summarization"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/summarization",
+      "destination": "/chapters/audio-intelligence/summarization"
+    },
+    {
+      "source": "/chapters/live-stt/named-entity-recognition",
+      "destination": "/chapters/audio-intelligence/named-entity-recognition"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/named-entity-recognition",
+      "destination": "/chapters/audio-intelligence/named-entity-recognition"
+    },
+    {
+      "source": "/chapters/live-stt/sentiment-analysis",
+      "destination": "/chapters/audio-intelligence/sentiment-analysis"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/sentiment-analysis",
+      "destination": "/chapters/audio-intelligence/sentiment-analysis"
+    },
+    {
+      "source": "/chapters/live-stt/chapterization",
+      "destination": "/chapters/audio-intelligence/chapterization"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/chapterization",
+      "destination": "/chapters/audio-intelligence/chapterization"
+    },
+    {
+      "source": "/chapters/live-stt/audio-to-llm",
+      "destination": "/chapters/audio-intelligence/audio-to-llm"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/audio-to-llm",
+      "destination": "/chapters/audio-intelligence/audio-to-llm"
+    },
+    {
+      "source": "/chapters/limits-and-specifications/languages",
+      "destination": "/chapters/language/supported-languages"
     }
   ]
 }

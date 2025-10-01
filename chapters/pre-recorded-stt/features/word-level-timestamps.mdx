@@ -1,0 +1,32 @@
+---
+title: "Word-level timestamps"
+description: "Get exact start and end timestamps for each recognized word"
+---
+
+Gladia provides word-level timestamps by default in pre-recorded transcriptions.
+
+Under each utterance, you'll find a `words` property like this:
+
+```json
+// other properties...
+"utterances": [
+  {
+    "words": [
+      {
+        "word": "Split",
+        "start": 0.21001999999999998,
+        "end": 0.69015,
+        "confidence": 1
+      },
+      {
+        "word": " infinity",
+        "start": 0.91021,
+        "end": 1.55038,
+        "confidence": 0.95
+      }
+    ]
+  }
+]
+```
+
+

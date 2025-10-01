@@ -1,5 +1,11 @@
 ---
 title: Initiate a session
-description: Initiate a live transcription job. Use the returned ws `url` to connect to the websocket and start sending audio chunks. Use the returned `id` and the [GET /v2/live/:id](/api-reference/v2/live/get) endpoint to obtain the status and results. 
+description: Initiate a live transcription WebSocket session.
 openapi: POST /v2/live
---- 
+---
+
+import WhyPostToOpenWebSocket from "/snippets/why-post-to-open-websocket.mdx";
+
+Use the returned WebSocket url to connect to the WebSocket and start sending audio chunks. Use the returned `id` and the [GET /v2/live/:id](/api-reference/v2/live/get) endpoint to obtain the status and results.
+
+<WhyPostToOpenWebSocket />
