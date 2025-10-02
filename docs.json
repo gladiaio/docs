@@ -236,7 +236,7 @@
   },
   "background": {
     "image": {
-      "light": "/assets/images/background/lightbackground.png",
+      "light": "",
       "dark": ""
     },
     "color": {
