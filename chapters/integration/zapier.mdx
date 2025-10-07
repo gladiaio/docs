@@ -17,10 +17,12 @@ By connecting Zapier with **Gladia’s speech-to-text (STT) service**, you can a
 
 
 ### Quickstart with Gladia + Zapier
+
 ### 1. Get Set Up
     - Create a Gladia account
     - Get your API key from the dashboard
     - Set up a webhook URL in your dashboard so Gladia can send back transcription events
+
 ### 2. Send Audio to Gladia
 
 You have two options:
@@ -28,6 +30,7 @@ You have two options:
 - If your audio file is publicly accessible → You can skip this step and directly use the file URL in the transcription request.
 
 ### 3. Request a Transcription
+
     - Add a Gladia Transcription Block in Zapier
 
     Provide either:
@@ -35,6 +38,7 @@ You have two options:
         - A publicly accessible audio file URL
 
 ### 4. Receive the Webhook Event
+
 Once Gladia finishes processing, it will send a webhook event to the URL you configured in your dashboard
 This webhook can trigger another Zap in Zapier
 👉 If the event is a success, it will include an id you can use to make a GET request and retrieve the final transcription result

@@ -19,12 +19,12 @@ Multilingual workflows → Automatically translate audio for global teams
 Gladia doesn’t have a native n8n node, but you can integrate easily with the HTTP Request node.
 Here’s the recommended workflow:
 
-1. Get Set Up
+### 1. Get Set Up
     - Create a Gladia account
     - Get your API key from the dashboard
     - Set up a webhook URL in your dashboard so Gladia can send back transcription events
 
-2. Upload or Send Audio to Gladia
+### 2. Upload or Send Audio to Gladia
 
 In n8n:
     - Add an HTTP Request node
@@ -34,7 +34,7 @@ In n8n:
     - Send the audio file as `multipart/form-data`
 If your file is already publicly accessible → you can skip this upload step and directly provide the URL in the transcription request (see next step).
 
-3. Request a Transcription
+### 3. Request a Transcription
     
     - Add another HTTP Request node
     - Configure it as a POST request to Gladia’s transcription endpoint:
@@ -42,14 +42,14 @@ If your file is already publicly accessible → you can skip this upload step an
         - The file URL you got from the upload response, or
         - The publicly accessible audio file URL
 
-4. Receive the Webhook Event
+### 4. Receive the Webhook Event
 
 Once Gladia completes the transcription, it will send a webhook event to the URL you configured in your dashboard.
 In n8n, you can set up a Webhook Trigger node to capture this event.
 This can then kick off the next steps in your workflow.
 👉 If the event is a success, it will contain an id that you can use to make a GET request to retrieve the final transcript
 
-5. Retrieve the Transcription Result
+### 5. Retrieve the Transcription Result
     - Add an HTTP Request node configured as a GET request to Gladia’s API
     - Use the id from the webhook event to fetch the final transcript
     - The JSON response will include fields like status and text
