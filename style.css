@@ -29,3 +29,7 @@
   max-width: 100%;
   overflow: auto;
 }
+
+.integration-image {
+  max-height: 200px;
+}
