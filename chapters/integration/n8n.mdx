@@ -3,19 +3,19 @@ title: "n8n"
 description: "How to integrate Gladia with n8n"
 ---
 
-### What is n8n?
+## What is n8n?
 n8n is a fair-code workflow automation platform that lets you connect apps and APIs with flexible, no-code/low-code workflows.
 
 By connecting n8n with **Gladia’s speech-to-text (STT) service**, you can build automated pipelines that transcribe, translate, and analyze audio files — and push the results into your favorite tools like Notion, Slack, or CRMs.
 
-### What You Can Build
+## What You Can Build
 - Automated transcription workflows that save meeting recordings into Google Docs or Notion.
 - Podcast and video content pipelines that generate transcripts and push them to CMS tools.
 - Customer support bots and CRMs that log call transcripts directly into HubSpot or Salesforce.
 - Multilingual operations with automatic translation of audio for global teams.
 
 
-### Quickstart with Gladia + n8n
+## Quickstart with Gladia + n8n
 Gladia doesn’t have a native n8n node, but you can integrate easily with the HTTP Request node.
 Here’s the recommended workflow:
 
@@ -30,12 +30,12 @@ In n8n:
     1. Add an HTTP Request node
     2. Configure it to send a POST request to Gladia’s upload endpoint if your file is not public:
     `POST` https://api.gladia.io/v2/upload
-    3. Add your API Key in the headers (Authorization: `Bearer YOUR_API_KEY`)
+    3. Add your API Key in the headers (`x-gladia-key`: `YOUR_API_KEY`)
     4. Send the audio file as `multipart/form-data`
 If your file is already publicly accessible → you can skip this upload step and directly provide the URL in the transcription request (see next step).
 
 ### 3. Request a Transcription
-    
+    ![](/assets/images/integrations/nodemation_init.png)
     1. Add another HTTP Request node
     2. Configure it as a POST request to Gladia’s transcription endpoint:
         Include either:
@@ -43,15 +43,14 @@ If your file is already publicly accessible → you can skip this upload step an
         - The publicly accessible audio file URL
 
 ### 4. Receive the Webhook Event
+![](/assets/images/integrations/nodemation_webhook.png)
 
 Once Gladia completes the transcription, it will send a webhook event to the URL you configured in your dashboard.
 
 In n8n, you can set up a Webhook Trigger node to capture this event.
-This can then kick off the next steps in your workflow.
-
-If the event is a success, it will contain an id that you can use to make a GET request to retrieve the final transcript
 
 ### 5. Retrieve the Transcription Result
     1. Add an HTTP Request node configured as a GET request to Gladia’s API
     2. Use the id from the webhook event to fetch the final transcript
-    3. The JSON response will include fields like status and text
+    
+This can then kick off the next steps in your workflow.
