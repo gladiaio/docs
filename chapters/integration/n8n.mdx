@@ -27,11 +27,12 @@ Here’s the recommended workflow:
 ### 2. Upload or Send Audio to Gladia
 
 In n8n:
+
     1. Add an HTTP Request node
     2. Configure it to send a POST request to Gladia’s upload endpoint if your file is not public:
     `POST` https://api.gladia.io/v2/upload
     3. Add your API Key in the headers (`x-gladia-key`: `YOUR_API_KEY`)
-    4. Send the audio file as `multipart/form-data`
+    4. Send the audio file as `multipart/form-data`.
 If your file is already publicly accessible → you can skip this upload step and directly provide the URL in the transcription request (see next step).
 
 ### 3. Request a Transcription
@@ -52,5 +53,5 @@ In n8n, you can set up a Webhook Trigger node to capture this event.
 ### 5. Retrieve the Transcription Result
     1. Add an HTTP Request node configured as a GET request to Gladia’s API
     2. Use the id from the webhook event to fetch the final transcript
-    
+
 This can then kick off the next steps in your workflow.
