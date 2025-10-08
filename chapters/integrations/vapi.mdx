@@ -1,4 +1,28 @@
 ---
 title: "Vapi"
-url: "https://docs.vapi.ai/providers/transcriber/gladia"
+description: "How to integrate Gladia within Vapi"
 ---
+## What is Vapi?
+
+Vapi is a developer platform for building real-time voice AI agents across phone, web, SIP, and WebSocket transports. It orchestrates audio I/O, LLM reasoning, and TTS—and lets you plug in your preferred STT. With the Gladia STT integration, your Vapi assistants get accurate, low-latency transcription in 90+ languages. See the official Gladia provider page in Vapi’s docs for fields and options. 
+docs.vapi.ai
+
+<Tip> Looking for the full API and options? See the official Vapi Gladia STT docs: [docs.vapi.ai/providers/transcriber/gladia](https://docs.vapi.ai/providers/transcriber/gladia). </Tip>
+
+## What you can build
+- Realtime voice agents on phone, web, or WebSocket streams
+- Live captions for calls and embedded voice experiences
+- IVR and customer-support bots that understand accents and code-switching
+- Multilingual assistants with diarization and optional translation layers 
+
+## Quickstart (configure Gladia as Vapi transcriber)
+    1. Get a Gladia API key from the Gladia dashboard. 
+    2. In Vapi, open your Dashboard ➜ Assistant ➜ Transcriber tab and select Gladia.
+    ![Gladia selection with Vapi dashboard](/assets/images/integrations/vapi_gladia_selection.png)
+    3. In your dashboard ➜ More ➜ Integrations, add your Gladia API key in Vapi’s provider key settings. 
+    <img src="/assets/images/integrations/vapi_gladia_api_key.png" style={{ height: 300, margin: 'auto' }} />
+    4. Choose options (e.g., language/auto-detect, diarization). See Vapi’s Gladia page for supported parameters. 
+    5. Test a call using Vapi’s Web UI or the WebSocket transport to stream audio from your app. 
+
+
+<CardGroup cols={3}> <Card title="Get your API key" href="https://app.gladia.io/apikeys" icon="key"> Get your API key on the Gladia dashboard </Card> <Card title="Configure Gladia in Vapi" icon="book" href="https://docs.vapi.ai/providers/transcriber/gladia" > Follow Vapi’s Gladia transcriber guide </Card> <Card title="Use Vapi WebSocket transport" icon="headset" href="https://docs.vapi.ai/calls/websocket-transport" > Stream audio to your assistant with minimal latency </Card> </CardGroup>
