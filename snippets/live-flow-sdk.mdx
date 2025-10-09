@@ -15,7 +15,11 @@ npm install @gladiaio/sdk
 ```
 
 ```sh Python
-# Coming soon
+# Using pip
+pip install gladiaio-sdk
+
+# Using uv
+uv add gladiaio-sdk
 ```
 
 </CodeGroup>
@@ -27,7 +31,15 @@ import { GladiaClient } from "@gladiaio/sdk";
 ```
 
 ```python Python
-# Coming soon
+from gladiaio_sdk import (
+    GladiaClient,
+    LiveV2InitRequest,
+    LiveV2LanguageConfig,
+    LiveV2MessagesConfig,
+    LiveV2WebSocketMessage,
+    LiveV2InitResponse,
+    LiveV2EndedMessage,
+)
 ```
 
 </CodeGroup>
@@ -60,7 +72,25 @@ const liveSession = gladiaClient.liveV2().startSession(gladiaConfig);
 ```
 
 ```python Python
-# Coming soon
+# Our Python SDK supports sync/threaded and asyncio versions.
+gladia_client = GladiaClient(api_key="<YOUR_GLADIA_API_KEY>")
+
+# sync/threaded version
+live_client = gladia_client.live_v2()
+# asyncio version
+live_client = gladia_client.live_v2_async()
+
+init_request = LiveV2InitRequest(
+    model="solaria-1",
+    encoding="wav/pcm",
+    sample_rate=16000,
+    bit_depth=16,
+    channels=1,
+    language_config=LiveV2LanguageConfig(languages=["fr"], code_switching=False),
+    messages_config=LiveV2MessagesConfig(receive_partial_transcripts=True),
+)
+
+live_session = live_client.start_session(init_request)
 ```
 
 </CodeGroup>
@@ -90,7 +120,31 @@ liveSession.on("error", (message) => {
 ```
 
 ```python Python
-  # Coming soon
+from gladiaio_sdk import (
+    LiveV2WebSocketMessage,
+    LiveV2InitResponse,
+    LiveV2EndedMessage,
+)
+
+@live_session.on("message")
+def on_message(message: LiveV2WebSocketMessage) -> None:
+    # Handle messages from the API
+    pass
+
+@live_session.on("error")
+def on_error(error: Exception) -> None:
+    # Handle error message
+    print(f"Live session error: {error}")
+
+@live_session.once("started")
+def on_started(_response: LiveV2InitResponse):
+    # Handle start session
+    print("Session started. Listening…")
+
+@live_session.once("ended")
+def on_ended(_ended: LiveV2EndedMessage):
+    # Handle end session
+    print("Session ended.")
 ```
 
 </CodeGroup>
@@ -103,11 +157,11 @@ You can now start sending us your audio chunks through the WebSocket:
 
 
 ```typescript JavaScript
-liveSession.sendAudio(buffer)
+liveSession.sendAudio(audioChunk)
 ```
 
 ```python Python
-# Coming soon
+live_session.send_audio(audio_chunk)
 ```
 
 </CodeGroup>
@@ -127,7 +181,17 @@ liveSession.on("message", (message) => {
 ```
 
 ```python Python
-# Coming soon
+@live_session.on("message")
+def on_message(message: LiveV2WebSocketMessage) -> None:
+    if getattr(message, "type", None) == "transcript":
+        data = getattr(message, "data", None)
+        if not data:
+            return
+        is_final = bool(getattr(data, "is_final", False))
+        utterance = getattr(data, "utterance", None)
+        text = getattr(utterance, "text", "") if utterance else ""
+        if is_final and text:
+            print(text.strip())
 ```
 </CodeGroup>
 
@@ -147,7 +211,7 @@ liveSession.stopRecording()
 ```
 
 ```python Python
-# Coming soon
+live_session.stop_recording()
 ```
 
 </CodeGroup>
@@ -174,6 +238,25 @@ If you want to get the complete result, you can call the [`GET /v2/live/:id` end
 
   const result = await response.json();
   console.log(result)
+```
+
+
+```python Python
+import os
+import requests
+
+session_id = "<SESSION_ID>"
+api_key = os.environ.get("GLADIA_API_KEY") or "<YOUR_GLADIA_API_KEY>"
+
+response = requests.get(
+    f"https://api.gladia.io/v2/live/{session_id}",
+    headers={"x-gladia-key": api_key},
+)
+
+if not response.ok:
+    print(f"{response.status_code}: {response.text or response.reason}")
+else:
+    print(response.json())
 ```
 
 
