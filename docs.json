@@ -40,6 +40,7 @@
                 "expanded": true,
                 "pages": [
                   "chapters/live-stt/quickstart",
+                  "chapters/live-stt/audio-intelligence",
                   "chapters/live-stt/features/partial-transcripts",
                   "chapters/live-stt/features/multiple-channels",
                   "chapters/live-stt/features/custom-vocabulary",
@@ -52,6 +53,7 @@
                 "expanded": false,
                 "pages": [
                   "chapters/pre-recorded-stt/quickstart",
+                  "chapters/pre-recorded-stt/audio-intelligence",
                   "chapters/pre-recorded-stt/features/sentences",
                   "chapters/pre-recorded-stt/features/speaker-diarization",
                   "chapters/pre-recorded-stt/features/subtitles",
