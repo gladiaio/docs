@@ -78,7 +78,7 @@ To enable translation, set `translation` to `true` on your request, and add a `t
 
 </ParamField>
 
-<ParamField body="lipsync" type="boolean" default="true">
+<ParamField body="lipsync" type="boolean" default>
   Controls alignment with visual cues, specifically lip movements. When enabled
   (default), uses an advanced lip synchronization algorithm that aligns
   translated output with speaker's lip movements using timestamps from lip
@@ -97,7 +97,6 @@ To enable translation, set `translation` to `true` on your request, and add a `t
 <ParamField
   body="context"
   type="string"
-  default
   placeholder='"Medical consultation between doctor and patient discussing cardiology"'
 >
   Additional context to improve terminology, proper nouns, or disambiguation.
@@ -105,7 +104,7 @@ To enable translation, set `translation` to `true` on your request, and add a `t
   **Example**: `"Medical consultation between doctor and patient discussing cardiology"`
 </ParamField>
 
-<ParamField body="informal" type="boolean" default="false">
+<ParamField body="informal" type="boolean" default={false}>
   Prefer informal register when available; useful for chatty UX or youth
   audiences. Especially relevant for languages with formal/informal distinctions
   (e.g., French "tu/vous", German "du/Sie", Spanish "tú/usted", Dutch "U/jij").
