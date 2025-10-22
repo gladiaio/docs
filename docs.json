@@ -111,7 +111,8 @@
             "group": "Migrations",
             "pages": [
               "chapters/live-stt/migration-from-v1",
-              "chapters/pre-recorded-stt/migration-from-v1"
+              "chapters/pre-recorded-stt/migration-from-v1",
+              "chapters/migrations/from-deepgram"
             ]
           }
         ]
