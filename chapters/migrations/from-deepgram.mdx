@@ -1,0 +1,217 @@
+---
+title: "Migration guide: realtime STT from Deepgram to Gladia"
+description: "Guide to switch your realtime WebSocket transcription from Deepgram's SDK to Gladia's SDK."
+sidebarTitle: "From Deepgram"
+---
+
+This guide is a step-by-step guide to switch your realtime transcription implementation from Deepgram to Gladia, using our SDK. The goal is to make the migration seamless by pointing out the key differences and showing how equivalent features work across both platforms.
+
+## Step-by-step guide
+
+### Install the SDK
+
+Install the official SDK to enable realtime streaming features. The examples below show the packages to install for Python and TypeScript.
+
+_For Deepgram :_
+
+<CodeGroup>
+
+```bash Python
+pip install deepgram-sdk
+```
+
+```bash Typescript
+npm i @deepgram/sdk
+```
+
+</CodeGroup>
+
+_For Gladia:_
+
+<CodeGroup>
+
+```bash Python
+pip install gladiaio-sdk
+```
+
+```bash Typescript
+npm i @gladiaio/sdk
+```
+
+</CodeGroup>
+
+### Initialize connection
+
+Create and authenticate the client that manages your live connection. The snippets below initialize Deepgram and Gladia with your API keys.
+
+_For Deepgram :_
+
+<CodeGroup>
+
+```python Python
+
+```
+
+```typescript Typescript
+import { Deepgram } from "@deepgram/sdk";
+
+const deepgram = new Deepgram(process.env.DEEPGRAM_API_KEY);
+```
+
+</CodeGroup>
+
+_For Gladia :_
+
+<CodeGroup>
+
+```python Python
+
+```
+
+```typescript Typescript
+import { GladiaClient } from "@gladiaio/sdk";
+
+const gladia = new GladiaClient({
+  apiKey: process.env.GLADIA_API_KEY,
+});
+```
+
+</CodeGroup>
+
+### Configure the session
+
+Choose the model, audio format, and language options your app needs. Align equivalent parameters between Deepgram and Gladia so results match across providers.
+
+Parameters correspondances between Deepgram and Gladia
+
+### Start a transcription session
+
+Open a live transcription session using your configuration. This establishes the WebSocket and prepares the service to receive audio.
+
+_For Deepgram :_
+
+<CodeGroup>
+
+```python Python
+
+```
+
+```typescript Typescript
+const session = deepgram.transcription.live(deepgramConfig);
+```
+
+</CodeGroup>
+
+_For Gladia :_
+
+<CodeGroup>
+
+```python Python
+
+```
+
+```typescript Typescript
+const session = gladiaClient.liveV2().startSession(gladiaConfig);
+```
+
+</CodeGroup>
+
+### Send audio chunks
+
+Stream audio frames to the session as they are produced. Both SDKs accept small chunks continuously until you stop recording.
+
+_For Deepgram :_
+
+<CodeGroup>
+
+```python Python
+
+```
+
+```typescript Typescript
+session.send(audioChunk);
+```
+
+</CodeGroup>
+
+_For Gladia :_
+
+<CodeGroup>
+
+```python Python
+
+```
+
+```typescript Typescript
+session.sendAudio(audioChunk);
+```
+
+</CodeGroup>
+
+### Read transcriptions messages
+
+After audio is flowing, subscribe to transcript and lifecycle events. The mapping below shows how to migrate Deepgram listeners to Gladia.
+
+Migrating from Deepgram events to Gladia:
+
+- `Transcript` → listen to Gladia `message` and branch on `message.data.is_final` to separate partial vs final results.
+- `Open`/`Close`/`Error` → map to Gladia `started`/`ended`/`error`.
+- `Metadata` → metadata comes inside the Gladia `message` payload.
+
+In practice, subscribe once to `message` and use the `is_final` flag instead of wiring separate listeners for partial and final updates. To receive partials, enable `messages_config.receive_partial_transcripts: true` in your init config.
+
+_For Deepgram :_
+
+<CodeGroup>
+
+```python Python
+
+```
+
+```typescript Typescript
+connection.on(LiveTranscriptionEvents.Open, () => {
+  connection.on(LiveTranscriptionEvents.Transcript, (data) => {
+    console.log(data.channel.alternatives[0].transcript);
+  });
+
+  connection.on(LiveTranscriptionEvents.Metadata, (data) => {
+    console.log(data);
+  });
+
+  connection.on(LiveTranscriptionEvents.Error, (err) => {
+    console.error(err);
+  });
+});
+```
+
+</CodeGroup>
+
+_For Gladia :_
+
+<CodeGroup>
+
+```python Python
+
+```
+
+```typescript Typescript
+session.on("message", (message) => {
+  // Partial and final transcripts are delivered here
+  // filter them with message.data.is_final field
+  console.log(message);
+});
+
+session.on("started", (info) => {
+  console.log("Start session", info);
+});
+
+session.on("ended", (info) => {
+  console.log("End session", info);
+});
+
+session.on("error", (err) => {
+  console.error("Error", err);
+});
+```
+
+</CodeGroup>
