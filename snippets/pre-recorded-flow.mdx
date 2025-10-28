@@ -52,6 +52,10 @@ We'll now POST the transcription request to Gladia's API using the [`POST /v2/pr
     --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
     --data '{
     "audio_url": "YOUR_AUDIO_URL",
+    "language_config": {
+      "languages": [],
+      "code_switching": false
+    },
     "diarization": true,
     "diarization_config": {
       "number_of_speakers": 3,
@@ -69,9 +73,7 @@ We'll now POST the transcription request to Gladia's API using the [`POST /v2/pr
     "subtitles": true,
     "subtitles_config": {
       "formats": ["srt", "vtt"]
-    },
-    "detect_language": true,
-    "enable_code_switching": false
+    }
     }
   '
 ```
