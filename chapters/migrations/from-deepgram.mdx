@@ -80,9 +80,43 @@ const gladia = new GladiaClient({
 
 ### Configure the session
 
-Choose the model, audio format, and language options your app needs. Align equivalent parameters between Deepgram and Gladia so results match across providers.
+Choose the model, audio format, and language options your app needs. Align equivalent parameters so results match across providers.
 
-Parameters correspondances between Deepgram and Gladia
+#### Deepgram to Gladia parameter mapping
+
+|     Deepgram      |                        Gladia                         | Notes / Example                                                                                                       |
+| :---------------: | :---------------------------------------------------: | --------------------------------------------------------------------------------------------------------------------- |
+|      `model`      |                        `model`                        | Choose the latest Gladia model ("solaria-1").                                                                         |
+|    `encoding`     |                      `encoding`                       | Match the actual [audio format](/api-reference/v2/live/init#body-encoding) (e.g., `linear16` ↔ `wav/pcm`).            |
+|                   |                      `bit_depth`                      | Choose the [bit depth](/api-reference/v2/live/init#body-bit-depth) value from your audio                              |
+|   `sample_rate`   |                     `sample_rate`                     | Same unit (Hz).                                                                                                       |
+|    `channels`     |                      `channels`                       | Same meaning.                                                                                                         |
+| `interim_results` |     `messages_config.receive_partial_transcripts`     | Set `true` to receive [partials messages](/chapters/live-stt/features/partial-transcripts).                           |
+|   `endpointing`   | `endpointing`; `maximum_duration_without_endpointing` | Port thresholds and consider a hard cap.                                                                              |
+|    `language`     |   `language_config.languages` (+ `code_switching`)    | Pass one or more languages; enable switching when [multiple languages](/chapters/language/code-switching) are spoken. |
+
+```json Gladia config example
+{
+  "model": "solaria-1",
+  "encoding": "wav/pcm",
+  "bit_depth": 16,
+  "sample_rate": 16000,
+  "channels": 1,
+  "language_config": { "languages": ["en"], "code_switching": false },
+  "messages_config": {
+    "receive_partial_transcripts": true,
+    "receive_final_transcripts": true
+  },
+  "endpointing": 0.8,
+  "maximum_duration_without_endpointing": 30,
+  "realtime_processing": {
+    "custom_vocabulary": false,
+    "custom_spelling": false
+  }
+}
+```
+
+See the full schema in the [live init reference](/api-reference/v2/live/init).
 
 ### Start a transcription session
 
