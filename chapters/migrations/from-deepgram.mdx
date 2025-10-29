@@ -65,13 +65,15 @@ _For Gladia :_
 <CodeGroup>
 
 ```python Python
+from gladiaio_sdk import GladiaClient
 
+gladia_client = GladiaClient(api_key="<YOUR_GLADIA_API_KEY>")
 ```
 
 ```typescript Typescript
 import { GladiaClient } from "@gladiaio/sdk";
 
-const gladia = new GladiaClient({
+const gladiaClient = new GladiaClient({
   apiKey: process.env.GLADIA_API_KEY,
 });
 ```
@@ -141,7 +143,7 @@ _For Gladia :_
 <CodeGroup>
 
 ```python Python
-
+session = gladia_client.live_v2().start_session(gladia_config)
 ```
 
 ```typescript Typescript
@@ -173,7 +175,7 @@ _For Gladia :_
 <CodeGroup>
 
 ```python Python
-
+session.send_audio(chunk)
 ```
 
 ```typescript Typescript
@@ -225,7 +227,29 @@ _For Gladia :_
 <CodeGroup>
 
 ```python Python
+from gladiaio_sdk import (
+    LiveV2WebSocketMessage,
+    LiveV2InitResponse,
+    LiveV2EndedMessage,
+)
 
+@live_session.on("message")
+def on_message(message: LiveV2WebSocketMessage):
+    # Partial and final transcripts are delivered here
+    # filter them with message.data.is_final field
+    print(message)
+
+@live_session.once("started")
+def on_started(_response: LiveV2InitResponse):
+    print("Session started. Listening...")
+
+@live_session.once("ended")
+def on_ended(_ended: LiveV2EndedMessage):
+    print("Session ended.")
+
+@live_session.on("error")
+def on_error(error: Exception):
+    print(f"Error: {error}")
 ```
 
 ```typescript Typescript
