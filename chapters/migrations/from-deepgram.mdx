@@ -49,7 +49,9 @@ _For Deepgram :_
 <CodeGroup>
 
 ```python Python
+from deepgram import DeepgramClient
 
+deepgram = DeepgramClient(api_key="<YOUR_DEEPGRAM_API_KEY>")
 ```
 
 ```typescript Typescript
@@ -129,7 +131,8 @@ _For Deepgram :_
 <CodeGroup>
 
 ```python Python
-
+connection = deepgram.listen.live.v("1")
+connection.start(deepgram_config)
 ```
 
 ```typescript Typescript
@@ -161,7 +164,7 @@ _For Deepgram :_
 <CodeGroup>
 
 ```python Python
-
+connection.send(audio_chunk)
 ```
 
 ```typescript Typescript
@@ -175,7 +178,7 @@ _For Gladia :_
 <CodeGroup>
 
 ```python Python
-session.send_audio(chunk)
+session.send_audio(audio_chunk)
 ```
 
 ```typescript Typescript
@@ -201,7 +204,25 @@ _For Deepgram :_
 <CodeGroup>
 
 ```python Python
+from deepgram import LiveTranscriptionEvents
 
+def on_open(_):
+    print("Deepgram connection opened")
+
+def on_transcript(data, **kwargs):
+    # Print the top alternative transcript if present
+    print(data["channel"]["alternatives"][0])
+
+def on_metadata(data, **kwargs):
+    print("Metadata:", data)
+
+def on_error(error, **kwargs):
+    print("Error:", error)
+
+connection.on(LiveTranscriptionEvents.Open, on_open)
+connection.on(LiveTranscriptionEvents.Transcript, on_transcript)
+connection.on(LiveTranscriptionEvents.Metadata, on_metadata)
+connection.on(LiveTranscriptionEvents.Error, on_error)
 ```
 
 ```typescript Typescript
