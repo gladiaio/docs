@@ -51,13 +51,13 @@ _For Deepgram :_
 ```python Python
 from deepgram import DeepgramClient
 
-deepgram = DeepgramClient(api_key="<YOUR_DEEPGRAM_API_KEY>")
+deepgram_client = DeepgramClient(api_key="<YOUR_DEEPGRAM_API_KEY>")
 ```
 
 ```typescript Typescript
-import { Deepgram } from "@deepgram/sdk";
+import { createClient } from "@deepgram/sdk";
 
-const deepgram = new Deepgram(process.env.DEEPGRAM_API_KEY);
+const deepgramClient = createClient(process.env.DEEPGRAM_API_KEY);
 ```
 
 </CodeGroup>
@@ -131,12 +131,13 @@ _For Deepgram :_
 <CodeGroup>
 
 ```python Python
-connection = deepgram.listen.live.v("1")
-connection.start(deepgram_config)
+with deepgram_client.listen.v1.connect(deepgram_config) as deepgram_connection:
+    # Further code to add event handlers
+    deepgram_connection.start_listening()
 ```
 
 ```typescript Typescript
-const session = deepgram.transcription.live(deepgramConfig);
+const deepgramConnection = deepgramClient.listen.live(deepgramConfig);
 ```
 
 </CodeGroup>
@@ -146,11 +147,11 @@ _For Gladia :_
 <CodeGroup>
 
 ```python Python
-session = gladia_client.live_v2().start_session(gladia_config)
+gladia_session = gladia_client.live_v2().start_session(gladia_config)
 ```
 
 ```typescript Typescript
-const session = gladiaClient.liveV2().startSession(gladiaConfig);
+const gladiaSession = gladiaClient.liveV2().startSession(gladiaConfig);
 ```
 
 </CodeGroup>
@@ -164,11 +165,11 @@ _For Deepgram :_
 <CodeGroup>
 
 ```python Python
-connection.send(audio_chunk)
+deepgram_connection.send(audio_chunk)
 ```
 
 ```typescript Typescript
-session.send(audioChunk);
+deepgramConnection.send(audioChunk);
 ```
 
 </CodeGroup>
@@ -178,11 +179,11 @@ _For Gladia :_
 <CodeGroup>
 
 ```python Python
-session.send_audio(audio_chunk)
+gladia_session.send_audio(audio_chunk)
 ```
 
 ```typescript Typescript
-session.sendAudio(audioChunk);
+gladiaSession.sendAudio(audioChunk);
 ```
 
 </CodeGroup>
@@ -195,7 +196,6 @@ Event mapping from Deepgram to Gladia:
 
 - `Transcript` → listen to Gladia `message` and branch on `message.data.is_final` to separate partial vs final results.
 - `Open`/`Close`/`Error` → map to Gladia `started`/`ended`/`error`.
-- `Metadata` → metadata comes inside the Gladia `message` payload.
 
 In practice, subscribe once to `message` and use the `is_final` flag instead of wiring separate listeners—less boilerplate, same control. To receive partials, enable `messages_config.receive_partial_transcripts: true` in your init config.
 
@@ -204,38 +204,34 @@ _For Deepgram :_
 <CodeGroup>
 
 ```python Python
-from deepgram import LiveTranscriptionEvents
+from deepgram.core.events import EventType
 
 def on_open(_):
     print("Deepgram connection opened")
 
-def on_transcript(data, **kwargs):
+def on_message(data, **kwargs):
     # Print the top alternative transcript if present
     print(data["channel"]["alternatives"][0])
 
-def on_metadata(data, **kwargs):
-    print("Metadata:", data)
+def on_close(data, **kwargs):
+    print("Deepgram connection closed")
 
 def on_error(error, **kwargs):
     print("Error:", error)
 
-connection.on(LiveTranscriptionEvents.Open, on_open)
-connection.on(LiveTranscriptionEvents.Transcript, on_transcript)
-connection.on(LiveTranscriptionEvents.Metadata, on_metadata)
-connection.on(LiveTranscriptionEvents.Error, on_error)
+deepgram_connection.on(EventType.OPEN, on_open)
+deepgram_connection.on(EventType.MESSAGE, on_message)
+deepgram_connection.on(EventType.CLOSE, on_close)
+deepgram_connection.on(EventType.ERROR, on_error)
 ```
 
 ```typescript Typescript
-connection.on(LiveTranscriptionEvents.Open, () => {
-  connection.on(LiveTranscriptionEvents.Transcript, (data) => {
+deepgramConnection.on(LiveTranscriptionEvents.Open, () => {
+  deepgramConnection.on(LiveTranscriptionEvents.Transcript, (data) => {
     console.log(data.channel.alternatives[0].transcript);
   });
 
-  connection.on(LiveTranscriptionEvents.Metadata, (data) => {
-    console.log(data);
-  });
-
-  connection.on(LiveTranscriptionEvents.Error, (err) => {
+  deepgramConnection.on(LiveTranscriptionEvents.Error, (err) => {
     console.error(err);
   });
 });
@@ -274,21 +270,21 @@ def on_error(error: Exception):
 ```
 
 ```typescript Typescript
-session.on("message", (message) => {
+gladiaSession.on("message", (message) => {
   // Partial and final transcripts are delivered here
   // filter them with message.data.is_final field
   console.log(message);
 });
 
-session.on("started", (info) => {
+gladiaSession.on("started", (info) => {
   console.log("Start session", info);
 });
 
-session.on("ended", (info) => {
+gladiaSession.on("ended", (info) => {
   console.log("End session", info);
 });
 
-session.on("error", (err) => {
+gladiaSession.on("error", (err) => {
   console.error("Error", err);
 });
 ```
