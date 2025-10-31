@@ -1,16 +1,16 @@
 ---
-title: "Migration guide: realtime STT from Deepgram to Gladia"
-description: "Guide to switch your realtime WebSocket transcription from Deepgram's SDK to Gladia's SDK."
+title: "Quick migration guide: realtime STT from Deepgram to Gladia"
+description: "Guide to seamlessly switch your realtime WebSocket transcription from Deepgram's SDK to Gladia's SDK."
 sidebarTitle: "From Deepgram"
 ---
 
-This guide is a step-by-step guide to switch your realtime transcription implementation from Deepgram to Gladia, using our SDK. The goal is to make the migration seamless by pointing out the key differences and showing how equivalent features work across both platforms.
+This step-by-step guide shows how to switch your realtime transcription from Deepgram to Gladia with minimal code changes. It highlights equivalences, subtle differences, and drop‑in replacements so you can migrate quickly and confidently, without any regressions.
 
 ## Step-by-step guide
 
 ### Install the SDK
 
-Install the official SDK to enable realtime streaming features. The examples below show the packages to install for Python and TypeScript.
+Install the official SDKs to enable realtime streaming. That's all you need to get started in Python or TypeScript.
 
 _For Deepgram :_
 
@@ -40,9 +40,9 @@ npm i @gladiaio/sdk
 
 </CodeGroup>
 
-### Initialize connection
+### Initialize the client
 
-Create and authenticate the client that manages your live connection. The snippets below initialize Deepgram and Gladia with your API keys.
+Create and authenticate the client that manages your live connection. The shape is the same idea across providers—just swap the client and key.
 
 _For Deepgram :_
 
@@ -84,7 +84,7 @@ const gladiaClient = new GladiaClient({
 
 ### Configure the session
 
-Choose the model, audio format, and language options your app needs. Align equivalent parameters so results match across providers.
+Choose the model, audio format, and language options your app needs. Most parameters map one‑to‑one, so your existing settings carry over naturally.
 
 #### Deepgram to Gladia parameter mapping
 
@@ -122,9 +122,9 @@ Choose the model, audio format, and language options your app needs. Align equiv
 
 See the full schema in the [live init reference](/api-reference/v2/live/init).
 
-### Start a transcription session
+### Start the transcription session
 
-Open a live transcription session using your configuration. This establishes the WebSocket and prepares the service to receive audio.
+Open a live transcription session using your configuration. The flow is the same as with Deepgram: establish the WebSocket and get ready to stream audio.
 
 _For Deepgram :_
 
@@ -157,7 +157,7 @@ const session = gladiaClient.liveV2().startSession(gladiaConfig);
 
 ### Send audio chunks
 
-Stream audio frames to the session as they are produced. Both SDKs accept small chunks continuously until you stop recording.
+Stream audio frames to the session as they are produced. Both SDKs accept small chunks continuously—keep your existing chunking logic.
 
 _For Deepgram :_
 
@@ -187,17 +187,17 @@ session.sendAudio(audioChunk);
 
 </CodeGroup>
 
-### Read transcriptions messages
+### Read transcription messages
 
-After audio is flowing, subscribe to transcript and lifecycle events. The mapping below shows how to migrate Deepgram listeners to Gladia.
+After audio is flowing, subscribe to transcript and lifecycle events. The mapping below shows how to translate Deepgram listeners to Gladia in a single place.
 
-Migrating from Deepgram events to Gladia:
+Event mapping from Deepgram to Gladia:
 
 - `Transcript` → listen to Gladia `message` and branch on `message.data.is_final` to separate partial vs final results.
 - `Open`/`Close`/`Error` → map to Gladia `started`/`ended`/`error`.
 - `Metadata` → metadata comes inside the Gladia `message` payload.
 
-In practice, subscribe once to `message` and use the `is_final` flag instead of wiring separate listeners for partial and final updates. To receive partials, enable `messages_config.receive_partial_transcripts: true` in your init config.
+In practice, subscribe once to `message` and use the `is_final` flag instead of wiring separate listeners—less boilerplate, same control. To receive partials, enable `messages_config.receive_partial_transcripts: true` in your init config.
 
 _For Deepgram :_
 
