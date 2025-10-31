@@ -476,6 +476,14 @@
     {
       "source": "/api-reference/introduction",
       "destination": "/api-reference"
+    },
+    {
+      "source": "/api-reference/live-flow",
+      "destination": "/chapters/live-stt/quickstart"
+    },
+    {
+      "source": "/api-reference/pre-recorded-flow",
+      "destination": "/chapters/pre-recorded-stt/quickstart"
     }
   ]
 }
