@@ -1,14 +1,8 @@
 /* Widen main reading column in Almond, keep sidebar/ToC intact */
 @media (min-width: 1280px) {
-  /* Mintlify applies Tailwind Typography's .prose to page content */
-  .prose {
-    /* Increase readable line length but avoid super-long lines */
-    max-width: 88ch;         /* ~88 characters per line */
-  }
-
   /* Loosen container caps commonly used for the center column */
   main [class*="max-w-"] {
-    max-width: 1180px !important;   /* was ~800–960px on many pages */
+    max-width: 1180px !important; /* was ~800–960px on many pages */
   }
 
   /* Defensive overrides for common Almond wrappers */
