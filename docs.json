@@ -246,6 +246,10 @@
       "dark": "#15181d"
     }
   },
+  "banner": {
+    "content": "**Introducing Solaria-2**. Our newest English speech-to-text model purpose-built for Voice AI. [Learn more here](https://www.gladia.io/blog/introducing-solaria-2)",
+    "dismissible": false
+  },
   "navbar": {
     "primary": {
       "label": "Signup",
