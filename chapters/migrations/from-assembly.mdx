@@ -1,0 +1,343 @@
+---
+title: "Quick migration guide: realtime STT from AssemblyAI to Gladia"
+description: "Guide to seamlessly switch your realtime WebSocket transcription from AssemblyAI's SDK to Gladia's SDK."
+sidebarTitle: "From AssemblyAI"
+---
+
+This step-by-step guide shows how to switch your realtime transcription from AssemblyAI to Gladia with minimal code changes. It highlights equivalences, subtle differences, and drop‑in replacements so you can migrate quickly and confidently, without any regressions.
+
+## Step-by-step guide
+
+### Install the SDK
+
+Install the official SDKs to enable realtime streaming. That's all you need to get started in Python or TypeScript.
+
+_For AssemblyAI :_
+
+<CodeGroup>
+
+```bash Python
+pip install assemblyai
+```
+
+```bash Typescript
+npm i assemblyai
+```
+
+</CodeGroup>
+
+_For Gladia:_
+
+<CodeGroup>
+
+```bash Python
+pip install gladiaio-sdk
+```
+
+```bash Typescript
+npm i @gladiaio/sdk
+```
+
+</CodeGroup>
+
+### Initialize the client
+
+Create and authenticate the client that manages your live connection. The shape is the same idea across providers—just swap the client and key.
+
+_For AssemblyAI :_
+
+<CodeGroup>
+
+```python Python
+from assemblyai.streaming.v3 import StreamingClient, StreamingClientOptions
+
+api_key = "<YOUR_ASSEMBLYAI_API_KEY>"
+
+assemblyClient = StreamingClient(
+    StreamingClientOptions(
+        api_key=api_key,
+        api_host="streaming.assemblyai.com",
+    )
+)
+```
+
+```typescript Typescript
+import { AssemblyAI } from "assemblyai";
+
+const assemblyClient = new AssemblyAI({
+  apiKey: process.env.ASSEMBLYAI_API_KEY!,
+});
+```
+
+</CodeGroup>
+
+_For Gladia :_
+
+<CodeGroup>
+
+```python Python
+from gladiaio_sdk import GladiaClient
+
+gladia_client = GladiaClient(api_key="<YOUR_GLADIA_API_KEY>")
+```
+
+```typescript Typescript
+import { GladiaClient } from "@gladiaio/sdk";
+
+const gladiaClient = new GladiaClient({
+  apiKey: process.env.GLADIA_API_KEY,
+});
+```
+
+</CodeGroup>
+
+### Configure the session
+
+Choose the model, audio format, and language options your app needs. Most parameters map one‑to‑one, so your existing settings carry over naturally.
+
+#### AssemblyAI to Gladia parameter mapping
+
+|     AssemblyAI      |                        Gladia                         | Notes / Example                                                                                                       |
+| :---------------: | :---------------------------------------------------: | --------------------------------------------------------------------------------------------------------------------- |
+|      `model`      |                        `model`                        | Choose the latest Gladia model ("solaria-1").                                                                         |
+|    `encoding`     |                      `encoding`                       | Match the actual [audio format](/api-reference/v2/live/init#body-encoding) (e.g., `linear16` ↔ `wav/pcm`).            |
+|                   |                      `bit_depth`                      | Choose the [bit depth](/api-reference/v2/live/init#body-bit-depth) value from your audio                              |
+|   `sample_rate`   |                     `sample_rate`                     | Same unit (Hz).                                                                                                       |
+|    `channels`     |                      `channels`                       | Same meaning.                                                                                                         |
+| `interim_results` |     `messages_config.receive_partial_transcripts`     | Set `true` to receive [partials messages](/chapters/live-stt/features/partial-transcripts).                           |
+|   `endpointing`   | `endpointing`; `maximum_duration_without_endpointing` | Port thresholds and consider a hard cap.                                                                              |
+|    `language`     |   `language_config.languages` (+ `code_switching`)    | Pass one or more languages; enable switching when [multiple languages](/chapters/language/code-switching) are spoken. |
+
+```json Gladia config example
+{
+  "model": "solaria-1",
+  "encoding": "wav/pcm",
+  "bit_depth": 16,
+  "sample_rate": 16000,
+  "channels": 1,
+  "language_config": { "languages": ["en"], "code_switching": false },
+  "messages_config": {
+    "receive_partial_transcripts": true,
+    "receive_final_transcripts": true
+  },
+  "endpointing": 0.8,
+  "maximum_duration_without_endpointing": 30,
+  "realtime_processing": {
+    "custom_vocabulary": false,
+    "custom_spelling": false
+  }
+}
+```
+
+See the full schema in the [live init reference](/api-reference/v2/live/init).
+
+### Start the transcription session
+
+Open a live transcription session using your configuration. The flow is the same as with AssemblyAI: establish the WebSocket and get ready to stream audio.
+
+_For AssemblyAI :_
+
+<CodeGroup>
+
+```python Python
+from assemblyai.streaming.v3 import StreamingParameters
+
+assemblyClient.connect(
+    StreamingParameters(
+        sample_rate=16000,
+        format_turns=True,
+    )
+)
+```
+
+```typescript Typescript
+const assemblySession = assemblyClient.streaming.transcriber({
+  sampleRate: 16_000,
+  formatTurns: true,
+});
+
+await assemblySession.connect();
+```
+
+</CodeGroup>
+
+_For Gladia :_
+
+<CodeGroup>
+
+```python Python
+gladia_session = gladia_client.live_v2().start_session(gladia_config)
+```
+
+```typescript Typescript
+const gladiaSession = gladiaClient.liveV2().startSession(gladiaConfig);
+```
+
+</CodeGroup>
+
+### Send audio chunks
+
+Stream audio frames to the session as they are produced. Both SDKs accept small chunks continuously—keep your existing chunking logic.
+
+_For AssemblyAI :_
+
+<CodeGroup>
+
+```python Python
+assemblyClient.stream(audio_chunk)
+```
+
+```typescript Typescript
+assemblySession.stream(audioChunk);
+```
+
+</CodeGroup>
+
+_For Gladia :_
+
+<CodeGroup>
+
+```python Python
+gladia_session.send_audio(audio_chunk)
+```
+
+```typescript Typescript
+gladiaSession.sendAudio(audioChunk);
+```
+
+</CodeGroup>
+
+### Read transcription messages
+
+After audio is flowing, subscribe to transcript and lifecycle events. The mapping below shows how to translate AssemblyAI listeners to Gladia in a single place.
+
+Event mapping from AssemblyAI to Gladia:
+
+- `Transcript` → listen to Gladia `message` and branch on `message.data.is_final` to separate partial vs final results.
+- `Open`/`Close`/`Error` → map to Gladia `started`/`ended`/`error`.
+
+In practice, subscribe once to `message` and use the `is_final` flag instead of wiring separate listeners—less boilerplate, same control. To receive partials, enable `messages_config.receive_partial_transcripts: true` in your init config.
+
+_For AssemblyAI :_
+
+<CodeGroup>
+
+```python Python
+from typing import Type
+
+from assemblyai.streaming.v3 import (
+    BeginEvent,
+    StreamingClient,
+    StreamingError,
+    StreamingEvents,
+    StreamingSessionParameters,
+    TerminationEvent,
+    TurnEvent,
+)
+
+
+def on_begin(self: Type[StreamingClient], event: BeginEvent):
+    print(f"Session started: {event.id}")
+
+
+def on_turn(self: Type[StreamingClient], event: TurnEvent):
+    print(f"{event.transcript} ({event.end_of_turn})")
+
+    if event.end_of_turn and not event.turn_is_formatted:
+        params = StreamingSessionParameters(
+            format_turns=True,
+        )
+        self.set_params(params)
+
+
+def on_terminated(self: Type[StreamingClient], event: TerminationEvent):
+    print(
+        f"Session terminated: {event.audio_duration_seconds} seconds of audio processed"
+    )
+
+
+def on_error(self: Type[StreamingClient], error: StreamingError):
+    print(f"Error occurred: {error}")
+
+
+client.on(StreamingEvents.Begin, on_begin)
+client.on(StreamingEvents.Turn, on_turn)
+client.on(StreamingEvents.Termination, on_terminated)
+client.on(StreamingEvents.Error, on_error)
+```
+
+```typescript Typescript
+assemblySession.on("open", ({ id }) => {
+  console.log(`Session opened with ID: ${id}`);
+});
+
+assemblySession.on("error", (error) => {
+  console.error("Error:", error);
+});
+
+assemblySession.on("close", (code, reason) =>
+  console.log("Session closed:", code, reason),
+);
+
+assemblySession.on("turn", (turn) => {
+  if (!turn.transcript) {
+    return;
+  }
+
+  console.log("Turn:", turn.transcript);
+});
+```
+
+</CodeGroup>
+
+_For Gladia :_
+
+<CodeGroup>
+
+```python Python
+from gladiaio_sdk import (
+    LiveV2WebSocketMessage,
+    LiveV2InitResponse,
+    LiveV2EndedMessage,
+)
+
+@live_session.on("message")
+def on_message(message: LiveV2WebSocketMessage):
+    # Partial and final transcripts are delivered here
+    # filter them with message.data.is_final field
+    print(message)
+
+@live_session.once("started")
+def on_started(_response: LiveV2InitResponse):
+    print("Session started. Listening...")
+
+@live_session.once("ended")
+def on_ended(_ended: LiveV2EndedMessage):
+    print("Session ended.")
+
+@live_session.on("error")
+def on_error(error: Exception):
+    print(f"Error: {error}")
+```
+
+```typescript Typescript
+gladiaSession.on("message", (message) => {
+  // Partial and final transcripts are delivered here
+  // filter them with message.data.is_final field
+  console.log(message);
+});
+
+gladiaSession.on("started", (info) => {
+  console.log("Start session", info);
+});
+
+gladiaSession.on("ended", (info) => {
+  console.log("End session", info);
+});
+
+gladiaSession.on("error", (err) => {
+  console.error("Error", err);
+});
+```
+
+</CodeGroup>
