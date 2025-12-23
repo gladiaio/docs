@@ -1,48 +1,31 @@
 ---
 title: Data retention
-description: "Data retention details"
+description: "Data retention policies and zero data behavior"
 ---
 
-# Data retention
+To provide transcription services, Gladia processes several types of data:
+- **Audio input**: Audio files or audio streams provided for transcription
+- **Transcription output**: Text, timestamps, words, utterances
+- **API Metadata**: Request IDs, timestamps, processing status
+- **Logs**: Operational logs for system reliability
 
-By default, Gladia stores transcription data to allow users to retrieve results, original audio, debug issues, and replay workflow.
+The duration for which your data is stored depends on your plan type. You have two main options for data retention:
 
-Enterprise users are eligible for custom data retention and zero data retention option.
+- **Standard data retention:** Your data (such as audio files, transcripts, and metadata) remains accessible for a set number of days, up to a maximum allowed by your plan. The minimum retention value is 0, which means your data is deleted within 24 hours. The maximum and default value is 12 months.
+- **Zero data retention:** No data is stored at any time—everything is deleted immediately after processing.
 
-| **Plan type** | **Data retention (days)** | **Zero data retention** |
-| --- | --- | --- |
-| Enterprise | Custom (up to 24 hours) | On demand |
-| Paid | Up to 12 months | No |
-| Free | Up to 12 months | No |
+<Info>
+Only Enterprise users are eligible for custom data retention and the zero data retention option.
+</Info>
 
-Depending on your configuration, Gladia may process the following data:
+To enable usage tracking, Gladia retains essential API metadata. Immutable logs are also maintained to ensure service quality and reliability.
 
-| Data type | Description | Data retention (N days) | Zero Data retention |
-| --- | --- | --- | --- |
-| Audio input | Audio files or audio streams provided for transcription | Fully accessible for N days. Deleted after N days. | Not stored |
-| Transcription output | Text, timestamps, words, utterances | Fully accessible for N days. Deleted after N days. | Not stored |
-| Metadata | Request IDs, timestamps, processing status | Fully accessible for N days. Minimal after N days for usage monitoring. | Minimal for usage monitoring. |
-| Logs | Operational logs for system reliability | Immutable | Immutable |
+## Zero Data Retention behavior
 
----
+When Zero Data Retention is enabled, Gladia processes data ephemerally; no data is stored at rest.
 
-### Zero Data Retention behavior
+- **No audio files are stored**: Files cannot be retrieved through the API or in the [Gladia's playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up). File upload is also disabled; the asynchronous API must use `audio_url` inputs.
+- **No transcripts are stored**: Transcription results cannot be retrieved through the API and are not visible in the [Gladia's playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up).
+- **No metadata is persisted**: Transcription API calls, audio duration, and other metadata cannot be retrieved through the API or in the [Gladia's playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up).
 
-When Zero Data Retention is enabled, Gladia processes data ephemerally.
-
-### Key guarantees
-
-- No audio files are stored
-- No transcripts are stored
-- No results are persisted
-- No replay or retrieval is possible
-
-Once the result is delivered, all data is immediately deleted.
-
-## API behavior for asynchronous and real-time
-
-Zero Data Retention intentionally changes how the API behaves.
-
-- File uploads are disabled. Only `audio_url` inputs are supported on the asynchronous API.
-- Results are delivered **only via callbacks or webhooks**
-- Polling or later retrieval is not supported
+Once the result is delivered, the audio, transcript, and metadata cannot be accessed. 
