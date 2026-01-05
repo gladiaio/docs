@@ -12,13 +12,13 @@ To provide transcription services, Gladia processes several types of data:
 The duration for which your data is stored depends on your plan type. You have two main options for data retention:
 
 - **Standard data retention:** Your data (such as audio files, transcripts, and metadata) remains accessible for a set number of days, up to a maximum allowed by your plan. The minimum retention value is 0, which means your data is deleted within 24 hours. The maximum and default value is 12 months.
-- **Zero data retention:** No data is stored at any time—everything is deleted immediately after processing.
+- **Zero data retention:** Data storage is minimized at all stages, avoiding temporary storage whenever possible. All data is deleted immediately after processing.
 
 <Info>
 Only Enterprise users are eligible for custom data retention and the zero data retention option.
 </Info>
 
-To enable usage tracking, Gladia retains essential API metadata. Immutable logs are also maintained to ensure service quality and reliability.
+To enable usage tracking, Gladia retains essential API metadata: request ID, timestamp, processing status and audio duration. Immutable logs are also maintained, for a limited period, to ensure service quality and reliability.
 
 ## Zero Data Retention behavior
 
@@ -26,6 +26,6 @@ When Zero Data Retention is enabled, Gladia processes data ephemerally; no data 
 
 - **No audio files are stored**: Files cannot be retrieved through the API or in the [Gladia's playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up). File upload is also disabled; the asynchronous API must use `audio_url` inputs.
 - **No transcripts are stored**: Transcription results cannot be retrieved through the API and are not visible in the [Gladia's playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up).
-- **No metadata is persisted**: Transcription API calls, audio duration, and other metadata cannot be retrieved through the API or in the [Gladia's playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up).
+- **No metadata retrieval**: Transcription API calls, audio duration, and other metadata cannot be retrieved through the API or in the [Gladia's playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up).
 
-Once the result is delivered, the audio, transcript, and metadata cannot be accessed. 
+Once the result is delivered, the audio, transcript, and metadata cannot be accessed.
