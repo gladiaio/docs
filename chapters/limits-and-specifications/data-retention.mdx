@@ -24,8 +24,9 @@ To enable usage tracking, Gladia retains essential API metadata: request ID, tim
 
 When Zero Data Retention is enabled, Gladia processes data ephemerally; no data is stored at rest.
 
-- **No audio files are stored**: Files cannot be retrieved through the API or in the [Gladia's playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up). File upload is also disabled; the asynchronous API must use `audio_url` inputs.
+- **No audio files are stored**: Files cannot be retrieved through the API or in the [Gladia's playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up). File upload is also disabled; the asynchronous API must use an external audio file url, such as S3 presigned url.
 - **No transcripts are stored**: Transcription results cannot be retrieved through the API and are not visible in the [Gladia's playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up).
 - **No metadata retrieval**: Transcription API calls, audio duration, and other metadata cannot be retrieved through the API or in the [Gladia's playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up).
+- **Transcription results delivered only via callbacks**: The only way to receive transcription results is through callbacks; they cannot be retrieved by any other means.
 
 Once the result is delivered, the audio, transcript, and metadata cannot be accessed.
