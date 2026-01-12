@@ -104,7 +104,8 @@
             "group": "Limits & Specifications",
             "pages": [
               "chapters/limits-and-specifications/concurrency",
-              "chapters/limits-and-specifications/supported-formats"
+              "chapters/limits-and-specifications/supported-formats",
+              "chapters/limits-and-specifications/data-retention"
             ]
           },
           {
