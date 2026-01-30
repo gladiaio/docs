@@ -25,7 +25,7 @@ During a live session, Gladia continuously analyzes the incoming audio stream an
 4. The AI model is then used to transcribe the final result of the utterance.
 5. If speech never pauses long enough, Gladia still has a safety mechanism to close the utterance (*maximum_duration_without_endpointing*, see next section)
 
-You can also subscribe to speech activity messages to know when speech starts and ends (useful to drive UI or agent turn-taking)
+You can also subscribe to speech activity messages to know when speech [starts](https://docs.gladia.io/api-reference/v2/live/callback/speech-start) and [ends](https://docs.gladia.io/api-reference/v2/live/callback/speech-end) (useful to drive UI or agent turn-taking)
 
 ### The 2 key parameters
 
