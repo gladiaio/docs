@@ -41,6 +41,7 @@
                 "pages": [
                   "chapters/live-stt/quickstart",
                   "chapters/live-stt/audio-intelligence",
+                  "chapters/live-stt/features/endpointing",
                   "chapters/live-stt/features/partial-transcripts",
                   "chapters/live-stt/features/multiple-channels",
                   "chapters/live-stt/features/custom-vocabulary",
