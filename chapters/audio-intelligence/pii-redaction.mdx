@@ -26,8 +26,10 @@ You can customize the behavior with `pii_redaction_config`:
   Preset or list of PII entity types to redact (e.g. `["GDPR"]`).
   See [Named Entity Recognition](/chapters/audio-intelligence/named-entity-recognition#supported-entities) for supported entity types.
 </ParamField>
-<ParamField body="processed_text_type" type="string">
-   How to replace detected PII: `"MARKER"` (placeholder labels like `[EMAIL_1]`) or `"MASK"` (masked characters).
+<ParamField body="processed_text_type" type="enum" default="MARKER">
+   How to replace detected PII: 
+   - **`MARKER`**: Placeholder labels like `[NAME_1]`, `[EMAIL_1]`. Same entity will have same ID.
+   - **`MASK`**: Each character replaced by a mask (e.g. "John Smith" → `#### #####`)
 </ParamField>
 
 ## Example body
@@ -45,11 +47,15 @@ You can customize the behavior with `pii_redaction_config`:
 
 ## Example output
 
-**Before (raw transcript):**
+**Without PII redaction (raw transcript):**
 
 > Hi, I'm calling about the order for John Smith. Can you confirm the delivery to john.smith@company.com? Yes, John Smith placed it yesterday.
 
-**After (with PII redaction):**
+**With PII redaction (`processed_text_type="MASK"`):**
+
+> Hi, I'm calling about the order for #### #####. Can you confirm the delivery to ######################? Yes, #### ##### placed it yesterday.
+
+**With PII redaction (`processed_text_type="MARKER"`):**
 
 > Hi, I'm calling about the order for [NAME_1]. Can you confirm the delivery to [EMAIL_1]? Yes, [NAME_1] placed it yesterday.
 
