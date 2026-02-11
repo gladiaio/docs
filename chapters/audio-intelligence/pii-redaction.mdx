@@ -1,0 +1,57 @@
+---
+title: PII Redaction
+description: "Automatically detect and redact personally identifiable information in pre-recorded transcripts"
+---
+
+**PII Redaction** automatically detects and replaces sensitive entities (names, emails, addresses, etc.) in your transcript output. This feature is only available for **pre-recorded** transcription.
+
+## Usage
+
+Add `"pii_redaction": true` to your request to redact all detected PII in the transcript. Sensitive entities will be replaced with markers in the output.
+
+<CodeGroup>
+```json Pre-recorded
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "pii_redaction": true
+}
+```
+</CodeGroup>
+
+## Optional configuration
+
+You can customize the behavior with `pii_redaction_config`:
+
+<ParamField body="entity_types" type="string[]">
+  Preset or list of PII entity types to redact (e.g. `["GDPR"]`).
+  See [Named Entity Recognition](/chapters/audio-intelligence/named-entity-recognition#supported-entities) for supported entity types.
+</ParamField>
+<ParamField body="processed_text_type" type="string">
+   How to replace detected PII: `"MARKER"` (placeholder labels like `[EMAIL_1]`) or `"MASK"` (masked characters).
+</ParamField>
+
+## Example body
+
+```json
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "pii_redaction": true,
+  "pii_redaction_config": {
+    "entity_types": ["GDPR"],
+    "processed_text_type": "MARKER"
+  }
+}
+```
+
+## Example output
+
+**Before (raw transcript):**
+
+> Hi, I'm calling about the order for John Smith. Can you confirm the delivery to john.smith@company.com? Yes, John Smith placed it yesterday.
+
+**After (with PII redaction):**
+
+> Hi, I'm calling about the order for [NAME_1]. Can you confirm the delivery to [EMAIL_1]? Yes, [NAME_1] placed it yesterday.
+
+The same entity mentioned multiple times receives the **same marker ID** (e.g. "John Smith" becomes [NAME_1] both times), so you can track references across the transcript while keeping sensitive data redacted. \
+This consistency is also useful for downstream tasks using LLMs, which can reason about entities (e.g. "the person in [NAME_1]") without ever seeing the raw PII.
