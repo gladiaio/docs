@@ -1,0 +1,9 @@
+The custom vocabulary feature allows you to process your transcription results by replacing specific words with terms that better fit your domain. This is especially useful for company names, product names, technical terms, or uncommon words that are often mis-transcribed by speech to text models.
+
+### How it works
+
+Custom vocabulary operates at a **word level** and is based on **phoneme similarity**.
+
+Once the transcription is generated, Gladia compares the phonemes of the transcribed words with the phonemes of the words you provided in your custom vocabulary. If the similarity score is above a defined similarity, the word in the transcription is replaced.
+
+Alongside the word value, the pronunciations list allows you to define alternative ways a word can be pronounced. This helps cover a wider phoneme range without having to increase the similarity threshold, which could otherwise lead to false positives. It is especially useful for words with multiple common pronunciations, foreign words, or variations caused by accents.
