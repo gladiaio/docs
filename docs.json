@@ -95,6 +95,7 @@
               "chapters/audio-intelligence/translation",
               "chapters/audio-intelligence/summarization",
               "chapters/audio-intelligence/named-entity-recognition",
+              "chapters/audio-intelligence/pii-redaction",
               "chapters/audio-intelligence/sentiment-analysis",
               "chapters/audio-intelligence/chapterization",
               "chapters/audio-intelligence/audio-to-llm"
