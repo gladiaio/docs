@@ -23,13 +23,15 @@ Add `"pii_redaction": true` to your request to redact all detected PII in the tr
 You can customize the behavior with `pii_redaction_config`:
 
 <ParamField body="entity_types" type="string[]">
-  Preset or list of PII entity types to redact (e.g. `["GDPR"]`).
-  See [Named Entity Recognition](/chapters/audio-intelligence/named-entity-recognition#supported-entities) for supported entity types.
+  Preset or list of PII entity types to redact (e.g. `["GDPR"]`). See [Named
+  Entity
+  Recognition](/chapters/audio-intelligence/named-entity-recognition#supported-entities)
+  for supported entity types.
 </ParamField>
 <ParamField body="processed_text_type" type="enum" default="MARKER">
-   How to replace detected PII: 
-   - **`MARKER`**: Placeholder labels like `[NAME_1]`, `[EMAIL_1]`. Same entity will have same ID.
-   - **`MASK`**: Each character replaced by a mask (e.g. "John Smith" → `#### #####`)
+  How to replace detected PII: - **`MARKER`**: Placeholder labels like
+  `[NAME_1]`, `[EMAIL_1]`. Same entity will have same ID. - **`MASK`**: Each
+  character replaced by a mask (e.g. "John Smith" → `#### #####`)
 </ParamField>
 
 ## Example body
@@ -61,3 +63,144 @@ You can customize the behavior with `pii_redaction_config`:
 
 The same entity mentioned multiple times receives the **same marker ID** (e.g. "John Smith" becomes [NAME_1] both times), so you can track references across the transcript while keeping sensitive data redacted. \
 This consistency is also useful for downstream tasks using LLMs, which can reason about entities (e.g. "the person in [NAME_1]") without ever seeing the raw PII.
+
+## Supported entity types
+
+When using `entity_types`, you can pass a preset group or a list of specific types.
+
+### Preset groups
+
+<AccordionGroup>
+<Accordion title="GDPR — EU General Data Protection Regulation" icon="shield-halved">
+  Personal data entities covered by the EU GDPR.
+
+Includes: `NAME`, `EMAIL_ADDRESS`, `PHONE_NUMBER`, `LOCATION`, `DOB`, `SSN`, `IP_ADDRESS`, etc.
+
+</Accordion>
+
+<Accordion title="GDPR_SENSITIVE — GDPR Article 9 sensitive data" icon="shield-halved">
+  Sensitive personal data as defined by [GDPR Article 9](https://gdpr-info.eu/art-9-gdpr/).
+
+Includes: `ORIGIN`, `PHYSICAL_ATTRIBUTE`, `POLITICAL_AFFILIATION`, `RELIGION`, `GENDER`, `SEXUALITY`, `LANGUAGE`
+
+</Accordion>
+
+<Accordion title="HIPAA_SAFE_HARBOR — USA HIPAA Safe Harbor" icon="hospital">
+  De-identification standard for US healthcare data under HIPAA.
+
+Includes: `NAME`, `LOCATION_ADDRESS`, `DATE`, `DOB`, `PHONE_NUMBER`, `EMAIL_ADDRESS`, `SSN`, `HEALTHCARE_NUMBER`, `IP_ADDRESS`, `VEHICLE_ID`, `URL`, `ACCOUNT_NUMBER`, etc.
+
+</Accordion>
+
+<Accordion title="HEALTH_INFORMATION — Health-related entities" icon="heart-pulse">
+  Medical and health-related information.
+
+Includes: `BLOOD_TYPE`, `CONDITION`, `DOSE`, `DRUG`, `INJURY`, `MEDICAL_PROCESS`, `STATISTICS`
+
+</Accordion>
+
+<Accordion title="PCI — Payment Card Industry" icon="credit-card">
+  PCI-specific financial entities only.
+
+Includes: `BANK_ACCOUNT`, `CREDIT_CARD`, `CREDIT_CARD_EXPIRATION`, `CVV`, `ROUTING_NUMBER`
+
+</Accordion>
+
+<Accordion title="CPRA — California Privacy Rights Act" icon="flag-usa">
+  Personal data entities covered by the California Privacy Rights Act.
+
+Includes: `NAME`, `DOB`, `DRIVER_LICENSE`, `EMAIL_ADDRESS`, `SSN`, `PHONE_NUMBER`, `IP_ADDRESS`, `LOCATION_ADDRESS`, etc.
+
+</Accordion>
+
+<Accordion title="APPI — Japan Act on the Protection of Personal Information" icon="globe">
+  Personal data entities covered by Japan's APPI.
+
+Includes: `NAME`, `DOB`, `LOCATION`, `PHONE_NUMBER`, `EMAIL_ADDRESS`, `SSN`, `IP_ADDRESS`, etc.
+
+</Accordion>
+
+<Accordion title="APPI_SENSITIVE — APPI sensitive data" icon="globe">
+  Sensitive data subset under Japan's APPI.
+
+Includes: `ORIGIN`, `PHYSICAL_ATTRIBUTE`, `POLITICAL_AFFILIATION`, `RELIGION`, `MARITAL_STATUS`
+
+</Accordion>
+
+<Accordion title="QUEBEC_PRIVACY_ACT — Quebec Law 25" icon="scale-balanced">
+  Personal data entities covered by Quebec's Privacy Act / Law 25.
+
+Includes: `NAME`, `DATE`, `DOB`, `OCCUPATION`, `ORGANIZATION`, `LOCATION_ADDRESS`, `PHONE_NUMBER`, `EMAIL_ADDRESS`, `SSN`, etc.
+
+</Accordion>
+
+<Accordion title="CORE_ENTITIES — Common PII types" icon="bullseye">
+  Core set of the most commonly used PII entity types across all regulations.
+</Accordion>
+
+<Accordion title="CCI — Corporate Confidential Information" icon="building">
+  Business and corporate data entities.
+
+Includes: `ORGANIZATION`, `OCCUPATION`, `TIME`, `MONEY`, `FILENAME`, etc.
+
+</Accordion>
+
+<Accordion title="LIDI — Locally Identifiable Data" icon="map-pin">
+  Entities that can identify individuals within a local context.
+</Accordion>
+
+<Accordion title="NUMERICAL_EXCL_PCI — Numerical PII (excluding PCI)" icon="hashtag">
+  Numerical PII entities, excluding PCI-specific types.
+
+Includes: `ACCOUNT_NUMBER`, `NUMERICAL_PII`, `SSN`, etc.
+
+Excludes: `CREDIT_CARD`, `CVV`, `BANK_ACCOUNT`, `ROUTING_NUMBER`
+
+</Accordion>
+</AccordionGroup>
+
+### Individual entity types
+
+#### Core PII
+
+| Entity             | What it catches                               |
+| ------------------ | --------------------------------------------- |
+| `NAME`             | Full person names                             |
+| `EMAIL_ADDRESS`    | Email addresses                               |
+| `PHONE_NUMBER`     | Phone/fax numbers                             |
+| `LOCATION_ADDRESS` | Full mailing addresses                        |
+| `DATE`             | Specific dates                                |
+| `DOB`              | Dates of birth                                |
+| `SSN`              | Social security numbers (+ intl. equivalents) |
+| `PASSPORT_NUMBER`  | Passport numbers                              |
+| `DRIVER_LICENSE`   | Driver's license numbers                      |
+| `IP_ADDRESS`       | IPv4 / IPv6 addresses                         |
+| `URL`              | Web addresses                                 |
+| `USERNAME`         | Logins, handles                               |
+
+#### Financial / PCI
+
+| Entity         | What it catches                    |
+| -------------- | ---------------------------------- |
+| `CREDIT_CARD`  | Credit card numbers (incl. last 4) |
+| `BANK_ACCOUNT` | Bank accounts, IBAN                |
+| `CVV`          | Card verification codes            |
+
+#### Sensitive / GDPR Article 9
+
+| Entity                  | What it catches        |
+| ----------------------- | ---------------------- |
+| `ORIGIN`                | Nationality, ethnicity |
+| `RELIGION`              | Religious affiliation  |
+| `POLITICAL_AFFILIATION` | Political opinions     |
+| `SEXUALITY`             | Sexual orientation     |
+| `PHYSICAL_ATTRIBUTE`    | Race, physical traits  |
+
+#### Healthcare (HIPAA / GDPR)
+
+| Entity              | What it catches                         |
+| ------------------- | --------------------------------------- |
+| `CONDITION`         | Medical conditions, diseases            |
+| `DRUG`              | Medications, supplements                |
+| `HEALTHCARE_NUMBER` | Health plan IDs, medical record numbers |
+| `MEDICAL_PROCESS`   | Treatments, procedures                  |
