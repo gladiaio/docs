@@ -29,6 +29,10 @@ The value listed below are default values. We can provide high concurrencies bas
   This refers to the maximum number of transcription (pre-recorder or real-time) that a user can process at the same time.
   For asynchronous transcriptions, Paid plan users can queue up to 300 requests, but only will still have 25 max processed concurrently.
 
+- **Realtime session duration** : (all plans)
+
+  A single realtime (live) transcription session cannot exceed **3 hours**. After 3 hours, the session will be terminated. For longer events, start a new session when approaching the limit.
+
 - **API level rate limit** : (same for every user)
 
   Which is the number of API calls that a user can make within a particular time frame.
