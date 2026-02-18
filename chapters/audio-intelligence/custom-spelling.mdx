@@ -1,6 +1,6 @@
 ---
 title: "Custom spelling"
-description: "Normalize spelling variants to your preferred forms in real time"
+description: "Normalize spelling variants to your preferred forms"
 ---
 
 import CustomSpellingStartDescription from '/snippets/custom-spelling-start-description.mdx'
@@ -8,7 +8,21 @@ import CustomSpellingEndDescription from '/snippets/custom-spelling-end-descript
 
 <CustomSpellingStartDescription />
 
-```json request data
+<CodeGroup>
+```json Pre-recorded
+{
+  "custom_spelling": true,
+  "custom_spelling_config": {
+    "spelling_dictionary": {
+      "Gorish": ["ghorish", "gaurish", "gaureish"],
+      "Data Science": ["data-science", "data science"],
+      ".": ["period", "full stop"],
+      "SQL": ["sequel"]
+    }
+  }
+}
+```
+```json Live transcription
 {
   "realtime_processing": {
     "custom_spelling": true,
@@ -23,7 +37,6 @@ import CustomSpellingEndDescription from '/snippets/custom-spelling-end-descript
   }
 }
 ```
+</CodeGroup>
 
 <CustomSpellingEndDescription />
-
-

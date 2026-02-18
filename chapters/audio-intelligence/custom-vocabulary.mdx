@@ -1,6 +1,6 @@
 ---
 title: "Custom vocabulary"
-description: "Improve recognition of expected vocabulary in your files"
+description: "Improve recognition of domain-specific words and phrases"
 ---
 
 import CustomVocabularyParams from '/snippets/custom-vocabulary-params.mdx'
@@ -9,7 +9,9 @@ import CustomVocabularyDescription from '/snippets/custom-vocabulary-description
 <CustomVocabularyDescription />
 
 ## Example configuration
-```json request data
+
+<CodeGroup>
+```json Pre-recorded
 {
   "audio_url": "YOUR_AUDIO_URL",
   "custom_vocabulary": true,
@@ -28,7 +30,26 @@ import CustomVocabularyDescription from '/snippets/custom-vocabulary-description
   }
 }
 ```
+```json Live transcription
+{
+  "realtime_processing": {
+    "custom_vocabulary": true,
+    "custom_vocabulary_config": {
+      "vocabulary": [
+        "Westeros",
+        {"value": "Stark"},
+        {
+          "value": "Night's Watch",
+          "pronunciations": ["Nightz Watch"],
+          "intensity": 0.4,
+          "language": "en"
+        }
+      ],
+      "default_intensity": 0.6
+    }
+  }
+}
+```
+</CodeGroup>
 
 <CustomVocabularyParams />
-
-
