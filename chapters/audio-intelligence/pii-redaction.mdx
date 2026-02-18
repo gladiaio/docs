@@ -23,10 +23,7 @@ Add `"pii_redaction": true` to your request to redact all detected PII in the tr
 You can customize the behavior with `pii_redaction_config`:
 
 <ParamField body="entity_types" type="string[]">
-  Preset or list of PII entity types to redact (e.g. `["GDPR"]`). See [Named
-  Entity
-  Recognition](/chapters/audio-intelligence/named-entity-recognition#supported-entities)
-  for supported entity types.
+  Preset or list of PII entity types to redact (e.g. `["GDPR"]`).
 </ParamField>
 <ParamField body="processed_text_type" type="enum" default="MARKER">
   How to replace detected PII: - **`MARKER`**: Placeholder labels like
