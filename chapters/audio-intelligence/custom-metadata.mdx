@@ -3,6 +3,12 @@ title: "Custom metadata"
 description: "Attach metadata to transcription jobs for filtering and retrieval"
 ---
 
+import PrerecordedBadge from "/snippets/badges/prerecorded.mdx"
+import LiveBadge from "/snippets/badges/live.mdx"
+
+<PrerecordedBadge />
+<LiveBadge />
+
 You can add metadata to your transcription using the `custom_metadata` property. This helps recognize your transcription when fetching results, and enables filtering via the list endpoints.
 
 - **Pre-recorded**: add `custom_metadata` to your POST request to `/v2/pre-recorded`, then filter via GET `/v2/pre-recorded` or fetch via GET `/v2/pre-recorded/:id`.
