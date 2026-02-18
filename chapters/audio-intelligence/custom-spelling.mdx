@@ -9,10 +9,14 @@ import LiveBadge from "/snippets/badges/live.mdx"
 <PrerecordedBadge />
 <LiveBadge />
 
-import CustomSpellingStartDescription from '/snippets/custom-spelling-start-description.mdx'
-import CustomSpellingEndDescription from '/snippets/custom-spelling-end-description.mdx'
+You can customize how certain words, names or phrases are spelled in the final transcript.
+<br/>To use custom spelling, provide a dictionary through the `custom_spelling_config` parameter. This dictionary should contain the correct spelling as the key and a list of one or more possible variations as the value.
 
-<CustomSpellingStartDescription />
+Custom spelling is useful in scenarios where consistent spelling of specific words is crucial (e.g., technical terms in industry-specific recordings).
+
+<Note>
+The keys in the dictionary are case sensitive, while the values aren't. Values can contain multiple words.
+</Note>
 
 <CodeGroup>
 ```json Pre-recorded
@@ -45,4 +49,4 @@ import CustomSpellingEndDescription from '/snippets/custom-spelling-end-descript
 ```
 </CodeGroup>
 
-<CustomSpellingEndDescription />
+In this example, the model will ensure that "Gorish" is spelled correctly throughout the transcript, even if it is pronounced in various ways such as "ghorish," "gaurish," or "gaureish."
