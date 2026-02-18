@@ -3,8 +3,9 @@ title: PII Redaction
 description: "Automatically detect and redact personally identifiable information in pre-recorded transcripts"
 ---
 
-**PII Redaction** automatically detects and replaces sensitive entities (names, emails, addresses, etc.) in your transcript output. This feature is only available for **pre-recorded** transcription.
-
+**PII Redaction** automatically detects and replaces sensitive entities (names, emails, addresses, etc.) in your transcript output. This feature is only available for **pre-recorded** transcription. \
+\
+Handling audio data often involves processing conversations that contain personally identifiable information such as names, phone numbers, or financial details. Redacting PII helps you comply with **privacy regulations** like GDPR and CCPA, protect your users' sensitive data, and reduce the risk of data breaches when storing or sharing transcripts.
 ## Usage
 
 Add `"pii_redaction": true` to your request to redact all detected PII in the transcript. Sensitive entities will be replaced with markers in the output.
