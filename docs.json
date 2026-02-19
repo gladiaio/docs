@@ -41,9 +41,7 @@
                 "pages": [
                   "chapters/pre-recorded-stt/quickstart",
                   "chapters/pre-recorded-stt/audio-intelligence",
-                  "chapters/pre-recorded-stt/features/sentences",
-                  "chapters/pre-recorded-stt/features/name-consistency",
-                  "chapters/pre-recorded-stt/features/enhanced-punctuation"
+                  "chapters/pre-recorded-stt/features/sentences"
                 ]
               },
               {
