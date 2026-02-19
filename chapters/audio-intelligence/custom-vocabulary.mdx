@@ -1,0 +1,87 @@
+---
+title: "Custom vocabulary"
+description: "Improve recognition of domain-specific words and phrases"
+---
+
+import PrerecordedBadge from "/snippets/badges/prerecorded.mdx"
+import LiveBadge from "/snippets/badges/live.mdx"
+
+<PrerecordedBadge />
+<LiveBadge />
+
+The custom vocabulary feature allows you to process your transcription results by replacing specific words with terms that better fit your domain. This is especially useful for company names, product names, technical terms, or uncommon words that are often mis-transcribed by speech to text models.
+
+### How it works
+
+Custom vocabulary operates at a **word level** and is based on **phoneme similarity**.
+
+Once the transcription is generated, Gladia compares the phonemes of the transcribed words with the phonemes of the words you provided in your custom vocabulary. If the similarity score is above a defined similarity, the word in the transcription is replaced.
+
+Alongside the word value, the pronunciations list allows you to define alternative ways a word can be pronounced. This helps cover a wider phoneme range without having to increase the similarity threshold, which could otherwise lead to false positives. It is especially useful for words with multiple common pronunciations, foreign words, or variations caused by accents.
+
+## Example configuration
+
+<CodeGroup>
+```json Pre-recorded
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "custom_vocabulary": true,
+  "custom_vocabulary_config": {
+    "vocabulary": [
+      "Westeros",
+      {"value": "Stark"},
+      {
+        "value": "Night's Watch",
+        "pronunciations": ["Nightz Vatch"],
+        "intensity": 0.4,
+        "language": "de"
+      }
+    ],
+    "default_intensity": 0.6
+  }
+}
+```
+```json Live
+{
+  "realtime_processing": {
+    "custom_vocabulary": true,
+    "custom_vocabulary_config": {
+      "vocabulary": [
+        "Westeros",
+        {"value": "Stark"},
+        {
+          "value": "Night's Watch",
+          "pronunciations": ["Nightz Watch"],
+          "intensity": 0.4,
+          "language": "en"
+        }
+      ],
+      "default_intensity": 0.6
+    }
+  }
+}
+```
+</CodeGroup>
+
+<ParamField body="default_intensity" type="number">
+  The global intensity of the feature (minimum 0, maximum 1, default 0.5).
+</ParamField>
+<ParamField body="vocabulary" type="object">
+  <Expandable title="properties">
+    <ParamField body="value" type="string" required>
+      The text used to replace in the transcription
+    </ParamField>
+    
+    <ParamField body="pronunciations" type="string">
+      The pronunciations used in the transcription language, or `vocabulary.language` if present.
+    </ParamField>
+
+    <ParamField body="intensity" type="number">
+      The intensity of the feature for this particular word (minimum 0, maximum 1, default 0.5).
+    </ParamField>
+
+    <ParamField body="language" type="string">
+      Specify the language in which it will be pronounced when sound comparison occurs. Default to transcription language.
+    </ParamField>
+  </Expandable>
+</ParamField>

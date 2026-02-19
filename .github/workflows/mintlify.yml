@@ -12,5 +12,5 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: lts/*
-      - run: npm i -g mint
+      - run: npm i -g mint@4.2.114
       - run: mint broken-links
