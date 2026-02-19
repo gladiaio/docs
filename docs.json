@@ -36,48 +36,25 @@
             "group": "Speech-to-Text",
             "pages": [
               {
-                "group": "Live Transcription",
-                "expanded": true,
-                "pages": [
-                  "chapters/live-stt/quickstart",
-                  "chapters/live-stt/audio-intelligence",
-                  "chapters/live-stt/features/partial-transcripts",
-                  "chapters/live-stt/features/multiple-channels",
-                  "chapters/live-stt/features/custom-vocabulary",
-                  "chapters/live-stt/features/custom-spelling",
-                  "chapters/live-stt/features/custom-metadata"
-                ]
-              },
-              {
                 "group": "Pre-recorded Transcription",
-                "expanded": false,
+                "expanded": true,
                 "pages": [
                   "chapters/pre-recorded-stt/quickstart",
                   "chapters/pre-recorded-stt/audio-intelligence",
-                  "chapters/pre-recorded-stt/features/sentences",
-                  "chapters/pre-recorded-stt/features/speaker-diarization",
-                  "chapters/pre-recorded-stt/features/subtitles",
-                  "chapters/pre-recorded-stt/features/multiple-channels",
-                  "chapters/pre-recorded-stt/features/name-consistency",
-                  "chapters/pre-recorded-stt/features/enhanced-punctuation",
-                  "chapters/pre-recorded-stt/features/custom-vocabulary",
-                  "chapters/pre-recorded-stt/features/custom-spelling",
-                  "chapters/pre-recorded-stt/features/custom-metadata"
+                  "chapters/pre-recorded-stt/features/sentences"
                 ]
               },
-              "chapters/recommended-parameters"
-            ]
-          },
-          {
-            "group": "Integrations",
-            "pages": [
-              "chapters/integrations/sdk",
-              "chapters/integrations/pipecat",
-              "chapters/integrations/livekit",
-              "chapters/integrations/vapi",
-              "chapters/integrations/recall",
-              "chapters/integrations/meeting-baas",
-              "chapters/integrations/twilio"
+              {
+                "group": "Live Transcription",
+                "expanded": false,
+                "pages": [
+                  "chapters/live-stt/quickstart",
+                  "chapters/live-stt/audio-intelligence",
+                  "chapters/live-stt/features/endpointing",
+                  "chapters/live-stt/features/partial-transcripts",
+                  "chapters/live-stt/recommended-parameters"
+                ]
+              }
             ]
           },
 
@@ -92,19 +69,37 @@
           {
             "group": "Audio Intelligence",
             "pages": [
+              "chapters/audio-intelligence/speaker-diarization",
               "chapters/audio-intelligence/translation",
-              "chapters/audio-intelligence/summarization",
+              "chapters/audio-intelligence/subtitles",
+              "chapters/audio-intelligence/custom-vocabulary",
+              "chapters/audio-intelligence/custom-spelling",
               "chapters/audio-intelligence/named-entity-recognition",
               "chapters/audio-intelligence/pii-redaction",
               "chapters/audio-intelligence/sentiment-analysis",
               "chapters/audio-intelligence/chapterization",
-              "chapters/audio-intelligence/audio-to-llm"
+              "chapters/audio-intelligence/summarization",
+              "chapters/audio-intelligence/audio-to-llm",
+              "chapters/audio-intelligence/custom-metadata"
+            ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "chapters/integrations/sdk",
+              "chapters/integrations/pipecat",
+              "chapters/integrations/livekit",
+              "chapters/integrations/vapi",
+              "chapters/integrations/recall",
+              "chapters/integrations/meeting-baas",
+              "chapters/integrations/twilio"
             ]
           },
           {
             "group": "Limits & Specifications",
             "pages": [
               "chapters/limits-and-specifications/concurrency",
+              "chapters/limits-and-specifications/multiple-channels",
               "chapters/limits-and-specifications/supported-formats",
               "chapters/limits-and-specifications/data-retention"
             ]
@@ -405,7 +400,7 @@
     },
     {
       "source": "/chapters/speech-to-text-api/pages/speaker-diarization",
-      "destination": "/chapters/pre-recorded-stt/speaker-diarization"
+      "destination": "/chapters/audio-intelligence/speaker-diarization"
     },
     {
       "source": "/chapters/get-started/pages/migration-from-v1",
@@ -494,6 +489,86 @@
     {
       "source": "/api-reference/pre-recorded-flow",
       "destination": "/chapters/pre-recorded-stt/quickstart"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/features/custom-vocabulary",
+      "destination": "/chapters/audio-intelligence/custom-vocabulary"
+    },
+    {
+      "source": "/chapters/live-stt/features/custom-vocabulary",
+      "destination": "/chapters/audio-intelligence/custom-vocabulary"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/features/custom-spelling",
+      "destination": "/chapters/audio-intelligence/custom-spelling"
+    },
+    {
+      "source": "/chapters/live-stt/features/custom-spelling",
+      "destination": "/chapters/audio-intelligence/custom-spelling"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/features/custom-metadata",
+      "destination": "/chapters/audio-intelligence/custom-metadata"
+    },
+    {
+      "source": "/chapters/live-stt/features/custom-metadata",
+      "destination": "/chapters/audio-intelligence/custom-metadata"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/features/speaker-diarization",
+      "destination": "/chapters/audio-intelligence/speaker-diarization"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/features/subtitles",
+      "destination": "/chapters/audio-intelligence/subtitles"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/features/multiple-channels",
+      "destination": "/chapters/limits-and-specifications/multiple-channels"
+    },
+    {
+      "source": "/chapters/live-stt/features/multiple-channels",
+      "destination": "/chapters/limits-and-specifications/multiple-channels"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/custom-vocabulary",
+      "destination": "/chapters/audio-intelligence/custom-vocabulary"
+    },
+    {
+      "source": "/chapters/live-stt/custom-vocabulary",
+      "destination": "/chapters/audio-intelligence/custom-vocabulary"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/custom-spelling",
+      "destination": "/chapters/audio-intelligence/custom-spelling"
+    },
+    {
+      "source": "/chapters/live-stt/custom-spelling",
+      "destination": "/chapters/audio-intelligence/custom-spelling"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/custom-metadata",
+      "destination": "/chapters/audio-intelligence/custom-metadata"
+    },
+    {
+      "source": "/chapters/live-stt/custom-metadata",
+      "destination": "/chapters/audio-intelligence/custom-metadata"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/speaker-diarization",
+      "destination": "/chapters/audio-intelligence/speaker-diarization"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/subtitles",
+      "destination": "/chapters/audio-intelligence/subtitles"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/multiple-channels",
+      "destination": "/chapters/limits-and-specifications/multiple-channels"
+    },
+    {
+      "source": "/chapters/live-stt/multiple-channels",
+      "destination": "/chapters/limits-and-specifications/multiple-channels"
     }
   ]
 }

@@ -3,6 +3,12 @@ title: Named Entity Recognition
 description: "The Named Entity Recognition model automatically identifies and categorizes key information in the audio."
 ---
 
+import PrerecordedBadge from "/snippets/badges/prerecorded.mdx"
+import LiveBadge from "/snippets/badges/live.mdx"
+
+<PrerecordedBadge />
+<LiveBadge />
+
 <Note>
 This feature is in **Alpha** state.<br/>
 Breaking changes may still be introduced to this API, but an advanced notice will be sent.
@@ -18,7 +24,12 @@ We're looking for feedback to improve this feature, [share yours on Discord](htt
 To enable named entity recognition simply set the appropriate flag:
 
 <CodeGroup>
-```json Live transcription
+```json Pre-recorded
+{
+  "named_entity_recognition": true
+}
+```
+```json Live
 {
   "realtime_processing": {
     "named_entity_recognition": true
@@ -28,16 +39,12 @@ To enable named entity recognition simply set the appropriate flag:
   }
 }
 ```
-```json Pre-recorded
-{
-  "named_entity_recognition": true
-}
-```
 </CodeGroup>
 ## Result
 The transcription result will contain a ```"named_entity_recognition"``` key with the output of the model:
 
-```json result
+<CodeGroup>
+```json Pre-recorded
 {
   "transcription":{...}
   "named_entity_recognition": {
@@ -62,6 +69,37 @@ The transcription result will contain a ```"named_entity_recognition"``` key wit
   }
 }
 ```
+```json Live
+{
+  "session_id": "550e8400-e29b-41d4-a716-446655440000",
+  "created_at": "2025-09-19T12:34:30Z",
+  "type": "named_entity_recognition",
+  "error": null,
+  "data": {
+    "utterance_id": "utt_002",
+    "utterance": {
+      "text": "meeting with Alice at 3pm",
+      "start": 7,
+      "end": 10.5
+    },
+    "results": [
+      {
+        "entity_type": "PERSON",
+        "text": "Alice",
+        "start": 2,
+        "end": 2.5
+      },
+      {
+        "entity_type": "TIME",
+        "text": "3pm",
+        "start": 3,
+        "end": 3.3
+      }
+    ]
+  }
+}
+```
+</CodeGroup>
 
 # Supported Regulations
 
