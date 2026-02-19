@@ -24,13 +24,13 @@ For example:
 }
 ```
 
-Filter results:
+Now, you'll be able to filter transcription jobs based on their metadata:
 
 <CodeGroup>
 ```bash Pre-recorded
 https://api.gladia.io/v2/pre-recorded?custom_metadata={"internalUserId": "2348739875894375"}
 ```
-```bash Live transcription
+```bash Live
 https://api.gladia.io/v2/live?custom_metadata={"internalUserId": "2348739875894375"}
 ```
 </CodeGroup>
@@ -41,7 +41,7 @@ or:
 ```bash Pre-recorded
 https://api.gladia.io/v2/pre-recorded?custom_metadata={"paymentMethod": {"last4Digits": 4576}, "internalUserName": "Spencer"}
 ```
-```bash Live transcription
+```bash Live
 https://api.gladia.io/v2/live?custom_metadata={"paymentMethod": {"last4Digits": 4576}, "internalUserName": "Spencer"}
 ```
 </CodeGroup>

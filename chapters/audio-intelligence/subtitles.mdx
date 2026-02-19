@@ -14,7 +14,7 @@ You can export completed transcripts in both SRT and VTT formats for subtitles a
 You can use the `subtitles` feature alongside `translation`. You'll have subtitles in the original language, and in each targeted translation language.
 </Tip>
 
-```json request data
+```json Pre-recorded
 {
   "audio_url": "YOUR_AUDIO_URL",
   "subtitles": true,
@@ -52,7 +52,7 @@ The `subtitles_config` object supports:
 
 The JSON response adds a `subtitles` array with items like:
 
-```json
+```json Pre-recorded
 {
   "format": "srt",
   "subtitles": "1\n00:00:00,210 --> 00:00:04,711....."

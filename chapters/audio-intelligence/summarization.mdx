@@ -30,7 +30,15 @@ If no `summarization_config` is provided, `general` type will be used by default
 ## Usage
 To enable summarization simply set the `"summarization"` parameter to true
 <CodeGroup>
-```json Live transcription
+```json Pre-recorded
+{
+  "summarization": true,
+  "summarization_config": {
+    "type": "concise",
+  }
+}
+```
+```json Live
 {
   "post_processing": {
     "summarization": true,
@@ -43,21 +51,13 @@ To enable summarization simply set the `"summarization"` parameter to true
   }
 }
 ```
-```json Pre-recorded
-{
-  "summarization": true,
-  "summarization_config": {
-    "type": "concise",
-  }
-}
-```
 </CodeGroup>
 
 ## Result
 The transcription result will contain a ```"summarization"``` key with the output of the model:
 
-
-```json result
+<CodeGroup>
+```json Pre-recorded
 {
   "transcription": {...},
   "summarization": {
@@ -69,5 +69,6 @@ The transcription result will contain a ```"summarization"``` key with the outpu
   }
 }
 ```
+</CodeGroup>
 
 You'll find the summarization of your audio under the `results` key.

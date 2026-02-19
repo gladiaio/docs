@@ -25,7 +25,12 @@ Each chapter will contain its start and end time, as well as a summary, headline
 Enable chapterization by setting the appropriate flag:
 
 <CodeGroup>
-```json Live transcription
+```json Pre-recorded
+{
+  "chapterization": true
+}
+```
+```json Live
 {
   "post_processing": {
     "chapterization": true
@@ -35,16 +40,12 @@ Enable chapterization by setting the appropriate flag:
   }
 }
 ```
-```json Pre-recorded
-{
-  "chapterization": true
-}
-```
 </CodeGroup>
 ## Result
 The transcription result will contain a `"chapterization"` key with the output of the model:
 
-```json result
+<CodeGroup>
+```json Pre-recorded
 {
   "transcription":{...},
   "chapterization": {
@@ -70,3 +71,7 @@ The transcription result will contain a `"chapterization"` key with the output o
   }
 }
 ```
+```json Live
+// TODO
+```
+</CodeGroup>

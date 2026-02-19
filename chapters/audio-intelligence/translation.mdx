@@ -26,7 +26,23 @@ The list of the languages covered by the Translation feature are listed in [Supp
 To enable translation, set `translation` to `true` on your request, and add a `translation_config` object :
 
 <CodeGroup>
-```json Live transcription
+```json Pre-recorded
+{
+  "translation": true,
+  "translation_config": {
+    "target_languages": [
+      "fr"
+    ],
+    "model": "base",
+    "match_original_utterances": true,
+    "lipsync": true,
+    "context_adaptation": true,
+    "context": "<string>",
+    "informal": false
+  }
+}
+```
+```json Live
 {
   "realtime_processing": {
     "translation": true,
@@ -44,22 +60,6 @@ To enable translation, set `translation` to `true` on your request, and add a `t
   },
   "messages_config": {
     "receive_realtime_processing_events": true
-  }
-}
-```
-```json Pre-recorded
-{
-  "translation": true,
-  "translation_config": {
-    "target_languages": [
-      "fr"
-    ],
-    "model": "base",
-    "match_original_utterances": true,
-    "lipsync": true,
-    "context_adaptation": true,
-    "context": "<string>",
-    "informal": false
   }
 }
 ```
@@ -120,7 +120,8 @@ To enable translation, set `translation` to `true` on your request, and add a `t
 
 The transcription result will contain a `"translation"` key with the output of the model:
 
-```json
+<CodeGroup>
+```json Pre-recorded
 {
   "transcription":{...},
   "translation": {
@@ -175,6 +176,10 @@ The transcription result will contain a `"translation"` key with the output of t
   }
 }
 ```
+```json Live
+// TODO
+```
+</CodeGroup>
 
 <Tip>
   If you enabled the `subtitles` generation, those will also benefits from the
