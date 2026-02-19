@@ -177,7 +177,29 @@ The transcription result will contain a `"translation"` key with the output of t
 }
 ```
 ```json Live
-// TODO
+{
+  "session_id": "550e8400-e29b-41d4-a716-446655440000",
+  "created_at": "2025-09-19T12:34:20Z",
+  "type": "translation",
+  "error": null,
+  "data": {
+    "utterance_id": "utt_001",
+    "utterance": {
+      "text": "buenos días",
+      "language": "es",
+      "start": 4.2,
+      "end": 6.1
+    },
+    "original_language": "es",
+    "target_language": "en",
+    "translated_utterance": {
+      "text": "good morning",
+      "language": "en",
+      "start": 4.2,
+      "end": 6.1
+    }
+  }
+}
 ```
 </CodeGroup>
 
