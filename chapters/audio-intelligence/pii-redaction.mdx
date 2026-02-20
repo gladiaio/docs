@@ -9,7 +9,7 @@ import PrerecordedBadge from "/snippets/badges/prerecorded.mdx"
 
 **PII Redaction** automatically detects and replaces sensitive entities (names, emails, addresses, etc.) in your transcript output. This feature is only available for **pre-recorded** transcription. \
 \
-Handling audio data often involves processing conversations that contain personally identifiable information such as names, phone numbers, or financial details. Redacting PII helps you comply with **privacy regulations** like GDPR and CCPA, protect your users' sensitive data, and reduce the risk of data breaches when storing or sharing transcripts.
+Handling audio data often involves processing conversations that contain personally identifiable information such as names, phone numbers, or financial details. Redacting PII helps you comply with **privacy regulations** like GDPR and CCPA/CPRA, protect your users' sensitive data, and reduce the risk of data breaches when storing or sharing transcripts.
 ## Usage
 
 Add `"pii_redaction": true` to your request to redact all detected PII in the transcript. Sensitive entities will be replaced with markers in the output.
@@ -28,12 +28,12 @@ Add `"pii_redaction": true` to your request to redact all detected PII in the tr
 You can customize the behavior with `pii_redaction_config`:
 
 <ParamField body="entity_types" type="string[]">
-  Preset or list of PII entity types to redact (e.g. `["GDPR"]`).
+  Preset or list of PII entity types to redact (e.g. `["GDPR"]`). See [Supported entity types](#supported-entity-types) for available presets.
 </ParamField>
 <ParamField body="processed_text_type" type="enum" default="MARKER">
-  How to replace detected PII: - **`MARKER`**: Placeholder labels like
-  `[NAME_1]`, `[EMAIL_1]`. Same entity will have same ID. - **`MASK`**: Each
-  character replaced by a mask (e.g. "John Smith" → `#### #####`)
+  How to replace detected PII: 
+  - **`MARKER`**: Placeholder labels like `[NAME_1]`, `[EMAIL_1]`. Same entity will have same ID.
+  - **`MASK`**: Each character replaced by a mask (e.g. "John Smith" → `#### #####`)
 </ParamField>
 
 ## Example body
