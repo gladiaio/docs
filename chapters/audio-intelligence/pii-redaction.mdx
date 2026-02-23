@@ -32,8 +32,8 @@ You can customize the behavior with `pii_redaction_config`:
 </ParamField>
 <ParamField body="processed_text_type" type="enum" default="MARKER">
   How to replace detected PII: 
-  - **`MARKER`**: Placeholder labels like `[NAME_1]`, `[EMAIL_1]`. Same entity will have same ID.
   - **`MASK`**: Each character replaced by a mask (e.g. "John Smith" → `#### #####`)
+  - **`MARKER`**: Placeholder labels like `[NAME_1]`, `[EMAIL_1]`. Same entity will have same ID.
 </ParamField>
 
 ## Example body
