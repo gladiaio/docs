@@ -5,18 +5,26 @@ description: "Normalize spelling variants to your preferred forms"
 
 import PrerecordedBadge from "/snippets/badges/prerecorded.mdx"
 import LiveBadge from "/snippets/badges/live.mdx"
+import VocabularyVsSpelling from "/snippets/custom-vocabulary-vs-spelling.mdx"
 
 <PrerecordedBadge />
 <LiveBadge />
 
-You can customize how certain words, names or phrases are spelled in the final transcript.
-<br/>To use custom spelling, provide a dictionary through the `custom_spelling_config` parameter. This dictionary should contain the correct spelling as the key and a list of one or more possible variations as the value.
+Custom spelling lets you **force specific text replacements** in the final transcript. You provide a dictionary where each key is the spelling you want, and each value is a list of variants the model might produce instead. When any of those variants appear in the transcript, they get replaced with no ambiguity and no false positives.
 
-Custom spelling is useful in scenarios where consistent spelling of specific words is crucial (e.g., technical terms in industry-specific recordings).
+This is a straightforward **text-based find-and-replace** on the transcript output. It doesn't look at how words sound; it matches the exact strings you list.
 
-<Note>
-The keys in the dictionary are case sensitive, while the values aren't. Values can contain multiple words.
-</Note>
+## How it works
+
+After the transcription is generated, Gladia scans the output text for any of the variant strings you listed as dictionary values. When it finds one, it swaps it for the corresponding key. The matching is **deterministic**: if the text is there, it gets replaced; if it isn't, nothing happens.
+
+Keys (replacement to write) are case sensitive. Values (variants to find) are not. Values can contain multiple words.
+
+## When to use custom spelling vs. custom vocabulary
+
+<VocabularyVsSpelling />
+
+## Example configuration
 
 <CodeGroup>
 ```json Pre-recorded
@@ -49,4 +57,13 @@ The keys in the dictionary are case sensitive, while the values aren't. Values c
 ```
 </CodeGroup>
 
-In this example, the model will ensure that "Gorish" is spelled correctly throughout the transcript, even if it is pronounced in various ways such as "ghorish," "gaurish," or "gaureish."
+In this example, any time the model outputs "ghorish", "gaurish", or "gaureish", it will be replaced with "Gorish" in the final transcript. Similarly, "sequel" becomes "SQL", and spoken words like "period" or "full stop" become a literal ".".
+
+## How to build your spelling dictionary
+
+1. **Run a transcription without custom spelling** and review the output.
+2. **Identify words that are close but not quite right.** These are your candidates.
+3. **Add each correct spelling as a key**, and list every variant you've seen the model produce as values.
+4. **Run again** and verify the replacements look correct.
+
+You don't need to guess at variants upfront. Just collect them from real transcription outputs over time and add them to your dictionary as they appear.
