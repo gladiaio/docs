@@ -43,16 +43,16 @@ The `pronunciations` field lets you provide **plain-text alternative spellings t
   "custom_vocabulary": true,
   "custom_vocabulary_config": {
     "vocabulary": [
-      "Westeros",
-      {"value": "Stark"},
+      "Gladia",
+      {"value": "Solaria"},
       {
-        "value": "Night's Watch",
-        "pronunciations": ["Nightz Vatch"],
-        "intensity": 0.4,
-        "language": "de"
-      }
+        "value": "Salesforce",
+        "pronunciations": ["sell force", "sale forces"],
+        "intensity": 0.5,
+        "language": "en"
+      },
     ],
-    "default_intensity": 0.3
+    "default_intensity": 0.4
   }
 }
 ```
@@ -62,16 +62,16 @@ The `pronunciations` field lets you provide **plain-text alternative spellings t
     "custom_vocabulary": true,
     "custom_vocabulary_config": {
       "vocabulary": [
-        "Westeros",
-        {"value": "Stark"},
+        "Gladia",
+        {"value": "Solaria"},
         {
-          "value": "Night's Watch",
-          "pronunciations": ["Nightz Watch"],
-          "intensity": 0.4,
+          "value": "Salesforce",
+          "pronunciations": ["sell force", "sale forces"],
+          "intensity": 0.5,
           "language": "en"
-        }
+        },
       ],
-      "default_intensity": 0.3
+      "default_intensity": 0.4
     }
   }
 }
@@ -111,14 +111,14 @@ A higher value means the model will apply replacements more aggressively: more r
 
 The default intensity is **0.5**, which works well for short lists of very distinctive words. But in practice, especially with longer lists or shorter words, 0.5 is often too aggressive and produces false positives.
 
-**We recommend starting at 0.3–0.4** and raising only if you notice that your terms are still not being picked up, or lowering if you see too many false positives.
+**We recommend starting at **0.4\*\* and raising only if you notice that your terms are still not being picked up, or lowering if you see too many false positives.
 
 ### `default_intensity` vs. per-entry `intensity`
 
 - `default_intensity` sets the baseline for every entry in your vocabulary list.
 - The per-entry `intensity` field overrides the global default for that specific word.
 
-You can mix both. A common pattern: set `default_intensity` to 0.3, then lower individual short or common-sounding words (like "Arc" or "Via") down to 0.1–0.2 to avoid them matching too many unrelated words.
+You can mix both. A common pattern: set `default_intensity` to 0.4, then lower individual short or common-sounding words (like brand names "Target" or "Zoom") down to 0.2-0.3 to avoid them matching too many unrelated words.
 
 ### Watch your list size
 
@@ -138,7 +138,7 @@ If you're setting up custom vocabulary for the first time, here's a step-by-step
 2. **Separate the problems into two buckets:**
    - Words that are completely wrong or garbled → these are candidates for **custom vocabulary**.
    - Words that are recognizable but misspelled (e.g. "Gaurish" instead of "Gorish") → use **[custom spelling](/chapters/audio-intelligence/custom-spelling)** for these.
-3. **Add your custom vocabulary entries** with `default_intensity` set to **0.3**.
+3. **Add your custom vocabulary entries** with `default_intensity` set to **0.4**.
 4. **Run the transcription again** and compare. Check that your terms are now appearing correctly.
 5. **Look for false positives**, words that were correct before but are now being wrongly replaced. If you spot any:
    - Lower the `intensity` on the entry causing the problem.
