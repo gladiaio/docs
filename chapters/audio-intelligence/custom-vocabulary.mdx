@@ -3,19 +3,23 @@ title: "Custom vocabulary"
 description: "Improve recognition of domain-specific words and phrases"
 ---
 
-import PrerecordedBadge from "/snippets/badges/prerecorded.mdx"
-import LiveBadge from "/snippets/badges/live.mdx"
-import VocabularyVsSpelling from "/snippets/custom-vocabulary-vs-spelling.mdx"
+import PrerecordedBadge from "/snippets/badges/prerecorded.mdx";
+import LiveBadge from "/snippets/badges/live.mdx";
+import VocabularyVsSpelling from "/snippets/custom-vocabulary-vs-spelling.mdx";
 
 <PrerecordedBadge />
 <LiveBadge />
 
 Custom vocabulary helps the transcription engine **recognize words it would otherwise get wrong**: unusual brand names, internal project codenames, medical or legal jargon, or acronyms that sound like common words.
 
-It works by comparing the *sounds* (phonemes) of what was actually spoken against the sounds of the words you provide. When there's a close enough match, the transcribed word gets swapped out for your term. This is **probabilistic**: it increases the odds of a correct transcription, but it does not guarantee it.
+It works by comparing the _sounds_ (phonemes) of what was actually spoken against the sounds of the words you provide. When there's a close enough match, the transcribed word gets swapped out for your term. This is **probabilistic**: it increases the odds of a correct transcription, but it does not guarantee it.
 
 <Note>
-If you already know exactly which *text* variants the model produces and you just want to normalize the spelling, use **[Custom spelling](/chapters/audio-intelligence/custom-spelling)** instead. Custom spelling is a deterministic find-and-replace on the transcript text, with no phoneme matching and no false positives.
+  If you already know exactly which *text* variants the model produces and you
+  just want to normalize the spelling, use **[Custom
+  spelling](/chapters/audio-intelligence/custom-spelling)** instead. Custom
+  spelling is a deterministic find-and-replace on the transcript text, with no
+  phoneme matching and no false positives.
 </Note>
 
 ## How it works
@@ -24,8 +28,7 @@ Custom vocabulary operates at a **text level** and is based on **phoneme similar
 
 Once the transcription is generated, Gladia converts both the transcribed words and your vocabulary entries into phonemes, then compares them. The `intensity` controls how aggressively the model applies replacements: a higher intensity means the model will replace words more readily (wider phoneme matching), while a lower intensity requires a closer phoneme match before a replacement is made.
 
-The `pronunciations` field lets you provide **plain-text alternative spellings that reflect how the word actually sounds** in speech. These are *not* phonetic notation. Just write the word the way someone might naively spell it based on how it sounds. Gladia converts these strings to phonemes internally. For example, if your term is "Nietzsche", you might add `["Niche", "Neechee"]` as pronunciations. This widens the phoneme net without having to raise the intensity (which would increase false positives across the board).
-
+The `pronunciations` field lets you provide **plain-text alternative spellings that reflect how the word actually sounds** in speech. These are _not_ phonetic notation. Just write the word the way someone might naively spell it based on how it sounds. Gladia converts these strings to phonemes internally. For example, if your term is "Nietzsche", you might add `["Niche", "Neechee"]` as pronunciations. This widens the phoneme net without having to raise the intensity (which would increase false positives across the board).
 
 ## When to use custom vocabulary vs. custom spelling
 
@@ -80,7 +83,8 @@ The `pronunciations` field lets you provide **plain-text alternative spellings t
 <ParamField body="default_intensity" type="number">
   The global intensity applied to every vocabulary entry that doesn't have its own `intensity` override (minimum 0, maximum 1, default 0.5).
 
-  A higher value means the model will apply replacements more aggressively: more replacements, but more risk of unwanted swaps. A lower value requires a closer phoneme match before replacing: fewer replacements, fewer false positives.
+A higher value means the model will apply replacements more aggressively: more replacements, but more risk of unwanted swaps. A lower value requires a closer phoneme match before replacing: fewer replacements, fewer false positives.
+
 </ParamField>
 <ParamField body="vocabulary" type="object">
   <Expandable title="properties">
@@ -99,6 +103,7 @@ The `pronunciations` field lets you provide **plain-text alternative spellings t
     <ParamField body="language" type="string">
       The language in which this word will be pronounced during phoneme comparison. Defaults to the transcription language. This matters when a word from one language appears in a conversation in another language. For example, an English brand name like "Salesforce" spoken in a French meeting. Setting `language: "en"` ensures the phoneme comparison uses English pronunciation rules, not French ones.
     </ParamField>
+
   </Expandable>
 </ParamField>
 
@@ -120,6 +125,7 @@ You can mix both. A common pattern: set `default_intensity` to 0.3, then lower i
 As your vocabulary list grows, the chance of false positives increases. Every transcribed word is compared against every entry, so a list of 50+ terms will naturally produce more unintended replacements than a list of 5.
 
 If you find yourself fighting false positives on a large list, consider:
+
 1. Lowering the intensity for the entries that cause problems.
 2. Adding specific `pronunciations` to narrow the phoneme matching instead of lowering intensity.
 3. Moving entries that the model already recognizes (just with wrong spelling) to **[custom spelling](/chapters/audio-intelligence/custom-spelling)** instead. This eliminates false positives entirely for those terms.
@@ -139,7 +145,3 @@ If you're setting up custom vocabulary for the first time, here's a step-by-step
    - Add `pronunciations` to make the match more precise.
    - If false positives persist, move that entry to custom spelling instead.
 6. **Iterate.** Tuning is normal. Don't expect to get it perfect on the first pass.
-
-<Tip>
-If custom vocabulary keeps producing false positives for a particular term no matter how you tune it, switch that term to **[custom spelling](/chapters/audio-intelligence/custom-spelling)**. Custom spelling is deterministic: if the model already outputs something close to the right text, custom spelling will normalize it without any risk of unintended replacements. This is a common migration path and the right call when phoneme matching is more trouble than it's worth for a given word.
-</Tip>
