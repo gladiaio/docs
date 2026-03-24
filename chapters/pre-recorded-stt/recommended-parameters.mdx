@@ -1,0 +1,137 @@
+---
+title: Recommended Parameters by Use Case
+sidebarTitle: Recommended Parameters
+description: Best parameter configurations for pre-recorded transcription depending on your application (Podcasts, Call Centers, Multilingual Content, Subtitles).
+---
+
+import LanguageDetection from "/snippets/recommended-params/language-detection.mdx";
+import CodeSwitching from "/snippets/recommended-params/code-switching.mdx";
+import CustomVocabulary from "/snippets/recommended-params/custom-vocabulary.mdx";
+
+When transcribing pre-recorded audio, the **right configuration** of parameters can significantly impact transcription quality. This guide covers **recommended values** for common use cases and highlights **common pitfalls** so you can avoid the most frequent configuration mistakes.
+
+<Info>
+  These recommendations apply to the **[Pre-recorded
+  API](/chapters/pre-recorded-stt/quickstart)** and can be passed in the `POST
+  /v2/pre-recorded` request body. They are starting points — feel free to
+  fine-tune them to your needs.
+</Info>
+
+---
+
+## Language Detection vs. Explicit Language
+
+<LanguageDetection />
+
+---
+
+## Code Switching: When to Use It
+
+<CodeSwitching />
+
+---
+
+## Custom Vocabulary Tips
+
+<CustomVocabulary />
+
+Here's an example configuration for pre-recorded transcription:
+
+```json
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "custom_vocabulary": true,
+  "custom_vocabulary_config": {
+    "vocabulary": [
+      "Kubernetes",
+      {
+        "value": "Gladia",
+        "pronunciations": ["Gladya", "Gladiah"],
+        "intensity": 0.5
+      },
+      {
+        "value": "PostgreSQL",
+        "pronunciations": ["Postgres Q L", "Post gress"],
+        "intensity": 0.4
+      }
+    ],
+    "default_intensity": 0.5
+  }
+}
+```
+
+---
+
+## Call Centers & Customer Support
+
+For recorded phone calls, the priorities are **speaker identification** and **accurate transcription** despite variable audio quality.
+
+**Recommended parameters:**
+
+- **`language_config.languages`: set explicitly**  
+  Call center audio typically has a known language. Setting it avoids detection errors on noisy recordings.
+- **`diarization`: true**  
+  Separates agent and customer speech.
+- **`diarization_config.number_of_speakers`: 2**  
+  Most calls have exactly two participants — giving this hint improves speaker assignment.
+- **`custom_vocabulary`: true**  
+  Add product names, plan names, and internal terminology.
+- **`summarization`: true**  
+  Automatically generate a summary for agent wrap-up notes.
+
+---
+
+## Podcasts & Interviews
+
+For long-form audio with multiple speakers, the focus is on **readability** and **correct speaker attribution**.
+
+**Recommended parameters:**
+
+- **`diarization`: true**  
+  Essential for multi-speaker content.
+- **`diarization_config.min_speakers` / `max_speakers`**  
+  Provide a range if the exact count varies across episodes.
+- **`sentences`: true**  
+  Produces well-segmented, readable output.
+- **`custom_vocabulary`: true**  
+  Add recurring guest names, show-specific terms, and brand names.
+- **`language_config.languages`: set to known language(s)**  
+  Podcast language is almost always known in advance.
+
+---
+
+## Subtitles & Captioning
+
+When generating subtitle files from pre-recorded content, fine-tune the subtitle formatting parameters for the best viewing experience.
+
+**Recommended parameters:**
+
+- **`subtitles`: true**  
+  Enables subtitle generation.
+- **`subtitles_config.formats`: `["srt", "vtt"]`**  
+  Generate both formats to cover different players.
+- **`subtitles_config.maximum_characters_per_row`: 42**  
+  Standard broadcast limit for readability.
+- **`subtitles_config.maximum_rows_per_caption`: 2**  
+  Keeps captions compact on screen.
+- **`subtitles_config.style`: `"compliance"`**  
+  Uses stricter formatting rules suited for broadcast or accessibility requirements.
+- **`translation`: true** (if needed)  
+  Subtitles are automatically generated for each target language when translation is enabled.
+
+---
+
+## Multilingual Content
+
+For content with mixed languages (conferences, multilingual media), combine language detection with code switching.
+
+**Recommended parameters:**
+
+- **`language_config.languages`: list of expected languages**  
+  Constrain to 2–4 expected languages for best accuracy.
+- **`language_config.code_switching`: true**  
+  Detects language shifts across utterances.
+- **`custom_vocabulary`: true**  
+  Add terms for each language with appropriate `language` tags on each entry.
+- **`translation`: true** (optional)  
+  Translate all utterances into a single target language for unified output.
