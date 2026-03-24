@@ -20,8 +20,9 @@ Code switching (`language_config.code_switching: true`) lets Gladia detect and t
 ```
 
 <Warning>
-  Avoid listing too many languages. The more candidates there are, the more
-  likely the model is to confuse similar-sounding languages (e.g.
-  Portuguese/Spanish, Dutch/German). Keep the list to languages you **actually
-  expect** in the audio.
+  **Do not enable `code_switching` with an empty `languages` list.** When no
+  languages are specified, the language detector evaluates every utterance
+  against 100+ supported languages, which leads to frequent misdetections —
+  especially between similar-sounding languages. Always provide a short list of
+  languages you **actually expect** in the audio.
 </Warning>
