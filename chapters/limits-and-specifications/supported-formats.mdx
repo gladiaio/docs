@@ -15,13 +15,15 @@ Those limits will be gradually lifted to ensure the full stability and performan
 </Tip>
 
 
-- **Audio length**: The maximum length of audio that can be transcribed in a single request is currently
+- **Audio length (pre-recorded)**: The maximum length of audio that can be transcribed in a single request is currently
 135 minutes. Attempts to transcribe longer audio files will result in an error.
 Direct YouTube links are limited to 120 minutes instead of 135 minutes.
 
 <Tip> 
   We support up to 4h15 audio length for enterprise plans.
 </Tip>
+
+- **Realtime session duration**: For [live (realtime) transcription](/chapters/live-stt/quickstart), a single WebSocket session cannot exceed **3 hours**. The session will be terminated after 3 hours; for longer events, start a new session before reaching the limit.
 
 - **File size**: Audio files must not exceed 1000 MB in size. Larger files will not be accepted by the API.
 
