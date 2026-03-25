@@ -86,14 +86,14 @@ The `pronunciations` field lets you provide **plain-text alternative spellings t
 A higher value means the model will apply replacements more aggressively: more replacements, but more risk of unwanted swaps. A lower value requires a closer phoneme match before replacing: fewer replacements, fewer false positives.
 
 </ParamField>
-<ParamField body="vocabulary" type="object">
+<ParamField body="vocabulary" type="object | string[]">
   <Expandable title="properties">
     <ParamField body="value" type="string" required>
       The text that will be inserted into the transcription when a phoneme match is found.
     </ParamField>
     
     <ParamField body="pronunciations" type="string[]">
-      Plain-text alternative spellings that reflect how the word sounds in speech. Write them the way someone would naively spell the word based on pronunciation. Gladia converts these to phonemes internally. This is *not* IPA or phonetic notation.
+      Plain-text alternative spellings that reflect how the word sounds in speech. Write them the way someone would naively spell the word based on pronunciation. Gladia converts these to phonemes internally. This is *not* phonetic notation.
     </ParamField>
 
     <ParamField body="intensity" type="number">
