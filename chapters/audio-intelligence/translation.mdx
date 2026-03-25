@@ -3,7 +3,13 @@ title: Translation
 description: "Translate your transcriptions & subtitles"
 ---
 
-The **Translation** model generates translations of your transcriptions to one or more targeted languages. If [subtitles](/chapters/pre-recorded-stt/features/subtitles) and/or [sentences](/chapters/pre-recorded-stt/features/sentences) are enabled, the translations will also include translated results for them.
+import PrerecordedBadge from "/snippets/badges/prerecorded.mdx"
+import LiveBadge from "/snippets/badges/live.mdx"
+
+<PrerecordedBadge />
+<LiveBadge />
+
+The **Translation** model generates translations of your transcriptions to one or more targeted languages. If [subtitles](/chapters/audio-intelligence/subtitles) and/or [sentences](/chapters/pre-recorded-stt/features/sentences) are enabled, the translations will also include translated results for them.
 You can translate your transcription to **multiple languages** in a single API call.
 
 The list of the languages covered by the Translation feature are listed in [Supported Languages](/chapters/language/supported-languages).
@@ -20,7 +26,23 @@ The list of the languages covered by the Translation feature are listed in [Supp
 To enable translation, set `translation` to `true` on your request, and add a `translation_config` object :
 
 <CodeGroup>
-```json Live transcription
+```json Pre-recorded
+{
+  "translation": true,
+  "translation_config": {
+    "target_languages": [
+      "fr"
+    ],
+    "model": "base",
+    "match_original_utterances": true,
+    "lipsync": true,
+    "context_adaptation": true,
+    "context": "<string>",
+    "informal": false
+  }
+}
+```
+```json Live
 {
   "realtime_processing": {
     "translation": true,
@@ -38,22 +60,6 @@ To enable translation, set `translation` to `true` on your request, and add a `t
   },
   "messages_config": {
     "receive_realtime_processing_events": true
-  }
-}
-```
-```json Pre-recorded
-{
-  "translation": true,
-  "translation_config": {
-    "target_languages": [
-      "fr"
-    ],
-    "model": "base",
-    "match_original_utterances": true,
-    "lipsync": true,
-    "context_adaptation": true,
-    "context": "<string>",
-    "informal": false
   }
 }
 ```
@@ -114,7 +120,8 @@ To enable translation, set `translation` to `true` on your request, and add a `t
 
 The transcription result will contain a `"translation"` key with the output of the model:
 
-```json
+<CodeGroup>
+```json Pre-recorded
 {
   "transcription":{...},
   "translation": {
@@ -169,6 +176,32 @@ The transcription result will contain a `"translation"` key with the output of t
   }
 }
 ```
+```json Live
+{
+  "session_id": "550e8400-e29b-41d4-a716-446655440000",
+  "created_at": "2025-09-19T12:34:20Z",
+  "type": "translation",
+  "error": null,
+  "data": {
+    "utterance_id": "utt_001",
+    "utterance": {
+      "text": "buenos días",
+      "language": "es",
+      "start": 4.2,
+      "end": 6.1
+    },
+    "original_language": "es",
+    "target_language": "en",
+    "translated_utterance": {
+      "text": "good morning",
+      "language": "en",
+      "start": 4.2,
+      "end": 6.1
+    }
+  }
+}
+```
+</CodeGroup>
 
 <Tip>
   If you enabled the `subtitles` generation, those will also benefits from the

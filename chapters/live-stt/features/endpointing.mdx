@@ -1,0 +1,47 @@
+---
+title: "Endpointing"
+description: "What's endpointing and how it works"
+---
+
+Endpointing is the mechanism Gladia uses in live transcription to decide when a speaker has "finished" an utterance, so the API can close that utterance and emit a final transcript segment.
+
+In practice, endpointing answers the question: "How much silence should we wait before we consider the sentence (or turn) complete?"
+
+### Why endpointing matters
+
+Endpointing is one of the main knobs that controls the tradeoff between:
+- **Latency (speed)**: how quickly you get final utterances
+- **Completeness**: whether you avoid cutting someone off mid-thought
+- **Chunking quality**: whether utterances align well with natural turns or sentences
+
+Lower endpointing values feel "snappier" (great for voice agents), while higher values tend to produce cleaner, more complete segments (great for meetings and lectures).
+
+### How it works conceptually
+
+During a live session, Gladia continuously analyzes the incoming audio stream and: 
+1. Detects speech activity on each channel (voice activity detection)
+2. Groups speech into an "utterance" while speech is ongoing
+3. When it observes silence lasting at least endpointing seconds, it considers the utterance finished and closes it (finalizes it).
+4. The AI model is then used to transcribe the final result of the utterance.
+5. If speech never pauses long enough, Gladia still has a safety mechanism to close the utterance (*maximum_duration_without_endpointing*, see next section)
+
+You can also subscribe to speech activity messages to know when speech [starts](https://docs.gladia.io/api-reference/v2/live/callback/speech-start) and [ends](https://docs.gladia.io/api-reference/v2/live/callback/speech-end) (useful to drive UI or agent turn-taking)
+
+### The 2 key parameters
+
+**endpointing (seconds)** \
+Definition: the duration of silence that closes the current utterance.
+- Default: 0.05
+- Range: 0.01 to 10
+
+Effect:
+- Smaller value = closes utterances faster, but can split sentences if the speaker hesitates briefly.
+- Larger value = waits longer before finalizing, which improves segment completeness but increases latency.
+
+**maximum_duration_without_endpointing (seconds)**
+
+Definition: maximum amount of time Gladia will keep an utterance open without detecting endpointing silence. If that limit is reached, the utterance is considered finished anyway.
+- Default: 5
+- Range: 5 to 60
+
+Why it exists: it prevents extremely long, never-ending utterances (for example: constant background noise, a speaker who never pauses, or long monologues), which is important for downstream UX and processing stability.

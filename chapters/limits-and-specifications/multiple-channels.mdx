@@ -1,0 +1,36 @@
+---
+title: "Multiple channels"
+description: "Transcribe multi-channel audio and tag utterances by channel"
+---
+
+Gladia supports multi-channel audio for both pre-recorded files and live streams. Each utterance in the result includes a `channel` key corresponding to the source channel.
+
+## Pre-recorded
+
+If your audio file has multiple distinct channels, Gladia will transcribe them automatically.
+
+<Warning>
+Sending an audio with two different channels (with different content) will be billed as two audios. If your audio has multiple channels with the same content, it will only be billed once.
+
+TL;DR: We charge every unique channel in an audio file; we do not charge if channels are duplicates.
+</Warning>
+
+## Live transcription
+
+For live audio streams, specify the channel count in the configuration:
+
+```json
+{
+  "channels": 2
+}
+```
+
+Gladia's real-time API will automatically split the channels and transcribe them separately.
+
+<Warning>
+  Transcribing an audio stream with multiple channels is billed per channel. For example, an audio stream with 2 channels will be billed as double the audio duration, even if the channels are identical.
+</Warning>
+
+<Note>
+  For a detailed guide on how to merge multiple audio tracks into a single multi-channel stream and send it over a WebSocket, see the [Sending multiple audio tracks over a single WebSocket](/chapters/live-stt/quickstart#merging-multiple-audio-tracks-into-one-multi-channel-websocket) section.
+</Note>

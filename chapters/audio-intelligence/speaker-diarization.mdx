@@ -1,7 +1,12 @@
 ---
 title: 'Speaker Diarization'
+sidebarTitle: Diarization
 description: 'Detect speakers and understand who said what.'
 ---
+
+import PrerecordedBadge from "/snippets/badges/prerecorded.mdx"
+
+<PrerecordedBadge />
 
 
 Speaker diarization is the process of detecting multiple speakers in an audio, and understanding which parts of the transcription each speaker said.
@@ -9,7 +14,7 @@ Speaker diarization is the process of detecting multiple speakers in an audio, a
 ## Enabling diarization
 
 Diarization is enabled by sending the `diarization` parameter in the transcription request:
-```json
+```json Pre-recorded
 {
   "audio_url": "<your audio URL>",
   "diarization": true
@@ -21,8 +26,7 @@ When diarization is enabled, each utterance will contain a `speaker` field, whos
 Speakers will be assigned indexes by **order of appearance** (i.e. the 1st speaker will be speaker 0, the 2nd speaker 1, etc).
 
 
-<CodeGroup>
-```json diarization
+```json Pre-recorded
 {
   "transcription": {
     "utterances": [
@@ -41,7 +45,6 @@ Speakers will be assigned indexes by **order of appearance** (i.e. the 1st speak
   }
 }
 ```
-</CodeGroup>
 
 
 ## Improving diarization accuracy
