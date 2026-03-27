@@ -24,10 +24,10 @@ npm install @gladiaio/sdk
 
 ```sh Python
 # Using pip
-pip install gladiaio-sdk
+pip install gladia
 
 # Using uv
-uv add gladiaio-sdk
+uv add gladia
 ```
 
 </CodeGroup>
@@ -39,7 +39,7 @@ import { GladiaClient } from "@gladiaio/sdk";
 ```
 
 ```python Python
-from gladiaio_sdk import (
+from gladia import (
     GladiaClient,
     LiveV2InitRequest,
     LiveV2LanguageConfig,
@@ -128,7 +128,7 @@ liveSession.on("error", (message) => {
 ```
 
 ```python Python
-from gladiaio_sdk import (
+from gladia import (
     LiveV2WebSocketMessage,
     LiveV2InitResponse,
     LiveV2EndedMessage,
