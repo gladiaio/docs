@@ -1,0 +1,27 @@
+Use **[custom spelling](/chapters/audio-intelligence/custom-spelling)** when the transcription already _recognizes_ the word but writes it differently than you want. Common cases:
+
+- A person's name comes through as "Gaurish" or "Gaureish" but you need "Gorish".
+- The model writes "data-science" and you want "Data Science".
+- You want to replace filler words or normalize punctuation (e.g. "period" → ".").
+
+Use **[custom vocabulary](/chapters/audio-intelligence/custom-vocabulary)** when the word comes out completely garbled or replaced by something phonetically similar. The transcription engine has never seen it and can't get close on its own. Custom vocabulary uses phoneme matching to catch these cases, but it's probabilistic and can produce false positives.
+
+|                  | Custom vocabulary                                                                                  | Custom spelling                                                                                        |
+| ---------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| **What it does** | Listens to how a word _sounds_ and replaces phonetically similar words in the transcript           | Finds exact text strings in the transcript and replaces them with your preferred spelling              |
+| **Mechanism**    | Phoneme-based similarity matching (probabilistic)                                                  | Text-based find-and-replace (deterministic)                                                            |
+| **Best for**     | Words that are consistently mis-transcribed: unusual proper nouns, new product names, niche jargon | Words that are recognizable but misspelled, e.g. "Gaurish" → "Gorish", "data-science" → "Data Science" |
+| **Risk**         | Can produce false positives. Unrelated words that happen to sound similar may get replaced         | No false positives, but it won't help if the word isn't recognized at all                              |
+| **Tuning**       | Adjust `intensity` and `default_intensity` to control aggressiveness                               | None needed. It either matches the text or it doesn't                                                  |
+
+**Rule of thumb:** start with a transcription run _without_ any custom vocabulary. Look at what the output actually says. If the word appears but is just misspelled, custom spelling is the simpler and safer fix. If the word is completely garbled, that's when custom vocabulary is the right tool.
+
+<Tip>
+  If you've been using [custom
+  vocabulary](/chapters/audio-intelligence/custom-vocabulary) and keep running
+  into false positives for certain terms, try moving those terms to [custom
+  spelling](/chapters/audio-intelligence/custom-spelling) instead. As long as
+  the transcription produces something close enough for you to list as a
+  variant, custom spelling will handle the rest, deterministically and without
+  side effects. This is a common and recommended migration path.
+</Tip>

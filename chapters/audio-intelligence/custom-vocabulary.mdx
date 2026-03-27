@@ -3,21 +3,36 @@ title: "Custom vocabulary"
 description: "Improve recognition of domain-specific words and phrases"
 ---
 
-import PrerecordedBadge from "/snippets/badges/prerecorded.mdx"
-import LiveBadge from "/snippets/badges/live.mdx"
+import PrerecordedBadge from "/snippets/badges/prerecorded.mdx";
+import LiveBadge from "/snippets/badges/live.mdx";
+import VocabularyVsSpelling from "/snippets/custom-vocabulary-vs-spelling.mdx";
 
 <PrerecordedBadge />
 <LiveBadge />
 
-The custom vocabulary feature allows you to process your transcription results by replacing specific words with terms that better fit your domain. This is especially useful for company names, product names, technical terms, or uncommon words that are often mis-transcribed by speech to text models.
+Custom vocabulary helps the transcription engine **recognize words it would otherwise get wrong**: unusual brand names, internal project codenames, medical or legal jargon, or acronyms that sound like common words.
 
-### How it works
+It works by comparing the _sounds_ (phonemes) of what was actually spoken against the sounds of the words you provide. When there's a close enough match, the transcribed word gets swapped out for your term. This is **probabilistic**: it increases the odds of a correct transcription, but it does not guarantee it.
 
-Custom vocabulary operates at a **word level** and is based on **phoneme similarity**.
+<Note>
+  If you already know exactly which *text* variants the model produces and you
+  just want to normalize the spelling, use **[Custom
+  spelling](/chapters/audio-intelligence/custom-spelling)** instead. Custom
+  spelling is a deterministic find-and-replace on the transcript text, with no
+  phoneme matching and no false positives.
+</Note>
 
-Once the transcription is generated, Gladia compares the phonemes of the transcribed words with the phonemes of the words you provided in your custom vocabulary. If the similarity score is above a defined similarity, the word in the transcription is replaced.
+## How it works
 
-Alongside the word value, the pronunciations list allows you to define alternative ways a word can be pronounced. This helps cover a wider phoneme range without having to increase the similarity threshold, which could otherwise lead to false positives. It is especially useful for words with multiple common pronunciations, foreign words, or variations caused by accents.
+Custom vocabulary operates at a **text level** and is based on **phoneme similarity**.
+
+Once the transcription is generated, Gladia converts both the transcribed words and your vocabulary entries into phonemes, then compares them. The `intensity` controls how aggressively the model applies replacements: a higher intensity means the model will replace words more readily (wider phoneme matching), while a lower intensity requires a closer phoneme match before a replacement is made.
+
+The `pronunciations` field lets you provide **plain-text alternative spellings that reflect how the word actually sounds** in speech. These are _not_ phonetic notation. Just write the word the way someone might naively spell it based on how it sounds. Gladia converts these strings to phonemes internally. For example, if your term is "Nietzsche", you might add `["Niche", "Neechee"]` as pronunciations. This widens the phoneme net without having to raise the intensity (which would increase false positives across the board).
+
+## When to use custom vocabulary vs. custom spelling
+
+<VocabularyVsSpelling />
 
 ## Example configuration
 
@@ -28,16 +43,16 @@ Alongside the word value, the pronunciations list allows you to define alternati
   "custom_vocabulary": true,
   "custom_vocabulary_config": {
     "vocabulary": [
-      "Westeros",
-      {"value": "Stark"},
+      "Gladia",
+      {"value": "Solaria"},
       {
-        "value": "Night's Watch",
-        "pronunciations": ["Nightz Vatch"],
-        "intensity": 0.4,
-        "language": "de"
-      }
+        "value": "Salesforce",
+        "pronunciations": ["sell force", "sale forces"],
+        "intensity": 0.5,
+        "language": "en"
+      },
     ],
-    "default_intensity": 0.6
+    "default_intensity": 0.4
   }
 }
 ```
@@ -47,41 +62,86 @@ Alongside the word value, the pronunciations list allows you to define alternati
     "custom_vocabulary": true,
     "custom_vocabulary_config": {
       "vocabulary": [
-        "Westeros",
-        {"value": "Stark"},
+        "Gladia",
+        {"value": "Solaria"},
         {
-          "value": "Night's Watch",
-          "pronunciations": ["Nightz Watch"],
-          "intensity": 0.4,
+          "value": "Salesforce",
+          "pronunciations": ["sell force", "sale forces"],
+          "intensity": 0.5,
           "language": "en"
-        }
+        },
       ],
-      "default_intensity": 0.6
+      "default_intensity": 0.4
     }
   }
 }
 ```
 </CodeGroup>
 
+## Parameter reference
+
 <ParamField body="default_intensity" type="number">
-  The global intensity of the feature (minimum 0, maximum 1, default 0.5).
+  The global intensity applied to every vocabulary entry that doesn't have its own `intensity` override (minimum 0, maximum 1, default 0.5).
+
+A higher value means the model will apply replacements more aggressively: more replacements, but more risk of unwanted swaps. A lower value requires a closer phoneme match before replacing: fewer replacements, fewer false positives.
+
 </ParamField>
-<ParamField body="vocabulary" type="object">
+<ParamField body="vocabulary" type="object | string[]">
   <Expandable title="properties">
     <ParamField body="value" type="string" required>
-      The text used to replace in the transcription
+      The text that will be inserted into the transcription when a phoneme match is found.
     </ParamField>
     
-    <ParamField body="pronunciations" type="string">
-      The pronunciations used in the transcription language, or `vocabulary.language` if present.
+    <ParamField body="pronunciations" type="string[]">
+      Plain-text alternative spellings that reflect how the word sounds in speech. Write them the way someone would naively spell the word based on pronunciation. Gladia converts these to phonemes internally. This is *not* phonetic notation.
     </ParamField>
 
     <ParamField body="intensity" type="number">
-      The intensity of the feature for this particular word (minimum 0, maximum 1, default 0.5).
+      The intensity for this specific entry (minimum 0, maximum 1, default: inherits from `default_intensity`). Use this to make individual entries more or less aggressive than the global default. For example, set a lower intensity on a short word that keeps producing false positives.
     </ParamField>
 
     <ParamField body="language" type="string">
-      Specify the language in which it will be pronounced when sound comparison occurs. Default to transcription language.
+      The language in which this word will be pronounced during phoneme comparison. Defaults to the transcription language. This matters when a word from one language appears in a conversation in another language. For example, an English brand name like "Salesforce" spoken in a French meeting. Setting `language: "en"` ensures the phoneme comparison uses English pronunciation rules, not French ones.
     </ParamField>
+
   </Expandable>
 </ParamField>
+
+## Tuning intensity
+
+The default intensity is **0.5**, which works well for short lists of very distinctive words. But in practice, especially with longer lists or shorter words, 0.5 is often too aggressive and produces false positives.
+
+**We recommend starting at 0.4** and raising only if you notice that your terms are still not being picked up, or lowering if you see too many false positives.
+
+### `default_intensity` vs. per-entry `intensity`
+
+- `default_intensity` sets the baseline for every entry in your vocabulary list.
+- The per-entry `intensity` field overrides the global default for that specific word.
+
+You can mix both. A common pattern: set `default_intensity` to 0.4, then lower individual short or common-sounding words (like brand names "Target" or "Zoom") down to 0.2-0.3 to avoid them matching too many unrelated words.
+
+### Watch your list size
+
+As your vocabulary list grows, the chance of false positives increases. Every transcribed word is compared against every entry, so a list of 50+ terms will naturally produce more unintended replacements than a list of 5.
+
+If you find yourself fighting false positives on a large list, consider:
+
+1. Lowering the intensity for the entries that cause problems.
+2. Adding specific `pronunciations` to narrow the phoneme matching instead of lowering intensity.
+3. Moving entries that the model already recognizes (just with wrong spelling) to **[custom spelling](/chapters/audio-intelligence/custom-spelling)** instead. This eliminates false positives entirely for those terms.
+
+## Recommended workflow
+
+If you're setting up custom vocabulary for the first time, here's a step-by-step approach that will save you time:
+
+1. **Run a transcription without any custom vocabulary.** Look at the raw output and identify which words are being mis-transcribed.
+2. **Separate the problems into two buckets:**
+   - Words that are completely wrong or garbled → these are candidates for **custom vocabulary**.
+   - Words that are recognizable but misspelled (e.g. "Gaurish" instead of "Gorish") → use **[custom spelling](/chapters/audio-intelligence/custom-spelling)** for these.
+3. **Add your custom vocabulary entries** with `default_intensity` set to **0.4**.
+4. **Run the transcription again** and compare. Check that your terms are now appearing correctly.
+5. **Look for false positives**, words that were correct before but are now being wrongly replaced. If you spot any:
+   - Lower the `intensity` on the entry causing the problem.
+   - Add `pronunciations` to make the match more precise.
+   - If false positives persist, move that entry to custom spelling instead.
+6. **Iterate.** Tuning is normal. Don't expect to get it perfect on the first pass.
