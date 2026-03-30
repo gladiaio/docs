@@ -173,6 +173,10 @@ live_session.send_audio(audio_chunk)
 ```
 
 </CodeGroup>
+  
+<Note>
+A single realtime transcription session cannot exceed **3 hours**. For longer events, start a new session before reaching the limit. See [Concurrency and rate limits](/chapters/limits-and-specifications/concurrency) and [Supported files & duration](/chapters/limits-and-specifications/supported-formats) for details.
+</Note>
 
 ## Read messages
 During the whole session, we will send various messages through the WebSocket, the callback URL or webhooks. You can specify which kind of messages you want to receive in the initial configuration. See [`messages_config`](/api-reference/v2/live/init) for WebSocket messages and [`callback_config`](/api-reference/v2/live/init) for callback messages.
@@ -397,6 +401,10 @@ socket.send(
 ```
 
 </CodeGroup>
+  
+<Note>
+A single realtime transcription session cannot exceed **3 hours**. For longer events, start a new session before reaching the limit. See [Concurrency and rate limits](/chapters/limits-and-specifications/concurrency) and [Supported files & duration](/chapters/limits-and-specifications/supported-formats) for details.
+</Note>
 
 ## Read messages
 
