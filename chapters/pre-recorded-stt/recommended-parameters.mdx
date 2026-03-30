@@ -1,137 +1,111 @@
 ---
 title: Recommended Parameters by Use Case
 sidebarTitle: Recommended Parameters
-description: Best parameter configurations for pre-recorded transcription depending on your application (Podcasts, Call Centers, Multilingual Content, Subtitles).
+description: Best parameter configurations for pre-recorded transcription depending on your application (Call Centers, Podcasts, Subtitles, Multilingual Content).
 ---
 
 import LanguageDetection from "/snippets/recommended-params/language-detection.mdx";
 import CodeSwitching from "/snippets/recommended-params/code-switching.mdx";
 import CustomVocabulary from "/snippets/recommended-params/custom-vocabulary.mdx";
 
-When transcribing pre-recorded audio, the **right configuration** of parameters can significantly impact transcription quality. This guide covers **recommended values** for common use cases and highlights **common pitfalls** so you can avoid the most frequent configuration mistakes.
+The right parameter configuration can significantly impact transcription quality for pre-recorded audio. This guide covers recommended starting points for common scenarios and highlights pitfalls that frequently trip up new integrations.
 
 <Info>
   These recommendations apply to the **[Pre-recorded
-  API](/chapters/pre-recorded-stt/quickstart)** and can be passed in the `POST
-  /v2/pre-recorded` request body. They are starting points — feel free to
-  fine-tune them to your needs.
+  API](/chapters/pre-recorded-stt/quickstart)** and are passed in the `POST
+  /v2/pre-recorded` request body. They are starting points — fine-tune them to
+  match your specific needs.
 </Info>
 
 ---
 
-## Language Detection vs. Explicit Language
+## Language Configuration
 
 <LanguageDetection />
 
 ---
 
-## Code Switching: When to Use It
+## Code Switching
 
 <CodeSwitching />
 
 ---
 
-## Custom Vocabulary Tips
+## Custom Vocabulary
 
 <CustomVocabulary />
-
-Here's an example configuration for pre-recorded transcription:
-
-```json
-{
-  "audio_url": "YOUR_AUDIO_URL",
-  "custom_vocabulary": true,
-  "custom_vocabulary_config": {
-    "vocabulary": [
-      "Kubernetes",
-      {
-        "value": "Gladia",
-        "pronunciations": ["Gladya", "Gladiah"],
-        "intensity": 0.5
-      },
-      {
-        "value": "PostgreSQL",
-        "pronunciations": ["Postgres Q L", "Post gress"],
-        "intensity": 0.4
-      }
-    ],
-    "default_intensity": 0.5
-  }
-}
-```
 
 ---
 
 ## Call Centers & Customer Support
 
-For recorded phone calls, the priorities are **speaker identification** and **accurate transcription** despite variable audio quality.
+For recorded phone calls the priorities are **speaker identification** and **accurate transcription** despite variable audio quality (telephony codecs, background noise, cross-talk).
 
-**Recommended parameters:**
+| Parameter                               | Recommended value              | Why                                                                                                                         |
+| --------------------------------------- | ------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| `language_config.languages`             | Set explicitly (e.g. `["en"]`) | Call center audio typically has a known language. Setting it avoids detection errors on noisy recordings.                   |
+| `diarization`                           | `true`                         | Separates agent and customer speech. See [Speaker diarization](/chapters/audio-intelligence/speaker-diarization).           |
+| `diarization_config.number_of_speakers` | `2`                            | Most calls have exactly two participants — giving this hint improves speaker assignment accuracy.                           |
+| `custom_vocabulary`                     | `true`                         | Add product names, plan names, and internal terminology.                                                                    |
+| `summarization`                         | `true`                         | Automatically generates a summary for agent wrap-up notes. See [Summarization](/chapters/audio-intelligence/summarization). |
 
-- **`language_config.languages`: set explicitly**  
-  Call center audio typically has a known language. Setting it avoids detection errors on noisy recordings.
-- **`diarization`: true**  
-  Separates agent and customer speech.
-- **`diarization_config.number_of_speakers`: 2**  
-  Most calls have exactly two participants — giving this hint improves speaker assignment.
-- **`custom_vocabulary`: true**  
-  Add product names, plan names, and internal terminology.
-- **`summarization`: true**  
-  Automatically generate a summary for agent wrap-up notes.
+<Tip>
+  For calls with more than two participants (e.g. conference bridges), use
+  `min_speakers` / `max_speakers` instead of `number_of_speakers` to give the
+  model a flexible range.
+</Tip>
 
 ---
 
 ## Podcasts & Interviews
 
-For long-form audio with multiple speakers, the focus is on **readability** and **correct speaker attribution**.
+For long-form audio with multiple speakers the focus is on **readability** and **correct speaker attribution**. Transcripts are often repurposed as articles or show notes, so segment quality matters.
 
-**Recommended parameters:**
-
-- **`diarization`: true**  
-  Essential for multi-speaker content.
-- **`diarization_config.min_speakers` / `max_speakers`**  
-  Provide a range if the exact count varies across episodes.
-- **`sentences`: true**  
-  Produces well-segmented, readable output.
-- **`custom_vocabulary`: true**  
-  Add recurring guest names, show-specific terms, and brand names.
-- **`language_config.languages`: set to known language(s)**  
-  Podcast language is almost always known in advance.
+| Parameter                                          | Recommended value          | Why                                                                                                                               |
+| -------------------------------------------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `diarization`                                      | `true`                     | Essential for multi-speaker content.                                                                                              |
+| `diarization_config.min_speakers` / `max_speakers` | Set a range (e.g. `2`-`4`) | Provides a flexible hint when the exact count varies across episodes.                                                             |
+| `sentences`                                        | `true`                     | Produces well-segmented, readable output suitable for publishing. See [Sentences](/chapters/pre-recorded-stt/features/sentences). |
+| `custom_vocabulary`                                | `true`                     | Add recurring guest names, show-specific terms, and brand names.                                                                  |
+| `language_config.languages`                        | Set explicitly             | Podcast language is almost always known in advance.                                                                               |
 
 ---
 
 ## Subtitles & Captioning
 
-When generating subtitle files from pre-recorded content, fine-tune the subtitle formatting parameters for the best viewing experience.
+When generating subtitle files from pre-recorded content, fine-tune the formatting parameters for the best viewing experience. Gladia produces SRT and VTT files directly — no post-processing needed. See [Subtitles](/chapters/audio-intelligence/subtitles) for the full parameter reference.
 
-**Recommended parameters:**
+| Parameter                                     | Recommended value  | Why                                                                                                                                        |
+| --------------------------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `subtitles`                                   | `true`             | Enables subtitle generation.                                                                                                               |
+| `subtitles_config.formats`                    | `["srt", "vtt"]`   | Generate both formats to cover different players and platforms.                                                                            |
+| `subtitles_config.maximum_characters_per_row` | `42`               | Standard broadcast limit for readability.                                                                                                  |
+| `subtitles_config.maximum_rows_per_caption`   | `2`                | Keeps captions compact on screen.                                                                                                          |
+| `subtitles_config.style`                      | `"compliance"`     | Uses stricter formatting rules suited for broadcast or accessibility requirements.                                                         |
+| `translation`                                 | `true` (if needed) | When enabled, subtitles are automatically generated for each target language. See [Translation](/chapters/audio-intelligence/translation). |
 
-- **`subtitles`: true**  
-  Enables subtitle generation.
-- **`subtitles_config.formats`: `["srt", "vtt"]`**  
-  Generate both formats to cover different players.
-- **`subtitles_config.maximum_characters_per_row`: 42**  
-  Standard broadcast limit for readability.
-- **`subtitles_config.maximum_rows_per_caption`: 2**  
-  Keeps captions compact on screen.
-- **`subtitles_config.style`: `"compliance"`**  
-  Uses stricter formatting rules suited for broadcast or accessibility requirements.
-- **`translation`: true** (if needed)  
-  Subtitles are automatically generated for each target language when translation is enabled.
+<Tip>
+  For live captions streamed in real time, use the [Realtime
+  API](/chapters/live-stt/quickstart) with partial transcripts instead — see the
+  [Live recommended
+  parameters](/chapters/live-stt/recommended-parameters#subtitles--captioning)
+  guide.
+</Tip>
 
 ---
 
 ## Multilingual Content
 
-For content with mixed languages (conferences, multilingual media), combine language detection with code switching.
+For content with mixed languages — conferences, multilingual media, interviews with speakers from different countries — combine language detection with code switching.
 
-**Recommended parameters:**
+| Parameter                        | Recommended value                                      | Why                                                                                                 |
+| -------------------------------- | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| `language_config.languages`      | List of expected languages (e.g. `["en", "fr", "de"]`) | Constrain to 3-5 expected languages for best accuracy.                                              |
+| `language_config.code_switching` | `true`                                                 | Detects language shifts across utterances. See [Code switching](/chapters/language/code-switching). |
+| `custom_vocabulary`              | `true`                                                 | Add terms for each language with appropriate `language` tags on each entry.                         |
 
-- **`language_config.languages`: list of expected languages**  
-  Constrain to 2–4 expected languages for best accuracy.
-- **`language_config.code_switching`: true**  
-  Detects language shifts across utterances.
-- **`custom_vocabulary`: true**  
-  Add terms for each language with appropriate `language` tags on each entry.
-- **`translation`: true** (optional)  
-  Translate all utterances into a single target language for unified output.
+<Warning>
+  Do not enable `code_switching` with an empty `languages` list. The detector
+  would evaluate every utterance against 100+ languages, leading to frequent
+  misdetections — especially between similar-sounding languages.
+</Warning>

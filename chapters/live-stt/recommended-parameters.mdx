@@ -8,113 +8,67 @@ import LanguageDetection from "/snippets/recommended-params/language-detection.m
 import CodeSwitching from "/snippets/recommended-params/code-switching.mdx";
 import CustomVocabulary from "/snippets/recommended-params/custom-vocabulary.mdx";
 
-When building realtime transcription applications, the **right configuration** of parameters can make a big difference regarding the transcription quality and latency. This guide covers **recommended values** for common use cases and highlights **common pitfalls** so you can get started quickly with settings optimized for **latency, readability, or accuracy**.
+The right parameter configuration can make a significant difference in transcription quality and latency for realtime use cases. This guide covers recommended starting points for common scenarios and highlights pitfalls that frequently trip up new integrations.
 
 <Info>
   These recommendations apply to the **[Realtime
-  API](/chapters/live-stt/quickstart)** and can be passed during session
-  initialization. They are starting points — feel free to fine-tune them to your
-  needs.
+  API](/chapters/live-stt/quickstart)** and are passed during session
+  initialization. They are starting points — fine-tune them to match your
+  specific needs.
 </Info>
 
 ---
 
-## Language Detection vs. Explicit Language
+## Language Configuration
 
 <LanguageDetection />
 
 ---
 
-## Code Switching: When to Use It
+## Code Switching
 
 <CodeSwitching />
 
 ---
 
-## Custom Vocabulary Tips
+## Custom Vocabulary
 
 <CustomVocabulary />
-
-Here's an example configuration for live transcription:
-
-```json
-{
-  "realtime_processing": {
-    "custom_vocabulary": true,
-    "custom_vocabulary_config": {
-      "vocabulary": [
-        "Kubernetes",
-        {
-          "value": "Gladia",
-          "pronunciations": ["Gladya", "Gladiah"],
-          "intensity": 0.5
-        },
-        {
-          "value": "PostgreSQL",
-          "pronunciations": ["Postgres Q L", "Post gress"],
-          "intensity": 0.4
-        }
-      ],
-      "default_intensity": 0.5
-    }
-  }
-}
-```
 
 ---
 
 ## Voice Agents
 
-For callbots, customer service assistants, or voice-driven chatbots, the top priority is **low latency**. The agent should respond quickly, even if sentence boundaries are not perfect.
+For callbots, customer-service assistants, or voice-driven chatbots the top priority is **low latency**. The agent must react quickly to user speech, even if sentence boundaries are not perfectly formed.
 
-**Recommended parameters:**
+| Parameter                                     | Recommended value | Why                                                                                                                                                                                                                   |
+| --------------------------------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `endpointing`                                 | `0.05` - `0.1`    | Closes utterances fast, keeping turn-taking snappy. See [Endpointing](/chapters/live-stt/features/endpointing).                                                                                                       |
+| `maximum_duration_without_endpointing`        | `15`              | Prevents very long utterances from staying open without cutting off the conversation.                                                                                                                                 |
+| `messages_config.receive_partial_transcripts` | `true`            | Enables interim results so the agent can start processing early. Use the `speech_stop` event to know when the user has finished speaking. See [Partial transcripts](/chapters/live-stt/features/partial-transcripts). |
+| `realtime_processing.custom_vocabulary`       | `true`            | Add product names and action keywords so the agent can react accurately.                                                                                                                                              |
 
-- **`endpointing`: 0.05 – 0.1**  
-  Keeps conversations snappy by closing utterances quickly.
-- **`maximum_duration_without_endpointing`: 15s**  
-  Prevents very long utterances from staying open, without cutting off the conversation.
-- **`messages_config.partial_transcripts`: true**  
-  Enables interim results for early reactions. Use the `speech_stop` event to know when the user has stopped speaking.
-- **`language_config.languages`: set explicitly**  
-  Skips auto-detection for faster response. Voice agents almost always operate in a known language.
-- **`realtime_processing.custom_vocabulary`: true**  
-  Add product names and action keywords so the agent can react accurately.
-
-<Tip>This setup is best when **fast turn-taking** is essential!</Tip>
+<Tip>
+  This setup is optimized for **fast turn-taking**. If utterances get cut off
+  mid-sentence, raise `endpointing` slightly.
+</Tip>
 
 ---
 
-## Meeting Recorders
+## Subtitles & Captioning
 
-For meetings, lectures, and conferences, the focus shifts to **readability and completeness**. Latency is less critical than producing well-punctuated, accurate transcripts.
+When providing live subtitles, the goal is to **sync text with the speaker in real time**. The right balance between speed and segment quality depends on whether captions are displayed live or post-produced.
 
-**Recommended parameters:**
+| Parameter                                     | Recommended value                      | Why                                                                                             |
+| --------------------------------------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `endpointing`                                 | `0.3` (live) / `0.8` (post-production) | Lower values keep captions close to the speaker; higher values produce cleaner subtitle blocks. |
+| `maximum_duration_without_endpointing`        | `5`                                    | Prevents excessively long subtitle segments that are hard to read on screen.                    |
+| `messages_config.receive_partial_transcripts` | `true`                                 | Shows words as they are spoken, then refines them when the final result arrives.                |
+| `language_config.languages`                   | Set explicitly                         | Avoids detection lag when the broadcast language is known.                                      |
 
-- **`endpointing`: 0.3 – 0.5**  
-  Captures sentences fully before closing.
-- **`maximum_duration_without_endpointing`: 60s**  
-  Allows for longer interventions or presentations.
-- **`messages_config.partial_transcripts`: true**  
-  Shows live transcripts while waiting for finals.
-- **`realtime_processing.custom_vocabulary`: true**  
-  Add company-specific terms to ensure correct spelling of jargon, acronyms, or product names.
-- **`language_config.code_switching`: true** (if multilingual)  
-  Enable when participants may switch languages during the meeting.
-
----
-
-## Subtitles / Captioning
-
-When providing live subtitles, the goal is to **sync text with the speaker**. For post-production subtitles, readability and sentence integrity matter more.
-
-**Recommended parameters:**
-
-- **`endpointing`:**
-  - `0.3` → for **live captions** (minimal lag)
-  - `0.8` → for **clean subtitles** (post-production or recordings)
-- **`maximum_duration_without_endpointing`: 5s**  
-  Prevents excessively long subtitle blocks.
-- **`messages_config.partial_transcripts`: true**  
-  Shows words as they're spoken, then refines them.
-- **`language_config.languages`: set explicitly**  
-  Avoids detection lag for live captions where the language is known.
+<Tip>
+  For post-production subtitles generated from a recording, consider using the
+  [Pre-recorded API](/chapters/pre-recorded-stt/quickstart) with the dedicated
+  [subtitles feature](/chapters/audio-intelligence/subtitles) instead — it
+  produces SRT/VTT files with fine-grained timing controls.
+</Tip>
