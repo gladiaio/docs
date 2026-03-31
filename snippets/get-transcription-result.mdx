@@ -3,8 +3,41 @@ You can get your transcription results in **3 different ways**:
 <AccordionGroup>
   <Accordion icon="repeat" title="Polling">
 
-  Once you post your transcription request, you get a transcription `id` and a pre-built `result_url` for convenience.
-  To get the result with this method, you'll just have to GET continuously on the given `result_url` until the status
+<CodeGroup>
+
+```python Python
+from gladiaio_sdk import GladiaClient
+
+gladia_client = GladiaClient(api_key="YOUR_GLADIA_API_KEY").prerecorded()
+
+# Use job.id from gladia_client.create(...)
+result = gladia_client.poll("YOUR_TRANSCRIPTION_JOB_ID")
+
+print(result.result.transcription.full_transcript)
+```
+
+```javascript JavaScript
+import { GladiaClient } from '@gladiaio/sdk';
+
+const gladiaClient = new GladiaClient({
+  apiKey: 'YOUR_GLADIA_API_KEY',
+});
+
+// Use job.id from createUntyped(...)
+const result = await gladiaClient.preRecorded().poll("YOUR_TRANSCRIPTION_JOB_ID");
+
+console.log(result.result?.transcription?.full_transcript ?? "");
+```
+
+
+</CodeGroup>
+
+<Tip>
+  You can use `create_and_poll()` in Python or `createAndPollUntyped()` in JavaScript to **create** and **poll** in one call with the same job payload.
+</Tip>
+
+  The methods implemented in the sdk are automatically polling until success or errors. 
+  To get the result with the cURL, you'll just have to GET continuously on the given `result_url` until the status
   of your transcription is `done`.
 
 
