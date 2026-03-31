@@ -10,8 +10,8 @@ import Samples from "/snippets/samples.mdx";
   <Tab title="Using our SDKs" icon="code">
 
 The SDK simplifies pre-recorded speech-to-text by abstracting upload, job creation, and result retrieval. Designed for developers, it offers:
-- Effortless implementation with minimal code to write.
-- Helpers such as `transcribe()` for an end-to-end flow, or the individual steps below when you need control over each step.
+- A `transcribe()` for an end-to-end flow
+- Individual steps when you need control over each step.
 
 ## Install the SDK
 
@@ -46,7 +46,7 @@ from gladiaio_sdk import GladiaClient
 
 gladia_client = GladiaClient(api_key="YOUR_GLADIA_API_KEY").prerecorded()
 
-transcription = gladia_client.transcribe(audio_url="audio.mp3")
+transcription = gladia_client.transcribe("YOUR_AUDIO_URL_OR_LOCAL_PATH")
 ```
 
 ```javascript JavaScript
@@ -54,9 +54,9 @@ import { GladiaClient } from "@gladiaio/sdk";
 
 const gladiaClient = new GladiaClient({ apiKey: "YOUR_GLADIA_API_KEY" });
 
-const transcription = await gladiaClient.preRecorded().transcribe("audio.mp3");
-
-console.log(transcription.result?.transcription?.full_transcript ?? "");
+const transcription = await gladiaClient
+  .preRecorded()
+  .transcribe("YOUR_AUDIO_URL_OR_LOCAL_PATH");
 ```
 
 </CodeGroup>
@@ -71,20 +71,15 @@ from gladiaio_sdk import GladiaClient
 gladia_client = GladiaClient(api_key="YOUR_GLADIA_API_KEY").prerecorded()
 
 transcription = gladia_client.transcribe(
-    audio_url= "YOUR_AUDIO_URL_OR_LOCAL_PATH",
-    options= {
-        "pii_redaction": True,
-        "pii_redaction_config": {
-            "entity_types": ["GDPR"],
-            "processed_text_type": "MASK",
-        },
+    "YOUR_AUDIO_URL_OR_LOCAL_PATH",
+    {
         "language_config": {
-            "languages": ["en", "ko", "zh", "mn", "ru", "ja"],
+            "languages": ["en", "fr"],
             "code_switching": True,
         },
+        "custom_vocabulary": True,
         "custom_vocabulary_config": {
-            "vocabulary": ["aaruul", "mutton"],
-            "default_intensity": 0.6,
+            "vocabulary": ["Gladia", "Solaria", "Salesforce"],
         },
     },
 )
@@ -98,30 +93,25 @@ const gladiaClient = new GladiaClient({ apiKey: "YOUR_GLADIA_API_KEY" });
 const transcription = await gladiaClient.preRecorded().transcribe(
   "YOUR_AUDIO_URL_OR_LOCAL_PATH",
   {
-    pii_redaction: true,
-    pii_redaction_config: {
-      entity_types: ["GDPR"],
-      processed_text_type: "MASK",
-    },
     language_config: {
-      languages: ["en", "ko", "zh", "mn", "ru", "ja"],
+      languages: ["en", "fr"],
       code_switching: true,
     },
+    custom_vocabulary: true,
     custom_vocabulary_config: {
-      vocabulary: ["aaruul", "mutton"],
-      default_intensity: 0.6,
+      vocabulary: ["Gladia", "Solaria", "Salesforce"],
     },
   }
 );
 ```
 </CodeGroup>
 
-<Note>  
-  **Want to know more about the features ?**
-
-  - [PII redaction](/chapters/audio-intelligence/pii-redaction) — Detect and redact sensitive entities in transcript text (names, emails, addresses, and more). Pre-recorded only; helps with privacy requirements such as GDPR and CCPA.
-  - [Supported languages](/chapters/language/supported-languages) — ISO 639-1 codes for `language_config.languages`, plus per-language capabilities (code-switching, translation).
-  - [Custom vocabulary](/chapters/audio-intelligence/custom-vocabulary) — Improve recognition of domain-specific words (brands, jargon, acronyms) using phoneme-based matching.
+<Note>
+Want to go further? See [Audio Intelligence](/chapters/pre-recorded-stt/audio-intelligence) for add-ons like:
+- [Speaker diarization](/chapters/audio-intelligence/speaker-diarization): separate the speakers across the conversation
+- [Translation](/chapters/audio-intelligence/translation): translate the transcript into one of our 100 target languages.
+- [PII redaction](/chapters/audio-intelligence/pii-redaction): detect and anonymize sensitive entities (ex: GDPR-related)
+- [Sentiment analysis](/chapters/audio-intelligence/sentiment-analysis): extract the main sentiment and up to 25 emotion
 </Note>
 
 
@@ -149,18 +139,10 @@ import { GladiaClient } from "@gladiaio/sdk";
 
 const gladiaClient = new GladiaClient({ apiKey: "YOUR_GLADIA_API_KEY" });
 
-const uploadResponse = await gladiaClient
-  .preRecorded()
-  .uploadFile("/path/to/your/audio/your_audio_file.mp3");
+const uploadResponse = await gladiaClient.preRecorded().uploadFile("YOUR_LOCAL_PATH");
+
 ```
 
-```bash cURL
-curl --request POST \
-  --url https://api.gladia.io/v2/upload \
-  --header 'Content-Type: multipart/form-data' \
-  --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
-  --form audio=@/path/to/your/audio/your_audio_file.mp3
-```
 
 </CodeGroup>
 
@@ -182,7 +164,7 @@ Example response:
 
 ### Create a transcription job
 
-Pass the `audio_url` from the previous step along with your transcription options. See the [init endpoint](/api-reference/v2/pre-recorded/init) for the full request schema.
+Pass the `audio_url` from the previous step along with your transcription options. 
 
 <CodeGroup>
 
@@ -191,31 +173,20 @@ from gladiaio_sdk import GladiaClient
 
 gladia_client = GladiaClient(api_key="YOUR_GLADIA_API_KEY").prerecorded()
 
-job = gladia_client.create({
+job = gladia_client.create(
+    {
     "audio_url": "YOUR_AUDIO_URL",
     "language_config": {
-        "languages": [],
-        "code_switching": False,
-    },
-    "diarization": True,
-    "diarization_config": {
-        "number_of_speakers": 3,
-        "min_speakers": 1,
-        "max_speakers": 5,
-    },
-    "translation": True,
-    "translation_config": {
-        "model": "base",
-        "target_languages": ["fr", "en"],
-        "context_adaptation": True,
-        "context": "Business meeting discussing quarterly results",
-        "informal": False,
-    },
-    "subtitles": True,
-    "subtitles_config": {
-        "formats": ["srt", "vtt"],
-    },
-})
+    "languages": ["en", "fr"],
+    "code_switching": True,
+  },
+  "custom_vocabulary": True,
+  "custom_vocabulary_config": {
+    "vocabulary": ["Gladia", "Solaria", "Salesforce"],
+      },
+    }
+)
+
 ```
 
 ```javascript JavaScript
@@ -223,64 +194,19 @@ import { GladiaClient } from "@gladiaio/sdk";
 
 const gladiaClient = new GladiaClient({ apiKey: "YOUR_GLADIA_API_KEY" });
 
-const job = await gladiaClient.preRecorded().create({
+const job = await gladiaClient.preRecorded().createUntyped({
   audio_url: "YOUR_AUDIO_URL",
   language_config: {
-    languages: [],
-    code_switching: false,
+    languages: ["en", "fr"],
+    code_switching: true,
   },
-  diarization: true,
-  diarization_config: {
-    number_of_speakers: 3,
-    min_speakers: 1,
-    max_speakers: 5,
-  },
-  translation: true,
-  translation_config: {
-    model: "base",
-    target_languages: ["fr", "en"],
-    context_adaptation: true,
-    context: "Business meeting discussing quarterly results",
-    informal: false,
-  },
-  subtitles: true,
-  subtitles_config: {
-    formats: ["srt", "vtt"],
+  custom_vocabulary: true,
+  custom_vocabulary_config: {
+    vocabulary: ["Gladia", "Solaria", "Salesforce"],
   },
 });
 ```
 
-```bash cURL
-curl --request POST \
-  --url https://api.gladia.io/v2/pre-recorded \
-  --header 'Content-Type: application/json' \
-  --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
-  --data '{
-  "audio_url": "YOUR_AUDIO_URL",
-  "language_config": {
-    "languages": [],
-    "code_switching": false
-  },
-  "diarization": true,
-  "diarization_config": {
-    "number_of_speakers": 3,
-    "min_speakers": 1,
-    "max_speakers": 5
-  },
-  "translation": true,
-  "translation_config": {
-    "model": "base",
-    "target_languages": ["fr", "en"],
-    "context_adaptation": true,
-    "context": "Business meeting discussing quarterly results",
-    "informal": false
-  },
-  "subtitles": true,
-  "subtitles_config": {
-    "formats": ["srt", "vtt"]
-  }
-}'
-```
 
 </CodeGroup>
 
@@ -439,12 +365,6 @@ if (!response.ok) {
 
 const result = await response.json();
 console.log(result);
-```
-
-```bash cURL
-curl --request GET \
-  --url https://api.gladia.io/v2/pre-recorded/ID_OF_THE_TRANSCRIPTION \
-  --header 'x-gladia-key: YOUR_GLADIA_API_KEY'
 ```
 
 </CodeGroup>

@@ -29,11 +29,6 @@ const result = await gladiaClient.preRecorded().poll("YOUR_TRANSCRIPTION_JOB_ID"
 console.log(result.result?.transcription?.full_transcript ?? "");
 ```
 
-```bash cURL
-curl --request GET \
-  --url 'YOUR_RESULT_URL' \
-  --header 'x-gladia-key: YOUR_GLADIA_API_KEY'
-```
 
 </CodeGroup>
 
