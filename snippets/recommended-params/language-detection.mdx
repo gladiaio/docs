@@ -1,0 +1,44 @@
+One of the most common configuration mistakes is misunderstanding how `language_config` works. Choosing the right setup avoids unnecessary detection overhead and improves accuracy.
+
+**When to set an explicit language:**
+
+- You **know** the language of the audio ahead of time.
+- The audio is **monolingual** (single language throughout).
+- You want the **fastest, most accurate** results.
+
+```json
+{
+  "language_config": {
+    "languages": ["en"],
+    "code_switching": false
+  }
+}
+```
+
+**When to use auto-detection:**
+
+- You process audio in **many different languages** and don't know which one beforehand.
+- You want Gladia to pick the language automatically.
+
+```json
+{
+  "language_config": {
+    "languages": [],
+    "code_switching": false
+  }
+}
+```
+
+<Warning>
+  When `code_switching` is `false` and no language is set, the language is
+  detected on the **first utterance** and reused for the rest of the session or
+  file. If the beginning of your audio contains silence, music, or a different
+  language than the main content, this can lead to incorrect detection for the
+  whole transcription.
+</Warning>
+
+<Tip>
+  Even when using auto-detection, pass a **small list of likely languages** in
+  `languages` to constrain the search. This improves both accuracy and
+  processing time.
+</Tip>

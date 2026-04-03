@@ -11,13 +11,11 @@ If your audio file has multiple distinct channels, Gladia will transcribe them a
 
 <Warning>
 Sending an audio with two different channels (with different content) will be billed as two audios. If your audio has multiple channels with the same content, it will only be billed once.
-
-TL;DR: We charge every unique channel in an audio file; we do not charge if channels are duplicates.
 </Warning>
 
 ## Live transcription
 
-For live audio streams, specify the channel count in the configuration:
+For live audio streams, specify the channel count in your [init request](/api-reference/v2/live/init):
 
 ```json
 {

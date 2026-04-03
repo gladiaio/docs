@@ -6,7 +6,8 @@ description: "Transcribe conversations that mix multiple languages in real time 
 Code switching handles conversations where speakers switch languages mid-utterance or across turns. Gladia can detect and transcribe the active language dynamically, and annotate results with the detected languages code.
 
 <Note>
-  For best accuracy and latency, provide a small set of expected languages. Avoid listing dozens of similar languages.
+  For best accuracy and latency, provide a small set of expected languages.
+  Avoid listing dozens of similar languages.
 </Note>
 
 ## How to use code switching ?
@@ -28,12 +29,14 @@ Enable code switching in the session configuration:
 
 When enabled, transcript messages include the detected `language` per utterance and per word. Use the [`transcript` message](/api-reference/v2/live/message/transcript) schema for details.
 
-<Tip>
-  You can also omit `languages` to allow detection across all supported languages, but constraining the set usually improves accuracy.
-</Tip>
+<Warning>
+  **Do not enable `code_switching` with an empty `languages` list.** When no
+  languages are specified, the language detector evaluates every utterance
+  against 100+ supported languages, leading to frequent misdetections -
+  especially between similar-sounding languages.
+</Warning>
 
 ## Recommendations
 
 - Limit the number of languages to those you expect.
 - Combine with [custom vocabulary](/chapters/pre-recorded-stt/features/custom-vocabulary) per language for domain terms.
-

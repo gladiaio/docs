@@ -1,67 +1,112 @@
 ---
 title: Recommended Parameters by Use Case
 sidebarTitle: Recommended Parameters
-description: Best parameter configurations for realtime transcription depending on your application (Voice Agents, Meeting Recorders, Subtitles).
+description: Best parameter configurations for realtime transcription depending on your application (Voice Agents, Meeting Recorders, Call Centers, Subtitles).
 ---
 
-When building realtime transcription applications, the **right configuration** of parameters can make a big difference regarding the transcription quality and latency. This guide provides **recommended values** for common use cases so you can get started quickly with settings optimized for **latency, readability, or accuracy**.
+import LanguageDetection from "/snippets/recommended-params/language-detection.mdx";
+import CodeSwitching from "/snippets/recommended-params/code-switching.mdx";
+import CustomVocabulary from "/snippets/recommended-params/custom-vocabulary.mdx";
+import DiarizationVsMultichannel from "/snippets/recommended-params/diarization-vs-multichannel.mdx";
+
+The right parameter configuration can make a significant difference in transcription quality and latency for realtime use cases. This guide covers recommended starting points for common scenarios and highlights pitfalls that frequently trip up new integrations.
 
 <Info>
-  These recommendations apply to the **[Realtime API](/chapters/live-stt/quickstart)** and can be passed during
-  session initialization. They are starting points — feel free to
-  fine-tune them to your needs.
+  These recommendations apply to the **[Realtime
+  API](/chapters/live-stt/quickstart)** and are passed during session
+  initialization. They are starting points — tune them to match your
+  specific needs.
 </Info>
+
+---
+
+## Language Configuration
+
+<LanguageDetection />
+
+---
+
+## Code Switching
+
+<CodeSwitching />
+
+---
+
+## Custom Vocabulary
+
+<CustomVocabulary />
 
 ---
 
 ## Voice Agents
 
-For callbots, customer service assistants, or voice-driven chatbots, the top priority is **low latency**. The agent should respond quickly, even if sentence boundaries are not perfect.
+For callbots, customer-service assistants, or voice-driven chatbots the top priority is **low latency**. The agent must react quickly to user speech, even if sentence boundaries are not perfectly formed.
 
-**Recommended parameters:**
-
-- **`endpointing`: 0.05 - 0.1**  
-  Keeps conversations snappy by closing utterances quickly.
-- **`maximum_duration_without_endpointing`: 15s**  
-  Prevents very long utterances from staying open, without cutting off the conversation.
-- **`messages_config.partial_transcripts`: true**  
-  Enables interim results for early reactions. For that, you can use the speech_stop event to know when the user has stopped speaking.
-- **`language_config.language`: fixed if known**  
-  Skips auto-detection for faster response.
+| Parameter                                     | Recommended value | Why                                                                                                                                                                                                                   |
+| --------------------------------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `endpointing`                                 | `0.05` - `0.1`    | Closes utterances fast, keeping turn-taking snappy. See [Endpointing](/chapters/live-stt/features/endpointing).                                                                                                       |
+| `maximum_duration_without_endpointing`        | `15`              | Prevents very long utterances from staying open without cutting off the conversation.                                                                                                                                 |
+| `messages_config.receive_partial_transcripts` | `true`            | Enables interim results so the agent can start processing early. Use the `speech_stop` event to know when the user has finished speaking. See [Partial transcripts](/chapters/live-stt/features/partial-transcripts). |
+| `realtime_processing.custom_vocabulary`       | `true`            | Add product names and action keywords so the agent can react accurately.                                                                                                                                              |
 
 <Tip>
-  This setup is best when **fast turn-taking** is essential!
+  This setup is optimized for **fast turn-taking**. If utterances get cut off
+  mid-sentence, raise `endpointing` slightly.
 </Tip>
 
 ---
 
 ## Meeting Recorders
 
-For meetings, lectures, and conferences, the focus shifts to **readability and completeness**. Latency is less critical than producing well-punctuated, accurate transcripts.
+For apps that record and transcribe meetings in real time — team stand-ups, board sessions, 1-on-1s — the goal is to produce a **structured, speaker-attributed live transcript** that can feed downstream features like summarization or live note-taking.
 
-**Recommended parameters:**
+| Parameter                                     | Recommended value           | Why                                                                                                                                                                                                                   |
+| --------------------------------------------- | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `endpointing`                                 | `0.3` - `0.5`              | Lets speakers finish their sentences before closing an utterance. See [Endpointing](/chapters/live-stt/features/endpointing).                                                                                         |
+| `maximum_duration_without_endpointing`        | `15`                        | Prevents very long utterances in case a speaker doesn't pause.                                                                                                                                                        |
+| `messages_config.receive_partial_transcripts` | `true`                      | Feeds live captions to the UI while waiting for final results. See [Partial transcripts](/chapters/live-stt/features/partial-transcripts).                                                                            |
+| `language_config.languages`                   | Set explicitly              | Meeting language is almost always known in advance — setting it avoids detection overhead.                                                                                                                            |
+| `realtime_processing.custom_vocabulary`       | `true`                      | Add company-specific terms, project names, and participant names for better accuracy.                                                                                                                                 |
 
-- **`endpointing`: 0.3 - 0.5**  
-  Captures sentences fully before closing.
-- **`maximum_duration_without_endpointing`: 60s**  
-  Allows for longer interventions or presentations.
-- **`messages_config.partial_transcripts`: `true`**  
-  Shows live transcripts while waiting for finals.
-- **`realtime_processing.custom_vocabulary`: add company-specific terms**  
-  Improves recognition of jargon, acronyms, or product names that the model would otherwise mis-transcribe. Note that this is probabilistic; for guaranteed spelling normalization, use [custom spelling](/chapters/audio-intelligence/custom-spelling) instead.
+<DiarizationVsMultichannel />
 
 ---
 
-## Subtitles / Captioning
+## Call Centers
 
-When providing live subtitles, the goal is to **sync text with the speaker**. For post-production subtitles, readability and sentence integrity matter more.
+For live phone calls the priorities are **speaker identification** and **fast, accurate transcription** despite variable audio quality (telephony codecs, background noise, cross-talk).
 
-**Recommended parameters:**
+| Parameter                                     | Recommended value              | Why                                                                                                                                                           |
+| --------------------------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `endpointing`                                 | `0.2` - `0.4`                 | Keeps turn-taking responsive without cutting off mid-sentence. See [Endpointing](/chapters/live-stt/features/endpointing).                                    |
+| `maximum_duration_without_endpointing`        | `15`                           | Prevents very long utterances in monologue-style segments.                                                                                                    |
+| `language_config.languages`                   | Set explicitly (e.g. `["en"]`) | Call center audio typically has a known language. Setting it avoids detection errors on noisy recordings.                                                     |
+| `realtime_processing.custom_vocabulary`       | `true`                         | Add product names, plan names, and internal terminology.                                                                                                      |
 
-- **`endpointing`:**
-  - `0.3` → for **live captions** (minimal lag)
-  - `0.8` → for **clean subtitles** (post-production or recordings)
-- **`maximum_duration_without_endpointing`: 5s**  
-  Prevents excessively long subtitle blocks.
-- **`messages_config.partial_transcripts`: true**  
-  Shows words as they're spoken, then refines them.
+<DiarizationVsMultichannel />
+
+<Tip>
+  For calls with more than two participants (e.g. conference bridges), use
+  `diarization_config.min_speakers` / `max_speakers` instead of `number_of_speakers` to give the
+  model a flexible range.
+</Tip>
+
+---
+
+## Subtitles & Captioning
+
+When providing live subtitles, the goal is to **sync text with the speaker in real time**. The right balance between speed and segment quality depends on whether captions are displayed live or post-produced.
+
+| Parameter                                     | Recommended value                      | Why                                                                                             |
+| --------------------------------------------- | -------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `endpointing`                                 | `0.3` (live) / `0.8` (post-production) | Lower values keep captions close to the speaker; higher values produce cleaner subtitle blocks. |
+| `maximum_duration_without_endpointing`        | `5`                                    | Prevents excessively long subtitle segments that are hard to read on screen.                    |
+| `messages_config.receive_partial_transcripts` | `true`                                 | Shows words as they are spoken, then refines them when the final result arrives.                |
+| `language_config.languages`                   | Set explicitly                         | Avoids detection lag when the broadcast language is known.                                      |
+
+<Tip>
+  For post-production subtitles generated from a recording, consider using the
+  [Pre-recorded API](/chapters/pre-recorded-stt/quickstart) with the dedicated
+  [subtitles feature](/chapters/audio-intelligence/subtitles) instead — it
+  produces SRT/VTT files with fine-grained timing controls.
+</Tip>
