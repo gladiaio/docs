@@ -1,20 +1,21 @@
 ---
 title: Recommended Parameters by Use Case
 sidebarTitle: Recommended Parameters
-description: Best parameter configurations for pre-recorded transcription depending on your application (Call Centers, Podcasts, Subtitles, Multilingual Content).
+description: Best parameter configurations for pre-recorded transcription depending on your application (Meeting Recorders, Call Centers, Podcasts, Subtitles, Multilingual Content).
 ---
 
 import LanguageDetection from "/snippets/recommended-params/language-detection.mdx";
 import CodeSwitching from "/snippets/recommended-params/code-switching.mdx";
 import CustomVocabulary from "/snippets/recommended-params/custom-vocabulary.mdx";
+import DiarizationVsMultichannel from "/snippets/recommended-params/diarization-vs-multichannel.mdx";
 
 The right parameter configuration can significantly impact transcription quality for pre-recorded audio. This guide covers recommended starting points for common scenarios and highlights pitfalls that frequently trip up new integrations.
 
 <Info>
   These recommendations apply to the **[Pre-recorded
   API](/chapters/pre-recorded-stt/quickstart)** and are passed in the `POST
-  /v2/pre-recorded` request body. They are starting points — tune them to
-  match your specific needs.
+  /v2/pre-recorded` request body. They are starting points — tune them to match
+  your specific needs.
 </Info>
 
 ---
@@ -37,7 +38,25 @@ The right parameter configuration can significantly impact transcription quality
 
 ---
 
-## Call Centers & Customer Support
+## Meeting Recorders
+
+For apps that record and process meetings — team stand-ups, board sessions, 1-on-1s — the goal is to produce **structured, actionable meeting notes** with clear speaker attribution. Meetings typically have a known set of participants and benefit heavily from post-processing features like summarization.
+
+| Parameter                                          | Recommended value           | Why                                                                                                                                                           |
+| -------------------------------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `diarization`                                      | `true`                      | Attributes speech to each participant. See [Speaker diarization](/chapters/audio-intelligence/speaker-diarization).                                           |
+| `diarization_config.min_speakers` / `max_speakers` | Set a range (e.g. `2`-`10`) | Meeting size varies — a range lets the model adapt without over- or under-splitting speakers.                                                                 |
+| `summarization`                                    | `true`                      | Generates a summary for quick review. Use `bullet_points` type for action-item style output. See [Summarization](/chapters/audio-intelligence/summarization). |
+| `named_entity_recognition`                         | `true`                      | Surfaces people, organizations, dates, and other key entities mentioned during the meeting. See [NER](/chapters/audio-intelligence/named-entity-recognition). |
+| `sentences`                                        | `true`                      | Produces well-segmented, readable output suitable for meeting minutes. See [Sentences](/chapters/pre-recorded-stt/features/sentences).                        |
+| `language_config.languages`                        | Set explicitly              | Meeting language is almost always known in advance — setting it avoids detection overhead.                                                                    |
+| `custom_vocabulary`                                | `true`                      | Add company-specific terms, project names, and participant names for better accuracy.                                                                         |
+
+<DiarizationVsMultichannel />
+
+---
+
+## Call Centers
 
 For recorded phone calls the priorities are **speaker identification** and **accurate transcription** despite variable audio quality (telephony codecs, background noise, cross-talk).
 
@@ -49,11 +68,7 @@ For recorded phone calls the priorities are **speaker identification** and **acc
 | `custom_vocabulary`                     | `true`                         | Add product names, plan names, and internal terminology.                                                                    |
 | `summarization`                         | `true`                         | Automatically generates a summary for agent wrap-up notes. See [Summarization](/chapters/audio-intelligence/summarization). |
 
-<Tip>
-  For calls with more than two participants (e.g. conference bridges), use
-  `min_speakers` / `max_speakers` instead of `number_of_speakers` to give the
-  model a flexible range.
-</Tip>
+<DiarizationVsMultichannel />
 
 ---
 
