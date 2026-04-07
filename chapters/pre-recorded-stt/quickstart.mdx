@@ -111,7 +111,7 @@ Want to go further? See [Audio Intelligence](/chapters/pre-recorded-stt/audio-in
 - [Speaker diarization](/chapters/audio-intelligence/speaker-diarization): separate the speakers across the conversation
 - [Translation](/chapters/audio-intelligence/translation): translate the transcript into one of our 100 target languages.
 - [PII redaction](/chapters/audio-intelligence/pii-redaction): detect and anonymize sensitive entities (ex: GDPR-related)
-- [Sentiment analysis](/chapters/audio-intelligence/sentiment-analysis): extract the main sentiment and up to 25 emotion
+- [Sentiment analysis](/chapters/audio-intelligence/sentiment-analysis): extract the main sentiment and up to 25 emotions
 </Note>
 
 
@@ -348,7 +348,7 @@ Poll [`GET /v2/pre-recorded/:id`](/api-reference/v2/pre-recorded/get) (or the `r
 
 ```javascript JavaScript
 const response = await fetch(
-  `https://api.gladia.io/v2/pre-recorded/${jobId}`,
+  `https://api.gladia.io/v2/pre-recorded/${id}`,
   {
     method: "GET",
     headers: {
