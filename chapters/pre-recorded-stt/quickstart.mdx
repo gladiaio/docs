@@ -1,29 +1,149 @@
 ---
 title: Quickstart
-description: How to work with Gladia Pre-recorded STT API
+description: How to transcribe pre-recorded audio with Gladia's speech-to-text (STT) API
 ---
 
 import GetTranscriptionResult from "/snippets/get-transcription-result.mdx";
 import Samples from "/snippets/samples.mdx";
 
-## Upload your file
+<Tabs>
+  <Tab title="Using our SDKs" icon="code">
+
+The SDK simplifies pre-recorded speech-to-text by abstracting upload, job creation, and result retrieval. Designed for developers, it offers:
+- A `transcribe()` for an end-to-end flow
+- Individual steps when you need control over each step.
+
+## Install the SDK
+
+<CodeGroup>
+
+```sh JavaScript
+npm install @gladiaio/sdk
+```
+
+```sh Python
+# Using pip
+pip install gladiaio-sdk
+
+# Using uv
+uv add gladiaio-sdk
+```
+
+</CodeGroup>
+
+## Transcribe in one call
+
+End-to-end transcription — from upload to result in one call.
+
+<Tip>
+  Pass in a local file, binary data, or a remote URL — and let the method handle the rest.
+</Tip>
+
+<CodeGroup>
+
+```javascript JavaScript
+import { GladiaClient } from "@gladiaio/sdk";
+
+const gladiaClient = new GladiaClient({ apiKey: "YOUR_GLADIA_API_KEY" });
+
+const transcription = await gladiaClient
+  .preRecorded()
+  .transcribe("YOUR_AUDIO_URL_OR_LOCAL_PATH");
+```
+
+```python Python
+from gladiaio_sdk import GladiaClient
+
+gladia_client = GladiaClient(api_key="YOUR_GLADIA_API_KEY").prerecorded()
+
+transcription = gladia_client.transcribe("YOUR_AUDIO_URL_OR_LOCAL_PATH")
+```
+
+</CodeGroup>
+
+With customizable features:
+
+<CodeGroup>
+
+```javascript JavaScript
+import { GladiaClient } from "@gladiaio/sdk";
+
+const gladiaClient = new GladiaClient({ apiKey: "YOUR_GLADIA_API_KEY" });
+
+const transcription = await gladiaClient.preRecorded().transcribe(
+  "YOUR_AUDIO_URL_OR_LOCAL_PATH",
+  {
+    language_config: {
+      languages: ["en", "fr"],
+      code_switching: true,
+    },
+    custom_vocabulary: true,
+    custom_vocabulary_config: {
+      vocabulary: ["Gladia", "Solaria", "Salesforce"],
+    },
+  }
+);
+```
+
+```python Python
+from gladiaio_sdk import GladiaClient
+
+gladia_client = GladiaClient(api_key="YOUR_GLADIA_API_KEY").prerecorded()
+
+transcription = gladia_client.transcribe(
+    "YOUR_AUDIO_URL_OR_LOCAL_PATH",
+    {
+        "language_config": {
+            "languages": ["en", "fr"],
+            "code_switching": True,
+        },
+        "custom_vocabulary": True,
+        "custom_vocabulary_config": {
+            "vocabulary": ["Gladia", "Solaria", "Salesforce"],
+        },
+    },
+)
+```
+</CodeGroup>
 
 <Note>
-  This step is **optional** if you are already working with **audio URLs**.{" "}
+Want to go further? See [Audio Intelligence](/chapters/pre-recorded-stt/audio-intelligence) for add-ons like:
+- [Speaker diarization](/chapters/audio-intelligence/speaker-diarization): separate the speakers across the conversation
+- [Translation](/chapters/audio-intelligence/translation): translate the transcript into one of our 100 target languages.
+- [PII redaction](/chapters/audio-intelligence/pii-redaction): detect and anonymize sensitive entities (ex: GDPR-related)
+- [Sentiment analysis](/chapters/audio-intelligence/sentiment-analysis): extract the main sentiment and up to 25 emotions
 </Note>
 
-If you're working with audio or video files, you'll need to upload it first using our [`POST /v2/upload` endpoint](/api-reference/v2/upload/audio-file) with `multipart/form-data`
-content-type since the [`POST /v2/pre-recorded` endpoint](/api-reference/v2/pre-recorded/init) only accept audio URLs.
 
-If you are already using audio file URLs, proceed to the next step.
 
-```bash
-curl --request POST \
-  --url https://api.gladia.io/v2/upload \
-  --header 'Content-Type: multipart/form-data' \
-  --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
-  --form audio=@/path/to/your/audio/conversation.wav
+## Individual steps
+
+The building blocks behind `transcribe()` — upload audio, create a job, then retrieve the result when you need finer control over the flow.
+
+### Upload your audio
+
+Upload a local file and pass the returned `audio_url` to the next step.
+
+<CodeGroup>
+
+```javascript JavaScript
+import { GladiaClient } from "@gladiaio/sdk";
+
+const gladiaClient = new GladiaClient({ apiKey: "YOUR_GLADIA_API_KEY" });
+
+const uploadResponse = await gladiaClient.preRecorded().uploadFile("YOUR_LOCAL_PATH");
+
 ```
+
+```python Python
+from gladiaio_sdk import GladiaClient
+
+gladia_client = GladiaClient(api_key="YOUR_GLADIA_API_KEY").prerecorded()
+
+upload_response = gladia_client.upload_file("YOUR_LOCAL_PATH")
+```
+
+</CodeGroup>
 
 Example response:
 
@@ -32,8 +152,8 @@ Example response:
   "audio_url": "https://api.gladia.io/file/636c70f6-92c1-4026-a8b6-0dfe3ecf826f",
   "audio_metadata": {
     "id": "636c70f6-92c1-4026-a8b6-0dfe3ecf826f",
-    "filename": "conversation.wav",
-    "extension": "wav",
+    "filename": "your_audio_file.mp3",
+    "extension": "mp3",
     "size": 99515383,
     "audio_duration": 4146.468542,
     "number_of_channels": 2
@@ -41,60 +161,220 @@ Example response:
 }
 ```
 
-We will now proceed to the next steps using the returned `audio_url`.
+### Create a transcription job
 
-## Transcribe
-
-We'll now POST the transcription request to Gladia's API using the [`POST /v2/pre-recorded` endpoint](/api-reference/v2/pre-recorded/init).
-
-<Note>`/v2/pre-recorded` only accept `application/json` as Content-Type.</Note>
+Pass the `audio_url` from the previous step along with your transcription options. 
 
 <CodeGroup>
-```bash cURL
-  curl --request POST \
-    --url https://api.gladia.io/v2/pre-recorded \
-    --header 'Content-Type: application/json' \
-    --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
-    --data '{
+
+```javascript JavaScript
+import { GladiaClient } from "@gladiaio/sdk";
+
+const gladiaClient = new GladiaClient({ apiKey: "YOUR_GLADIA_API_KEY" });
+
+const job = await gladiaClient.preRecorded().createUntyped({
+  audio_url: "YOUR_AUDIO_URL",
+  language_config: {
+    languages: ["en", "fr"],
+    code_switching: true,
+  },
+  custom_vocabulary: true,
+  custom_vocabulary_config: {
+    vocabulary: ["Gladia", "Solaria", "Salesforce"],
+  },
+});
+```
+
+```python Python
+from gladiaio_sdk import GladiaClient
+
+gladia_client = GladiaClient(api_key="YOUR_GLADIA_API_KEY").prerecorded()
+
+job = gladia_client.create(
+    {
     "audio_url": "YOUR_AUDIO_URL",
     "language_config": {
-      "languages": [],
-      "code_switching": false
-    },
-    "diarization": true,
-    "diarization_config": {
-      "number_of_speakers": 3,
-      "min_speakers": 1,
-      "max_speakers": 5
-    },
-    "translation": true,
-    "translation_config": {
-      "model": "base",
-      "target_languages": ["fr", "en"],
-      "context_adaptation": true,
-      "context": "Business meeting discussing quarterly results",
-      "informal": false
-    },
-    "subtitles": true,
-    "subtitles_config": {
-      "formats": ["srt", "vtt"]
+    "languages": ["en", "fr"],
+    "code_switching": True,
+  },
+  "custom_vocabulary": True,
+  "custom_vocabulary_config": {
+    "vocabulary": ["Gladia", "Solaria", "Salesforce"],
+      },
     }
-    }
-  '
+)
+
 ```
+
 </CodeGroup>
 
-You'll get an instant response from the request with an `id` and a `result_url`. The `id` is your transcription ID that you
-will use to get your transcription result once it's done.
-
-`result_url` is returned for convenience. This is a pre-built url with your transcription id in it that you can use to get your result in the next step.
-
-## Get the transcription result
+### Get the transcription result
 
 <GetTranscriptionResult />
 
+<Note>
+  For file size, duration, and concurrency limits, see [Supported files & duration](/chapters/limits-and-specifications/supported-formats) and [Concurrency and rate limits](/chapters/limits-and-specifications/concurrency).
+</Note>
+
+  </Tab>
+  <Tab title="Using the API" icon="brackets-curly">
+
+## Individual steps
+
+Upload audio, create a transcription job, then poll until the job is done (or use webhooks or a callback URL).
+
+### Upload your audio
+
+Call the [upload endpoint](/api-reference/v2/upload/audio-file) with multipart form data. Use the returned `audio_url` when creating a transcription job.
+
+<CodeGroup>
+
+```bash cURL
+curl --request POST \
+  --url https://api.gladia.io/v2/upload \
+  --header 'Content-Type: multipart/form-data' \
+  --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
+  --form audio=@/path/to/your/audio/your_audio_file.mp3
+```
+
+</CodeGroup>
+
+Example response:
+
+```json
+{
+  "audio_url": "https://api.gladia.io/file/636c70f6-92c1-4026-a8b6-0dfe3ecf826f",
+  "audio_metadata": {
+    "id": "636c70f6-92c1-4026-a8b6-0dfe3ecf826f",
+    "filename": "your_audio_file.mp3",
+    "extension": "mp3",
+    "size": 99515383,
+    "audio_duration": 4146.468542,
+    "number_of_channels": 2
+  }
+}
+```
+
+### Create a transcription job
+
+POST to [`/v2/pre-recorded`](/api-reference/v2/pre-recorded/init) with your `audio_url` and options.
+
+<CodeGroup>
+
+```javascript JavaScript
+const response = await fetch("https://api.gladia.io/v2/pre-recorded", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "x-gladia-key": "<YOUR_GLADIA_API_KEY>",
+  },
+  body: JSON.stringify({
+    audio_url: "YOUR_AUDIO_URL",
+    language_config: {
+      languages: [],
+      code_switching: false,
+    },
+    diarization: true,
+    diarization_config: {
+      number_of_speakers: 3,
+      min_speakers: 1,
+      max_speakers: 5,
+    },
+    translation: true,
+    translation_config: {
+      model: "base",
+      target_languages: ["fr", "en"],
+      context_adaptation: true,
+      context: "Business meeting discussing quarterly results",
+      informal: false,
+    },
+    subtitles: true,
+    subtitles_config: {
+      formats: ["srt", "vtt"],
+    },
+  }),
+});
+if (!response.ok) {
+  console.error(
+    `${response.status}: ${(await response.text()) || response.statusText}`
+  );
+  process.exit(response.status);
+}
+
+const { id, result_url } = await response.json();
+```
+
+```bash cURL
+curl --request POST \
+  --url https://api.gladia.io/v2/pre-recorded \
+  --header 'Content-Type: application/json' \
+  --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
+  --data '{
+  "audio_url": "YOUR_AUDIO_URL",
+  "language_config": {
+    "languages": [],
+    "code_switching": false
+  },
+  "diarization": true,
+  "diarization_config": {
+    "number_of_speakers": 3,
+    "min_speakers": 1,
+    "max_speakers": 5
+  },
+  "translation": true,
+  "translation_config": {
+    "model": "base",
+    "target_languages": ["fr", "en"],
+    "context_adaptation": true,
+    "context": "Business meeting discussing quarterly results",
+    "informal": false
+  },
+  "subtitles": true,
+  "subtitles_config": {
+    "formats": ["srt", "vtt"]
+  }
+}'
+```
+
+</CodeGroup>
+
+### Get the transcription result
+
+Poll [`GET /v2/pre-recorded/:id`](/api-reference/v2/pre-recorded/get) (or the `result_url` from the create response) until the job status is `done`.
+
+<CodeGroup>
+
+```javascript JavaScript
+const response = await fetch(
+  `https://api.gladia.io/v2/pre-recorded/${id}`,
+  {
+    method: "GET",
+    headers: {
+      "x-gladia-key": "<YOUR_GLADIA_API_KEY>",
+    },
+  }
+);
+if (!response.ok) {
+  console.error(
+    `${response.status}: ${(await response.text()) || response.statusText}`
+  );
+  return;
+}
+
+const result = await response.json();
+console.log(result);
+```
+
+</CodeGroup>
+
 <Tip>
-Want to know more about a specific feature? Check out our [Features chapter](/chapters/pre-recorded-stt/features) for more details.
+  Instead of polling, configure [webhooks](https://app.gladia.io/webhooks) or set `callback` and `callback_config` on the job — see the [init](/api-reference/v2/pre-recorded/init) reference. The **Using our SDKs** tab also documents polling helpers, webhooks, and callbacks together.
+</Tip>
+
+  </Tab>
+</Tabs>
+<Tip>
+  Want to know more about a specific feature? Check out our [Features chapter](/chapters/pre-recorded-stt/features) for more details.
 </Tip>
 
 <Samples />
