@@ -29,3 +29,17 @@
   max-width: 100%;
   overflow: auto;
 }
+
+.benchmark-status-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(46, 52, 62, 0.18);
+  background: rgba(46, 52, 62, 0.08);
+  color: #2e343e;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+}
