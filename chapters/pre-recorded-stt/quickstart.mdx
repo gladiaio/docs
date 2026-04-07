@@ -41,14 +41,6 @@ End-to-end transcription — from upload to result in one call.
 
 <CodeGroup>
 
-```python Python
-from gladiaio_sdk import GladiaClient
-
-gladia_client = GladiaClient(api_key="YOUR_GLADIA_API_KEY").prerecorded()
-
-transcription = gladia_client.transcribe("YOUR_AUDIO_URL_OR_LOCAL_PATH")
-```
-
 ```javascript JavaScript
 import { GladiaClient } from "@gladiaio/sdk";
 
@@ -59,31 +51,19 @@ const transcription = await gladiaClient
   .transcribe("YOUR_AUDIO_URL_OR_LOCAL_PATH");
 ```
 
-</CodeGroup>
-
-With customizable features:
-
-<CodeGroup>
-
 ```python Python
 from gladiaio_sdk import GladiaClient
 
 gladia_client = GladiaClient(api_key="YOUR_GLADIA_API_KEY").prerecorded()
 
-transcription = gladia_client.transcribe(
-    "YOUR_AUDIO_URL_OR_LOCAL_PATH",
-    {
-        "language_config": {
-            "languages": ["en", "fr"],
-            "code_switching": True,
-        },
-        "custom_vocabulary": True,
-        "custom_vocabulary_config": {
-            "vocabulary": ["Gladia", "Solaria", "Salesforce"],
-        },
-    },
-)
+transcription = gladia_client.transcribe("YOUR_AUDIO_URL_OR_LOCAL_PATH")
 ```
+
+</CodeGroup>
+
+With customizable features:
+
+<CodeGroup>
 
 ```javascript JavaScript
 import { GladiaClient } from "@gladiaio/sdk";
@@ -103,6 +83,26 @@ const transcription = await gladiaClient.preRecorded().transcribe(
     },
   }
 );
+```
+
+```python Python
+from gladiaio_sdk import GladiaClient
+
+gladia_client = GladiaClient(api_key="YOUR_GLADIA_API_KEY").prerecorded()
+
+transcription = gladia_client.transcribe(
+    "YOUR_AUDIO_URL_OR_LOCAL_PATH",
+    {
+        "language_config": {
+            "languages": ["en", "fr"],
+            "code_switching": True,
+        },
+        "custom_vocabulary": True,
+        "custom_vocabulary_config": {
+            "vocabulary": ["Gladia", "Solaria", "Salesforce"],
+        },
+    },
+)
 ```
 </CodeGroup>
 
@@ -126,14 +126,6 @@ Upload a local file and pass the returned `audio_url` to the next step.
 
 <CodeGroup>
 
-```python Python
-from gladiaio_sdk import GladiaClient
-
-gladia_client = GladiaClient(api_key="YOUR_GLADIA_API_KEY").prerecorded()
-
-upload_response = gladia_client.upload_file("YOUR_LOCAL_PATH")
-```
-
 ```javascript JavaScript
 import { GladiaClient } from "@gladiaio/sdk";
 
@@ -143,6 +135,13 @@ const uploadResponse = await gladiaClient.preRecorded().uploadFile("YOUR_LOCAL_P
 
 ```
 
+```python Python
+from gladiaio_sdk import GladiaClient
+
+gladia_client = GladiaClient(api_key="YOUR_GLADIA_API_KEY").prerecorded()
+
+upload_response = gladia_client.upload_file("YOUR_LOCAL_PATH")
+```
 
 </CodeGroup>
 
@@ -168,6 +167,24 @@ Pass the `audio_url` from the previous step along with your transcription option
 
 <CodeGroup>
 
+```javascript JavaScript
+import { GladiaClient } from "@gladiaio/sdk";
+
+const gladiaClient = new GladiaClient({ apiKey: "YOUR_GLADIA_API_KEY" });
+
+const job = await gladiaClient.preRecorded().createUntyped({
+  audio_url: "YOUR_AUDIO_URL",
+  language_config: {
+    languages: ["en", "fr"],
+    code_switching: true,
+  },
+  custom_vocabulary: true,
+  custom_vocabulary_config: {
+    vocabulary: ["Gladia", "Solaria", "Salesforce"],
+  },
+});
+```
+
 ```python Python
 from gladiaio_sdk import GladiaClient
 
@@ -188,25 +205,6 @@ job = gladia_client.create(
 )
 
 ```
-
-```javascript JavaScript
-import { GladiaClient } from "@gladiaio/sdk";
-
-const gladiaClient = new GladiaClient({ apiKey: "YOUR_GLADIA_API_KEY" });
-
-const job = await gladiaClient.preRecorded().createUntyped({
-  audio_url: "YOUR_AUDIO_URL",
-  language_config: {
-    languages: ["en", "fr"],
-    code_switching: true,
-  },
-  custom_vocabulary: true,
-  custom_vocabulary_config: {
-    vocabulary: ["Gladia", "Solaria", "Salesforce"],
-  },
-});
-```
-
 
 </CodeGroup>
 
