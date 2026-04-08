@@ -1,9 +1,9 @@
 ---
 title: Benchmarking
-description: A guide on how we benchmark speech-to-text systems correctly with transcript normalization, WER, and representative datasets.
+description: A guide on how to benchmark speech-to-text systems with transcript normalization, WER, and representative datasets.
 ---
 
-Benchmarking speech-to-text systems is easy to get wrong.
+Benchmarking speech-to-text systems is very easy to get wrong.
 
 Small methodology changes can produce large swings in reported quality, which makes comparisons misleading.
 
@@ -43,7 +43,9 @@ If your benchmark does not reflect your real traffic, the result will not tell y
 
 Normalization defines which surface-form differences should be ignored before scoring. The goal is to remove formatting variance without erasing information that still matters for the benchmark.
 
-In practice, a good normalization pipeline should reconcile equivalent forms while preserving entity-level meaning such as currencies, numbered labels, honorifics, and timestamps.
+Simply put, normalization ensures you compare apple to apples when judging transcription output. 
+
+In practice that means a good normalization pipeline reconciles equivalent forms while preserving entity-level meaning such as currencies, numbered labels, honorifics, and timestamps.
 
 | Reference | Prediction | Why raw WER is wrong |
 |-----------|------------|----------------------|
@@ -51,9 +53,11 @@ In practice, a good normalization pipeline should reconcile equivalent forms whi
 | `Meet at Point 14` | `meet at point fourteen` | The normalization should preserve the numbered entity instead of collapsing it into an unrelated form. |
 | `Mr. Smith joined at 3:00 PM` | `mister smith joined at 3 pm` | Honorific and timestamp formatting differ, but the transcript content is equivalent. |
 
-This is where normalization quality matters. A benchmark-friendly normalizer should make few assumptions by default: it should standardize casing, abbreviations, symbols, and numeric rendering, but avoid discarding cues that may affect downstream evaluation.
+A benchmark-friendly normalizer should make few assumptions by default: it should standardize casing, abbreviations, symbols, and numeric rendering, but avoid discarding cues that may affect downstream evaluation.
 
-That is one of the main limitations of Whisper-style normalization. It is useful for generic lexical comparability, but it applies stronger canonicalization assumptions by default, such as aggressive lowercasing, punctuation stripping, and verbalization. That can be acceptable for broad WER reporting, yet it is less appropriate when entity fidelity matters, for example when distinguishing `Point 14`, preserving explicit currency markers, or keeping structured time expressions stable across systems.
+And that is one of the main limitations of "Whisper-style normalization" introduced by OpenAI in 2022 and commonly implemented in packages such as [`whisper-normalizer`](https://pypi.org/project/whisper-normalizer/).
+
+It is useful for generic lexical comparability, but applies stronger canonicalization assumptions by default, such as aggressive lowercasing, punctuation stripping, and verbalization.
 
 Gladia's recommended approach is to normalize both the ground-truth transcript and the model output with [`gladia-normalization`](https://github.com/gladiaio/normalization), our open-source normalization library designed for transcript evaluation.
 
@@ -70,10 +74,6 @@ For example, a Gladia-oriented pipeline can reconcile formatting differences suc
 >
   Open-source transcript normalization library used before WER computation.
 </Card>
-
-<Note>
-  Be careful with generic Whisper-style normalizers such as [`whisper-normalizer`](https://pypi.org/project/whisper-normalizer/): beyond stronger normalization assumptions, its own package description notes known issues with Indic and other low-resource languages, so it may not be an appropriate evaluation baseline for multilingual production traffic.
-</Note>
 
 ```python
 from normalization import load_pipeline
