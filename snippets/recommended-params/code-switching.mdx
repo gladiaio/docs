@@ -1,0 +1,28 @@
+Code switching (`language_config.code_switching: true`) lets Gladia detect and transcribe **multiple languages** within the same audio, re-evaluating the language on each utterance.
+
+**When to enable it:**
+
+- Speakers **switch languages** mid-conversation (e.g. bilingual meetings, multilingual customer support).
+- You need the detected `language` returned **per utterance**.
+
+**When NOT to enable it:**
+
+- The audio is in a **single language** — code switching adds unnecessary processing and can introduce misdetections.
+- You've set **exactly one language** in `languages` — in that case `code_switching` is ignored anyway.
+
+```json
+{
+  "language_config": {
+    "languages": ["en", "fr", "es"],
+    "code_switching": true
+  }
+}
+```
+
+<Warning>
+  **Do not enable `code_switching` with an empty `languages` list.** When no
+  languages are specified, the language detector evaluates every utterance
+  against 100+ supported languages, which leads to frequent misdetections —
+  especially between similar-sounding languages. Always provide a short list of
+  languages you **actually expect** in the audio.
+</Warning>

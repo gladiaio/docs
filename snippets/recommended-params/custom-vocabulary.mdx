@@ -1,0 +1,62 @@
+[Custom vocabulary](/chapters/audio-intelligence/custom-vocabulary) is a post-transcription replacement based on **phoneme similarity**. It's essential for domain-specific terms that speech models frequently mis-transcribe.
+
+**Best practices:**
+
+- **Always provide both** the `custom_vocabulary` flag and a `custom_vocabulary_config`.
+- **Add pronunciations** for words that can be said in different ways (accents, foreign speakers). This is more reliable than raising `intensity`.
+- **Keep `intensity` moderate** (0.4-0.6). High values increase false positives where unrelated words get replaced.
+- **Set `language`** on individual vocabulary entries when your audio is multilingual and a term is pronounced differently depending on the language.
+
+<Tip>
+  For simple terms that are already close to their phonetic spelling (e.g. brand
+  names), you can pass them as plain strings instead of objects — Gladia will
+  use the default intensity.
+</Tip>
+
+<CodeGroup>
+```json Pre-recorded
+{
+  "audio_url": "YOUR_AUDIO_URL",
+  "custom_vocabulary": true,
+  "custom_vocabulary_config": {
+    "vocabulary": [
+      "Kubernetes",
+      {
+        "value": "Gladia",
+        "pronunciations": ["Gladya", "Gladiah"],
+        "intensity": 0.5
+      },
+      {
+        "value": "PostgreSQL",
+        "pronunciations": ["Postgres Q L", "Post gress"],
+        "intensity": 0.4
+      }
+    ],
+    "default_intensity": 0.5
+  }
+}
+```
+```json Live
+{
+  "realtime_processing": {
+    "custom_vocabulary": true,
+    "custom_vocabulary_config": {
+      "vocabulary": [
+        "Kubernetes",
+        {
+          "value": "Gladia",
+          "pronunciations": ["Gladya", "Gladiah"],
+          "intensity": 0.5
+        },
+        {
+          "value": "PostgreSQL",
+          "pronunciations": ["Postgres Q L", "Post gress"],
+          "intensity": 0.4
+        }
+      ],
+      "default_intensity": 0.5
+    }
+  }
+}
+```
+</CodeGroup>
