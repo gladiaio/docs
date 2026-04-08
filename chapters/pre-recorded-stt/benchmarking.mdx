@@ -10,6 +10,9 @@ Small methodology changes can produce large swings in reported quality, which ma
 ## Benchmarking at a glance
 
 <CardGroup cols={2}>
+  <Card title="0. Define your goal" icon="bullseye">
+    Decide what "good" means for your product before comparing systems.
+  </Card>
   <Card title="1. Normalize transcripts" icon="wand-magic-sparkles">
     Normalize both references and predictions before computing WER.
   </Card>
@@ -24,7 +27,7 @@ Small methodology changes can produce large swings in reported quality, which ma
   </Card>
 </CardGroup>
 
-## 1. Define your evaluation goal
+## 0. Define your evaluation goal
 
 Before comparing providers, define what "good" means for your product.
 
@@ -36,7 +39,7 @@ For example:
 
 If your benchmark does not reflect your real traffic, the result will not tell you much about production performance.
 
-## 2. Normalize transcripts before computing WER
+## 1. Normalize transcripts before computing WER
 
 Normalization defines which surface-form differences should be ignored before scoring. The goal is to remove formatting variance without erasing information that still matters for the benchmark.
 
@@ -88,7 +91,7 @@ normalized_prediction = pipeline.normalize(prediction)
   Always apply the same normalization pipeline to every system you compare. Changing the normalization rules between vendors invalidates the benchmark.
 </Tip>
 
-## 3. Compute WER correctly
+## 2. Compute WER correctly
 
 Word Error Rate measures the edit distance between a reference transcript and a predicted transcript at the word level.
 
@@ -117,7 +120,7 @@ Lower is better. In practice:
   Do not compute WER on raw transcripts if providers format numbers, punctuation, abbreviations, or casing differently. That mostly measures formatting conventions, not recognition quality.
 </Warning>
 
-## 4. Choose a representative dataset
+## 3. Choose a representative dataset
 
 Start from your [evaluation goal](#1-define-your-evaluation-goal): the right dataset depends on the use case and traffic shape you want to measure.
 
@@ -142,7 +145,7 @@ Typical failure cases:
 
 For a broader methodology view, see [this benchmark guide](/chapters/pre-recorded-stt/benchmarking), especially the evaluation-goal section above when mapping use cases to dataset types.
 
-## 5. Interpret results carefully
+## 4. Interpret results carefully
 
 Do not stop at a single WER number. Review:
 
