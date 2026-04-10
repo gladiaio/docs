@@ -45,6 +45,7 @@
                   "chapters/pre-recorded-stt/recommended-parameters"
                 ]
               },
+              "chapters/pre-recorded-stt/benchmarking",
               {
                 "group": "Live Transcription",
                 "expanded": false,

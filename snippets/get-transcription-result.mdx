@@ -44,7 +44,7 @@ print(result.result.transcription.full_transcript)
   </Accordion>
   <Accordion icon="webhook" title="Webhook">
   You can configure webhooks at https://app.gladia.io/webhooks to be notified when your transcriptions are done.
-  <img src='/assets/images/webhooks-1.png'/>
+  <img src='/assets/images/webhooks-1.png' alt="Gladia dashboard webhook settings page for configuring transcription notifications." />
   Once a transcription is done, a `POST` request will be made to the endpoint you configured. The request body is a JSON object containing the transcription `id` that you can use to retrieve your result with [our API](/api-reference/v2/pre-recorded/get).  
   For the full body definition, check [our API definition](/api-reference/v2/pre-recorded/webhook/success).  
   </Accordion>
