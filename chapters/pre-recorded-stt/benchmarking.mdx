@@ -126,18 +126,17 @@ Lower is better. In practice:
 
 Start from your [evaluation goal](#1-define-your-evaluation-goal): the right dataset depends on the use case and traffic shape you want to measure.
 
-A representative benchmark dataset is not just a random audio collection. It should be curated to reflect production traffic, annotated with reliable ground truth, and structured well enough to support consistent quality and latency measurement.
+A good benchmark dataset should look as close as possible to your real production audio. If the audio in the benchmark does not match what you actually process, the results will not tell you much.
 
-Selection criteria:
+When choosing your dataset, make sure it matches your real audio on:
 
-- Match the channel conditions you expect in production: telephony, browser microphone, meeting capture, studio audio, or field recording.
-- Match the linguistic distribution: language mix, accents, code-switching frequency, and domain terminology.
-- Match the acoustic conditions: compression artifacts, background noise, reverberation, cross-talk, and overlapping speech.
-- Match the interaction pattern: single-speaker dictation, dialogue, multi-speaker meetings, or long-form continuous recordings.
-- Match the output requirements: entity fidelity, diarization, subtitle timing, readability, or downstream extraction accuracy.
-- Use transcripts that are strong enough to serve as ground truth, with timing annotations when latency is part of the benchmark.
-- Keep the sample size large and diverse enough to keep rankings stable across domains, speakers, and recording conditions.
-- Prefer a mix of public datasets for external comparability and private in-domain datasets for business relevance.
+- Language: the target language, accents, and whether speakers switch languages.
+- Audio quality: telephony, browser microphone, studio recordings, noisy field audio, overlapping speech, or compressed audio.
+- Topics: medical, operational, legal, financial, customer support, or any other domain you care about.
+- Important words: numbers, names, acronyms, product names, addresses, or domain-specific terminology.
+- Interaction style: single-speaker dictation, calls, meetings, interviews, or long-form recordings.
+
+Use transcripts that are strong enough to serve as ground truth. When possible, combine public datasets for comparability with private in-domain datasets that reflect your real traffic.
 
 Typical failure cases:
 
