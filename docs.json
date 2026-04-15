@@ -29,7 +29,8 @@
             "pages": [
               "chapters/introduction/index",
               "chapters/introduction/getting-started",
-              "chapters/introduction/playground"
+              "chapters/introduction/playground",
+              "chapters/pre-recorded-stt/benchmarking"
             ]
           },
           {
