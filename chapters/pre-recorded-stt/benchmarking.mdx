@@ -1,0 +1,176 @@
+---
+title: Benchmarking
+description: A practical guide to benchmarking speech-to-text accuracy — from defining goals to choosing datasets, normalizing transcripts, computing WER, and interpreting results.
+---
+
+Benchmarking speech-to-text systems is easy to get wrong.
+Small methodology changes can produce large swings in reported quality, which makes comparisons misleading.
+
+## Benchmarking at a glance
+
+<CardGroup cols={2}>
+  <Card title="0. Define your goal" icon="bullseye">
+    Decide what "good" means for your product before comparing systems.
+  </Card>
+  <Card title="1. Normalize transcripts" icon="wand-magic-sparkles">
+    Normalize both references and predictions before computing WER.
+  </Card>
+  <Card title="2. Compute WER" icon="calculator">
+    Measure substitutions, deletions, and insertions on normalized text.
+  </Card>
+  <Card title="3. Use the right dataset" icon="database">
+    Benchmark on audio that matches your real traffic and target users.
+  </Card>
+  <Card title="4. Interpret results carefully" icon="chart-line">
+    Look beyond one average score and inspect meaningful slices.
+  </Card>
+</CardGroup>
+
+## 0. Define your evaluation goal
+
+Before comparing providers and models, the first step is to define which aspects of performance matter most for your use case.
+
+Below are examples of performance aspects that would be more weighted for domain applications of speech to text:
+
+- <u>Accuracy on noisy backgrounds</u>: for contact centers, telephony, and field recordings.
+- <u>Speaker diarization quality</u>: for meeting assistants and multi-speaker calls.
+- <u>Named entity accuracy</u>: for workflows that extract people, organizations, phone numbers, or addresses.
+- <u>Domain-specific vocabulary handling</u>: for medical, legal, or financial transcription.
+- <u>Timestamp accuracy</u>: for media workflows that need readable, well-timed captions.
+- <u>Filler-word handling</u>: for agentic workflows .
+
+Those choices shape every downstream decision: which dataset to use, which normalization rules to apply, and which metrics to report.
+
+
+If your benchmark does not reflect your real traffic, the result will not tell you much about production performance.
+
+## 1. Normalize transcripts before computing WER
+
+Normalization removes surface-form differences (casing, abbreviations, numeric rendering) so you compare apples to apples when judging transcription output.
+
+| Reference | Prediction | Why raw WER is wrong |
+|-----------|------------|----------------------|
+| `It's $50` | `it is fifty dollars` | Contraction and currency formatting differ, but the semantic content is the same. |
+| `Meet at Point 14` | `meet at point fourteen` | The normalization should preserve the numbered entity instead of collapsing it into an unrelated form. |
+| `Mr. Smith joined at 3:00 PM` | `mister smith joined at 3 pm` | Honorific and timestamp formatting differ, but the transcript content is equivalent. |
+
+One common limitation is "Whisper-style normalization" (OpenAI, 2022): implemented in packages like [`whisper-normalizer`](https://pypi.org/project/whisper-normalizer/). It does not affect numbers, and applies aggressive lowercasing and punctuation stripping.
+
+Gladia's recommended approach is [`gladia-normalization`](https://github.com/gladiaio/normalization), our open-source library designed for transcript evaluation:
+
+- `It's $50` -> `it is 50 dollars`
+- `Meet at Point 14` -> `meet at point 14`
+- `Mr. Smith joined at 3:00 PM` -> `mister smith joined at 3 pm`
+
+<Card
+  title="gladia-normalization"
+  icon="github"
+  href="https://github.com/gladiaio/normalization"
+>
+  Open-source transcript normalization library used before WER computation.
+</Card>
+
+```python
+from normalization import load_pipeline
+
+pipeline = load_pipeline("gladia-3", language="en")
+
+reference = "Meet at Point 14. It's $50 at 3:00 PM."
+prediction = "meet at point fourteen it is fifty dollars at 3 pm"
+
+normalized_reference = pipeline.normalize(reference)
+normalized_prediction = pipeline.normalize(prediction)
+```
+
+<Tip>
+  Always apply the same normalization pipeline to both the reference transcript and every hypothesis output you compare. Changing the normalization rules between references invalidates the results.
+</Tip>
+
+## 2. Compute WER correctly
+
+Word Error Rate measures the edit distance between a reference transcript and a predicted transcript at the word level.
+
+The standard formula is:
+
+```text
+WER = (S + D + I) / N
+```
+
+Where:
+
+- `S` = substitutions
+- `D` = deletions
+- `I` = insertions
+- `N` = number of words in the reference transcript
+
+Lower is better. In practice:
+
+1. Prepare a reference transcript for each audio sample.
+2. Run each provider on the exact same audio.
+3. Normalize both the reference and each prediction with the same pipeline.
+4. Compute WER on the normalized outputs.
+5. Aggregate results across the full dataset.
+
+<Warning>
+  Do not compute WER on raw transcripts if providers format numbers, punctuation, abbreviations, or casing differently. That mostly measures formatting conventions, not recognition quality.
+</Warning>
+
+<Tip>
+  Inspect your reference transcripts carefully before computing WER. If a
+  reference contains text that is not actually present in the audio, for
+  example an intro such as "this audio is a recording of...", it can make WER
+  look much worse across all providers.
+</Tip>
+
+## 3. Choose a representative dataset
+
+Start from your [evaluation goal](#1-define-your-evaluation-goal): the right dataset depends on the use case and traffic shape you want to measure.
+
+A good benchmark dataset should look as close as possible to your real production audio. If the audio in the benchmark does not match what you actually process, the results will not tell you much.
+
+When choosing your dataset, make sure it matches your real audio on:
+
+- Language: the target language, accents, and whether speakers switch languages.
+- Audio quality: telephony, browser microphone, studio recordings, noisy field audio, overlapping speech, or compressed audio.
+- Topics: medical, operational, legal, financial, customer support, or any other domain you care about.
+- Important words: numbers, names, acronyms, product names, addresses, or domain-specific terminology.
+- Interaction style: single-speaker dictation, calls, meetings, interviews, or long-form recordings.
+
+Use transcripts that are strong enough to serve as ground truth. When possible, combine public datasets for comparability with private in-domain datasets that reflect your real traffic.
+
+Typical failure cases:
+
+- Benchmarking call-center audio with clean podcast recordings overestimates real-world performance.
+- Benchmarking English-only speech does not capture code-switching traffic.
+- Benchmarking short clips can hide failures that appear on long recordings with multiple speakers.
+
+<Tip>
+  Your favorite LLM with internet access can be very effective at finding
+  public datasets that match your use case.
+</Tip>
+
+For a broader methodology view, see [this benchmark guide](/chapters/pre-recorded-stt/benchmarking), especially the evaluation-goal section above when mapping use cases to dataset types.
+
+## 4. Interpret results carefully
+
+Do not stop at a single WER number. Review:
+
+- overall average WER
+- median WER and spread across files
+- breakdowns by language, domain, or audio condition
+- failure modes on proper nouns, acronyms, and numbers
+- whether differences are consistent or concentrated in a few hard samples
+
+Two systems can post similar average WER while failing on different error classes. Separate statistically meaningful gaps from noise introduced by dataset composition or normalization choices.
+
+If two systems are close, inspect actual transcript examples before drawing strong conclusions.
+
+## Common pitfalls
+
+- Comparing providers on different datasets
+- Using low-quality or inconsistent ground truth
+- Treating punctuation and formatting differences as recognition errors
+- Drawing conclusions from too few samples
+- Reporting one average score without any slice analysis
+- Not inspecting the reference transcript: if it contains text not present in the audio, for example an intro like "this audio is a recording of...", it will inflate WER across all providers
+- Not experimenting with provider configurations: for example, using Gladia's [custom vocabulary](/chapters/audio-intelligence/custom-vocabulary) to improve proper noun accuracy, then comparing against the ground truth
