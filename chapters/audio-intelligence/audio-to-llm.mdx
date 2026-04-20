@@ -1,30 +1,51 @@
 ---
 title: Audio to LLM
-description: "Ask any question or analysis, as you would do with an assistant"
+description: "Run your own prompts on a pre-recorded transcript with an LLM - summaries, Q&A, extraction, and more."
 ---
 
 import PrerecordedBadge from "/snippets/badges/prerecorded.mdx"
 
 <PrerecordedBadge />
 
-The **Audio to LLM** feature applies your own prompts to the audio transcription. For now, it is only available for **pre-recorded** audio.
+**Audio to LLM** runs once the transcription is generated. You provide **one or more prompts**; each prompt is executed against the **transcript text** from the same job using the configured model, yielding **one LLM response per prompt**. Use it to summarize a call, extract action items, answer questions about the recording, or run any text analysis you express in natural language.
 
-## Usage
-Enable Audio to LLM by setting the appropriate flag and providing your prompts:
+## How it works
+
+1. Include `audio_to_llm: true` and an `audio_to_llm_config` object (at minimum, a `prompts` array) in your [pre-recorded transcription request](/chapters/pre-recorded-stt/quickstart).
+2. Gladia transcribes the audio, along with any other audio-intelligence options you enabled on that request.
+3. Each prompt is run on the resulting transcript via the LLM.
+4. The API returns **one result object per prompt** (same order as `prompts`), each containing the original `prompt` and the model `response`.
+
+<Note>
+  Audio to LLM sends **plain transcript text** to the model. Raw audio and other fields from the transcription response are **not** added to the LLM prompt context.
+</Note>
+
+## Model selection
+
+By default the model used to execute your prompts is **[GPT 5.4 Nano](https://openrouter.ai/openai/gpt-5.4-nano)** (`openai/gpt-5.4-nano`), a fast option suited to high-volume summaries and extraction. The `model` can be customized when you need stronger reasoning, richer analysis, longer outputs, or behavior that fits a specific provider or family.
+
+**Enterprise** accounts can use **any model listed on [OpenRouter](https://openrouter.ai/models)** by setting the `model` key.
+
+<Warning>
+  Model selection is **Enterprise-only** and is billed accordingly.
+</Warning>
+
+## Example
+
+A single prompt is enough to get started (you can omit `model` to use the default):
 
 ```json Pre-recorded
 {
   "audio_to_llm": true,
   "audio_to_llm_config": {
     "prompts": [
-      "Extract the key points from the transcription as bullet points",
-      "Generate a title from this transcription"
+      "Summarize the transcript in three bullet points."
     ]
   }
 }
 ```
 
-With this code, your output will look like this:
+Example response shape for one prompt:
 
 ```json Pre-recorded
 {
@@ -35,8 +56,49 @@ With this code, your output will look like this:
       "success": true,
       "is_empty": false,
       "results": {
-        "prompt": "Extract the key points from the transcription as bullet points",
-        "response": "The main entities key points from the transcription are:\n- ..."
+        "prompt": "Summarize the transcript in three bullet points.",
+        "response": "- Intro and context\n- Main discussion\n- Conclusion and next steps"
+      },
+      "exec_time": 1.4122809978485107,
+      "error": null
+    }
+  ],
+  "exec_time": 4.521103805541992,
+  "error": null
+}
+```
+
+## Example: post-meeting workflow
+
+For a **post-meeting** pass, you might ask for bullet takeaways, a short summary, and follow-up actions for the next meeting:
+
+```json Pre-recorded
+{
+  "audio_to_llm": true,
+  "audio_to_llm_config": {
+    "model": "openai/gpt-5.4-nano",
+    "prompts": [
+      "Summarize the meeting as bullet points: main topics, decisions, and open questions.",
+      "Give a concise paragraph summarizing what this meeting was about and the outcome.",
+      "List action items and follow-ups to prepare for the next meeting; include owners if they were mentioned."
+    ]
+  }
+}
+```
+
+With this configuration, your output might look like this:
+
+```json Pre-recorded
+{
+  "success": true,
+  "is_empty": false,
+  "results": [
+    {
+      "success": true,
+      "is_empty": false,
+      "results": {
+        "prompt": "Summarize the meeting as bullet points: main topics, decisions, and open questions.",
+        "response": "- **Roadmap Q2**: Team aligned on shipping the billing integration first.\n- **Decision**: Weekly sync moved to Tuesday.\n- **Open question**: Whether to support SSO in v1 is still TBD."
       },
       "exec_time": 1.7726809978485107,
       "error": null
@@ -45,16 +107,42 @@ With this code, your output will look like this:
       "success": true,
       "is_empty": false,
       "results": {
-        "prompt": "Generate a title from this transcription",
-        "response": "The Great Title"
+        "prompt": "Give a concise paragraph summarizing what this meeting was about and the outcome.",
+        "response": "The group reviewed Q2 priorities, agreed to prioritize billing, and rescheduled the standing meeting. SSO scope was left for a follow-up once design signs off."
       },
-      "exec_time": 1.7832809978258485,
+      "exec_time": 1.5122809978485107,
+      "error": null
+    },
+    {
+      "success": true,
+      "is_empty": false,
+      "results": {
+        "prompt": "List action items and follow-ups to prepare for the next meeting; include owners if they were mentioned.",
+        "response": "- **Alex**: Finalize SSO requirements doc by Friday.\n- **Jamie**: Share billing API cutover checklist with the team.\n- **Everyone**: Review the updated roadmap draft before next sync."
+      },
+      "exec_time": 1.8932809978258485,
       "error": null
     }
   ],
-  "exec_time": 6.127103805541992,
+  "exec_time": 6.267103805541992,
   "error": null
 }
 ```
 
-You'll find the results for each prompt under the `results` key.
+## Response shape
+
+- Top-level `results` is an **array** with **one entry per prompt**, in the **same order** as `audio_to_llm_config.prompts`.
+- Each entry includes `success`, optional `error`, timing fields, and nested `results.prompt` / `results.response` with the LLM output for that prompt.
+
+## More prompt ideas
+
+Try prompts such as:
+
+- Quote the strongest claims and note whether they are supported by the dialogue.
+- What is the single main takeaway for someone who missed the meeting?
+- List risks, blockers, or unresolved decisions mentioned in the call.
+- Draft a short customer-facing email summarizing what was agreed.
+
+## See also
+
+- [Pre-recorded API quickstart](/chapters/pre-recorded-stt/quickstart)
