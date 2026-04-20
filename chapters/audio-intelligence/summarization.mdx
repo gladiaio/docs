@@ -27,6 +27,16 @@ If no `summarization_config` is provided, `general` type will be used by default
 - **concise**: Shorter output for quick overviews or previews; fewer details.
 - **bullet_points**: Lists key takeaways; ideal for action items, meeting notes, or highlights.
 
+## Model selection
+
+By default the model used for summarization is **[GPT 5.4 Nano](https://openrouter.ai/openai/gpt-5.4-nano)** (`openai/gpt-5.4-nano`), a fast option suited to high-volume summaries and extraction. Use the **`model`** field inside **`summarization_config`** to override the default when stronger reasoning, richer analysis, longer outputs, or another provider or model family is needed.
+
+**Enterprise** accounts can use **any model listed on [OpenRouter](https://openrouter.ai/models)** by setting the `model` key.
+
+<Warning>
+  Model selection is **Enterprise-only** and is billed accordingly.
+</Warning>
+
 ## Usage
 To enable summarization simply set the `"summarization"` parameter to true
 <CodeGroup>
@@ -35,6 +45,7 @@ To enable summarization simply set the `"summarization"` parameter to true
   "summarization": true,
   "summarization_config": {
     "type": "concise",
+    "model": "openai/gpt-5.4-nano",
   }
 }
 ```
@@ -44,6 +55,7 @@ To enable summarization simply set the `"summarization"` parameter to true
     "summarization": true,
     "summarization_config": {
       "type": "concise",
+      "model": "openai/gpt-5.4-nano",
     }
   },
   "messages_config": {
