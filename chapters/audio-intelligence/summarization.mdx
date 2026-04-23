@@ -41,7 +41,7 @@ To enable summarization simply set the `"summarization"` parameter to true
   "summarization": true,
   "summarization_config": {
     "type": "concise",
-    "model": "openai/gpt-5.4-nano",
+    "model": "openai/gpt-5.4",
   }
 }
 ```
@@ -51,7 +51,7 @@ To enable summarization simply set the `"summarization"` parameter to true
     "summarization": true,
     "summarization_config": {
       "type": "concise",
-      "model": "openai/gpt-5.4-nano",
+      "model": "openai/gpt-5.4",
     }
   },
   "messages_config": {
@@ -83,9 +83,9 @@ You'll find the summarization of your audio under the `results` key.
 
 ## Pricing
 
-All prices are per 1M tokens and include platform fees.
+The input provided to the LLM is the full transcription. All prices are per 1M tokens and include platform fees.
 
-| Model | `model` config | Context Window | Input (per 1M) | Output (per 1M) |
+| Model | `model` config | Context Window | Input | Output |
 |-------|----------------|----------------|----------------|-----------------|
 | [OpenAI: GPT-5.4 Nano](https://openrouter.ai/openai/gpt-5.4-nano) | `openai/gpt-5.4-nano` | 400k | $0.26 | $1.76 |
 | [OpenAI: GPT-5.4](https://openrouter.ai/openai/gpt-5.4) | `openai/gpt-5.4` | 1.1M | $3.25 | $19.50 |
