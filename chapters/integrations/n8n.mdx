@@ -1,0 +1,87 @@
+---
+title: "n8n"
+description: "How to use Gladia with n8n"
+---
+
+## What is n8n?
+
+n8n is an open-source workflow automation platform that lets you connect apps, APIs, and services through a visual node-based editor. The official Gladia community node for n8n makes it easy to add speech-to-text transcription to any workflow — supporting audio from a URL or directly from binary data piped between nodes.
+
+<Tip>
+  Install the Gladia node directly from your n8n instance: go to **Settings → Community Nodes**, search for `@gladiaio/n8n-nodes`, and click Install.
+  Community node installation requires a self-hosted n8n instance.
+</Tip>
+
+## What you can build
+
+- Transcription pipelines triggered by new audio files in cloud storage
+- Meeting recording workflows that produce transcripts, summaries, and subtitles automatically
+- Multi-step automations combining transcription with translation, sentiment analysis, or NER
+- Real-time webhook-driven flows that transcribe and route audio to Slack, Notion, or any downstream app
+
+## Quickstart
+
+### Prerequisites
+
+- A self-hosted n8n instance (v1.0.0 or later)
+- A [Gladia API key](https://app.gladia.io/apikeys)
+
+### Installation
+
+Install the node from the n8n UI or via npm:
+
+```bash
+npm install @gladiaio/n8n-nodes
+```
+
+Then restart your n8n instance.
+
+### Configure credentials
+
+In n8n, add a new **Gladia API** credential and paste your API key from the [Gladia dashboard](https://app.gladia.io/apikeys).
+
+### Transcribe audio from a URL
+
+1. Add a **Gladia** node to your workflow.
+2. Set **Audio Source** to `URL` and provide a publicly accessible audio link.
+3. Enable **Wait for Completion** to receive the full transcript immediately, or disable it to get the transcription ID for asynchronous polling.
+
+### Transcribe binary audio data
+
+1. Pipe binary data from an upstream node (e.g. an HTTP Request or Read Binary File node).
+2. Set **Audio Source** to `Binary Data` and specify the binary field name.
+3. The Gladia node will upload the file and return the transcript automatically.
+
+## Supported features
+
+The Gladia n8n node exposes the full Gladia feature set:
+
+- 100+ language detection and code-switching
+- Speaker diarization and segmentation
+- Sentiment analysis and named entity recognition (NER)
+- Subtitle generation (SRT, VTT)
+- Summarization and multilingual translation
+- Custom vocabulary support
+- Configurable polling intervals for async jobs
+
+## Next steps
+
+<CardGroup cols={3}>
+  <Card title="Get your API key" href="https://app.gladia.io/apikeys" icon="key">
+    Get your API key on the Gladia dashboard
+  </Card>
+  <Card
+    title="@gladiaio/n8n-nodes on npm"
+    icon="npm"
+    href="https://www.npmjs.com/package/@gladiaio/n8n-nodes"
+  >
+    View the package and release notes
+  </Card>
+  <Card
+    title="n8n website"
+    icon="globe"
+    href="https://n8n.io"
+  >
+    Learn more about the platform
+  </Card>
+</CardGroup>

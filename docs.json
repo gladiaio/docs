@@ -98,7 +98,8 @@
               "chapters/integrations/videosdk",
               "chapters/integrations/composio",
               "chapters/integrations/zapier",
-              "chapters/integrations/make"
+              "chapters/integrations/make",
+              "chapters/integrations/n8n"
             ]
           },
           {
