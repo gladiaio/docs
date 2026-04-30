@@ -1,5 +1,5 @@
 ---
-title: Audio to LLM
+title: Audio-to-LLM
 description: "Run your own prompts on a pre-recorded transcript with an LLM - summaries, Q&A, extraction, and more."
 ---
 
@@ -7,9 +7,9 @@ import PrerecordedBadge from "/snippets/badges/prerecorded.mdx"
 
 <PrerecordedBadge />
 
-**Audio to LLM** runs once the transcription is generated. You provide **one or more prompts**; each prompt is executed against the **transcript text** from the same job using the configured model, yielding **one LLM response per prompt**. Use it to extract action items, answer questions about the recording, or run any text analysis you express in natural language.
+**Audio-to-LLM** runs once the transcription is generated. You provide **one or more prompts**; each prompt is executed against the **transcript text** from the same job using the configured model, yielding **one LLM response per prompt**. Use it to extract action items, answer questions about the recording, or run any text analysis you express in natural language.
 
-Unlike the built-in [Summarization](/chapters/audio-intelligence/summarization) feature — which produces a fixed-format summary — Audio to LLM lets you write **your own instructions**: ask for a summary in the exact format, tone, and level of detail your product needs, or combine a summary with other analyses (action items, compliance checks) in a single request.
+Unlike the built-in [Summarization](/chapters/audio-intelligence/summarization) feature — which produces a fixed-format summary — Audio-to-LLM lets you write **your own instructions**: ask for a summary in the exact format, tone, and level of detail your product needs, or combine a summary with other analyses (action items, compliance checks) in a single request.
 
 ## Usage
 
@@ -19,7 +19,7 @@ Unlike the built-in [Summarization](/chapters/audio-intelligence/summarization) 
 4. The API returns **one result object per prompt** (same order as `prompts`), each containing the original `prompt` and the model `response`.
 
 <Note>
-  Audio to LLM sends **plain transcript text** to the model. Raw audio and other fields from the transcription response are **not** added to the LLM prompt context.
+  Audio-to-LLM sends **plain transcript text** to the model. Raw audio and other fields from the transcription response are **not** added to the LLM prompt context.
 </Note>
 
 ## Model selection
