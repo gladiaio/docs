@@ -1,6 +1,6 @@
-**[Custom spelling](/chapters/audio-intelligence/custom-spelling)** fixes the transcription when the model always outputs a close textual match (e.g. **"data-science"** → **"Data Science"**). It applies **literal matching** on strings you list. Make sure to add every possible close words variants.
+Use **[Custom spelling](/chapters/audio-intelligence/custom-spelling)** when the model outputs a recognizable but wrong form. It applies **literal string matching** on variants you list (e.g. **"data-science"** → **"Data Science"**). **List every close variant** the model might output.
 
-**[Custom vocabulary](/chapters/audio-intelligence/custom-vocabulary)** fixes garbled or sound-alike output (e.g. **"le vin"** / **"levine"** → **"Levain"**). It applies **phonemes matching** on strings you list. Entries must cover to potential different spellings of the words.
+Use **[Custom vocabulary](/chapters/audio-intelligence/custom-vocabulary)** when the model outputs garbled or sound-alike text. It applies **phoneme-based matching** on entries you define (e.g. **"le vin"** / **"levine"** → **"Levain"**). **Add pronunciations** for each spelling the model might produce.
 
 | | Custom spelling | Custom vocabulary |
 | --- | --- | --- |

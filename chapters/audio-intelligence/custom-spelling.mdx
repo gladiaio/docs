@@ -10,9 +10,9 @@ import VocabularyVsSpelling from "/snippets/custom-vocabulary-vs-spelling.mdx";
 <PrerecordedBadge />
 <LiveBadge />
 
-As Speech-to-text models are trained on general vocabulary, under-represented words such brand names, proper nouns, and domain-specific terms are often transcribed incorrectly. That is why we use **custom spelling** at Gladia.
+As Speech-to-text models are trained on general vocabulary, under-represented words such as brand names, proper nouns, or domain-specific terms are often transcribed incorrectly. That is why we use **custom spelling** at Gladia.
 
-Custom Spelling is a post-processing operation that applies literal matching between the correct word and the pronunciations entries. When the literal match is close enough, the transcribed text is replaced with your term.
+Custom Spelling is a post-processing operation that applies literal matching between the correct word and the pronunciations entries. When there is a literal match, the transcribed text is replaced with your term.
 
 <Note>
   If the word comes out garbled or replaced by something phonetically similar (e.g.
@@ -38,7 +38,7 @@ Custom spelling is **precise but strict**: Gladia replaces only strings listed i
 If the model outputs **"gaurish"** or **"ghorish"**, Gladia replaces them with **"Gorish"** when they appear in your dictionary:
 
 ```json
-"Gorish": ["ghorish", "gaurish", "gaureish" "geurish", "go rich"]
+"Gorish": ["ghorish", "gaurish", "gaureish", "geurish", "go rich"]
 ```
 
 Custom spelling is not based on phoneme-matching but **literal matching** so make sure to list every spelling carefully as missing variants are never inferred.
@@ -55,7 +55,7 @@ Custom spelling is not based on phoneme-matching but **literal matching** so mak
   "custom_spelling": true,
   "custom_spelling_config": {
     "spelling_dictionary": {
-      "Gorish": ["ghorish", "gaurish", "gaureish" "geurish", "go rich"],
+      "Gorish": ["ghorish", "gaurish", "gaureish", "geurish", "go rich"],
       "Data Science": ["data-science", "data science"],
       ".": ["period", "full stop"],
       "SQL": ["sequel"]
@@ -69,7 +69,7 @@ Custom spelling is not based on phoneme-matching but **literal matching** so mak
     "custom_spelling": true,
     "custom_spelling_config": {
       "spelling_dictionary": {
-        "Gorish": ["ghorish", "gaurish", "gaureish" "geurish", "go rich"],
+        "Gorish": ["ghorish", "gaurish", "gaureish", "geurish", "go rich"],
         "Data Science": ["data-science", "data science"],
         ".": ["period", "full stop"],
         "SQL": ["sequel"]

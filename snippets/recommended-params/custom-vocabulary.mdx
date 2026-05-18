@@ -3,7 +3,7 @@
 **Best practices:**
 
 - **Always provide both** the `custom_vocabulary` flag and a `custom_vocabulary_config`.
-- **Add pronunciations** to provide all the close spelling variants. You can check and Automatic Phonemic Transcriber (IPA) that all the different spellings are covered.
+- **Add pronunciations** to provide all the close spelling variants. You can use Automatic Phonemic Transcriber (IPA) in order to check if all the different spellings are covered.
 - **Keep `intensity` moderate** (0.4-0.6). High values increase false positives where unrelated words get replaced.
 - **Set `language`** on individual vocabulary entries when your audio is multilingual and a term is pronounced differently depending on the language.
 
@@ -38,7 +38,6 @@
       "vocabulary": [
         "Kubernetes",
         {
-          "value": "Gladia",
         "value": "Gladia",
         "pronunciations": ["Glad", "Gladio"],          
         "intensity": 0.5

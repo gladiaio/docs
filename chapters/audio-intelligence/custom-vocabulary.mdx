@@ -10,7 +10,7 @@ import VocabularyVsSpelling from "/snippets/custom-vocabulary-vs-spelling.mdx";
 <PrerecordedBadge />
 <LiveBadge />
 
-As Speech-to-text models are trained on general vocabulary, under-represented words such brand names, proper nouns, and domain-specific terms are often transcribed incorrectly. That is why we use **custom vocabulary** at Gladia.
+As Speech-to-text models are trained on general vocabulary, under-represented words such as brand names, proper nouns, or domain-specific terms are often transcribed incorrectly. That is why we use **custom vocabulary** at Gladia.
 
 Custom Vocabulary is a post-processing operation that compares **phonemes** between the transcript and your pronunciations entries. When the phonetic match is close enough, the transcribed text is replaced with your term.
 
@@ -43,7 +43,7 @@ If the transcript contains **"le vin"** or **"levin"**, Gladia can replace them 
 }
 ```
 
-For example, the pronunciations will be convert to the phonemes _'lɛvɪn'_, _'le vɪn'_ and _'ləˈvin'_, and will be replace by the correct word **'Levin'** with the phoneme _'lɛvɪn'_.
+For example, the pronunciations entries will be convert to the phonemes _'lɛvɪn'_, _'le vɪn'_ and _'ləˈvin'_, and will be replace by the correct word **'Levin'**.
 
 
 ## When to use custom vocabulary vs. custom spelling
