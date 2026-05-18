@@ -10,41 +10,23 @@ import VocabularyVsSpelling from "/snippets/custom-vocabulary-vs-spelling.mdx";
 <PrerecordedBadge />
 <LiveBadge />
 
-As Speech-to-text models are trained on general vocabulary, under-represented words such as brand names, proper nouns, or domain-specific terms are often transcribed incorrectly. That is why we use **custom vocabulary** at Gladia.
+As Speech-to-text models are trained on general vocabulary, under-represented words such as brand names, proper nouns, or domain-specific terms are often transcribed incorrectly.
 
 Custom Vocabulary is a post-processing operation that compares **phonemes** between the transcript and your pronunciations entries. When the phonetic match is close enough, the transcribed text is replaced with your term.
 
 <Note>
   If you already know which *text* variants the model produces and only need to
   normalize spelling, use **[Custom
-  spelling](/chapters/audio-intelligence/custom-spelling)** instead. Custom-spelling is not based on phonemes but literal matching.
+  spelling](/chapters/audio-intelligence/custom-spelling)** instead. Custom spelling is not based on phonemes but literal matching.
 </Note>
 
 ## How it works
 
-Gladia runs custom vocabulary on the **transcript text** after transcription:
+Custom vocabulary operates at a **text level** and is based on **phoneme similarity**.
 
-1. Transcribed words and your entries are converted to phonemes.
-2. Gladia applies replacements when the match score (fuzzy-matching) is within the configured threshold.
-3. Each entry supplies:
-   - **`value`** — the correct word to be transcribed
-   - **`pronunciations`** — 2–3 words with different spelling for how the word might be mis-transcribed
-   - **`intensity`** — how strict the match must be (0–1). Higher values catch more variants but increase false positives.
+Once the transcription is generated, Gladia converts both the transcribed words and your vocabulary entries into phonemes, then compares them. The `intensity` controls how aggressively the model applies replacements: a higher intensity means the model will replace words more readily (wider phoneme matching), while a lower intensity requires a closer phoneme match before a replacement is made.
 
-### Example: brand name "Levain"
-
-If the transcript contains **"le vin"** or **"levin"**, Gladia can replace them with **"Levain"** when the entry is configured well:
-
-```json
-{
-  "value": "Levain",
-  "pronunciations": ["levin", "le vin", "levine"],
-  "intensity": 0.4
-}
-```
-
-For example, the pronunciations entries will be convert to the phonemes _'lɛvɪn'_, _'le vɪn'_ and _'ləˈvin'_, and will be replace by the correct word **'Levin'**.
-
+The `pronunciations` field lets you provide **plain-text alternative spellings that reflect how the word actually sounds** in speech. These are _not_ phonetic notation. Just write the word the way someone might naively spell it based on how it sounds. Gladia converts these strings to phonemes internally. For example, if your term is "Nietzsche", you might add `["Niche", "Neechee"]` as pronunciations. This widens the phoneme net without having to raise the intensity (which would increase false positives across the board).
 
 ## When to use custom vocabulary vs. custom spelling
 
@@ -97,6 +79,7 @@ For example, the pronunciations entries will be convert to the phonemes _'lɛvɪ
 ## Parameter reference
 
 <ParamField body="vocabulary" type="object | string[]">
+  <Expandable title="properties">
     <ParamField body="value" type="string" required>
       The correct word you want to be transcribed.
     </ParamField>
@@ -113,7 +96,8 @@ For example, the pronunciations entries will be convert to the phonemes _'lɛvɪ
     <ParamField body="language" type="string">
       Language used for phoneme comparison (defaults to the transcription language). Set this when a term is pronounced in a different language than the rest of the audio.
     </ParamField>
-
+  </Expandable>
+  
   <ParamField body="default_intensity" type="number">
   Global intensity for entries. We suggest **0.4–0.6** raise if terms are missed, lower if unrelated words get replaced.
 </ParamField>

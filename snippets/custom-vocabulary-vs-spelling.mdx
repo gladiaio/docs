@@ -8,3 +8,4 @@ Use **[Custom vocabulary](/chapters/audio-intelligence/custom-vocabulary)** when
 | **Best for** | Wrong spelling, punctuation, formatting | Phonetically similar mis-transcriptions |
 | **You provide** | All the words that the model outputs wrongly | `value`, `pronunciations`, `intensity` |
 
+**Rule of thumb:** start with a transcription run _without_ any custom vocabulary. Look at what the output actually says. If the word appears but is just misspelled, custom spelling is the simpler and safer fix. If the word is completely garbled, that's when custom vocabulary is the right tool.

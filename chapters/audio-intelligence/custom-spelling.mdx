@@ -10,7 +10,7 @@ import VocabularyVsSpelling from "/snippets/custom-vocabulary-vs-spelling.mdx";
 <PrerecordedBadge />
 <LiveBadge />
 
-As Speech-to-text models are trained on general vocabulary, under-represented words such as brand names, proper nouns, or domain-specific terms are often transcribed incorrectly. That is why we use **custom spelling** at Gladia.
+As Speech-to-text models are trained on general vocabulary, under-represented words such as brand names, proper nouns, or domain-specific terms are often transcribed incorrectly.
 
 Custom Spelling is a post-processing operation that applies literal matching between the correct word and the pronunciations entries. When there is a literal match, the transcribed text is replaced with your term.
 
@@ -83,6 +83,8 @@ Custom spelling is not based on phoneme-matching but **literal matching** so mak
 ## Parameter reference
 
 <ParamField body="spelling_dictionary" type="object">
+  <Expandable title="properties">
+
   Map of preferred spellings (**keys**) to variant strings the model might output (**values**).
     <ParamField body="key" type="string" required>
       The correct word to transcribe. This parameter is **case-sensitive** so `"Gorish"` and `"gorish"` are different keys.
@@ -91,6 +93,8 @@ Custom spelling is not based on phoneme-matching but **literal matching** so mak
     <ParamField body="values" type="string[]" required>
       Variant strings to search for in the transcript. Those strings are **case-insensitive.** and can be multiple words (e.g. `"full stop"`).
     </ParamField>
+  </Expandable>
+  
 </ParamField>
 
 ## Tuning tips
