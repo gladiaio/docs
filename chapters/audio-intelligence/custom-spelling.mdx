@@ -3,24 +3,47 @@ title: "Custom spelling"
 description: "Normalize spelling variants to your preferred forms"
 ---
 
-import PrerecordedBadge from "/snippets/badges/prerecorded.mdx"
-import LiveBadge from "/snippets/badges/live.mdx"
-import VocabularyVsSpelling from "/snippets/custom-vocabulary-vs-spelling.mdx"
+import PrerecordedBadge from "/snippets/badges/prerecorded.mdx";
+import LiveBadge from "/snippets/badges/live.mdx";
+import VocabularyVsSpelling from "/snippets/custom-vocabulary-vs-spelling.mdx";
 
 <PrerecordedBadge />
 <LiveBadge />
 
-Custom spelling lets you **force specific text replacements** in the final transcript. You provide a dictionary where each key is the spelling you want, and each value is a list of variants the model might produce instead. When any of those variants appear in the transcript, they get replaced with no ambiguity and no false positives.
+As Speech-to-text models are trained on general vocabulary, under-represented words such as brand names, proper nouns, or domain-specific terms are often transcribed incorrectly.
 
-This is a straightforward **text-based find-and-replace** on the transcript output. It doesn't look at how words sound; it matches the exact strings you list.
+Custom Spelling is a post-processing operation that applies literal matching between the correct word and the pronunciations entries. When there is a literal match, the transcribed text is replaced with your term.
+
+<Note>
+  If the word comes out garbled or replaced by something phonetically similar (e.g.
+  **"le vin"** instead of **"Levain"**), use **[Custom
+  vocabulary](/chapters/audio-intelligence/custom-vocabulary)** instead. Custom
+  vocabulary matches on phonemes, not literal text.
+</Note>
 
 ## How it works
 
-After the transcription is generated, Gladia scans the output text for any of the variant strings you listed as dictionary values. When it finds one, it swaps it for the corresponding key. The matching is **deterministic**: if the text is there, it gets replaced; if it isn't, nothing happens.
+Gladia runs custom spelling on the **transcript text** after transcription:
 
-Keys (replacement to write) are case sensitive. Values (variants to find) are not. Values can contain multiple words.
+1. Gladia scans the output for strings listed in your dictionary **values**.
+2. When a variant is found, it is replaced with the corresponding **key**.
+3. Each entry supplies:
+   - **Key** — the spelling to write (case-sensitive).
+   - **Values** — variant strings to find (case-insensitive; can be multiple words).
 
-## When to use custom spelling vs. custom vocabulary
+Custom spelling is **precise but strict**: Gladia replaces only strings listed in your dictionary and leaves everything else unchanged. 
+
+### Example: name "Gorish"
+
+If the model outputs **"gaurish"** or **"ghorish"**, Gladia replaces them with **"Gorish"** when they appear in your dictionary:
+
+```json
+"Gorish": ["ghorish", "gaurish", "gaureish", "geurish", "go rich"]
+```
+
+Custom spelling is not based on phoneme-matching but **literal matching** so make sure to list every spelling carefully as missing variants are never inferred.
+
+## When to use custom vocabulary vs. custom spelling
 
 <VocabularyVsSpelling />
 
@@ -32,7 +55,7 @@ Keys (replacement to write) are case sensitive. Values (variants to find) are no
   "custom_spelling": true,
   "custom_spelling_config": {
     "spelling_dictionary": {
-      "Gorish": ["ghorish", "gaurish", "gaureish"],
+      "Gorish": ["ghorish", "gaurish", "gaureish", "geurish", "go rich"],
       "Data Science": ["data-science", "data science"],
       ".": ["period", "full stop"],
       "SQL": ["sequel"]
@@ -46,7 +69,7 @@ Keys (replacement to write) are case sensitive. Values (variants to find) are no
     "custom_spelling": true,
     "custom_spelling_config": {
       "spelling_dictionary": {
-        "Gorish": ["ghorish", "gaurish", "gaureish"],
+        "Gorish": ["ghorish", "gaurish", "gaureish", "geurish", "go rich"],
         "Data Science": ["data-science", "data science"],
         ".": ["period", "full stop"],
         "SQL": ["sequel"]
@@ -57,13 +80,34 @@ Keys (replacement to write) are case sensitive. Values (variants to find) are no
 ```
 </CodeGroup>
 
-In this example, any time the model outputs "ghorish", "gaurish", or "gaureish", it will be replaced with "Gorish" in the final transcript. Similarly, "sequel" becomes "SQL", and spoken words like "period" or "full stop" become a literal ".".
+## Parameter reference
 
-## How to build your spelling dictionary
+<ParamField body="spelling_dictionary" type="object">
+  <Expandable title="properties">
 
-1. **Run a transcription without custom spelling** and review the output.
-2. **Identify words that are close but not quite right.** These are your candidates.
-3. **Add each correct spelling as a key**, and list every variant you've seen the model produce as values.
-4. **Run again** and verify the replacements look correct.
+  Map of preferred spellings (**keys**) to variant strings the model might output (**values**).
+    <ParamField body="key" type="string" required>
+      The correct word to transcribe. This parameter is **case-sensitive** so `"Gorish"` and `"gorish"` are different keys.
+    </ParamField>
 
-You don't need to guess at variants upfront. Just collect them from real transcription outputs over time and add them to your dictionary as they appear.
+    <ParamField body="values" type="string[]" required>
+      Variant strings to search for in the transcript. Those strings are **case-insensitive.** and can be multiple words (e.g. `"full stop"`).
+    </ParamField>
+  </Expandable>
+  
+</ParamField>
+
+## Tuning tips
+
+- **Collect variants from real transcripts** — run without custom spelling first, then add keys and values from what the model actually outputs.
+- **Match key capitalization** to how the word should appear in the final transcript.
+- **List phonetically different strings separately** — custom spelling will not group them the way custom vocabulary does.
+- **Move garbled or sound-alike output to [custom vocabulary](/chapters/audio-intelligence/custom-vocabulary)** when listing every variant becomes impractical.
+
+## Recommended workflow
+
+1. **Transcribe without custom spelling** and note misspelled terms.
+2. **Route each term:** recognizable but wrong spelling → custom spelling; garbled or phonetically wrong → custom vocabulary.
+3. **Build the dictionary** — correct form as the key, every variant you have seen as values.
+4. **Transcribe again** — confirm replacements and check that nothing else was changed unexpectedly.
+5. **Refine:** add new variants as they appear in production audio.

@@ -3,15 +3,9 @@
 **Best practices:**
 
 - **Always provide both** the `custom_vocabulary` flag and a `custom_vocabulary_config`.
-- **Add pronunciations** for words that can be said in different ways (accents, foreign speakers). This is more reliable than raising `intensity`.
+- **Add pronunciations** to provide all the close spelling variants. You can use Automatic Phonemic Transcriber (IPA) in order to check if all the different spellings are covered.
 - **Keep `intensity` moderate** (0.4-0.6). High values increase false positives where unrelated words get replaced.
 - **Set `language`** on individual vocabulary entries when your audio is multilingual and a term is pronounced differently depending on the language.
-
-<Tip>
-  For simple terms that are already close to their phonetic spelling (e.g. brand
-  names), you can pass them as plain strings instead of objects — Gladia will
-  use the default intensity.
-</Tip>
 
 <CodeGroup>
 ```json Pre-recorded
@@ -23,7 +17,7 @@
       "Kubernetes",
       {
         "value": "Gladia",
-        "pronunciations": ["Gladya", "Gladiah"],
+        "pronunciations": ["Glad", "Gladio"],
         "intensity": 0.5
       },
       {
@@ -44,9 +38,9 @@
       "vocabulary": [
         "Kubernetes",
         {
-          "value": "Gladia",
-          "pronunciations": ["Gladya", "Gladiah"],
-          "intensity": 0.5
+        "value": "Gladia",
+        "pronunciations": ["Glad", "Gladio"],          
+        "intensity": 0.5
         },
         {
           "value": "PostgreSQL",
