@@ -1,8 +1,10 @@
 <Tip>
 Pass `model` in your pre-recorded request body to choose the transcription model:
 
-- `"solaria-3"` — our latest model (best-in class on EU languages)
-- `"solaria-1"` — our generalist model (code switching, 100 languages)
+- `"solaria-3"` — our latest model (best-in-class on EU languages). **Async (pre-recorded) only** — not available for live transcription. **No code switching.**
+  - **Languages:** English, French, Spanish, German, Dutch, Italian, Portuguese
+  - **Add-ons:** summarization, translation, PII redaction, and audio to LLM
+- `"solaria-1"` — our generalist model (code switching, 100 languages). Available for async and live.
 
 If omitted, the API uses the default model.
 </Tip>
