@@ -99,7 +99,7 @@ Choose the model, audio format, and language options your app needs. Most parame
 
 |     AssemblyAI      |                        Gladia                         | Notes / Example                                                                                                       |
 | :---------------: | :---------------------------------------------------: | --------------------------------------------------------------------------------------------------------------------- |
-|      `model`      |                        `model`                        | Choose the latest Gladia model ("solaria-1").                                                                         |
+|      `model`      |                        `model`                        | Choose the Gladia model (`"solaria-3"` recommended, or `"solaria-1"`).                                                |
 |    `encoding`     |                      `encoding`                       | Match the actual [audio format](/api-reference/v2/live/init#body-encoding) (e.g., `linear16` ↔ `wav/pcm`).            |
 |                   |                      `bit_depth`                      | Choose the [bit depth](/api-reference/v2/live/init#body-bit-depth) value from your audio                              |
 |   `sample_rate`   |                     `sample_rate`                     | Same unit (Hz).                                                                                                       |
@@ -110,7 +110,7 @@ Choose the model, audio format, and language options your app needs. Most parame
 
 ```json Gladia config example
 {
-  "model": "solaria-1",
+  "model": "solaria-3",
   "encoding": "wav/pcm",
   "bit_depth": 16,
   "sample_rate": 16000,

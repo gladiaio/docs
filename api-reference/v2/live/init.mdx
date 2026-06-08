@@ -5,7 +5,10 @@ openapi: POST /v2/live
 ---
 
 import WhyPostToOpenWebSocket from "/snippets/why-post-to-open-websocket.mdx";
+import ChooseModel from "/snippets/choose-model.mdx";
 
 Use the returned WebSocket url to connect to the WebSocket and start sending audio chunks. Use the returned `id` and the [GET /v2/live/:id](/api-reference/v2/live/get) endpoint to obtain the status and results.
+
+<ChooseModel />
 
 <WhyPostToOpenWebSocket />

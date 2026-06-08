@@ -6,6 +6,7 @@ description: How to transcribe live audio with Gladia's Real-time speech-to-text
 import Samples from '/snippets/samples.mdx';
 import PartialsTip from '/snippets/partials-tip.mdx';
 import WhyPostToOpenWebSocket from '/snippets/why-post-to-open-websocket.mdx';
+import ChooseModel from '/snippets/choose-model.mdx';
 
 <Tabs>
   <Tab title="Using our SDKs" icon="code">
@@ -57,6 +58,8 @@ from gladiaio_sdk import (
 First, call the [ endpoint](/api-reference/v2/live/init) and pass your configuration.
 It's important to correctly define the properties `encoding`, `sample_rate`, `bit_depth` and `channels` as we need them to parse your audio chunks.
 
+<ChooseModel />
+
 <CodeGroup>
 
 ```typescript JavaScript
@@ -65,7 +68,7 @@ const gladiaClient = new GladiaClient({
 });
 
 const gladiaConfig = {
-  model: "solaria-1",
+  model: "solaria-3",
   encoding: 'wav/pcm',
   sample_rate: 16000,
   bit_depth: 16,
@@ -89,7 +92,7 @@ live_client = gladia_client.live_v2()
 live_client = gladia_client.live_v2_async()
 
 init_request = LiveV2InitRequest(
-    model="solaria-1",
+    model="solaria-3",
     encoding="wav/pcm",
     sample_rate=16000,
     bit_depth=16,
@@ -288,6 +291,8 @@ curl --request GET \
 First, call the [ endpoint](/api-reference/v2/live/init) and pass your configuration.
 It's important to correctly define the properties `encoding`, `sample_rate`, `bit_depth` and `channels` as we need them to parse your audio chunks.
 
+<ChooseModel />
+
 <CodeGroup>
 
 ```javascript JavaScript
@@ -298,6 +303,7 @@ const response = await fetch("https://api.gladia.io/v2/live", {
     "x-gladia-key": "<YOUR_GLADIA_API_KEY>",
   },
   body: JSON.stringify({
+    model: "solaria-3",
     encoding: "wav/pcm",
     sample_rate: 16000,
     bit_depth: 16,
@@ -322,6 +328,7 @@ curl --request POST \
   --header 'Content-Type: application/json' \
   --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
   --data '{
+    "model": "solaria-3",
     "encoding": "wav/pcm",
     "sample_rate": 16000,
     "bit_depth": 16,
@@ -504,6 +511,7 @@ const response = await fetch("https://api.gladia.io/v2/live", {
     "x-gladia-key": "<YOUR_GLADIA_API_KEY>",
   },
   body: JSON.stringify({
+    model: "solaria-3",
     encoding: "wav/pcm",
     sample_rate: 16000,
     bit_depth: 16,

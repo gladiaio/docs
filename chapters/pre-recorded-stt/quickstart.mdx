@@ -5,6 +5,7 @@ description: How to transcribe pre-recorded audio with Gladia's speech-to-text (
 
 import GetTranscriptionResult from "/snippets/get-transcription-result.mdx";
 import Samples from "/snippets/samples.mdx";
+import ChooseModel from "/snippets/choose-model.mdx";
 
 <Tabs>
   <Tab title="Using our SDKs" icon="code">
@@ -12,6 +13,8 @@ import Samples from "/snippets/samples.mdx";
 The SDK simplifies pre-recorded speech-to-text by abstracting upload, job creation, and result retrieval. Designed for developers, it offers:
 - A `transcribe()` for an end-to-end flow
 - Individual steps when you need control over each step.
+
+<ChooseModel />
 
 ## Install the SDK
 
@@ -73,6 +76,7 @@ const gladiaClient = new GladiaClient({ apiKey: "YOUR_GLADIA_API_KEY" });
 const transcription = await gladiaClient.preRecorded().transcribe(
   "YOUR_AUDIO_URL_OR_LOCAL_PATH",
   {
+    model: "solaria-3",
     language_config: {
       languages: ["en", "fr"],
       code_switching: true,
@@ -93,6 +97,7 @@ gladia_client = GladiaClient(api_key="YOUR_GLADIA_API_KEY").prerecorded()
 transcription = gladia_client.transcribe(
     "YOUR_AUDIO_URL_OR_LOCAL_PATH",
     {
+        "model": "solaria-3",
         "language_config": {
             "languages": ["en", "fr"],
             "code_switching": True,
@@ -174,6 +179,7 @@ const gladiaClient = new GladiaClient({ apiKey: "YOUR_GLADIA_API_KEY" });
 
 const job = await gladiaClient.preRecorded().createUntyped({
   audio_url: "YOUR_AUDIO_URL",
+  model: "solaria-3",
   language_config: {
     languages: ["en", "fr"],
     code_switching: true,
@@ -193,6 +199,7 @@ gladia_client = GladiaClient(api_key="YOUR_GLADIA_API_KEY").prerecorded()
 job = gladia_client.create(
     {
     "audio_url": "YOUR_AUDIO_URL",
+    "model": "solaria-3",
     "language_config": {
     "languages": ["en", "fr"],
     "code_switching": True,
@@ -218,6 +225,8 @@ job = gladia_client.create(
 
   </Tab>
   <Tab title="Using the API" icon="brackets-curly">
+
+<ChooseModel />
 
 ## Individual steps
 
@@ -270,6 +279,7 @@ const response = await fetch("https://api.gladia.io/v2/pre-recorded", {
   },
   body: JSON.stringify({
     audio_url: "YOUR_AUDIO_URL",
+    model: "solaria-3",
     language_config: {
       languages: [],
       code_switching: false,
@@ -311,6 +321,7 @@ curl --request POST \
   --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
   --data '{
   "audio_url": "YOUR_AUDIO_URL",
+  "model": "solaria-3",
   "language_config": {
     "languages": [],
     "code_switching": false
