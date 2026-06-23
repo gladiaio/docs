@@ -24,9 +24,35 @@ To enable usage tracking, Gladia retains essential API metadata: request ID, tim
 
 When Zero Data Retention is enabled, Gladia processes data ephemerally; no data is stored at rest.
 
-- **No audio files are stored**: Files cannot be retrieved through the API or in the [Gladia's playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up). File upload is also disabled; the asynchronous API must use an external audio file url, such as S3 presigned url.
-- **No transcripts are stored**: Transcription results cannot be retrieved through the API and are not visible in the [Gladia's playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up).
-- **No metadata retrieval**: Transcription API calls, audio duration, and other metadata cannot be retrieved through the API or in the [Gladia's playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up).
-- **Transcription results delivered only via callbacks**: The only way to receive transcription results is through callbacks; they cannot be retrieved by any other means.
+<Warning>
+Enabling Zero Data Retention is a **breaking change** if your integration relies on file upload ([`/v2/upload`](/api-reference/v2/upload/audio-file)) or result retrieval via polling ([`GET /v2/pre-recorded/:id`](/api-reference/v2/pre-recorded/get)). Review the restrictions below and update your integration **before** enabling ZDR.
+</Warning>
 
-Once the result is delivered, the audio, transcript, and metadata cannot be accessed.
+### Disabled endpoints
+
+- **File upload is disabled**: The [`/v2/upload`](/api-reference/v2/upload/audio-file) endpoint is fully disabled. Any request to this endpoint will fail. The asynchronous API must use an external audio file URL (e.g. an S3 presigned URL or any publicly accessible URL) passed directly as `audio_url` to [`POST /v2/pre-recorded`](/api-reference/v2/pre-recorded/init).
+- **Result polling is disabled**: Transcription results cannot be retrieved via [`GET /v2/pre-recorded/:id`](/api-reference/v2/pre-recorded/get). The only way to receive results is through [callbacks](/api-reference/v2/pre-recorded/callback/success).
+
+### No data stored
+
+- **No audio files are stored**: Files cannot be retrieved through the API or in [Gladia's playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up).
+- **No transcripts are stored**: Transcription results are not visible in the API or in [Gladia's playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up).
+- **No metadata retrieval**: Transcription API calls, audio duration, and other metadata cannot be retrieved through the API or in [Gladia's playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up).
+
+Once the result is delivered via callback, the audio, transcript, and metadata cannot be accessed.
+
+### Migration checklist
+
+Before enabling Zero Data Retention, make sure your integration meets the following requirements:
+
+<Steps>
+  <Step title="Host audio files externally">
+    Replace any usage of `/v2/upload` with an external storage provider. Pass a publicly accessible or signed URL (e.g. AWS S3 presigned URL, GCS signed URL) as `audio_url` when creating a transcription job.
+  </Step>
+  <Step title="Set up a callback endpoint">
+    Configure a callback URL in your transcription requests to receive results, since polling and the playground will not be available. See [callback configuration](/api-reference/v2/pre-recorded/init) for setup details.
+  </Step>
+  <Step title="Remove polling and GET calls">
+    Remove any code that retrieves transcription results via `GET /v2/pre-recorded/:id` or relies on the Gladia playground for debugging. Results are delivered exclusively through callbacks.
+  </Step>
+</Steps>
