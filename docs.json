@@ -94,6 +94,7 @@
               "chapters/integrations/vapi",
               "chapters/integrations/recall",
               "chapters/integrations/meeting-baas",
+              "chapters/integrations/attendee",
               "chapters/integrations/twilio",
               "chapters/integrations/videosdk",
               "chapters/integrations/composio",

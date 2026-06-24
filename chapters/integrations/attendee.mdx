@@ -1,0 +1,125 @@
+---
+title: "Attendee"
+description: "How to integrate Gladia with the Attendee Meeting Bot API"
+---
+
+## What is Attendee?
+
+[Attendee](https://attendee.dev/) is an open‑source, universal Meeting Bot API that can join Zoom, Google Meet, and Microsoft Teams calls, capture per‑participant audio, and route it to a transcription provider in real time. By connecting Gladia STT, you get accurate, multilingual transcription with perfect speaker diarization for your meeting recordings without building any of the bot or RTC plumbing yourself.
+
+<Tip>
+  Looking for API details and options? See the Attendee docs:
+  [docs.attendee.dev](https://docs.attendee.dev/) and the Gladia docs
+  [docs.gladia.io](https://docs.gladia.io/). Attendee is open source on GitHub:
+  [attendee-labs/attendee](https://github.com/attendee-labs/attendee).
+</Tip>
+
+## Benefits of integration
+
+- **Single API for multiple platforms**: Join and transcribe meetings from Zoom, Google Meet, and Microsoft Teams through one consistent API
+- **Open source**: Self‑host Attendee or use the hosted version at [app.attendee.dev](https://app.attendee.dev/)
+- **Per‑participant audio**: Third‑party transcription uses separate audio streams for perfect speaker diarization on Zoom and Google Meet
+- **Multilingual**: Gladia supports automatic language detection and code switching for speakers who change languages mid‑sentence
+- **Real‑time webhooks**: Receive `transcript.update` events as utterances are produced
+
+## What you can build
+
+- Meeting assistants that take notes, summaries, and action items
+- Live captions for meetings, webinars, and trainings
+- Contact‑center analytics and QA from customer calls
+- LLM agents that join calls and understand participants in real time
+
+## Setup instructions
+
+### Prerequisites
+
+1. An Attendee account (hosted at [app.attendee.dev](https://app.attendee.dev/) or self‑hosted) with an API key
+2. A Gladia account with an API key
+
+### Add your Gladia API key in Attendee
+
+Attendee calls Gladia with an API key that you provide:
+
+1. [Sign up for a Gladia account](https://app.gladia.io/auth/signup) if you don't have one
+2. Copy your key from the Gladia dashboard: [app.gladia.io/apikeys](https://app.gladia.io/apikeys)
+3. In Attendee, go to **Settings → Credentials** and find the **Gladia Credentials** card, then click **Add Credentials**
+
+<Frame caption="Settings → Credentials in the Attendee dashboard">
+  <img src="/assets/images/attendee-gladia-credentials.png" alt="Gladia Credentials card in the Attendee Settings → Credentials page" />
+</Frame>
+
+4. Paste your Gladia API key and click **Save Credentials**
+
+<Frame caption="Add your Gladia API key">
+  <img src="/assets/images/attendee-add-gladia-credentials.png" alt="Add Gladia Credentials dialog with the API Key field" />
+</Frame>
+
+## Quickstart via API
+
+When creating a bot, select Gladia as the transcription provider in the `transcription_settings` object of the [Create Bot request](https://docs.attendee.dev/api-reference/tag/bots/post/api/v1/bots):
+
+```bash
+curl -X POST "https://app.attendee.dev/api/v1/bots" \
+  -H "Authorization: Token <ATTENDEE_API_KEY>" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "meeting_url": "https://meet.google.com/xyz-abc-def",
+        "bot_name": "My Bot",
+        "transcription_settings": {
+          "gladia": {}
+        }
+      }'
+```
+
+### Gladia provider options
+
+Set Gladia‑specific options inside the `gladia` object:
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `enable_code_switching` | boolean | Transcribe meetings where speakers switch languages mid‑sentence |
+| `code_switching_languages` | array of strings | The languages to consider when code switching is enabled. See [supported languages](https://docs.gladia.io/chapters/limits-and-specifications/languages) |
+
+Example with code switching enabled:
+
+```bash
+curl -X POST "https://app.attendee.dev/api/v1/bots" \
+  -H "Authorization: Token <ATTENDEE_API_KEY>" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "meeting_url": "https://meet.google.com/xyz-abc-def",
+        "bot_name": "My Bot",
+        "transcription_settings": {
+          "gladia": {
+            "enable_code_switching": true,
+            "code_switching_languages": ["en", "fr", "es"]
+          }
+        }
+      }'
+```
+
+## Fetching transcripts
+
+Receive utterances in real time by enabling the `transcript.update` webhook trigger in **Settings → Webhooks**, or pull the transcript during and after the meeting from the [`/transcript` endpoint](https://docs.attendee.dev/api-reference/tag/bots/get/api/v1/bots/object_id/transcript).
+
+## Next steps
+
+<CardGroup cols={3}>
+  <Card title="Get your API key" href="https://app.gladia.io/apikeys" icon="key">
+    Get your API key on the Gladia dashboard
+  </Card>
+  <Card
+    title="Attendee docs"
+    icon="book"
+    href="https://docs.attendee.dev/"
+  >
+    Explore the Meeting Bot API and transcription settings
+  </Card>
+  <Card
+    title="Attendee on GitHub"
+    icon="github"
+    href="https://github.com/attendee-labs/attendee"
+  >
+    Self‑host the open‑source Meeting Bot API
+  </Card>
+</CardGroup>
