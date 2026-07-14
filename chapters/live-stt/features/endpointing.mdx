@@ -45,3 +45,9 @@ Definition: maximum amount of time Gladia will keep an utterance open without de
 - Range: 5 to 60
 
 Why it exists: it prevents extremely long, never-ending utterances (for example: constant background noise, a speaker who never pauses, or long monologues), which is important for downstream UX and processing stability.
+
+### Endpointing vs end-of-turn
+
+Endpointing is **time-based**: it closes a turn after a fixed amount of silence. That makes it simple and predictable, but silence is only a proxy for "finished" — a speaker who pauses to think looks the same as one who is done, so a short window can cut people off mid-thought.
+
+[Semantic end-of-turn](https://docs.gladia.io/chapters/live-stt/features/end-of-turn) is **meaning-based**: a model judges whether the speaker has actually reached the end of their turn, so a natural mid-sentence pause no longer forces a cut. The two work together — endpointing stays the silence-based safety net, and end-of-turn adds semantic judgment on top. For natural turn-taking (voice agents, IVR), enable end-of-turn; for simple, predictable segmenting, endpointing alone is enough.
