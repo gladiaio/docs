@@ -104,6 +104,12 @@
             ]
           },
           {
+            "group": "Developer tools",
+            "pages": [
+              "chapters/developer-tools/gladia-cli"
+            ]
+          },
+          {
             "group": "Limits & Specifications",
             "pages": [
               "chapters/limits-and-specifications/concurrency",
