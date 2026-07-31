@@ -4,18 +4,28 @@ description: "Data retention policies and zero data behavior"
 ---
 
 To provide transcription services, Gladia processes several types of data:
+
 - **Audio input**: Audio files or audio streams provided for transcription
 - **Transcription output**: Text, timestamps, words, utterances
 - **API Metadata**: Request IDs, timestamps, processing status
 - **Logs**: Operational logs for system reliability
 
-The duration for which your data is stored depends on your plan type. You have two main options for data retention:
+The duration for which your data is stored depends on your plan. You have two main options for data retention:
 
-- **Standard data retention:** Your data (such as audio files, transcripts, and metadata) remains accessible for a set number of days, up to a maximum allowed by your plan. The minimum retention value is 0, which means your data is deleted within 24 hours. The maximum and default value is 12 months.
-- **Zero data retention:** Data storage is minimized at all stages, avoiding temporary storage whenever possible. All data is deleted immediately after processing.
+- **Standard data retention:** Your data (audio files, transcripts, and metadata) remains accessible for a set period. Defaults and customization options vary by plan (see below).
+- **Zero data retention:** Data storage is minimized at all stages, avoiding temporary storage whenever possible. All data is deleted immediately after processing. Available on **Enterprise** only.
+
+## Standard data retention by plan
+
+| Plan | Default retention | Custom retention |
+| ---- | ----------------- | ---------------- |
+| **Free** | 12 months | Not available |
+| **Starter** | 3 weeks | Yes — minimum **24 hours** |
+| **Growth** | 3 weeks | Yes — minimum **24 hours** |
+| **Enterprise** | 3 weeks | Yes — including zero data retention |
 
 <Info>
-Only Enterprise users are eligible for custom data retention and the zero data retention option.
+Custom retention periods are available on **Starter**, **Growth**, and **Enterprise**. Zero data retention is available on **Enterprise** only. Contact [support](https://www.gladia.io/contact) to configure a custom retention period.
 </Info>
 
 To enable usage tracking, Gladia retains essential API metadata: request ID, timestamp, processing status and audio duration. Immutable logs are also maintained, for a limited period, to ensure service quality and reliability.
