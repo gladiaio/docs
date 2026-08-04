@@ -7,7 +7,6 @@ description: Best parameter configurations for realtime transcription depending 
 import LanguageDetection from "/snippets/recommended-params/language-detection.mdx";
 import CodeSwitching from "/snippets/recommended-params/code-switching.mdx";
 import CustomVocabulary from "/snippets/recommended-params/custom-vocabulary.mdx";
-import DiarizationVsMultichannel from "/snippets/recommended-params/diarization-vs-multichannel.mdx";
 
 The right parameter configuration can make a significant difference in transcription quality and latency for realtime use cases. This guide covers recommended starting points for common scenarios and highlights pitfalls that frequently trip up new integrations.
 
@@ -68,8 +67,6 @@ For apps that record and transcribe meetings in real time — team stand-ups, bo
 | `language_config.languages`                   | Set explicitly              | Meeting language is almost always known in advance — setting it avoids detection overhead.                                                                                                                            |
 | `realtime_processing.custom_vocabulary`       | `true`                      | Add company-specific terms, project names, and participant names for better accuracy.                                                                                                                                 |
 
-<DiarizationVsMultichannel />
-
 ---
 
 ## Call Centers
@@ -82,14 +79,6 @@ For live phone calls the priorities are **speaker identification** and **fast, a
 | `maximum_duration_without_endpointing`        | `15`                           | Prevents very long utterances in monologue-style segments.                                                                                                    |
 | `language_config.languages`                   | Set explicitly (e.g. `["en"]`) | Call center audio typically has a known language. Setting it avoids detection errors on noisy recordings.                                                     |
 | `realtime_processing.custom_vocabulary`       | `true`                         | Add product names, plan names, and internal terminology.                                                                                                      |
-
-<DiarizationVsMultichannel />
-
-<Tip>
-  For calls with more than two participants (e.g. conference bridges), use
-  `diarization_config.min_speakers` / `max_speakers` instead of `number_of_speakers` to give the
-  model a flexible range.
-</Tip>
 
 ---
 
