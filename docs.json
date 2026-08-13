@@ -29,8 +29,14 @@
             "pages": [
               "chapters/introduction/index",
               "chapters/introduction/getting-started",
-              "chapters/introduction/playground",
-              "chapters/pre-recorded-stt/benchmarking"
+              "chapters/introduction/models"
+            ]
+          },
+          {
+            "group": "How to use Gladia",
+            "pages": [
+              "chapters/how-to-use-gladia/playground",
+              "chapters/how-to-use-gladia/benchmarking"
             ]
           },
           {
@@ -42,7 +48,6 @@
                 "pages": [
                   "chapters/pre-recorded-stt/quickstart",
                   "chapters/pre-recorded-stt/audio-intelligence",
-                  "chapters/pre-recorded-stt/features/sentences",
                   "chapters/pre-recorded-stt/recommended-parameters"
                 ]
               },
@@ -306,6 +311,14 @@
     }
   },
   "redirects": [
+    {
+      "source": "/chapters/introduction/playground",
+      "destination": "/chapters/how-to-use-gladia/playground"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/benchmarking",
+      "destination": "/chapters/how-to-use-gladia/benchmarking"
+    },
     {
       "source": "/api-reference/transcription-flow",
       "destination": "/api-reference/pre-recorded-flow"
