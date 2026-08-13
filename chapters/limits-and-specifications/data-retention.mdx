@@ -4,6 +4,7 @@ description: "Data retention policies and zero data behavior"
 ---
 
 To provide transcription services, Gladia processes several types of data:
+
 - **Audio input**: Audio files or audio streams provided for transcription
 - **Transcription output**: Text, timestamps, words, utterances
 - **API Metadata**: Request IDs, timestamps, processing status
@@ -11,14 +12,36 @@ To provide transcription services, Gladia processes several types of data:
 
 The duration for which your data is stored depends on your plan type. You have two main options for data retention:
 
-- **Standard data retention:** Your data (such as audio files, transcripts, and metadata) remains accessible for a set number of days, up to a maximum allowed by your plan. The minimum retention value is 0, which means your data is deleted within 24 hours. The maximum and default value is 12 months.
+- **Standard data retention:** Data is stored according to the default windows below (by plan and data type). Audio files and transcripts remain retrievable through the API and the [Gladia playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up) for that window. Enterprise customers can request a custom retention period. The minimum custom value is 0, which means data is deleted within 24 hours.
 - **Zero data retention:** Data storage is minimized at all stages, avoiding temporary storage whenever possible. All data is deleted immediately after processing.
 
 <Info>
 Only Enterprise users are eligible for custom data retention and the zero data retention option.
 </Info>
 
-To enable usage tracking, Gladia retains essential API metadata: request ID, timestamp, processing status and audio duration. Immutable logs are also maintained, for a limited period, to ensure service quality and reliability.
+## Default retention by plan
+
+### Free
+
+By default, Free accounts retain **all** data types for **1 year**:
+
+| Data type | Default retention |
+| --- | --- |
+| Audio input | 1 year |
+| Transcription output | 1 year |
+| API Metadata | 1 year |
+| Logs | 1 year |
+
+### Paid (Starter, Growth, Enterprise)
+
+By default, paid accounts keep audio and transcripts for a shorter window, while essential API metadata is retained longer for usage tracking:
+
+| Data type | Default retention | What is retained |
+| --- | --- | --- |
+| Audio input | 3 weeks | Audio files or audio streams provided for transcription |
+| Transcription output | 3 weeks | Text, timestamps, words, utterances |
+| API Metadata | 1 year | Request IDs, timestamps, and processing status only |
+| Logs | Limited period | Operational logs for service quality and reliability |
 
 ## Zero Data Retention behavior
 
