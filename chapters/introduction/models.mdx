@@ -1,0 +1,181 @@
+---
+title: Models
+description: Compare Gladia speech-to-text models and choose the right one for your use case.
+---
+
+Pick a model with `model` in your request. Omit it to use the default: **`solaria-1`**.
+
+## Choose your model
+
+<CardGroup cols={2}>
+  <Card title="Solaria-3" icon="sparkles" href="#solaria-3">
+    Highest accuracy on European real-world audio. Pre-recorded only.
+  </Card>
+  <Card title="Solaria-1" icon="globe" href="#solaria-1">
+    Default generalist. 100+ languages, async and live, code switching.
+  </Card>
+</CardGroup>
+
+## Comparison
+
+| | **Solaria-3** | **Solaria-1** (default) |
+| --- | --- | --- |
+| **Best for** | European real-world / business audio | Global coverage across any domain |
+| **Modes** | Pre-recorded only | Pre-recorded + live |
+| **Languages** | EN, FR, DE, ES, IT | 100+ languages |
+| **Code switching** | No | Yes |
+| **Accuracy** | **9.6%** WER on EN production audio (26% better than Solaria-1) | Strong multilingual; best on clean / formal speech |
+| **Audio Intelligence** | All add-ons | All add-ons |
+| **Pricing** | [Same plan rates](https://www.gladia.io/pricing) | [Same plan rates](https://www.gladia.io/pricing) |
+
+## Select a model in your API call
+
+Set `model` to `"solaria-3"` or `"solaria-1"`:
+
+<CodeGroup>
+
+```javascript JavaScript
+import { GladiaClient } from "@gladiaio/sdk";
+
+const gladiaClient = new GladiaClient({ apiKey: "YOUR_GLADIA_API_KEY" });
+
+const transcription = await gladiaClient.preRecorded().transcribe(
+  "YOUR_AUDIO_URL_OR_LOCAL_PATH",
+  {
+    model: "solaria-3",
+    language_config: {
+      languages: ["fr"],
+    },
+  }
+);
+```
+
+```python Python
+from gladiaio_sdk import GladiaClient
+
+gladia_client = GladiaClient(api_key="YOUR_GLADIA_API_KEY").prerecorded()
+
+transcription = gladia_client.transcribe(
+    "YOUR_AUDIO_URL_OR_LOCAL_PATH",
+    {
+        "model": "solaria-3",
+        "language_config": {
+            "languages": ["fr"],
+        },
+    },
+)
+```
+
+```bash cURL
+curl --request POST 'https://api.gladia.io/v2/pre-recorded' \
+  --header 'x-gladia-key: YOUR_GLADIA_API_KEY' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+    "audio_url": "YOUR_AUDIO_URL",
+    "model": "solaria-3",
+    "language_config": {
+      "languages": ["fr"]
+    }
+  }'
+```
+
+</CodeGroup>
+
+<Note>
+  With `"solaria-3"`, there is no code switching. You can pass languages in `language_config.languages` (for example `["fr"]`, or several from EN/FR/DE/ES/IT) so the model can pick among those covered languages. Once the language is detected, it sticks to it for the rest of the file.
+</Note>
+
+## Solaria-3
+
+Highest accuracy on noisy, conversational European audio (calls, meetings, field recordings).
+
+### When to use
+
+Use **`solaria-3`** if:
+
+- Audio is **pre-recorded**
+- Language is **EN, FR, DE, ES, or IT**
+- You prioritize **accuracy on real production audio**
+- You can constrain detection to the **covered languages** (no mid-file switching)
+
+Use Solaria-1 instead for live streaming, code switching, languages outside those five, or clean / formal speech.
+
+### Get started
+
+<CardGroup cols={2}>
+  <Card
+    title="Pre-recorded transcription"
+    icon="file-audio"
+    href="/chapters/pre-recorded-stt/quickstart"
+  >
+    Transcribe files with `model: "solaria-3"`.
+  </Card>
+  <Card
+    title="SDK integration"
+    icon="code"
+    href="/chapters/integrations/sdk"
+  >
+    Call Solaria-3 from JavaScript or Python.
+  </Card>
+</CardGroup>
+
+## Solaria-1
+
+Maximum language coverage. Works async and live, with code switching.
+
+### When to use
+
+Use **`solaria-1`** (or omit `model`) if:
+
+- You need **live / real-time** transcription
+- You need **100+ languages** or **code switching**
+- Audio is **clean read-speech** or formal / institutional
+
+Ideal default for voice agents, live captions, and global multilingual products.
+
+### Get started
+
+<CardGroup cols={3}>
+  <Card
+    title="Live transcription"
+    icon="bolt"
+    href="/chapters/live-stt/quickstart"
+  >
+    Stream audio in real time.
+  </Card>
+  <Card
+    title="Pre-recorded transcription"
+    icon="file-audio"
+    href="/chapters/pre-recorded-stt/quickstart"
+  >
+    Batch-transcribe with the default model.
+  </Card>
+  <Card
+    title="SDK integration"
+    icon="code"
+    href="/chapters/integrations/sdk"
+  >
+    Integrate with the official SDKs.
+  </Card>
+</CardGroup>
+
+<CardGroup cols={2}>
+  <Card
+    title="Code switching"
+    icon="language"
+    href="/chapters/language/code-switching"
+  >
+    Handle mixed-language conversations.
+  </Card>
+  <Card
+    title="Supported languages"
+    icon="globe"
+    href="/chapters/language/supported-languages"
+  >
+    Full language list.
+  </Card>
+</CardGroup>
+
+<Tip>
+  Measuring accuracy on your own traffic? See [Benchmarking](/chapters/how-to-use-gladia/benchmarking).
+</Tip>
