@@ -11,6 +11,10 @@ import PrerecordedBadge from "/snippets/badges/prerecorded.mdx"
 
 Speaker diarization is the process of detecting multiple speakers in an audio, and understanding which parts of the transcription each speaker said.
 
+<Info>
+On multi-channel audio, diarization runs separately on each channel (see [_with multi-channel audio_](#with-multi-channel-audio)).
+</Info>
+
 ## Enabling diarization
 
 Diarization is enabled by sending the `diarization` parameter in the transcription request:
@@ -58,3 +62,11 @@ You can improve the accuracy of the diarization by providing the model with hint
 | `diarization_config.number_of_speakers` | number | Guiding number of speakers - instructs the model to detect an exact number of speakers in the audio. |
 | `diarization_config.min_speakers` | number | Instructs the model to detect no less than this number of speakers in the audio. |
 | `diarization_config.max_speakers` | number | Causes the model to detect no more than this number of speakers in the audio. |
+
+## With multi-channel audio
+
+When diarization is enabled on [multi-channel audio](/chapters/limits-and-specifications/multiple-channels), diarization runs separately on each channel. Diarization parameters (`number_of_speakers`, `min_speakers`, `max_speakers`) apply **per channel**.
+
+Speaker indexes are then **normalized across channels** so IDs stay unique in the result. For example, with two channels and two speakers on each, speakers are numbered from `0` to `3` (four speakers total).
+
+Because diarization is run independently per channel, the same physical speaker appearing on two channels will receive two different speaker IDs.
