@@ -79,6 +79,7 @@
               "chapters/audio-intelligence/speaker-diarization",
               "chapters/audio-intelligence/translation",
               "chapters/audio-intelligence/subtitles",
+              "chapters/audio-intelligence/sentences",
               "chapters/audio-intelligence/custom-vocabulary",
               "chapters/audio-intelligence/custom-spelling",
               "chapters/audio-intelligence/named-entity-recognition",
@@ -318,6 +319,10 @@
     {
       "source": "/chapters/pre-recorded-stt/benchmarking",
       "destination": "/chapters/how-to-use-gladia/benchmarking"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/features/sentences",
+      "destination": "/chapters/audio-intelligence/sentences"
     },
     {
       "source": "/api-reference/transcription-flow",
