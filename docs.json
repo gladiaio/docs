@@ -29,8 +29,14 @@
             "pages": [
               "chapters/introduction/index",
               "chapters/introduction/getting-started",
-              "chapters/introduction/playground",
-              "chapters/pre-recorded-stt/benchmarking"
+              "chapters/introduction/models"
+            ]
+          },
+          {
+            "group": "How to use Gladia",
+            "pages": [
+              "chapters/how-to-use-gladia/playground",
+              "chapters/how-to-use-gladia/benchmarking"
             ]
           },
           {
@@ -42,7 +48,6 @@
                 "pages": [
                   "chapters/pre-recorded-stt/quickstart",
                   "chapters/pre-recorded-stt/audio-intelligence",
-                  "chapters/pre-recorded-stt/features/sentences",
                   "chapters/pre-recorded-stt/recommended-parameters"
                 ]
               },
@@ -74,6 +79,7 @@
               "chapters/audio-intelligence/speaker-diarization",
               "chapters/audio-intelligence/translation",
               "chapters/audio-intelligence/subtitles",
+              "chapters/audio-intelligence/sentences",
               "chapters/audio-intelligence/custom-vocabulary",
               "chapters/audio-intelligence/custom-spelling",
               "chapters/audio-intelligence/named-entity-recognition",
@@ -312,6 +318,18 @@
     }
   },
   "redirects": [
+    {
+      "source": "/chapters/introduction/playground",
+      "destination": "/chapters/how-to-use-gladia/playground"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/benchmarking",
+      "destination": "/chapters/how-to-use-gladia/benchmarking"
+    },
+    {
+      "source": "/chapters/pre-recorded-stt/features/sentences",
+      "destination": "/chapters/audio-intelligence/sentences"
+    },
     {
       "source": "/api-reference/transcription-flow",
       "destination": "/api-reference/pre-recorded-flow"
