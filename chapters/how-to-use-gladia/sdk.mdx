@@ -1,0 +1,209 @@
+---
+title: SDK
+description: "Transcribe audio in a few lines with the official Gladia SDKs"
+---
+
+import WhatToUseWhen from "/snippets/what-to-use-when.mdx";
+
+Ship transcription in minutes. The official SDKs handle upload, jobs, live WebSockets, and retries so you write product code, not plumbing.
+
+<CardGroup cols={2}>
+  <Card title="JavaScript / TypeScript" icon="js" href="https://www.npmjs.com/package/@gladiaio/sdk">
+    `npm install @gladiaio/sdk`
+  </Card>
+  <Card title="Python" icon="python" href="https://pypi.org/project/gladiaio-sdk/">
+    `pip install gladiaio-sdk`
+  </Card>
+</CardGroup>
+
+## Install
+
+<CodeGroup>
+
+```bash JavaScript
+npm install @gladiaio/sdk
+```
+
+```bash Python
+pip install gladiaio-sdk
+```
+
+</CodeGroup>
+
+Get an API key from the [Gladia dashboard](https://app.gladia.io/apikeys), or set `GLADIA_API_KEY`.
+
+## Pre-recorded in 3 lines
+
+Pass a local file or a URL. One call uploads, runs the job, and returns the result.
+
+<CodeGroup>
+
+```javascript JavaScript
+import { GladiaClient } from "@gladiaio/sdk";
+
+const gladia = new GladiaClient({ apiKey: "YOUR_GLADIA_API_KEY" });
+const result = await gladia.preRecorded().transcribe("audio.mp3");
+
+console.log(result);
+```
+
+```python Python
+from gladiaio_sdk import GladiaClient
+
+gladia = GladiaClient(api_key="YOUR_GLADIA_API_KEY").prerecorded()
+result = gladia.transcribe("audio.mp3")
+
+print(result)
+```
+
+</CodeGroup>
+
+Add options when you need them:
+
+<CodeGroup>
+
+```javascript JavaScript
+const result = await gladia.preRecorded().transcribe("audio.mp3", {
+  model: "solaria-3",
+  language_config: { languages: ["en"] },
+  diarization: true,
+});
+```
+
+```python Python
+result = gladia.transcribe(
+    "audio.mp3",
+    {
+        "model": "solaria-3",
+        "language_config": {"languages": ["en"]},
+        "diarization": True,
+    },
+)
+```
+
+</CodeGroup>
+
+## Live in a few lines
+
+Start a session, send audio, print finals as they arrive:
+
+<CodeGroup>
+
+```javascript JavaScript
+import { GladiaClient } from "@gladiaio/sdk";
+
+const gladia = new GladiaClient({ apiKey: "YOUR_GLADIA_API_KEY" });
+
+const session = gladia.liveV2().startSession({
+  encoding: "wav/pcm",
+  sample_rate: 16000,
+  bit_depth: 16,
+  channels: 1,
+});
+
+session.on("message", (message) => {
+  if (message.type === "transcript" && message.data.is_final) {
+    console.log(message.data.utterance.text);
+  }
+});
+
+// session.sendAudio(chunk)
+// session.stopRecording()
+```
+
+```python Python
+from gladiaio_sdk import GladiaClient, LiveV2InitRequest
+
+gladia = GladiaClient(api_key="YOUR_GLADIA_API_KEY")
+session = gladia.live_v2().start_session(
+    LiveV2InitRequest(
+        encoding="wav/pcm",
+        sample_rate=16000,
+        bit_depth=16,
+        channels=1,
+    )
+)
+
+@session.on("message")
+def on_message(message):
+    if getattr(message, "type", None) == "transcript":
+        data = message.data
+        if data.is_final:
+            print(data.utterance.text)
+
+# session.send_audio(chunk)
+# session.stop_recording()
+```
+
+</CodeGroup>
+
+## Full samples
+
+Clone ready-to-run examples for pre-recorded, live, and real use cases:
+
+<Card
+  title="gladia-samples"
+  icon="github"
+  href="https://github.com/gladiaio/gladia-samples"
+>
+  Python, TypeScript, and JavaScript samples on GitHub
+</Card>
+
+<CardGroup cols={3}>
+  <Card
+    title="Python"
+    icon="python"
+    href="https://github.com/gladiaio/gladia-samples/tree/main/python"
+  >
+    Pre-recorded and live samples
+  </Card>
+  <Card
+    title="TypeScript"
+    icon="js"
+    href="https://github.com/gladiaio/gladia-samples/tree/main/typescript"
+  >
+    Pre-recorded and live samples
+  </Card>
+  <Card
+    title="JavaScript"
+    icon="js"
+    href="https://github.com/gladiaio/gladia-samples/tree/main/javascript"
+  >
+    Pre-recorded and live samples
+  </Card>
+</CardGroup>
+
+## Next guides
+
+<CardGroup cols={2}>
+  <Card
+    title="Pre-recorded quickstart"
+    icon="file-audio"
+    href="/chapters/pre-recorded-stt/quickstart"
+  >
+    Jobs, webhooks, and audio intelligence
+  </Card>
+  <Card
+    title="Live quickstart"
+    icon="bolt"
+    href="/chapters/live-stt/quickstart"
+  >
+    Streaming, partials, and session lifecycle
+  </Card>
+  <Card
+    title="Models"
+    icon="sparkles"
+    href="/chapters/introduction/models"
+  >
+    Choose Solaria-3 or Solaria-1
+  </Card>
+  <Card
+    title="CLI"
+    icon="terminal"
+    href="/chapters/how-to-use-gladia/cli"
+  >
+    Transcribe from the terminal without app code
+  </Card>
+</CardGroup>
+
+<WhatToUseWhen />

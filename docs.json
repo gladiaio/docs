@@ -39,6 +39,7 @@
             "pages": [
               "chapters/how-to-use-gladia/playground",
               "chapters/how-to-use-gladia/gladia-flow",
+              "chapters/how-to-use-gladia/sdk",
               "chapters/how-to-use-gladia/benchmarking"
             ]
           },
@@ -96,7 +97,6 @@
           {
             "group": "Integrations",
             "pages": [
-              "chapters/integrations/sdk",
               "chapters/integrations/pipecat",
               "chapters/integrations/livekit",
               "chapters/integrations/vapi",
@@ -324,6 +324,10 @@
     {
       "source": "/chapters/pre-recorded-stt/benchmarking",
       "destination": "/chapters/how-to-use-gladia/benchmarking"
+    },
+    {
+      "source": "/chapters/integrations/sdk",
+      "destination": "/chapters/how-to-use-gladia/sdk"
     },
     {
       "source": "/chapters/pre-recorded-stt/features/sentences",
