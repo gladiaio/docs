@@ -12,7 +12,9 @@
     "eyebrows": "breadcrumbs",
     "codeblocks": "system"
   },
-  "fonts": { "family": "Inter" },
+  "fonts": {
+    "family": "Inter"
+  },
   "appearance": {
     "default": "system",
     "strict": false
@@ -36,6 +38,7 @@
             "group": "How to use Gladia",
             "pages": [
               "chapters/how-to-use-gladia/playground",
+              "chapters/how-to-use-gladia/gladia-flow",
               "chapters/how-to-use-gladia/benchmarking"
             ]
           },
@@ -64,7 +67,6 @@
               }
             ]
           },
-
           {
             "group": "Language",
             "pages": [
@@ -141,7 +143,10 @@
         "groups": [
           {
             "group": "API Documentation",
-            "pages": ["api-reference/index", "api-reference/authentication"]
+            "pages": [
+              "api-reference/index",
+              "api-reference/authentication"
+            ]
           },
           {
             "group": "Live endpoints",
