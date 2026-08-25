@@ -1,0 +1,169 @@
+---
+title: CLI
+description: "Transcribe audio from your terminal with one install and one command."
+---
+
+import WhatToUseWhen from "/snippets/what-to-use-when.mdx";
+
+The Gladia CLI wraps the [speech-to-text API](/chapters/pre-recorded-stt/quickstart) for terminals and shell scripts.
+
+<Tip>
+  Get your API key from the [Gladia dashboard](https://app.gladia.io/apikeys) before your first transcription.
+</Tip>
+
+## Why use the CLI ?
+
+- **One command**: install, set your key, run `gladia transcribe audio.mp3`
+- **Flexible output**: plain text, JSON, SRT, or VTT to stdout
+- **Set up features**: diarization, languages, and model selection (`solaria-1`, `solaria-3`)
+- **Files or URLs**: local recordings or remote links
+- **Pipe-friendly**: machine-readable output for scripts and CI
+
+## Install
+
+```bash
+# macOS & Linux
+curl -fsSL https://github.com/gladiaio/gladia-cli/releases/latest/download/install.sh | sh
+
+# Windows (PowerShell)
+powershell -c "irm https://github.com/gladiaio/gladia-cli/releases/latest/download/install.ps1 | iex"
+```
+
+Other platforms and binaries: [GitHub releases](https://github.com/gladiaio/gladia-cli/releases).
+
+### API key setup
+
+```bash
+export GLADIA_API_KEY=your_key              # 1. environment variable
+gladia auth set your_key                    # 2. saved to ~/.gladia (mode 0600)
+gladia transcribe meeting.wav --gladia-key your_key   # 3. per-command flag
+```
+
+## Quick start
+
+```bash
+gladia transcribe meeting.wav               # transcript to stdout
+gladia transcribe podcast.mp3 -o srt        # subtitles
+gladia transcribe call.wav --diarize        # who spoke when
+gladia languages                            # supported language codes
+```
+
+## Common workflows
+
+```bash
+# Local file or remote URL
+gladia transcribe meeting.wav
+gladia transcribe https://example.com/audio.mp3 -o json
+
+# Narrow language detection
+gladia transcribe podcast.mp3 --language en,fr,de
+
+# Mixed-language audio
+gladia transcribe mixed.mp3 --code-switching --language en,fr
+
+# Diarization as subtitles
+gladia transcribe call.wav --diarize -o srt
+
+# Pick a model
+gladia transcribe podcast.mp3 --model solaria-3 --language en
+
+# Pipe into a script
+gladia transcribe interview.mp3 -o json | jq '.transcription'
+```
+
+## Commands
+
+| Command | Description |
+| --- | --- |
+| `transcribe <file-or-url>` | Transcribe an audio file or URL |
+| `auth set <key>` | Save API key to `~/.gladia` |
+| `languages` | List supported ISO 639-1 codes |
+| `completion <shell>` | Generate shell tab completion (bash, zsh, fish, powershell) |
+
+## Output formats
+
+Use `-o` or `--output`:
+
+| Format | Description |
+| --- | --- |
+| `text` | Plain transcript (default) |
+| `json` | Structured JSON transcript |
+| `json-full` | Full API response as JSON |
+| `srt` | SubRip subtitles |
+| `vtt` | WebVTT subtitles |
+
+## Transcription options
+
+| Flag | Default | Description |
+| --- | --- | --- |
+| `-o`, `--output` | `text` | `text`, `json`, `json-full`, `srt`, `vtt` |
+| `--language` | | Expected language(s), comma-separated (`en` or `en,fr,de`) |
+| `--cs`, `--code-switching` | off | Re-detect language per utterance (`solaria-1` only) |
+| `--diarize` | off | Identify speakers |
+| `--model` | | `solaria-1` or `solaria-3`. Solaria-3 accepts one `--language` (`en`, `fr`, `de`, `es`, or `it`) and no code switching. |
+| `-v`, `--verbose` | off | Show progress while polling |
+
+**Global flag**: `--gladia-key` (if not set via env or `~/.gladia`).
+
+### Language
+
+| Goal | Command |
+| --- | --- |
+| Auto-detect | `gladia transcribe <file>` |
+| Constrain detection | `--language en,fr,de` |
+| Code switching | `--code-switching` (optional `--language` hints) |
+
+- **`--language`**: limits which languages Gladia considers (hint list, not per-utterance switching).
+- **`--code-switching`**: detects language per utterance. Not available with `solaria-3`.
+
+### Diarization
+
+Use `--diarize` for who spoke when (e.g. `Speaker 0: …`).
+
+```bash
+gladia transcribe meeting.wav --diarize
+gladia transcribe panel.mp3 --diarize -o srt
+```
+
+## Shell completion
+
+The installer can set up tab completion. To skip the prompt in CI, set `GLADIA_NO_COMPLETION_PROMPT=1`.
+
+```bash
+# bash
+source <(gladia completion bash)
+
+# zsh
+mkdir -p ~/.zsh/completions
+gladia completion zsh > ~/.zsh/completions/_gladia
+
+# fish
+mkdir -p ~/.config/fish/completions
+gladia completion fish > ~/.config/fish/completions/gladia.fish
+```
+
+See `gladia completion --help` for full instructions.
+
+## Next steps
+
+<CardGroup cols={3}>
+  <Card title="Get your API key" href="https://app.gladia.io/apikeys" icon="key">
+    Create an API key on the Gladia dashboard
+  </Card>
+  <Card
+    title="Gladia CLI on GitHub"
+    icon="github"
+    href="https://github.com/gladiaio/gladia-cli"
+  >
+    Source code, issues, and releases
+  </Card>
+  <Card
+    title="Pre-recorded STT quickstart"
+    icon="book"
+    href="/chapters/pre-recorded-stt/quickstart"
+  >
+    Transcription features reference
+  </Card>
+</CardGroup>
+
+<WhatToUseWhen />

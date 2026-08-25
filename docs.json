@@ -40,6 +40,7 @@
               "chapters/how-to-use-gladia/playground",
               "chapters/how-to-use-gladia/gladia-flow",
               "chapters/how-to-use-gladia/sdk",
+              "chapters/how-to-use-gladia/cli",
               "chapters/how-to-use-gladia/benchmarking"
             ]
           },
@@ -328,6 +329,14 @@
     {
       "source": "/chapters/integrations/sdk",
       "destination": "/chapters/how-to-use-gladia/sdk"
+    },
+    {
+      "source": "/chapters/developer-tools/gladia-cli",
+      "destination": "/chapters/how-to-use-gladia/cli"
+    },
+    {
+      "source": "/chapters/introduction/benchmarking",
+      "destination": "/chapters/how-to-use-gladia/benchmarking"
     },
     {
       "source": "/chapters/pre-recorded-stt/features/sentences",
