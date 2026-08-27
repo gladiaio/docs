@@ -1,6 +1,6 @@
 ---
 title: "Chapterization"
-description: "Chapterization is deprecated. Use Audio-to-LLM for customizable chapter-style structuring of long audio."
+description: "Chapterization is deprecated and no longer returns results. Use Audio-to-LLM for customizable chapter-style structuring of long audio."
 ---
 
 import PrerecordedBadge from "/snippets/badges/prerecorded.mdx"
@@ -10,9 +10,9 @@ import LiveBadge from "/snippets/badges/live.mdx"
 <LiveBadge />
 
 <Warning>
-This feature is **deprecated**.
+This feature is **deprecated** and **no longer returns results**.
 
-Chapterization is replaced by [Audio-to-LLM](/chapters/audio-intelligence/audio-to-llm), which is more powerful and fully customizable: you write your own prompts to segment long audio, generate headlines and summaries, or structure the transcript however your product needs.
+Use [Audio-to-LLM](/chapters/audio-intelligence/audio-to-llm) instead. It is more powerful and fully customizable: you write your own prompts to segment long audio, generate headlines and summaries, or structure the transcript however your product needs.
 </Warning>
 
-Existing `chapterization` requests continue to work for backward compatibility, but new integrations should use Audio-to-LLM instead.
+The `chapterization` parameter remains in the API for backward compatibility, but enabling it will not produce chapter results. New integrations should use Audio-to-LLM.
