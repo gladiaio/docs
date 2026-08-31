@@ -5,7 +5,7 @@ description: "A clear 5-step method to compare speech-to-text accuracy fairly"
 
 import WhatToUseWhen from "/snippets/what-to-use-when.mdx";
 
-Use one shared dataset, one human ground truth, and the same normalization before comparing providers. Otherwise scores are not comparable.
+Use one dataset with human ground truth, and the same normalization before comparing providers. Otherwise scores are not comparable.
 
 ## Methodology
 
@@ -15,7 +15,7 @@ Use one shared dataset, one human ground truth, and the same normalization befor
   </Step>
 
   <Step title="Human annotation" icon="user">
-    Create independent ground truth (e.g. Amberscript). Do not score providers against each other's transcripts.
+    Create independent ground truth. Do not score providers against each other's transcripts.
   </Step>
 
   <Step title="Run all STT providers" icon="diagram-project">
@@ -23,9 +23,15 @@ Use one shared dataset, one human ground truth, and the same normalization befor
   </Step>
 
   <Step title="Normalize" icon="file-import">
-    Normalize reference and predictions with the same pipeline before WER, so `Mr.` / `Mister` and `$50` / `fifty dollars` match.
+    Normalize reference and predictions with the same pipeline before WER, so `Mr.` / `Mister` and `$50` / `fifty dollars` mismatches does not count as errors.
 
-    [`gladia-normalization`](https://github.com/gladiaio/normalization):
+    <Card
+      title="gladia-normalization"
+      icon="github"
+      href="https://github.com/gladiaio/normalization"
+    >
+      Open-source text normalization for fair WER scoring
+    </Card>
 
     ```python
     from normalization import load_pipeline
@@ -56,7 +62,7 @@ Decide what "good" means for your product (noise, diarization, entities, domain 
 - Different datasets per provider
 - Weak ground truth
 - Counting formatting as recognition errors
-- Too few samples or one average with no slices
+- Too few samples, or a wrong distribution of your real audio traffic diversity
 - Reference text that is not in the audio
 
 <WhatToUseWhen />
