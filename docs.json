@@ -12,7 +12,9 @@
     "eyebrows": "breadcrumbs",
     "codeblocks": "system"
   },
-  "fonts": { "family": "Inter" },
+  "fonts": {
+    "family": "Inter"
+  },
   "appearance": {
     "default": "system",
     "strict": false
@@ -35,8 +37,11 @@
           {
             "group": "How to use Gladia",
             "pages": [
+              "chapters/how-to-use-gladia/sdk",
               "chapters/how-to-use-gladia/playground",
-              "chapters/how-to-use-gladia/benchmarking"
+              "chapters/how-to-use-gladia/cli",
+              "chapters/how-to-use-gladia/benchmarking",
+              "chapters/how-to-use-gladia/gladia-flow"
             ]
           },
           {
@@ -64,7 +69,6 @@
               }
             ]
           },
-
           {
             "group": "Language",
             "pages": [
@@ -94,7 +98,6 @@
           {
             "group": "Integrations",
             "pages": [
-              "chapters/integrations/sdk",
               "chapters/integrations/pipecat",
               "chapters/integrations/livekit",
               "chapters/integrations/vapi",
@@ -147,7 +150,10 @@
         "groups": [
           {
             "group": "API Documentation",
-            "pages": ["api-reference/index", "api-reference/authentication"]
+            "pages": [
+              "api-reference/index",
+              "api-reference/authentication"
+            ]
           },
           {
             "group": "Live endpoints",
@@ -324,6 +330,18 @@
     },
     {
       "source": "/chapters/pre-recorded-stt/benchmarking",
+      "destination": "/chapters/how-to-use-gladia/benchmarking"
+    },
+    {
+      "source": "/chapters/integrations/sdk",
+      "destination": "/chapters/how-to-use-gladia/sdk"
+    },
+    {
+      "source": "/chapters/developer-tools/gladia-cli",
+      "destination": "/chapters/how-to-use-gladia/cli"
+    },
+    {
+      "source": "/chapters/introduction/benchmarking",
       "destination": "/chapters/how-to-use-gladia/benchmarking"
     },
     {

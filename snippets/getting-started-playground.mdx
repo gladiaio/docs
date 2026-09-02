@@ -1,11 +1,9 @@
 [Gladia's playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up
-) is a convenient way to test our Speech-To-Text API. On the playground
-you are able to transcribe remote audio files through URL, and also upload your local audio files, alongside with live
-audio transcription.
+) lets you try Speech-To-Text in the browser: mic stream, local upload, or remote URL. Compare models and features on your audio before you integrate.
 
 <Steps>
   <Step title="Select your audio source">
-    Choose your audio source (stream from you microphone, or upload a local file)
+    Choose your audio source (mic stream or local file upload).
 
     <Frame>
       <img src="/assets/images/playground-1.png" />
@@ -15,13 +13,13 @@ audio transcription.
   </Step>
 
   <Step title="Select features">
-    You'll be able to select <Tooltip tip="If you want to see a complete list of the features Gladia's API provide check the Features section">some of
-    the options</Tooltip> Gladia API provide for your transcription. \
-    For this example, we want to detect the named entity (like email adresses, phone numbers, etc.), so we turned on **named entity recognition**.
+    Select <Tooltip tip="For the full feature list, see the Features section">some of
+    the options</Tooltip> Gladia provides. \
+    In this example we enable **named entity recognition**.
 
     <Note>
-      Only a few features of Gladia API are available on the playground. For more advanced testing,
-      check [our API documentation](/api-reference/) instead.
+      Only a subset of API features is available in the playground. For advanced testing,
+      see the [API documentation](/api-reference/).
     </Note>
 
     <Frame>
@@ -30,9 +28,9 @@ audio transcription.
   </Step>
 
   <Step title="Talk to Gladia">
-    You can talk to Gladia by clicking on the "Start transcribing" button, and you'll be able to see the transcription of your voice in the "Transcription" tab.
+    Click **Start transcribing** to see your voice in the Transcription tab.
     <Note>
-      Text in italic in the transcription represents [partials transcripts](/chapters/live-stt/features#partial-transcripts).
+      Italic text is [partial transcripts](/chapters/live-stt/features#partial-transcripts).
     </Note>
     <Frame>
       <img src="/assets/images/playground-3.png" />
@@ -40,8 +38,7 @@ audio transcription.
   </Step>
 
   <Step title="Transcribe">
-    You can see an already formatted and readable results in the default "Transcription" tab, and you'll also find
-    the result in JSON format (the one you'd get with an API call).
+    The Transcription tab shows a readable result. The JSON tab shows the same payload you would get from an API call.
 
     <Frame>
       <img src="/assets/images/playground-4.png" />
