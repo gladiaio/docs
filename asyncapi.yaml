@@ -298,9 +298,9 @@ components:
         $ref: "#/components/schemas/PostFinalTranscriptMessage"
     postChapterization:
       name: post_chapterization
-      title: Chapterization
+      title: Chapterization (deprecated)
       contentType: application/json
-      summary: This message contains the informations about the post chapterization of the audio chunk.
+      summary: "**[Deprecated]** Chapterization no longer returns results. Use audio_to_llm on pre-recorded transcription instead; Audio-to-LLM is more powerful and fully customizable via custom prompts."
       payload:
         $ref: "#/components/schemas/PostChapterizationMessage"
     postSummarization:
@@ -905,6 +905,8 @@ components:
                     - { $ref: "#/components/schemas/ErrorObject" }
                 results: { type: string }
             chapterization:
+              deprecated: true
+              description: "**[Deprecated]** Chapterization no longer returns results. Use audio_to_llm on pre-recorded transcription instead; Audio-to-LLM is more powerful and fully customizable via custom prompts."
               type: object
               properties:
                 success: { type: boolean }
@@ -931,6 +933,8 @@ components:
 
     PostChapterizationMessage:
       type: object
+      deprecated: true
+      description: "**[Deprecated]** Chapterization no longer returns results. Use audio_to_llm on pre-recorded transcription instead; Audio-to-LLM is more powerful and fully customizable via custom prompts."
       required: [session_id, created_at, type, data]
       properties:
         session_id: { $ref: "#/components/schemas/UUID" }
