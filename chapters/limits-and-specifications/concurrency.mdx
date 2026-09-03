@@ -3,16 +3,7 @@ title: Concurrency and Rate limits
 description: "Rate limiting and transcriptions concurrency"
 ---
 
-In order to provide a smooth experience and optimal performance for all users, Gladia accounts can have up to **3** differents limits
-for **Free**, **Paid** & **Enterprise** users :
-
-<Note>
-Need a higher concurrency limit?
-
-The value listed below are default values. We can provide high concurrencies based on your needs, so feel free to
-[contact us](https://www.gladia.io/contact).
-
- </Note>
+In order to provide a smooth experience and optimal performance for all users, Gladia provides 3 plans:
 
 | Plan type      | Usage limit <br /> (per month) | Max Transcriptions in concurrency <br />(pre-recorded) | Max Transcriptions in concurrency (Live) |
 | -------------- | ------------------------------ | ------------------------------------------------------ | ---------------------------------------- |
@@ -20,9 +11,31 @@ The value listed below are default values. We can provide high concurrencies bas
 | **Paid**       | Unlimited                      | 25                                                     | 30                                       |
 | **Free**       | 10 Hours                       | 3                                                      | 1                                        |
 
+## Hitting your concurrency limit
+
+When you hit your concurrent session limit:
+
+- **Live (WebSocket)**: the API returns a **429** status code.
+- **Pre-recorded (async)**: the API returns an error indicating **too many parallel jobs**.
+
+<Tip>
+Prefer the [official SDK](/chapters/how-to-use-gladia/sdk) for Live integrations: it already handles the WebSocket lifecycle (reconnection, session continuity, retries, and related timing). See the [Live quickstart](/chapters/live-stt/quickstart).
+</Tip>
+
+### Default values (custom plans)
+
+| API                   | Default (custom plans)           |
+| --------------------- | -------------------------------- |
+| Live (WebSocket)      | 30 concurrent sessions           |
+| Pre-recorded (async)  | 25 parallel jobs + 300 queued    |
+
+<Note>
+Any limit above the default requires a capacity check. [Contact the sales team](https://www.gladia.io/contact) to request an increase.
+</Note>
+
 - **Usage limit** : (**free-tier** users only)
 
-  This determines the number of hours a user can transcribe a given month. This is a limitation for free tier users only.
+  This determines the number of hours a user can transcribe a given month.
 
 - **Concurrency** : (depending on free/paid tier)
 
