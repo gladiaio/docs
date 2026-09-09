@@ -271,7 +271,7 @@ components:
       name: answering_machine
       title: Answering Machine
       contentType: application/json
-      summary: Reports whether the callee is a human or an answering machine, from speech timing alone.
+      summary: Reports whether the callee is a human or an answering machine.
       payload:
         $ref: "#/components/schemas/AnsweringMachineMessage"
     translation:
@@ -631,7 +631,7 @@ components:
               minimum: 0
               maximum: 1
               description: >-
-                How machine-like the speech timing was, between 0 and 1. This is a ranking
+                How machine-like the call opening was, between 0 and 1. This is a ranking
                 score, not a calibrated probability: compare it against a threshold tuned on
                 your own traffic rather than reading it as a likelihood.
             time:
@@ -642,10 +642,9 @@ components:
               description: Audio channel index (0-based) for which the decision applies.
           description: Outcome of answering machine detection for the session.
       description: >-
-        Reports whether the callee is a human or an answering machine, derived from speech
-        timing only with no transcription involved. Emitted at most once per session, as soon
-        as the decision window closes, so it arrives before the first transcript. The decision
-        is never revised.
+        Reports whether the callee is a human or an answering machine. Emitted at most once
+        per session, before the first transcript, and never revised. Does not require
+        transcription, so it behaves the same across languages.
       examples:
         - session_id: "550e8400-e29b-41d4-a716-446655440000"
           created_at: "2026-09-09T12:34:11Z"
