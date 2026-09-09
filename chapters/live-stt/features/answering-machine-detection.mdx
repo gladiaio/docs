@@ -5,7 +5,7 @@ description: "Know within seconds whether a human or a voicemail picked up"
 
 Answering machine detection tells you whether the person you called picked up, or whether you reached a voicemail greeting.
 
-The decision arrives about five seconds after the callee starts speaking, without waiting for a transcript, so an outbound agent can act on it immediately.
+The decision arrives about five seconds after the person you called starts speaking, without waiting for a transcript, so an outbound agent can act on it immediately.
 
 ### The message
 
@@ -44,7 +44,7 @@ You receive an `answering_machine` message at most once per session:
 
 Most callers act on `kind` directly:
 
-- **`machine`** — hang up and requeue the number, or stay silent and let the greeting finish before leaving a recorded message.
+- **`machine`** — hang up and queue the number for a later attempt, or stay silent and let the greeting finish before leaving a recorded message.
 - **`human`** — start the conversation.
 
 If you want to be more conservative than the default, read `confidence` and require a high score before treating a call as a machine. Hanging up on a real person usually costs more than a few wasted seconds on a voicemail, so a threshold above the default is a common choice.
@@ -53,8 +53,8 @@ If you want to be more conservative than the default, read `confidence` and requ
 
 The decision fires **at most once per session** and is never revised. Later audio does not change it.
 
-- **The window starts when the callee first speaks.** Ringing, connection delay and any leading silence do not count. The decision is taken once five seconds of audio have been heard after that first speech.
-- **The callee says nothing at all.** No message is emitted: silence never starts the window and is not evidence of a machine. Apply your own timeout if you need to give up on a silent line.
+- **The window starts at the first speech.** Ringing, connection delay and any leading silence do not count. The decision is taken once five seconds of audio have been heard after that first speech.
+- **Nobody speaks at all.** No message is emitted: silence never starts the window and is not evidence of a machine. Apply your own timeout if you need to give up on a silent line.
 - **Very short calls.** If the session ends before the five seconds have elapsed, no message is emitted.
 - **Transcripts are not ordered against it.** Partial or final transcripts may arrive before the decision.
 - **No transcription required.** The detection does not depend on what was said, so it behaves the same across languages and adds no transcription latency.

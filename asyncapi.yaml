@@ -271,7 +271,7 @@ components:
       name: answering_machine
       title: Answering Machine
       contentType: application/json
-      summary: Reports whether the callee is a human or an answering machine.
+      summary: Reports whether a human or an answering machine picked up.
       payload:
         $ref: "#/components/schemas/AnsweringMachineMessage"
     translation:
@@ -646,9 +646,9 @@ components:
               description: Audio channel index (0-based) for which the decision applies.
           description: Outcome of answering machine detection for the session.
       description: >-
-        Reports whether the callee is a human or an answering machine. Emitted at most once
-        per session, about five seconds after the callee first speaks, and never revised.
-        Not emitted if the callee never speaks or if the session ends before the decision.
+        Reports whether a human or an answering machine picked up. Emitted at most once
+        per session, about five seconds after the first speech, and never revised.
+        Not emitted if nobody speaks or if the session ends before the decision.
         Does not require transcription, so it behaves the same across languages; partial
         or final transcripts may arrive before it.
       examples:
