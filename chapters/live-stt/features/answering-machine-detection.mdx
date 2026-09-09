@@ -1,0 +1,85 @@
+---
+title: "Answering Machine Detection"
+description: "Know within seconds whether a human or a voicemail picked up, without waiting for a transcript"
+---
+
+Answering machine detection (AMD) tells you whether the person you called picked up, or whether you reached a voicemail greeting. The decision arrives in the first seconds of the call, before the first transcript.
+
+This matters for outbound calling: a voice agent that talks to a voicemail wastes the call, and a human who gets treated as a machine hangs up.
+
+### How it works
+
+The detection uses **speech timing only**. No transcription is involved, which is why it is fast and why it costs you nothing extra in latency.
+
+The reasoning is simple. A human and a voicemail greeting have very different rhythms:
+
+```text
+human     : "Hello?"  ->  silence  ->  waits for you to speak
+voicemail : delay  ->  speech  ->  speech  ->  speech  ->  speech
+```
+
+A person says one or two words and stops, because they expect you to answer. A recorded greeting keeps going for several seconds without pausing. Gladia's voice activity detection already knows exactly when speech starts and stops, so the pattern is visible without reading a single word.
+
+Three timing signals carry most of the decision:
+
+| Signal | What it captures |
+|---|---|
+| Distribution of speech across the window | A human's speech collapses into the first moments; a greeting spreads evenly |
+| Length of the first speech burst | One word versus a full sentence |
+| Delay before speech begins | Machines often start after a beep or connection delay |
+
+### Why not use the transcript
+
+It sounds natural to look for phrases like "please leave a message". We measured it, and it makes things worse: accuracy drops and latency goes from tens of milliseconds to roughly half a second, because you have to wait for words to exist before you can classify.
+
+Timing alone is both faster and more reliable. It also works regardless of the language spoken, since it never looks at what was said.
+
+### The message you receive
+
+You get an `answering_machine` message once per session, as soon as the decision window closes:
+
+```json
+{
+  "session_id": "550e8400-e29b-41d4-a716-446655440000",
+  "created_at": "2026-09-09T12:34:11Z",
+  "type": "answering_machine",
+  "data": {
+    "kind": "machine",
+    "confidence": 0.78,
+    "time": 5.0,
+    "channel": 0
+  }
+}
+```
+
+| Field | Meaning |
+|---|---|
+| `kind` | `human` or `machine` |
+| `confidence` | Score between 0 and 1 indicating how machine-like the timing was |
+| `time` | Seconds from session start at which the decision was taken |
+| `channel` | Audio channel index the decision applies to |
+
+<Warning>
+`confidence` is a **ranking score, not a probability**. A value of `0.7` does not mean "70% chance this is a machine". Use it to compare against a threshold you tune on your own traffic, not as a calibrated likelihood.
+</Warning>
+
+### What to do with it
+
+Most callers act on `kind` directly:
+
+- **`machine`** — hang up and requeue the number, or stay silent and let the greeting finish before dropping a recorded message.
+- **`human`** — start the conversation.
+
+If you want to be more conservative than the default, read `confidence` and require a high score before treating a call as a machine. The cost of a false `machine` (hanging up on a real person) is usually higher than the cost of a false `human` (a few wasted seconds), so a threshold above the default is a common choice.
+
+### Timing and edge cases
+
+The decision fires **once per session** and is never revised. Later audio does not change it.
+
+- **The callee says nothing at all.** You still receive a message, reported as `human` with a low confidence. Silence is not evidence of a machine, and staying on the line is the safer default.
+- **A greeting longer than the decision window.** Speech that runs past the window is truncated at the boundary, so a very long greeting cannot distort the result.
+- **Very short calls.** If the session ends before the window closes, no message is emitted.
+
+### Limits
+
+Detection is tuned for the opening of an outbound call. It is not designed to detect an answering machine that picks up mid-conversation, and it does not attempt to detect IVR menus or hold music, which have their own rhythms.
