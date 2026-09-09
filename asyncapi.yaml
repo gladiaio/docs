@@ -647,8 +647,10 @@ components:
           description: Outcome of answering machine detection for the session.
       description: >-
         Reports whether the callee is a human or an answering machine. Emitted at most once
-        per session, before the first transcript, and never revised. Does not require
-        transcription, so it behaves the same across languages.
+        per session, about five seconds after the callee first speaks, and never revised.
+        Not emitted if the callee never speaks or if the session ends before the decision.
+        Does not require transcription, so it behaves the same across languages; partial
+        or final transcripts may arrive before it.
       examples:
         - session_id: "550e8400-e29b-41d4-a716-446655440000"
           created_at: "2026-09-09T12:34:11Z"

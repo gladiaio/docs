@@ -5,11 +5,11 @@ description: "Know within seconds whether a human or a voicemail picked up"
 
 Answering machine detection tells you whether the person you called picked up, or whether you reached a voicemail greeting.
 
-The decision arrives in the first seconds of the call, before the first transcript, so an outbound agent can act on it immediately.
+The decision arrives about five seconds after the callee starts speaking, without waiting for a transcript, so an outbound agent can act on it immediately.
 
 ### The message
 
-You receive an `answering_machine` message once per session:
+You receive an `answering_machine` message at most once per session:
 
 ```json
 {
@@ -51,10 +51,12 @@ If you want to be more conservative than the default, read `confidence` and requ
 
 ### Timing and edge cases
 
-The decision fires **once per session** and is never revised. Later audio does not change it.
+The decision fires **at most once per session** and is never revised. Later audio does not change it.
 
-- **The callee says nothing at all.** You still receive a message, reported as `human` with a low confidence. Silence is not evidence of a machine, and staying on the line is the safer default.
-- **Very short calls.** If the session ends before a decision can be taken, no message is emitted.
+- **The window starts when the callee first speaks.** Ringing, connection delay and any leading silence do not count. The decision is taken once five seconds of audio have been heard after that first speech.
+- **The callee says nothing at all.** No message is emitted: silence never starts the window and is not evidence of a machine. Apply your own timeout if you need to give up on a silent line.
+- **Very short calls.** If the session ends before the five seconds have elapsed, no message is emitted.
+- **Transcripts are not ordered against it.** Partial or final transcripts may arrive before the decision.
 - **No transcription required.** The detection does not depend on what was said, so it behaves the same across languages and adds no transcription latency.
 
 ### Limits
