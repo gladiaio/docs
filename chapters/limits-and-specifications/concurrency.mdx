@@ -13,18 +13,15 @@ In order to provide a smooth experience and optimal performance for all users, G
 
 ## Hitting your concurrency limit
 
-When you hit your concurrent session limit:
-
-- **Live (WebSocket)**: the API returns a **429** status code.
-- **Pre-recorded (async)**: the API returns an error indicating **too many parallel jobs**.
+When you hit your concurrent session limit, both the **Live** and **Pre-recorded** APIs return a **429** status code.
 
 <Tip>
-Prefer the [official SDK](/chapters/how-to-use-gladia/sdk) for Live integrations: it already handles the WebSocket lifecycle (reconnection, session continuity, retries, and related timing). See the [Live quickstart](/chapters/live-stt/quickstart).
+Prefer the [official SDK](/chapters/how-to-use-gladia/sdk) for Live integrations: it already handles the WebSocket lifecycle (reconnection, session continuity, retries, buffering, and related timing). See the [Live quickstart](/chapters/live-stt/quickstart).
 </Tip>
 
-### Default values (custom plans)
+### Default values
 
-| API                   | Default (custom plans)           |
+| API                   | Default         |
 | --------------------- | -------------------------------- |
 | Live (WebSocket)      | 30 concurrent sessions           |
 | Pre-recorded (async)  | 25 parallel jobs + 300 queued    |
