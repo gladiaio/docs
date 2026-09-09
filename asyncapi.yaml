@@ -32,6 +32,8 @@ channels:
         $ref: "#/components/messages/speechStart"
       speechEnd:
         $ref: "#/components/messages/speechEnd"
+      answeringMachine:
+        $ref: "#/components/messages/answeringMachine"
       translation:
         $ref: "#/components/messages/translation"
       namedEntityRecognition:
@@ -103,6 +105,12 @@ operations:
       $ref: "#/channels/liveTranscription"
     messages:
       - $ref: "#/channels/liveTranscription/messages/speechEnd"
+  onAnsweringMachine:
+    action: send
+    channel:
+      $ref: "#/channels/liveTranscription"
+    messages:
+      - $ref: "#/channels/liveTranscription/messages/answeringMachine"
   onTranslation:
     action: send
     channel:
@@ -259,6 +267,13 @@ components:
       summary: Indicates the end of detected speech activity.
       payload:
         $ref: "#/components/schemas/SpeechEventMessageEnd"
+    answeringMachine:
+      name: answering_machine
+      title: Answering Machine
+      contentType: application/json
+      summary: Reports whether the callee is a human or an answering machine.
+      payload:
+        $ref: "#/components/schemas/AnsweringMachineMessage"
     translation:
       name: translation
       title: Translation
@@ -593,6 +608,63 @@ components:
           type: speech_start
           data:
             time: 1.24
+            channel: 0
+
+    AnsweringMachineMessage:
+      title: Answering Machine
+      type: object
+      required: [session_id, created_at, type, data]
+      properties:
+        session_id: { $ref: "#/components/schemas/UUID" }
+        created_at: { $ref: "#/components/schemas/ISODateTime" }
+        type: { type: string, const: answering_machine }
+        data:
+          type: object
+          required: [kind, confidence, time]
+          properties:
+            kind:
+              type: string
+              enum: [human, machine]
+              description: Whether a person picked up or the call reached an answering machine.
+            confidence:
+              type: number
+              minimum: 0
+              maximum: 1
+              description: >-
+                How machine-like the call opening was, between 0 and 1. This is a ranking
+                score, not a calibrated probability: compare it against a threshold tuned on
+                your own traffic rather than reading it as a likelihood.
+            time:
+              type: number
+              description: >-
+                Position in the audio stream, in seconds from the start of the session, at
+                which the decision was taken. Measured on the audio timeline and sharing the
+                same reference as speech_start, speech_end and transcript, so all messages can
+                be ordered against each other. Use created_at to correlate with wall-clock logs.
+            channel:
+              type: integer
+              description: Audio channel index (0-based) for which the decision applies.
+          description: Outcome of answering machine detection for the session.
+      description: >-
+        Reports whether the callee is a human or an answering machine. Emitted at most once
+        per session, before the first transcript, and never revised. Does not require
+        transcription, so it behaves the same across languages.
+      examples:
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2026-09-09T12:34:11Z"
+          type: answering_machine
+          data:
+            kind: machine
+            confidence: 0.78
+            time: 5.24
+            channel: 0
+        - session_id: "550e8400-e29b-41d4-a716-446655440000"
+          created_at: "2026-09-09T12:34:11Z"
+          type: answering_machine
+          data:
+            kind: human
+            confidence: 0.12
+            time: 5.31
             channel: 0
 
     TranslationMessage:
