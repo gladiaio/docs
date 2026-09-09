@@ -19,7 +19,7 @@ You receive an `answering_machine` message once per session:
   "data": {
     "kind": "machine",
     "confidence": 0.78,
-    "time": 5.0,
+    "time": 5.24,
     "channel": 0
   }
 }
@@ -29,8 +29,12 @@ You receive an `answering_machine` message once per session:
 |---|---|
 | `kind` | `human` or `machine` |
 | `confidence` | Score between 0 and 1 indicating how machine-like the call opening was |
-| `time` | Seconds from session start at which the decision was taken |
+| `time` | Position in the audio stream, in seconds from the start of the session, at which the decision was taken |
 | `channel` | Audio channel index the decision applies to |
+
+<Note>
+`time` is measured on the **audio timeline**, not the clock. It uses the same reference as `speech_start`, `speech_end` and `transcript`, so you can order all of them against each other. If you push audio faster than real time, `time` still refers to the audio position, so use `created_at` when you need to correlate with your own logs.
+</Note>
 
 <Warning>
 `confidence` is a **ranking score, not a probability**. A value of `0.7` does not mean "70% chance this is a machine". Use it to compare against a threshold you tune on your own traffic, not as a calibrated likelihood.
