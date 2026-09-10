@@ -11,7 +11,27 @@ Gladia can automatically detect the spoken language from audio, either within a 
 
 ## How to use language detection ?
 
-You can either omit `language_config.languages` to search across all supported languages, or pass a constrained list:
+- You **know** the language of the audio ahead of time.
+- The audio is **monolingual** (single language throughout).
+- You want the **fastest, most accurate** results.
+
+```json
+{
+  "language_config": {
+    "languages": ["en"],
+    "code_switching": false
+  }
+}
+```
+
+## When to use auto-detection
+
+- You process audio in **many different languages** and don't know which one beforehand.
+- You want Gladia to pick the language automatically.
+
+## How to use language detection
+
+You can either omit `language_config.languages` (or pass an empty list) to search across all supported languages, or pass a constrained list:
 
 <CodeGroup>
 
@@ -41,16 +61,26 @@ You can either omit `language_config.languages` to search across all supported l
 }
 ```
 
-
-
 </CodeGroup>
 
-The detected `language` is returned on each utterance and can vary over time if you also enable <a href="/chapters/language/code-switching">code switching</a>.
+The detected `language` is returned on each utterance and can vary over time if you also enable [code switching](/chapters/language/code-switching).
+
+<Warning>
+  When `code_switching` is `false` and no language is set, the language is
+  detected on the **first utterance** and reused for the rest of the session or
+  file. If the beginning of your audio contains silence, music, or a different
+  language than the main content, this can lead to incorrect detection for the
+  whole transcription.
+</Warning>
+
+<Tip>
+  Even when using auto-detection, pass a **small list of likely languages** in
+  `languages` to constrain the search. This improves both accuracy and
+  processing time.
+</Tip>
 
 ## Tips
 
-- Use <a href="/chapters/language/supported-languages">supported languages</a> to pick valid ISO 639-1 codes.
+- Use [supported languages](/chapters/language/supported-languages) to pick valid ISO 639-1 codes.
 - Combine with `messages_config.receive_partial_transcripts` in real time to get immediate feedback.
-- For mixed-language conversations, enable <a href="/chapters/language/code-switching">code switching</a>.
-
-
+- For mixed-language conversations, enable [code switching](/chapters/language/code-switching).
