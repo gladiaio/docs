@@ -8,12 +8,12 @@ description: Best parameter configurations for realtime transcription depending 
 
 Optimize for **low latency** and fast turn-taking.
 
-| Parameter                                     | Recommended value | Why                                      |
-| --------------------------------------------- | ----------------- | ---------------------------------------- |
-| `endpointing`                                 | `0.05` - `0.1`    | Closes utterances fast.                  |
-| `maximum_duration_without_endpointing`        | `15`              | Caps very long open utterances.          |
-| `messages_config.receive_partial_transcripts` | `true`            | Lets the agent process speech early.     |
-| `realtime_processing.custom_vocabulary`       | `true`            | Product names and action keywords.       |
+| Parameter                                     | Recommended value | Why                                                                                                                                                                                                                   |
+| --------------------------------------------- | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `endpointing`                                 | `0.05` - `0.1`    | Closes utterances fast, keeping turn-taking snappy. See [Endpointing](/chapters/live-stt/features/endpointing).                                                                                                       |
+| `maximum_duration_without_endpointing`        | `15`              | Prevents very long utterances from staying open without cutting off the conversation.                                                                                                                                 |
+| `messages_config.receive_partial_transcripts` | `true`            | Enables interim results so the agent can start processing early. Use the `speech_stop` event to know when the user has finished speaking. See [Partial transcripts](/chapters/live-stt/features/partial-transcripts). |
+| `realtime_processing.custom_vocabulary`       | `true`            | Add product names and action keywords so the agent can react accurately.                                                                                                                                              |
 
 <Tip>
   If utterances get cut off mid-sentence, raise `endpointing` slightly.
