@@ -5,9 +5,18 @@ description: "Transcribe multi-channel audio and tag utterances by channel"
 
 Gladia supports multi-channel audio for both pre-recorded files and live streams. Each utterance in the result includes a `channel` key corresponding to the source channel.
 
+| Mode                 | Max channels       | How to configure                                                  |
+| -------------------- | ------------------ | ----------------------------------------------------------------- |
+| Pre-recorded (async) | 2 (mono or stereo) | Detected automatically from the file                              |
+| Live (realtime)      | 8                  | Set `channels` in the [init request](/api-reference/v2/live/init) |
+
 ## Pre-recorded
 
-If your audio file has multiple distinct channels, Gladia will transcribe them automatically.
+Pre-recorded transcription supports **up to 2 channels** (mono or stereo). If your audio file has two distinct channels, Gladia will detect and transcribe them automatically.
+
+<Warning>
+  Files with more than 2 channels are not supported for pre-recorded transcription.
+</Warning>
 
 <Warning>
 Sending an audio with two different channels (with different content) will be billed as two audios. If your audio has multiple channels with the same content, it will only be billed once.
@@ -15,7 +24,7 @@ Sending an audio with two different channels (with different content) will be bi
 
 ## Live transcription
 
-For live audio streams, specify the channel count in your [init request](/api-reference/v2/live/init):
+For live audio streams, you must supply the channel count in your [init request](/api-reference/v2/live/init). The `channels` value must be an integer from **1 to 8**.
 
 ```json
 {

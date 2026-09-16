@@ -432,7 +432,7 @@ socket.addEventListener("message", function(event) {
 
 ## Sending multiple audio tracks in real-time
 
-If you have multiple audio sources (like different participants in a conversation) that you need to transcribe simultaneously, you can merge these separate audio tracks into a single multi-channel audio stream and send it over one WebSocket connection.
+If you have multiple audio sources (like different participants in a conversation) that you need to transcribe simultaneously, you can merge these separate audio tracks into a single multi-channel audio stream and send it over one WebSocket connection. Live sessions support up to **8 channels**; set the `channels` value in your [init request](/api-reference/v2/live/init). See [Multiple channels](/chapters/limits-and-specifications/multiple-channels).
 
 ### Merging multiple audio tracks into one multi-channel WebSocket
 
