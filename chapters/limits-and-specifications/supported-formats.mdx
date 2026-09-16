@@ -24,6 +24,8 @@ Those limits will be gradually lifted to ensure the full stability and performan
 
 - **Realtime session duration**: For [live (realtime) transcription](/chapters/live-stt/quickstart), a single WebSocket session cannot exceed **3 hours**. The session will be terminated after 3 hours; for longer events, start a new session before reaching the limit.
 
+- **Channels**: Pre-recorded jobs support up to **2 channels** (mono or stereo). Live sessions support up to **8 channels**, and the `channels` value must be set in the [init request](/api-reference/v2/live/init). See [Multiple channels](/chapters/limits-and-specifications/multiple-channels).
+
 - **File size**: Audio files must not exceed 1000 MB in size. Larger files will not be accepted by the API.
 
 ### Splitting oversize audio files
