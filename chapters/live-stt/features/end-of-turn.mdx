@@ -1,0 +1,76 @@
+---
+title: "Semantic end-of-turn"
+description: "Finalize a turn when the speaker has actually finished, not just when they go quiet"
+---
+
+Semantic end-of-turn detection decides that a speaker has finished their turn based on **what they said**, not only on how long they stayed silent. It runs on top of the usual [endpointing](https://docs.gladia.io/chapters/live-stt/features/endpointing) and lets the API hold a turn open through natural mid-sentence pauses, then finalize as soon as the thought is complete.
+
+It is designed for conversational, turn-taking use cases — voice agents, IVR, live assistants — where cutting a speaker off on a brief hesitation ("I'd like… uh… a coffee, please") feels broken.
+
+### Endpointing vs end-of-turn
+
+Both answer the same question — *has this turn finished?* — but they look at different signals.
+
+**Endpointing** is **time-based**. It waits for a fixed amount of *silence* and, once that silence passes, closes the turn. It is simple and predictable, but silence is only a proxy for "finished": a speaker who pauses to think looks exactly like a speaker who is done. Set the window short and you cut people off mid-thought; set it long and every turn feels sluggish.
+
+**End-of-turn** is **meaning-based**. A model listens to the content of the turn and judges whether the speaker has actually reached the end of what they were saying. A pause in the middle of a sentence no longer forces a cut — the turn stays open until the utterance is genuinely complete, or a safety limit is reached.
+
+The two are complementary, not exclusive: endpointing remains the silence-based safety net, and end-of-turn adds a layer of semantic judgment on top of it.
+
+| | Endpointing | Semantic end-of-turn |
+|---|---|---|
+| Decides on | Duration of silence | Whether the thought is complete |
+| Mid-sentence pause | May cut the speaker off | Held open until the turn is complete |
+| Best for | Simple, predictable segmenting | Natural turn-taking (voice agents, IVR) |
+| Tuning | One silence window | Sensitivity + safety guard |
+
+In short: **endpointing asks "has it been quiet long enough?"; end-of-turn asks "has the speaker actually finished?"**
+
+### How to enable it
+
+Add an `end_of_turn` object to your live configuration. Omit it and the session uses endpointing only (unchanged behaviour).
+
+```json
+{
+  "end_of_turn": {
+    "threshold": 0.5,
+    "max_wait_secs": 8
+  }
+}
+```
+
+### Parameters
+
+**threshold** \
+Definition: how confident the model must be that the turn is complete before finalizing it. Higher = the model waits until it is more certain the speaker is done.
+- Default: 0.5
+- Range: 0 to 1
+
+Effect:
+- Lower value = finalizes more eagerly (snappier turn-taking, but more likely to close on a natural pause).
+- Higher value = waits for stronger evidence the turn is over (fewer premature cuts, slightly higher latency).
+
+**emission_threshold** \
+Definition: the confidence at which the `speech_turn_end` event is sent to your client, independent of the value that finalizes the utterance. Lets you surface an early "the speaker is wrapping up" signal to drive your UI or agent while keeping finalization conservative.
+- Default: follows `threshold`
+- Range: 0 to 1
+
+**max_wait_secs** \
+Definition: a safety limit. If the model never declares the turn complete, the utterance is finalized anyway once this much speech has elapsed, so a turn can never hang.
+- Default: 8
+- Range: 1 to 30
+
+**probe_base_ms** \
+Definition: how often the model checks, while the speaker is still talking, whether the turn is wrapping up. This is what lets partial transcripts speed up as the end approaches.
+- Default: 900
+- Range: 100 to 5000
+
+Effect:
+- Lower value = more responsive turn-taking and lower latency to the final transcript, but a higher chance of finalizing on a brief mid-sentence pause.
+- Higher value = more conservative, less likely to cut the speaker off.
+- Keep the default unless you have a specific reason to change it; going near the minimum is not recommended for general use.
+
+### Choosing between them
+
+- **Meetings, lectures, captioning** — endpointing alone is usually enough; you want complete, clean segments and cadence matters less.
+- **Voice agents, IVR, live assistants** — enable end-of-turn for natural turn-taking that survives hesitations, and tune `threshold` for how eagerly the agent should take its turn.
