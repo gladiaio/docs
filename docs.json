@@ -115,7 +115,8 @@
           {
             "group": "Developer tools",
             "pages": [
-              "chapters/developer-tools/gladia-cli"
+              "chapters/developer-tools/gladia-cli",
+              "chapters/developer-tools/gladia-skills"
             ]
           },
           {
