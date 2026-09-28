@@ -41,3 +41,7 @@ When enabled, transcript messages include the detected `language` per utterance 
 
 - Limit the number of languages to those you expect.
 - Combine with [custom vocabulary](/chapters/audio-intelligence/custom-vocabulary) per language for domain terms.
+- Use [supported languages](/chapters/language/supported-languages) to pick valid ISO 639-1 codes.
+- Check [model selection](/chapters/introduction/models) for language and code-switching availability by model. Live transcription uses Solaria-1.
+- Multiple languages or code switching can reduce [partial transcript](/chapters/live-stt/features/partial-transcripts) accuracy — keep the expected-language list focused.
+- Supported languages describe coverage, not guaranteed accuracy on your production audio. Review [async benchmarks](https://www.gladia.io/competitors/benchmarks) with their model and dataset limits, then evaluate with the [blind comparison tool](https://www.gladia.io/compare-stt-apis) and [pricing](https://www.gladia.io/pricing).
