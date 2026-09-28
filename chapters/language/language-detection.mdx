@@ -12,6 +12,13 @@ Automatic language detection identifies the spoken language in audio so transcri
 
 ## How to use language detection ?
 
+Choose the `language_config` that matches your audio:
+
+- **One known language:** Set `languages` to that language code (for example `["en"]`) and keep `code_switching` off.
+- **Unknown language from a small set:** Pass the candidate languages you expect. A short list is usually more accurate and faster than searching all supported languages.
+- **Conversations that change languages:** Enable [code switching](/chapters/language/code-switching) and provide a nonempty expected-language list.
+- **Detection vs translation:** Language detection selects the spoken language for transcription. Translating the transcript into another language is a separate [translation](/chapters/audio-intelligence/translation) feature.
+
 You can either omit `language_config.languages` to search across all supported languages, or pass a constrained list:
 
 <CodeGroup>
