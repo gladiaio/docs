@@ -1,7 +1,7 @@
 ---
-title: 'Speaker Diarization'
+title: 'Speaker diarization API: configuration and output'
 sidebarTitle: Diarization
-description: 'Detect speakers and understand who said what.'
+description: 'Enable speaker diarization for pre-recorded audio in Gladia. Configure speaker-count hints and read speaker labels, timestamps and limitations.'
 ---
 
 import PrerecordedBadge from "/snippets/badges/prerecorded.mdx"
@@ -9,7 +9,7 @@ import PrerecordedBadge from "/snippets/badges/prerecorded.mdx"
 <PrerecordedBadge />
 
 
-Speaker diarization is the process of detecting multiple speakers in an audio, and understanding which parts of the transcription each speaker said.
+Speaker diarization assigns speaker labels to segments of pre-recorded audio so you can identify who spoke when. In Gladia, enable `diarization` on the pre-recorded transcription request. The response associates each utterance with a speaker index in order of first appearance. These labels distinguish speakers within the recording and do not establish a person's identity.
 
 ## Enabling diarization
 
@@ -49,12 +49,18 @@ Speakers will be assigned indexes by **order of appearance** (i.e. the 1st speak
 
 ## Improving diarization accuracy
 
-You can improve the accuracy of the diarization by providing the model with hints regarding the expected number or lower/upper bounds ofspeakers using the `diarization_config.num_of_speakers`, `diarization_config.min_speakers` and `diarization_config.max_speakers`  parameters respectively.
-
-**Important:** These parameters are hints, not hard constraints. The actual number of speakers detected by the model may not comply with the provided parameters.
+Provide speaker-count hints with `diarization_config.number_of_speakers`, `diarization_config.min_speakers` and `diarization_config.max_speakers`. These specify the expected count, lower hint and upper hint respectively. They are hints, not hard constraints; the detected count may differ.
 
 | Key | Type | Description |
 | --- | --- | --- |
-| `diarization_config.number_of_speakers` | number | Guiding number of speakers - instructs the model to detect an exact number of speakers in the audio. |
-| `diarization_config.min_speakers` | number | Instructs the model to detect no less than this number of speakers in the audio. |
-| `diarization_config.max_speakers` | number | Causes the model to detect no more than this number of speakers in the audio. |
+| `diarization_config.number_of_speakers` | number | Expected speaker-count hint. It does not guarantee that the detected count matches this value. |
+| `diarization_config.min_speakers` | number | Lower speaker-count hint, not an enforced minimum. |
+| `diarization_config.max_speakers` | number | Upper speaker-count hint, not an enforced maximum. |
+
+## Diarization scope and evaluation
+
+This guide covers speaker diarization for **pre-recorded audio** only.
+
+Speaker diarization, transcription accuracy, and channel identification are different capabilities. For concept definitions, see [speaker diarization concepts](https://www.gladia.io/blog/what-is-diarization).
+
+Async accuracy comparisons use the model and dataset scope described in the [async benchmark methodology](https://www.gladia.io/competitors/benchmarks). Use the [blind API comparison](https://www.gladia.io/compare-stt-apis) tool and check [pricing](https://www.gladia.io/pricing) for current plans. Speaker-count hints do not guarantee a specific detected speaker count.
