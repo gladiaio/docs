@@ -38,4 +38,6 @@ To distinguish between them, the message payload includes the [`is_final`](/api-
 
 In the same utterance, the partial and final transcripts share the same `data.id`.
 
+Treat that shared `data.id` as one utterance whose transcript changes over time. A newer partial replaces the previous provisional text for that utterance. When `is_final` is true, the final text replaces the provisional text. The resulting transcript contains one entry for that utterance—do not append each update as a separate line.
+
 
