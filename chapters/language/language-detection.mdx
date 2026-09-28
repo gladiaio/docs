@@ -53,12 +53,13 @@ You can either omit `language_config.languages` to search across all supported l
 
 </CodeGroup>
 
-The detected `language` is returned on each utterance and can vary over time if you also enable <a href="/chapters/language/code-switching">code switching</a>.
+The detected `language` is returned on each utterance and can vary over time if you also enable [code switching](/chapters/language/code-switching).
 
 ## Tips
 
-- Use <a href="/chapters/language/supported-languages">supported languages</a> to pick valid ISO 639-1 codes.
-- Combine with `messages_config.receive_partial_transcripts` in real time to get immediate feedback.
-- For mixed-language conversations, enable <a href="/chapters/language/code-switching">code switching</a>.
+- Use [supported languages](/chapters/language/supported-languages) to pick valid ISO 639-1 codes.
+- Check [model selection](/chapters/introduction/models) for language detection availability by model. Live transcription uses Solaria-1.
+- Multiple languages or code switching can reduce [partial transcript](/chapters/live-stt/features/partial-transcripts) accuracy — keep the expected-language list focused.
+- For mixed-language conversations, enable [code switching](/chapters/language/code-switching).
 
 
