@@ -1,6 +1,7 @@
 ---
-title: "Endpointing"
-description: "What's endpointing and how it works"
+title: "Endpointing for streaming transcription"
+description: "Configure silence thresholds and maximum utterance duration in Gladia live transcription. Understand the latency and completeness tradeoff."
+sidebarTitle: Endpointing
 ---
 
 Endpointing is the mechanism Gladia uses in live transcription to decide when a speaker has "finished" an utterance, so the API can close that utterance and emit a final transcript segment.
@@ -45,3 +46,5 @@ Definition: maximum amount of time Gladia will keep an utterance open without de
 - Range: 5 to 60
 
 Why it exists: it prevents extremely long, never-ending utterances (for example: constant background noise, a speaker who never pauses, or long monologues), which is important for downstream UX and processing stability.
+
+`endpointing` closes an utterance after the configured silence; `maximum_duration_without_endpointing` forces closure when speech continues without enough silence. Neither setting guarantees that a final transcript arrives within that many seconds: transport and processing delay still apply after the utterance is closed. Configure both on the [live initialization](/api-reference/v2/live/init) request.
