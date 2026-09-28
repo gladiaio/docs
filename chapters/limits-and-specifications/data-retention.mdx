@@ -13,8 +13,9 @@ Gladia's data retention depends on the plan and the type of data. Audio and tran
 
 The duration for which your data is stored depends on your plan type. You have two main options for data retention:
 
-- **Standard data retention:** Data is stored according to the default windows below (by plan and data type). Audio files and transcripts remain retrievable through the API and the [Gladia playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up) for that window. Enterprise customers can request a custom retention period. The minimum custom value is 0, which means data is deleted within 24 hours.
-- **Zero data retention:** Data storage is minimized at all stages, avoiding temporary storage whenever possible. All data is deleted immediately after processing.
+- **Standard retention:** Audio and transcripts remain retrievable during the default retention window for your plan and data type.
+- **Custom retention (Enterprise):** Enterprise customers can request a custom period. A custom value of zero means deletion within 24 hours; it does not mean immediate deletion.
+- **Zero data retention (Enterprise):** This separate option uses ephemeral processing and immediate deletion after processing, as described below. It is not the same as a custom retention value of zero.
 
 <Info>
 Only Enterprise users are eligible for custom data retention and the zero data retention option.
