@@ -55,3 +55,5 @@ When Zero Data Retention is enabled, Gladia processes data ephemerally; no data 
 - **Transcription results delivered only via callbacks**: The only way to receive transcription results is through callbacks; they cannot be retrieved by any other means.
 
 Once the result is delivered, the audio, transcript, and metadata cannot be accessed.
+
+For pre-recorded transcription with zero data retention, use an external audio URL and deliver results through a callback. File upload is unavailable under zero data retention, and results cannot be retrieved later through the API or playground. See the [pre-recorded request reference](/api-reference/v2/pre-recorded/init).
