@@ -79,7 +79,7 @@ Once a job is accepted, Gladia continues trying to process it on our side for **
 | --- | --- |
 | `POST` returned **200**, or you received **`transcription.created`** | Do **not** resubmit. Poll / wait for success or error on that job `id`. |
 | `POST` failed (timeout, connection error, **5xx**, no response) **and** no `transcription.created` | Treat as **not accepted**. Safe to retry the `POST` with backoff. |
-| [`transcription.error`](/api-reference/v2/pre-recorded/webhook/error) / job status **`error`** | The accepted job failed. You **may** submit again, but check the error first — retry only when it makes sense for that failure. |
+| [`transcription.error`](/api-reference/v2/pre-recorded/webhook/error) webhook, [`transcription.error`](/api-reference/v2/pre-recorded/callback/error) callback, or job status **`error`** | The accepted job failed. You **may** submit again, but check the error first — retry only when it makes sense for that failure. |
 | Job status is **`queued`** or **`processing`** | Do **not** resubmit. Keep waiting on the same `id`. |
 | HTTP **429** (concurrency / rate limit) | Back off and retry later. See [Concurrency and rate limits](/chapters/limits-and-specifications/concurrency). |
 
@@ -89,19 +89,19 @@ Once a job is accepted, Gladia continues trying to process it on our side for **
 
 ### Errors and when to retry
 
-A [`transcription.error`](/api-reference/v2/pre-recorded/webhook/error) webhook (or an `error` status on [GET](/api-reference/v2/pre-recorded/get) / [callback](/api-reference/v2/pre-recorded/callback/error)) means processing failed for that job ID. At that point a new `POST` is allowed — but **not every error is worth retrying**:
+A `transcription.error` event — via [webhook](/api-reference/v2/pre-recorded/webhook/error) or [callback](/api-reference/v2/pre-recorded/callback/error) — or an `error` status on [GET](/api-reference/v2/pre-recorded/get) means processing failed for that job ID. At that point a new `POST` is allowed — but **not every error is worth retrying**:
 
 - **Transient / infrastructure-style failures** (timeouts, temporary 5xx, short-lived capacity issues): retry with backoff can help
 - **Request or media issues** (invalid / unreachable audio URL, unsupported or corrupt file, bad parameters): fix the input first — resubmitting the same payload will fail again and still create a new billable job if accepted
 
-Inspect the error details (webhook/callback payload and/or GET on the job `id`) before deciding.
+Inspect the error details (webhook or callback payload, and/or GET on the job `id`) before deciding.
 
 ### Recommended client pattern
 
 1. Call `POST /v2/pre-recorded`
 2. On **200** *or* `transcription.created`, store the job `id` and stop submitting that audio
 3. Complete via poll, success/error webhook, or callback
-4. Only re-POST if acceptance failed (no 200 and no `transcription.created`), or after **`transcription.error`** / status `error` **when the error is retryable**
+4. Only re-POST if acceptance failed (no 200 and no `transcription.created`), or after **`transcription.error`** (webhook or callback) / status `error` **when the error is retryable**
 
 Prefer exponential backoff with jitter on transport / 5xx / 429 failures. Avoid tight loops (for example, retrying every few minutes while the original job is still in flight).
 
@@ -128,3 +128,4 @@ Each successful `POST` creates a **new** job and is **billed separately**, even 
 - [GET /v2/pre-recorded/:id](/api-reference/v2/pre-recorded/get)
 - [`transcription.created` webhook](/api-reference/v2/pre-recorded/webhook/created)
 - [`transcription.error` webhook](/api-reference/v2/pre-recorded/webhook/error)
+- [`transcription.error` callback](/api-reference/v2/pre-recorded/callback/error)
