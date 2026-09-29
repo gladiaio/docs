@@ -6,15 +6,13 @@ description: "How pre-recorded jobs move through the Gladia pipeline, concurrenc
 
 import PlanConcurrencyLimits from "/snippets/plan-concurrency-limits.mdx";
 
-> Understand where time is spent on async jobs — and when you should (or should not) resubmit
-
 When you call Gladia’s pre-recorded API, each request passes through several internal stages before the final transcript is ready. Knowing these steps helps you interpret response times, tune your configuration, and avoid retry patterns that create duplicate jobs and extra billing.
 
 ## The transcription pipeline
 
 Each pre-recorded request follows the same sequence.
 
-<Steps>
+<Steps titleSize="h3">
   <Step title="Queue (job scheduling)" icon="list">
     Before processing starts, the job enters a queue. Wait time depends on:
 
@@ -97,7 +95,7 @@ Inspect the error details (webhook or callback payload, and/or GET on the job `i
 
 ## Recommended client pattern
 
-<Steps>
+<Steps titleSize="h3">
   <Step title="Submit the job">
     Call `POST /v2/pre-recorded`.
   </Step>
