@@ -20,7 +20,7 @@ Prefer the [official SDK](/chapters/how-to-use-gladia/sdk) for Live integrations
 </Tip>
 
 <Note>
-For pre-recorded jobs, a **200** on `POST` means the job was accepted — do not resubmit while it is still queued or processing. See [Transcription process & retry policy](/chapters/pre-recorded-stt/transcription-process).
+For pre-recorded jobs, a **200** on `POST` or a [`transcription.created`](/api-reference/v2/pre-recorded/webhook/created) webhook means the job was accepted — do not resubmit while it is still queued or processing. See [Transcription process & retry policy](/chapters/pre-recorded-stt/transcription-process).
 </Note>
 
 ### Default values

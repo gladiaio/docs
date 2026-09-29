@@ -62,28 +62,37 @@ When concurrency limits are reached, additional requests wait until a slot is fr
 
 ## Retry policy: when to resubmit (and when not to)
 
-Pre-recorded transcription is **asynchronous**. A successful `POST /v2/pre-recorded` (**HTTP 200**) means Gladia has **accepted** the job and placed it in the queue above. Processing is not finished when that response returns.
+Pre-recorded transcription is **asynchronous**. The job is **accepted** when either of these happens:
+
+- Your `POST /v2/pre-recorded` returns **HTTP 200** (with a job `id`)
+- You receive the [`transcription.created`](/api-reference/v2/pre-recorded/webhook/created) webhook
+
+Both mean Gladia has queued the job. Processing is not finished yet.
 
 Once a job is accepted, Gladia continues trying to process it on our side for **up to 2 hours** after we receive the request. During incidents or high load, queue and processing times can be longer than usual — a job that is still `queued` or `processing` is not a failed submission.
 
 <Warning>
-  **Do not resubmit** the same audio if your POST already returned 200. Keep the returned job ID and wait for completion via [polling](/api-reference/v2/pre-recorded/get), [webhook](/chapters/pre-recorded-stt/quickstart), or [callback](/api-reference/v2/pre-recorded/init). Re-POSTing does not make the transcript arrive faster: it creates a **new** job that competes for the same capacity and can worsen the backlog.
+  **Do not resubmit** the same audio if you already got a **200** or a `transcription.created` webhook. Keep that job ID and wait for completion via [polling](/api-reference/v2/pre-recorded/get), [success/error webhooks](/chapters/pre-recorded-stt/quickstart), or [callback](/api-reference/v2/pre-recorded/init). Re-POSTing does not make the transcript arrive faster: it creates a **new** job that competes for the same capacity and can worsen the backlog.
 </Warning>
 
 | Situation | What to do |
 | --- | --- |
-| `POST` returned **200** | Do **not** resubmit. Poll / wait for webhook or callback on that job `id`. |
-| `POST` failed (timeout, connection error, **5xx**, no response) | Treat as **not accepted**. Safe to retry the `POST` with backoff. |
-| Job status is **`error`** | Safe to submit again if you still need the transcript. |
+| `POST` returned **200**, or you received **`transcription.created`** | Do **not** resubmit. Poll / wait for success or error on that job `id`. |
+| `POST` failed (timeout, connection error, **5xx**, no response) **and** no `transcription.created` | Treat as **not accepted**. Safe to retry the `POST` with backoff. |
+| Job status is **`error`** (or error webhook / callback) | Safe to submit again if you still need the transcript. |
 | Job status is **`queued`** or **`processing`** | Do **not** resubmit. Keep waiting on the same `id`. |
 | HTTP **429** (concurrency / rate limit) | Back off and retry later. See [Concurrency and rate limits](/chapters/limits-and-specifications/concurrency). |
+
+<Tip>
+  If the HTTP client times out but Gladia still accepted the job, you may still receive `transcription.created`. Prefer that webhook (or a follow-up GET by `id` if you already stored one) before re-POSTing the same audio.
+</Tip>
 
 ### Recommended client pattern
 
 1. Call `POST /v2/pre-recorded`
-2. On **200**, store the job `id` and stop submitting that audio
-3. Complete via poll, webhook, or callback
-4. Only re-POST if acceptance failed, or the job reached **`error`**
+2. On **200** *or* `transcription.created`, store the job `id` and stop submitting that audio
+3. Complete via poll, success/error webhook, or callback
+4. Only re-POST if acceptance failed (no 200 and no `transcription.created`), or the job reached **`error`**
 
 Prefer exponential backoff with jitter on transport / 5xx / 429 failures. Avoid tight loops (for example, retrying every few minutes while the original job is still in flight).
 
@@ -108,3 +117,4 @@ Each successful `POST` creates a **new** job and is **billed separately**, even 
 - [Supported files & duration](/chapters/limits-and-specifications/supported-formats)
 - [POST /v2/pre-recorded](/api-reference/v2/pre-recorded/init)
 - [GET /v2/pre-recorded/:id](/api-reference/v2/pre-recorded/get)
+- [`transcription.created` webhook](/api-reference/v2/pre-recorded/webhook/created)
