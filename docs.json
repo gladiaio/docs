@@ -40,6 +40,7 @@
               "chapters/how-to-use-gladia/sdk",
               "chapters/how-to-use-gladia/playground",
               "chapters/how-to-use-gladia/cli",
+              "chapters/how-to-use-gladia/mcp",
               "chapters/how-to-use-gladia/benchmarking",
               "chapters/how-to-use-gladia/gladia-flow"
             ]
@@ -115,7 +116,8 @@
           {
             "group": "Developer tools",
             "pages": [
-              "chapters/developer-tools/gladia-cli"
+              "chapters/developer-tools/gladia-cli",
+              "chapters/developer-tools/gladia-skills"
             ]
           },
           {
