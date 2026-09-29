@@ -131,11 +131,29 @@ Each successful `POST` creates a **new** job and is **billed separately**, even 
 
 ## Related
 
-[<Badge icon="play" color="blue" size="lg">Quickstart</Badge>](/chapters/pre-recorded-stt/quickstart)
-[<Badge icon="gauge-high" color="blue" size="lg">Concurrency</Badge>](/chapters/limits-and-specifications/concurrency)
-[<Badge icon="file-audio" color="blue" size="lg">Supported files</Badge>](/chapters/limits-and-specifications/supported-formats)
-[<Badge icon="paper-plane" color="blue" size="lg">POST /v2/pre-recorded</Badge>](/api-reference/v2/pre-recorded/init)
-[<Badge icon="download" color="blue" size="lg">GET /v2/pre-recorded/:id</Badge>](/api-reference/v2/pre-recorded/get)
-[<Badge icon="bell" color="green" size="lg">transcription.created</Badge>](/api-reference/v2/pre-recorded/webhook/created)
-[<Badge icon="triangle-exclamation" color="orange" size="lg">error webhook</Badge>](/api-reference/v2/pre-recorded/webhook/error)
-[<Badge icon="reply" color="orange" size="lg">error callback</Badge>](/api-reference/v2/pre-recorded/callback/error)
+<CardGroup cols={2}>
+  <Card title="Pre-recorded quickstart" icon="play" href="/chapters/pre-recorded-stt/quickstart">
+    Upload, create a job, poll or use webhooks/callbacks
+  </Card>
+  <Card title="Concurrency & rate limits" icon="gauge-high" href="/chapters/limits-and-specifications/concurrency">
+    Plan limits, 429s, and queue capacity
+  </Card>
+  <Card title="Supported files & duration" icon="file-audio" href="/chapters/limits-and-specifications/supported-formats">
+    Formats, conversion time, and duration limits
+  </Card>
+  <Card title="POST /v2/pre-recorded" icon="paper-plane" href="/api-reference/v2/pre-recorded/init">
+    Initiate an async transcription job
+  </Card>
+  <Card title="GET /v2/pre-recorded/:id" icon="download" href="/api-reference/v2/pre-recorded/get">
+    Poll job status and results
+  </Card>
+  <Card title="transcription.created" icon="bell" href="/api-reference/v2/pre-recorded/webhook/created">
+    Webhook when a job is accepted
+  </Card>
+  <Card title="transcription.error (webhook)" icon="triangle-exclamation" href="/api-reference/v2/pre-recorded/webhook/error">
+    Webhook when processing fails
+  </Card>
+  <Card title="transcription.error (callback)" icon="reply" href="/api-reference/v2/pre-recorded/callback/error">
+    Callback when processing fails
+  </Card>
+</CardGroup>
