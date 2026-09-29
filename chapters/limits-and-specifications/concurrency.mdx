@@ -3,13 +3,11 @@ title: Concurrency and Rate limits
 description: "Rate limiting and transcriptions concurrency"
 ---
 
+import PlanConcurrencyLimits from "/snippets/plan-concurrency-limits.mdx";
+
 In order to provide a smooth experience and optimal performance for all users, Gladia provides 3 plans:
 
-| Plan type      | Usage                          | Max Transcriptions in concurrency <br />(pre-recorded) | Max Transcriptions in concurrency (Live) |
-| -------------- | ------------------------------ | ------------------------------------------------------ | ---------------------------------------- |
-| **Enterprise** | Unlimited                      | On demand                                              | On demand                                |
-| **Paid**       | Unlimited                      | 25                                                     | 30                                       |
-| **Free**       | €50 credits (one-time)         | 3                                                      | 1                                        |
+<PlanConcurrencyLimits />
 
 ## Hitting your concurrency limit
 
@@ -34,9 +32,9 @@ For pre-recorded jobs, a **200** on `POST` or a [`transcription.created`](/api-r
 Any limit above the default requires a capacity check. [Contact the sales team](https://www.gladia.io/contact) to request an increase.
 </Note>
 
-- **Usage (Free)** :
+- **Usage** :
 
-  New Free accounts receive a **one-time grant of €50 in credits**. These credits do **not** renew once consumed. When they run out, top up your wallet or upgrade to a paid plan to continue.
+  New accounts receive a **one-time grant of €50 in credits**. These credits do **not** renew once consumed. When they run out, top up your wallet or upgrade to a paid plan to continue.
 
 - **Concurrency** : (depending on free/paid tier)
 

@@ -1,9 +1,10 @@
 ---
 title: "Transcription process & retry policy"
+sidebarTitle: "Process & retries"
 description: "How pre-recorded jobs move through the Gladia pipeline, concurrency impact, and when to retry safely"
 ---
 
-# Transcription process & retry policy
+import PlanConcurrencyLimits from "/snippets/plan-concurrency-limits.mdx";
 
 > Understand where time is spent on async jobs — and when you should (or should not) resubmit
 
@@ -13,50 +14,48 @@ When you call Gladia’s pre-recorded API, each request passes through several i
 
 Each pre-recorded request follows the same sequence.
 
-### 1. Queue (job scheduling)
+<Steps>
+  <Step title="Queue (job scheduling)" icon="list">
+    Before processing starts, the job enters a queue. Wait time depends on:
 
-Before processing starts, the job enters a queue. Wait time depends on:
+    - How many transcriptions are already running on Gladia’s clusters
+    - Overall system load
+    - Your plan’s [concurrency limits](/chapters/limits-and-specifications/concurrency)
 
-- How many transcriptions are already running on Gladia’s clusters
-- Overall system load
-- Your plan’s [concurrency limits](/chapters/limits-and-specifications/concurrency)
+    Queuing keeps capacity fair across users. During high demand, or when your account hits its concurrency limit, short delays are normal — especially on short files, where queue time can be a large share of the total duration.
+  </Step>
 
-Queuing keeps capacity fair across users. During high demand, or when your account hits its concurrency limit, short delays are normal — especially on short files, where queue time can be a large share of the total duration.
+  <Step title="Pre-processing" icon="sliders">
+    Once the job is dispatched, the audio is prepared for transcription:
 
-### 2. Pre-processing
+    - Audio normalization (format, codec, bitrate, sample rate). Some formats take longer to convert — see [conversion time by format](/chapters/limits-and-specifications/supported-formats#conversion-time)
+    - Voice Activity Detection (VAD) to isolate speech from silence
+  </Step>
 
-Once the job is dispatched, the audio is prepared for transcription:
+  <Step title="Language discovery" icon="language">
+    If you do not specify a language, Gladia detects which language(s) are spoken. That improves accuracy but can add latency.
 
-- Audio normalization (format, codec, bitrate, sample rate). Some formats take longer to convert — see [conversion time by format](/chapters/limits-and-specifications/supported-formats#conversion-time)
-- Voice Activity Detection (VAD) to isolate speech from silence
+    If you already know the language, set it in `language_config.languages` to skip this phase. See [recommended parameters](/chapters/pre-recorded-stt/recommended-parameters) and [language detection](/chapters/language/language-detection).
+  </Step>
 
-### 3. Language discovery
+  <Step title="Inference" icon="microchip">
+    Speech is converted to text. Inference time scales with audio length and content complexity, and is usually the most predictable part of the pipeline.
+  </Step>
 
-If you do not specify a language, Gladia detects which language(s) are spoken. That improves accuracy but can add latency.
+  <Step title="Post-processing and formatting" icon="wand-magic-sparkles">
+    After inference, the result is refined. Depending on your configuration, this may include:
 
-If you already know the language, set it in `language_config.languages` to skip this phase. See [recommended parameters](/chapters/pre-recorded-stt/recommended-parameters) and [language detection](/chapters/language/language-detection).
-
-### 4. Inference
-
-Speech is converted to text. Inference time scales with audio length and content complexity, and is usually the most predictable part of the pipeline.
-
-### 5. Post-processing and formatting
-
-After inference, the result is refined. Depending on your configuration, this may include:
-
-- Diarization (speaker separation)
-- Sentence structuring, custom vocabulary / custom spelling
-- Other enabled [Audio Intelligence](/chapters/pre-recorded-stt/audio-intelligence) add-ons
+    - Diarization (speaker separation)
+    - Sentence structuring, custom vocabulary / custom spelling
+    - Other enabled [Audio Intelligence](/chapters/pre-recorded-stt/audio-intelligence) add-ons
+  </Step>
+</Steps>
 
 ## Concurrency and plan limits
 
 Processing speed and queue time also depend on your plan:
 
-| Plan | Usage | Max concurrent pre-recorded |
-| --- | --- | --- |
-| **Enterprise** | Unlimited | On demand |
-| **Paid** | Unlimited | 25 (plus queue capacity) |
-| **Free** | €50 credits (one-time, no renewal) | 3 |
+<PlanConcurrencyLimits />
 
 When concurrency limits are reached, additional requests wait until a slot is free. Full details: [Concurrency and rate limits](/chapters/limits-and-specifications/concurrency).
 
@@ -87,7 +86,7 @@ Once a job is accepted, Gladia continues trying to process it on our side for **
   If the HTTP client times out but Gladia still accepted the job, you may still receive `transcription.created`. Prefer that webhook (or a follow-up GET by `id` if you already stored one) before re-POSTing the same audio.
 </Tip>
 
-### Errors and when to retry
+## Errors and when to retry
 
 A `transcription.error` event — via [webhook](/api-reference/v2/pre-recorded/webhook/error) or [callback](/api-reference/v2/pre-recorded/callback/error) — or an `error` status on [GET](/api-reference/v2/pre-recorded/get) means processing failed for that job ID. At that point a new `POST` is allowed — but **not every error is worth retrying**:
 
@@ -96,12 +95,25 @@ A `transcription.error` event — via [webhook](/api-reference/v2/pre-recorded/w
 
 Inspect the error details (webhook or callback payload, and/or GET on the job `id`) before deciding.
 
-### Recommended client pattern
+## Recommended client pattern
 
-1. Call `POST /v2/pre-recorded`
-2. On **200** *or* `transcription.created`, store the job `id` and stop submitting that audio
-3. Complete via poll, success/error webhook, or callback
-4. Only re-POST if acceptance failed (no 200 and no `transcription.created`), or after **`transcription.error`** (webhook or callback) / status `error` **when the error is retryable**
+<Steps>
+  <Step title="Submit the job">
+    Call `POST /v2/pre-recorded`.
+  </Step>
+
+  <Step title="Treat acceptance as final for that audio">
+    On **200** *or* `transcription.created`, store the job `id` and stop submitting that audio.
+  </Step>
+
+  <Step title="Wait for completion">
+    Complete via poll, success/error webhook, or callback.
+  </Step>
+
+  <Step title="Retry only when needed">
+    Only re-POST if acceptance failed (no 200 and no `transcription.created`), or after **`transcription.error`** (webhook or callback) / status `error` **when the error is retryable**.
+  </Step>
+</Steps>
 
 Prefer exponential backoff with jitter on transport / 5xx / 429 failures. Avoid tight loops (for example, retrying every few minutes while the original job is still in flight).
 
@@ -121,11 +133,29 @@ Each successful `POST` creates a **new** job and is **billed separately**, even 
 
 ## Related
 
-- [Pre-recorded quickstart](/chapters/pre-recorded-stt/quickstart)
-- [Concurrency and rate limits](/chapters/limits-and-specifications/concurrency)
-- [Supported files & duration](/chapters/limits-and-specifications/supported-formats)
-- [POST /v2/pre-recorded](/api-reference/v2/pre-recorded/init)
-- [GET /v2/pre-recorded/:id](/api-reference/v2/pre-recorded/get)
-- [`transcription.created` webhook](/api-reference/v2/pre-recorded/webhook/created)
-- [`transcription.error` webhook](/api-reference/v2/pre-recorded/webhook/error)
-- [`transcription.error` callback](/api-reference/v2/pre-recorded/callback/error)
+<CardGroup cols={2}>
+  <Card title="Pre-recorded quickstart" icon="play" href="/chapters/pre-recorded-stt/quickstart">
+    Upload, create a job, poll or use webhooks/callbacks
+  </Card>
+  <Card title="Concurrency & rate limits" icon="gauge-high" href="/chapters/limits-and-specifications/concurrency">
+    Plan limits, 429s, and queue capacity
+  </Card>
+  <Card title="Supported files & duration" icon="file-audio" href="/chapters/limits-and-specifications/supported-formats">
+    Formats, conversion time, and duration limits
+  </Card>
+  <Card title="POST /v2/pre-recorded" icon="paper-plane" href="/api-reference/v2/pre-recorded/init">
+    Initiate an async transcription job
+  </Card>
+  <Card title="GET /v2/pre-recorded/:id" icon="download" href="/api-reference/v2/pre-recorded/get">
+    Poll job status and results
+  </Card>
+  <Card title="transcription.created" icon="bell" href="/api-reference/v2/pre-recorded/webhook/created">
+    Webhook when a job is accepted
+  </Card>
+  <Card title="transcription.error (webhook)" icon="triangle-exclamation" href="/api-reference/v2/pre-recorded/webhook/error">
+    Webhook when processing fails
+  </Card>
+  <Card title="transcription.error (callback)" icon="reply" href="/api-reference/v2/pre-recorded/callback/error">
+    Callback when processing fails
+  </Card>
+</CardGroup>
