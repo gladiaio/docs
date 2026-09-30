@@ -53,6 +53,7 @@
                 "expanded": true,
                 "pages": [
                   "chapters/pre-recorded-stt/quickstart",
+                  "chapters/pre-recorded-stt/transcription-process",
                   "chapters/pre-recorded-stt/audio-intelligence",
                   "chapters/pre-recorded-stt/recommended-parameters"
                 ]

@@ -3,13 +3,11 @@ title: Concurrency and Rate limits
 description: "Rate limiting and transcriptions concurrency"
 ---
 
+import PlanConcurrencyLimits from "/snippets/plan-concurrency-limits.mdx";
+
 In order to provide a smooth experience and optimal performance for all users, Gladia provides 3 plans:
 
-| Plan type      | Usage limit <br /> (per month) | Max Transcriptions in concurrency <br />(pre-recorded) | Max Transcriptions in concurrency (Live) |
-| -------------- | ------------------------------ | ------------------------------------------------------ | ---------------------------------------- |
-| **Enterprise** | Unlimited                      | On demand                                              | On demand                                |
-| **Paid**       | Unlimited                      | 25                                                     | 30                                       |
-| **Free**       | 10 Hours                       | 3                                                      | 1                                        |
+<PlanConcurrencyLimits />
 
 ## Hitting your concurrency limit
 
@@ -18,6 +16,10 @@ When you hit your concurrent session limit, both the **Live** and **Pre-recorded
 <Tip>
 Prefer the [official SDK](/chapters/how-to-use-gladia/sdk) for Live integrations: it already handles the WebSocket lifecycle (reconnection, session continuity, retries, buffering, and related timing). See the [Live quickstart](/chapters/live-stt/quickstart).
 </Tip>
+
+<Note>
+For pre-recorded jobs, a **200** on `POST` or a [`transcription.created`](/api-reference/v2/pre-recorded/webhook/created) webhook means the job was accepted — do not resubmit while it is still queued or processing. See [Transcription process & retry policy](/chapters/pre-recorded-stt/transcription-process).
+</Note>
 
 ### Default values
 
@@ -30,9 +32,9 @@ Prefer the [official SDK](/chapters/how-to-use-gladia/sdk) for Live integrations
 Any limit above the default requires a capacity check. [Contact the sales team](https://www.gladia.io/contact) to request an increase.
 </Note>
 
-- **Usage limit** : (**free-tier** users only)
+- **Usage** :
 
-  This determines the number of hours a user can transcribe a given month.
+  New accounts receive a **one-time grant of €50 in credits**. These credits do **not** renew once consumed. When they run out, top up your wallet or upgrade to a paid plan to continue.
 
 - **Concurrency** : (depending on free/paid tier)
 
