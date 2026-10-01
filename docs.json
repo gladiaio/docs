@@ -40,6 +40,7 @@
               "chapters/how-to-use-gladia/sdk",
               "chapters/how-to-use-gladia/playground",
               "chapters/how-to-use-gladia/cli",
+              "chapters/how-to-use-gladia/mcp",
               "chapters/how-to-use-gladia/benchmarking",
               "chapters/how-to-use-gladia/gladia-flow"
             ]
@@ -52,6 +53,7 @@
                 "expanded": true,
                 "pages": [
                   "chapters/pre-recorded-stt/quickstart",
+                  "chapters/pre-recorded-stt/transcription-process",
                   "chapters/pre-recorded-stt/audio-intelligence",
                   "chapters/pre-recorded-stt/recommended-parameters"
                 ]
@@ -115,7 +117,8 @@
           {
             "group": "Developer tools",
             "pages": [
-              "chapters/developer-tools/gladia-cli"
+              "chapters/developer-tools/gladia-cli",
+              "chapters/developer-tools/gladia-skills"
             ]
           },
           {

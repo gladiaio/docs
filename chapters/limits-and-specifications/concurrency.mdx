@@ -4,13 +4,11 @@ description: "Check Gladia transcription concurrency, queue capacity and live se
 sidebarTitle: Concurrency
 ---
 
+import PlanConcurrencyLimits from "/snippets/plan-concurrency-limits.mdx";
+
 Gladia limits concurrent transcription work separately from API request rate and live session duration. Your plan determines how many jobs or sessions can run at once. If concurrency is exhausted, the live and pre-recorded APIs return HTTP 429. Use the limits below to size your workload and request a capacity increase before sustained demand exceeds your allocation.
 
-| Plan type      | Usage limit <br /> (per month) | Max Transcriptions in concurrency <br />(pre-recorded) | Max Transcriptions in concurrency (Live) |
-| -------------- | ------------------------------ | ------------------------------------------------------ | ---------------------------------------- |
-| **Enterprise** | Unlimited                      | On demand                                              | On demand                                |
-| **Paid**       | Unlimited                      | 25                                                     | 30                                       |
-| **Free**       | 10 Hours                       | 3                                                      | 1                                        |
+<PlanConcurrencyLimits />
 
 These plan limits separate **usage allowance**, **active concurrency**, and **queued requests**:
 
@@ -27,6 +25,10 @@ HTTP 429 can mean either exhausted concurrency or API request-rate limiting. Tre
 
 Prefer the [official SDK](/chapters/how-to-use-gladia/sdk) for Live integrations: it already handles the WebSocket lifecycle (reconnection, session continuity, retries, buffering, and related timing). See the [Live quickstart](/chapters/live-stt/quickstart) for implementation details.
 
+<Note>
+For pre-recorded jobs, a **200** on `POST` or a [`transcription.created`](/api-reference/v2/pre-recorded/webhook/created) webhook means the job was accepted — do not resubmit while it is still queued or processing. See [Transcription process & retry policy](/chapters/pre-recorded-stt/transcription-process).
+</Note>
+
 ### Paid-plan concurrency defaults
 
 | API                   | Default         |
@@ -38,9 +40,9 @@ Prefer the [official SDK](/chapters/how-to-use-gladia/sdk) for Live integrations
 Any limit above the default requires a capacity check. [Contact the sales team](https://www.gladia.io/contact) to request an increase.
 </Note>
 
-- **Usage limit** : (**free-tier** users only)
+- **Usage** :
 
-  This determines the number of hours a user can transcribe a given month.
+  New accounts receive a **one-time grant of €50 in credits**. These credits do **not** renew once consumed. When they run out, top up your wallet or upgrade to a paid plan to continue.
 
 - **Concurrency** : (depending on free/paid tier)
 
