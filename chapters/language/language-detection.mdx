@@ -59,7 +59,8 @@ The detected `language` is returned on each utterance and can vary over time if 
 
 - Use [supported languages](/chapters/language/supported-languages) to pick valid ISO 639-1 codes.
 - Check [model selection](/chapters/introduction/models) for language detection availability by model. Live transcription uses Solaria-1.
-- Multiple languages or code switching can reduce [partial transcript](/chapters/live-stt/features/partial-transcripts) accuracy — keep the expected-language list focused.
+- Multiple languages or code switching can reduce [partial transcript](/chapters/live-stt/features/partial-transcripts) accuracy — keep the expected-language list focused, since fewer candidate languages make detection more reliable and partial transcripts more stable.
+- Combine with `messages_config.receive_partial_transcripts` in real time to get immediate feedback.
 - For mixed-language conversations, enable [code switching](/chapters/language/code-switching).
 
 
