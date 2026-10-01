@@ -611,11 +611,13 @@ The channel numbers directly correspond to the order in which you added the audi
   multiplied by the number of channels.
 </Warning>
 
-## Read messages
+## Read messages from multiple tracks
 
-During the whole session, we will send various messages through the WebSocket, the callback URL or webhooks. You can specify which kind of messages you want to receive in the initial configuration. See for WebSocket messages and for callback messages.
+During the whole session, we will send various messages through the WebSocket, the callback URL or webhooks. You can specify which kind of messages you want to receive in the initial configuration. See [`messages_config`](/api-reference/v2/live/init) for WebSocket messages and [`callback_config`](/api-reference/v2/live/init) for callback messages.
 
-Here's an example of how to read a message received through a WebSocket:
+Partial and final transcripts behave the same as with a single track; see [Partial transcripts](/chapters/live-stt/features/partial-transcripts) for how to handle them.
+
+Here's an example of how to read a [`transcript`](/api-reference/v2/live/message/transcript) message received through a WebSocket:
 
 <CodeGroup>
 
