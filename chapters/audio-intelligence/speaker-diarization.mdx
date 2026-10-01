@@ -38,7 +38,7 @@ Speakers will be assigned indexes by **order of appearance** (i.e. the 1st speak
         "end": 2.364,
         "confidence": 0.8914285714285715,
         "channel": 0,
-        "speaker": 0,
+        "speaker": 0
       },
       ...
     ]
@@ -61,6 +61,6 @@ Provide speaker-count hints with `diarization_config.number_of_speakers`, `diari
 
 This guide covers speaker diarization for **pre-recorded audio** only.
 
-Speaker diarization, transcription accuracy, and channel identification are different capabilities. For concept definitions, see [speaker diarization concepts](https://www.gladia.io/blog/what-is-diarization).
+Speaker diarization labels who spoke when within a single mixed audio track, while transcription accuracy measures word errors in the transcribed text. Channel identification instead relies on separate audio channels, reported in each utterance's `channel` field, rather than telling speakers apart within one track (see [Multiple channels](/chapters/limits-and-specifications/multiple-channels)). For concept definitions, see [speaker diarization concepts](https://www.gladia.io/blog/what-is-diarization).
 
 Async accuracy comparisons use the model and dataset scope described in the [async benchmark methodology](https://www.gladia.io/competitors/benchmarks). Use the [blind API comparison](https://www.gladia.io/compare-stt-apis) tool and check [pricing](https://www.gladia.io/pricing) for current plans. Speaker-count hints do not guarantee a specific detected speaker count.
