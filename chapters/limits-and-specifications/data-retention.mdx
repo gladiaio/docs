@@ -1,9 +1,10 @@
 ---
-title: Data retention
-description: "Data retention policies and zero data behavior"
+title: Data retention and zero data retention
+description: "Understand Gladia retention windows for audio, transcripts and metadata, Enterprise zero data retention, callback delivery and retrieval limitations."
+sidebarTitle: Data retention
 ---
 
-To provide transcription services, Gladia processes several types of data:
+Gladia's data retention depends on the plan and the type of data. Audio and transcript retention are separate from API metadata and operational logs. Enterprise customers can request custom retention or zero data retention. Under the documented zero-retention workflow, results are delivered through callbacks and are not available for later retrieval through the API or playground. The data types are:
 
 - **Audio input**: Audio files or audio streams provided for transcription
 - **Transcription output**: Text, timestamps, words, utterances
@@ -12,8 +13,9 @@ To provide transcription services, Gladia processes several types of data:
 
 The duration for which your data is stored depends on your plan type. You have two main options for data retention:
 
-- **Standard data retention:** Data is stored according to the default windows below (by plan and data type). Audio files and transcripts remain retrievable through the API and the [Gladia playground](https://app.gladia.io/?utm_campaign=197609689-Website&utm_source=documentation&utm_content=sign-up) for that window. Enterprise customers can request a custom retention period. The minimum custom value is 0, which means data is deleted within 24 hours.
-- **Zero data retention:** Data storage is minimized at all stages, avoiding temporary storage whenever possible. All data is deleted immediately after processing.
+- **Standard retention:** Audio and transcripts remain retrievable during the default retention window for your plan and data type.
+- **Custom retention (Enterprise):** Enterprise customers can request a custom period. A custom value of zero means deletion within 24 hours; it does not mean immediate deletion.
+- **Zero data retention (Enterprise):** This separate option uses ephemeral processing and immediate deletion after processing, as described below. It is not the same as a custom retention value of zero.
 
 <Info>
 Only Enterprise users are eligible for custom data retention and the zero data retention option.
@@ -43,7 +45,7 @@ By default, paid accounts keep audio and transcripts for a shorter window, while
 | API Metadata | 1 year | Request IDs, timestamps, and processing status only |
 | Logs | Limited period | Operational logs for service quality and reliability |
 
-## Zero Data Retention behavior
+## Zero data retention behavior
 
 When Zero Data Retention is enabled, Gladia processes data ephemerally; no data is stored at rest.
 
@@ -80,3 +82,6 @@ Before enabling Zero Data Retention, make sure your integration meets the follow
   </Step>
 </Steps>
 
+For pre-recorded transcription with zero data retention, use an external audio URL and deliver results through a callback. File upload is unavailable under zero data retention, and results cannot be retrieved later through the API or playground. See the [pre-recorded request reference](/api-reference/v2/pre-recorded/init).
+
+For current security attestations, data residency information, and agreements, see the [compliance hub](https://www.gladia.io/compliance-hub). Plan eligibility for custom retention and zero data retention is listed on [Pricing](https://www.gladia.io/pricing). Choosing a retention setting does not by itself establish your application's overall legal compliance.
