@@ -386,4 +386,8 @@ console.log(result);
   Want to know more about a specific feature? Check out our [Features chapter](/chapters/pre-recorded-stt/features) for more details.
 </Tip>
 
+<Tip>
+  If a `POST` already returned **200**, or you received a [`transcription.created`](/api-reference/v2/pre-recorded/webhook/created) webhook, do not resubmit the same audio — wait on that job ID. See [Transcription process & retry policy](/chapters/pre-recorded-stt/transcription-process).
+</Tip>
+
 <Samples />
