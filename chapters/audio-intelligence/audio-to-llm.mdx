@@ -11,6 +11,10 @@ import PrerecordedBadge from "/snippets/badges/prerecorded.mdx"
 
 Unlike the built-in [Summarization](/chapters/audio-intelligence/summarization) feature — which produces a fixed-format summary — Audio-to-LLM lets you write **your own instructions**: ask for a summary in the exact format, tone, and level of detail your product needs, or combine a summary with other analyses (action items, compliance checks) in a single request.
 
+<Note>
+  The Chapterization add-on is discontinued. The `chapterization` parameter is still accepted but ignored, and no chapters are returned. To split a recording into chapters, add a prompt such as "Split the transcript into chapters with a headline, a summary, and start and end timestamps for each".
+</Note>
+
 ## Usage
 
 1. Include `audio_to_llm: true` and an `audio_to_llm_config` object (at minimum, a `prompts` array) in your [pre-recorded transcription request](/chapters/pre-recorded-stt/quickstart).

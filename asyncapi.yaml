@@ -43,8 +43,6 @@ channels:
         $ref: "#/components/messages/postTranscript"
       postFinalTranscript:
         $ref: "#/components/messages/postFinalTranscript"
-      postChapterization:
-        $ref: "#/components/messages/postChapterization"
       postSummarization:
         $ref: "#/components/messages/postSummarization"
       # Server -> Client (Acks)
@@ -133,12 +131,6 @@ operations:
       $ref: "#/channels/liveTranscription"
     messages:
       - $ref: "#/channels/liveTranscription/messages/postFinalTranscript"
-  onPostChapterization:
-    action: send
-    channel:
-      $ref: "#/channels/liveTranscription"
-    messages:
-      - $ref: "#/channels/liveTranscription/messages/postChapterization"
   onPostSummarization:
     action: send
     channel:
@@ -296,13 +288,6 @@ components:
       summary: This message contains the informations about the post final transcript of the audio chunk.
       payload:
         $ref: "#/components/schemas/PostFinalTranscriptMessage"
-    postChapterization:
-      name: post_chapterization
-      title: Chapterization
-      contentType: application/json
-      summary: This message contains the informations about the post chapterization of the audio chunk.
-      payload:
-        $ref: "#/components/schemas/PostChapterizationMessage"
     postSummarization:
       name: post_summarization
       title: Summarization
@@ -904,17 +889,6 @@ components:
                     - { type: "null" }
                     - { $ref: "#/components/schemas/ErrorObject" }
                 results: { type: string }
-            chapterization:
-              type: object
-              properties:
-                success: { type: boolean }
-                is_empty: { type: boolean }
-                exec_time: { type: number }
-                error:
-                  oneOf:
-                    - { type: "null" }
-                    - { $ref: "#/components/schemas/ErrorObject" }
-                results: { type: object }
       description: Final aggregated output for the session, including metadata and add-on results.
       examples:
         - session_id: "550e8400-e29b-41d4-a716-446655440000"
@@ -928,60 +902,6 @@ components:
               transcription_time: 3.2
             transcription:
               full_transcript: "hello world"
-
-    PostChapterizationMessage:
-      type: object
-      required: [session_id, created_at, type, data]
-      properties:
-        session_id: { $ref: "#/components/schemas/UUID" }
-        created_at: { $ref: "#/components/schemas/ISODateTime" }
-        error:
-          oneOf:
-            - { type: "null" }
-            - { $ref: "#/components/schemas/ErrorObject" }
-        type: { type: string, const: post_chapterization }
-        data:
-          type: object
-          properties:
-            results:
-              type: array
-              items:
-                type: object
-                properties:
-                  abstractive_summary: { type: string }
-                  extractive_summary: { type: string }
-                  summary: { type: string }
-                  headline: { type: string }
-                  gist: { type: string }
-                  keywords:
-                    type: array
-                    items: { type: string }
-                  start: { type: number }
-                  end: { type: number }
-                  sentences:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        sentence: { type: string }
-                        start: { type: number }
-                        end: { type: number }
-                        words:
-                          type: array
-                          items: { $ref: "#/components/schemas/Word" }
-                  text: { type: string }
-      description: Post-processing output with chapter-level summaries and metadata.
-      examples:
-        - session_id: "550e8400-e29b-41d4-a716-446655440000"
-          created_at: "2025-09-19T12:46:00Z"
-          type: post_chapterization
-          error: null
-          data:
-            results:
-              - headline: "Project kickoff"
-                start: 0.0
-                end: 60.0
-                keywords: ["timeline", "owner"]
 
     PostSummarizationMessage:
       type: object
