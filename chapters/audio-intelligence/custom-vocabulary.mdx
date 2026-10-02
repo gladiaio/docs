@@ -1,6 +1,6 @@
 ---
 title: "Custom vocabulary"
-description: "Improve recognition of domain-specific words and phrases"
+description: "Configure custom vocabulary in Gladia live and pre-recorded transcription. Add pronunciation variants, tune intensity and distinguish custom spelling."
 ---
 
 import PrerecordedBadge from "/snippets/badges/prerecorded.mdx";
@@ -10,9 +10,7 @@ import VocabularyVsSpelling from "/snippets/custom-vocabulary-vs-spelling.mdx";
 <PrerecordedBadge />
 <LiveBadge />
 
-As Speech-to-text models are trained on general vocabulary, under-represented words such as brand names, proper nouns, or domain-specific terms are often transcribed incorrectly.
-
-Custom Vocabulary is a post-processing operation that compares **phonemes** between the transcript and your pronunciations entries. When the phonetic match is close enough, the transcribed text is replaced with your term.
+Custom vocabulary helps correct speech-to-text output for domain terms, product names and other words that are poorly represented in general vocabulary. Gladia applies phoneme-based matching after transcription: it compares the transcript with your vocabulary entries and pronunciation variants, then replaces sufficiently close matches. Use custom spelling when you need literal text normalization instead.
 
 <Note>
   If you already know which *text* variants the model produces and only need to
@@ -48,7 +46,7 @@ The `pronunciations` field lets you provide **plain-text alternative spellings t
         "pronunciations": ["sell force", "sale forces"],
         "intensity": 0.5,
         "language": "en"
-      },
+      }
     ],
     "default_intensity": 0.4
   }
@@ -67,7 +65,7 @@ The `pronunciations` field lets you provide **plain-text alternative spellings t
           "pronunciations": ["sell force", "sale forces"],
           "intensity": 0.5,
           "language": "en"
-        },
+        }
       ],
       "default_intensity": 0.4
     }
@@ -79,13 +77,15 @@ The `pronunciations` field lets you provide **plain-text alternative spellings t
 ## Parameter reference
 
 <ParamField body="vocabulary" type="object | string[]">
+  Each entry is either a string (the term to prefer) or an object with the fields below. When an entry omits `intensity`, `default_intensity` applies.
+
   <Expandable title="properties">
     <ParamField body="value" type="string" required>
       The correct word you want to be transcribed.
     </ParamField>
     
     <ParamField body="pronunciations" type="string[]">
-      Words with different spellings the word might be mis-spelled or mis-transcribed.
+      Plain-text alternative spellings that represent how the term sounds. These are spelling variants, not IPA symbols.
     </ParamField>
 
     <ParamField body="intensity" type="number">
@@ -105,15 +105,18 @@ The `pronunciations` field lets you provide **plain-text alternative spellings t
 
 ## Tuning tips
 
-- **Start at `default_intensity` 0.4** and adjust per entry only when needed.
-- **Add `pronunciations` before raising `intensity`** — variants narrow what can match without loosening every comparison.
-- **Keep lists focused** — every transcribed word is compared against every entry; long lists increase false positives.
+- **Start at `default_intensity` 0.4** and adjust per entry only when needed. The suggested **0.4–0.6** range is guidance, not a schema restriction or accuracy guarantee.
+- **Add `pronunciations` before raising `intensity`** — variants narrow what can match without loosening every comparison. Pronunciation variants widen phonetic coverage for a term; intensity controls how readily close matches are replaced.
+- **Keep lists focused** — every transcribed word is compared against every entry; long lists increase false positives. Higher intensity increases the risk of unwanted replacements.
 - **Move stable misspellings to [custom spelling](/chapters/audio-intelligence/custom-spelling)** when the model already outputs a recognizable (but wrong) form.
+- Custom vocabulary is **post-processing**. It does not retrain the speech model.
 
 ## Recommended workflow
 
 1. **Transcribe without custom vocabulary** and note mis-transcribed terms.
 2. **Route each term:** garbled or phonetically wrong output → custom vocabulary; recognizable but misspelled → custom spelling.
 3. **Add entries** with `pronunciations` and `default_intensity` around **0.4–0.6**.
-4. **Transcribe again** — confirm targets appear and scan for false positives.
+4. **Transcribe again** — confirm targets appear and scan for false positives. The outcomes that matter are recovered target terms and unwanted replacements.
 5. **Refine:** lower `intensity`, tighten `pronunciations`, or move stubborn terms to custom spelling.
+
+The relevant [language setting](/chapters/language/language-detection) affects multilingual terms. See the [API reference](/api-reference/v2/pre-recorded/init) for request fields. [Async benchmarks](https://www.gladia.io/competitors/benchmarks) and the [blind comparison tool](https://www.gladia.io/compare-stt-apis) do not establish the accuracy of a specific custom vocabulary configuration. Check [pricing](https://www.gladia.io/pricing) for current plan information.
