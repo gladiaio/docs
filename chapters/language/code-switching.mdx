@@ -10,7 +10,17 @@ Code switching handles conversations where speakers switch languages mid-utteran
   Avoid listing dozens of similar languages.
 </Note>
 
-## How to use code switching ?
+## When to enable it
+
+- Speakers **switch languages** mid-conversation (e.g. bilingual meetings, multilingual customer support).
+- You need the detected `language` returned **per utterance**.
+
+## When NOT to enable it
+
+- The audio is in a **single language** — code switching adds unnecessary processing and can introduce misdetections.
+- You've set **exactly one language** in `languages` — in that case `code_switching` is ignored anyway.
+
+## How to use code switching
 
 Enable code switching in the session configuration:
 
@@ -33,10 +43,11 @@ When enabled, transcript messages include the detected `language` per utterance 
   **Do not enable `code_switching` with an empty `languages` list.** When no
   languages are specified, the language detector evaluates every utterance
   against 100+ supported languages, leading to frequent misdetections -
-  especially between similar-sounding languages.
+  especially between similar-sounding languages. If possible, provide a short list of
+  languages you **actually expect** in the audio.
 </Warning>
 
 ## Recommendations
 
 - Limit the number of languages to those you expect.
-- Combine with [custom vocabulary](/chapters/pre-recorded-stt/features/custom-vocabulary) per language for domain terms.
+- Combine with [custom vocabulary](/chapters/audio-intelligence/custom-vocabulary) per language for domain terms.
