@@ -323,7 +323,7 @@ They may return in another form in the future.
 ## Send audio chunks
 
 If you were sending chunks as bytes, nothing has changed.
-If you were sending them as base64, the format of the JSON messages changed in V2. See the [API reference](/api-reference/v2/live/websocket) for the full format.
+If you were sending them as base64, the format of the JSON messages changed in V2. See the [API reference](/api-reference/v2/live/action/audio-chunk) for the full format.
 
 <AccordionGroup>
   <Accordion title="V1">
@@ -367,7 +367,7 @@ To read a transcription message in V1, you verify that the `type` field is `"fin
 In V2, you should confirm that the `type` field is `transcript` and that `data.is_final` is `true`.
 
 Below are examples of transcript messages in V1 and V2, so you can see the differences.
-See the [API reference](/api-reference/v2/live/callback/transcript) for the full format.
+See the [API reference](/api-reference/v2/live/message/transcript) for the full format.
 
 <AccordionGroup>
   <Accordion title="V1">
@@ -452,7 +452,7 @@ With the following configuration, you will only receive final transcript message
 
 ## End the live session
 
-The format of this message also changed. See the [API reference](/api-reference/v2/live/websocket) for the full format.
+The format of this message also changed. See the [API reference](/api-reference/v2/live/action/stop-recording) for the full format.
 
 <AccordionGroup>
   <Accordion title="V1">

@@ -31,7 +31,7 @@ To reduce the total response time and create a more fluid user experience, parti
 <Note>Partial transcripts accuracy deteriorates when multiple languages and/or code switching are enabled. For best results, limit the number of languages.</Note>
 
 When `receive_partial_transcripts` is `true`, the real-time API will send transcript messages for both intermediate and final results. 
-To distinguish between them, the message payload includes the [`is_final`](/api-reference/v2/live/callback/transcript#schema-payload) boolean field.
+To distinguish between them, the message payload includes the [`is_final`](/api-reference/v2/live/message/transcript#schema-data-is-final) boolean field.
 
 - `"is_final": false`: The message contains a partial transcript, which is subject to change.
 - `"is_final": true`: The message contains the final, most accurate transcript for an utterance. This transcript will not change.
