@@ -40,6 +40,7 @@
               "chapters/how-to-use-gladia/sdk",
               "chapters/how-to-use-gladia/playground",
               "chapters/how-to-use-gladia/cli",
+              "chapters/how-to-use-gladia/mcp",
               "chapters/how-to-use-gladia/benchmarking",
               "chapters/how-to-use-gladia/gladia-flow"
             ]
@@ -52,6 +53,7 @@
                 "expanded": true,
                 "pages": [
                   "chapters/pre-recorded-stt/quickstart",
+                  "chapters/pre-recorded-stt/transcription-process",
                   "chapters/pre-recorded-stt/audio-intelligence",
                   "chapters/pre-recorded-stt/recommended-parameters"
                 ]
@@ -89,7 +91,6 @@
               "chapters/audio-intelligence/named-entity-recognition",
               "chapters/audio-intelligence/pii-redaction",
               "chapters/audio-intelligence/sentiment-analysis",
-              "chapters/audio-intelligence/chapterization",
               "chapters/audio-intelligence/summarization",
               "chapters/audio-intelligence/audio-to-llm",
               "chapters/audio-intelligence/custom-metadata"
@@ -115,7 +116,8 @@
           {
             "group": "Developer tools",
             "pages": [
-              "chapters/developer-tools/gladia-cli"
+              "chapters/developer-tools/gladia-cli",
+              "chapters/developer-tools/gladia-skills"
             ]
           },
           {
@@ -194,7 +196,6 @@
                     "pages": [
                       "api-reference/v2/live/callback/post-transcript",
                       "api-reference/v2/live/callback/post-final-transcript",
-                      "api-reference/v2/live/callback/post-chapterization",
                       "api-reference/v2/live/callback/post-summarization"
                     ]
                   },
@@ -510,11 +511,23 @@
     },
     {
       "source": "/chapters/live-stt/chapterization",
-      "destination": "/chapters/audio-intelligence/chapterization"
+      "destination": "/chapters/audio-intelligence/audio-to-llm"
     },
     {
       "source": "/chapters/pre-recorded-stt/chapterization",
-      "destination": "/chapters/audio-intelligence/chapterization"
+      "destination": "/chapters/audio-intelligence/audio-to-llm"
+    },
+    {
+      "source": "/chapters/audio-intelligence/chapterization",
+      "destination": "/chapters/audio-intelligence/audio-to-llm"
+    },
+    {
+      "source": "/api-reference/v2/live/callback/post-chapterization",
+      "destination": "/api-reference/v2/live/callback/post-summarization"
+    },
+    {
+      "source": "/api-reference/v2/live/message/post-chapterization",
+      "destination": "/api-reference/v2/live/message/post-summarization"
     },
     {
       "source": "/chapters/live-stt/audio-to-llm",
