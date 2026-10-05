@@ -1,27 +1,35 @@
 ---
-title: Concurrency and Rate limits
-description: "Rate limiting and transcriptions concurrency"
+title: API rate limits and transcription concurrency
+description: "Check Gladia transcription concurrency, queue capacity and live session duration. Understand 429 responses and how to request more capacity."
+sidebarTitle: Concurrency
 ---
 
 import PlanConcurrencyLimits from "/snippets/plan-concurrency-limits.mdx";
 
-In order to provide a smooth experience and optimal performance for all users, Gladia provides 3 plans:
+Gladia limits concurrent transcription work separately from API request rate and live session duration. Your plan determines how many jobs or sessions can run at once. If concurrency is exhausted, the live and pre-recorded APIs return HTTP 429. Use the limits below to size your workload and request a capacity increase before sustained demand exceeds your allocation.
 
 <PlanConcurrencyLimits />
+
+These plan limits separate **usage allowance**, **active concurrency**, and **queued requests**:
+
+- **Free accounts:** 3 concurrent pre-recorded jobs and 1 live session.
+- **Paid defaults:** 25 parallel pre-recorded jobs and 30 live sessions; up to 300 additional async requests can queue.
+- Queued requests are separate from active parallel jobs.
+- **Enterprise** concurrency is agreed on demand. See [pricing](https://www.gladia.io/pricing) for current plans.
 
 ## Hitting your concurrency limit
 
 When you hit your concurrent session limit, both the **Live** and **Pre-recorded** APIs return a **429** status code.
 
-<Tip>
-Prefer the [official SDK](/chapters/how-to-use-gladia/sdk) for Live integrations: it already handles the WebSocket lifecycle (reconnection, session continuity, retries, buffering, and related timing). See the [Live quickstart](/chapters/live-stt/quickstart).
-</Tip>
+HTTP 429 can mean either exhausted concurrency or API request-rate limiting. Treat them separately: reduce parallel jobs or sessions when concurrency is exhausted, and slow the request rate when request-rate limiting applies. Use bounded retries with backoff and jitter, and honor any retry header documented for the endpoint.
+
+Prefer the [official SDK](/chapters/how-to-use-gladia/sdk) for Live integrations: it already handles the WebSocket lifecycle (reconnection, session continuity, retries, buffering, and related timing). See the [Live quickstart](/chapters/live-stt/quickstart) for implementation details.
 
 <Note>
 For pre-recorded jobs, a **200** on `POST` or a [`transcription.created`](/api-reference/v2/pre-recorded/webhook/created) webhook means the job was accepted — do not resubmit while it is still queued or processing. See [Transcription process & retry policy](/chapters/pre-recorded-stt/transcription-process).
 </Note>
 
-### Default values
+### Paid-plan concurrency defaults
 
 | API                   | Default         |
 | --------------------- | -------------------------------- |
@@ -43,7 +51,7 @@ Any limit above the default requires a capacity check. [Contact the sales team](
 
 - **Realtime session duration** : (all plans)
 
-  A single realtime (live) transcription session cannot exceed **3 hours**. After 3 hours, the session will be terminated. For longer events, start a new session when approaching the limit.
+  A single realtime (live) transcription session cannot exceed **3 hours**. After 3 hours, the session will be terminated. When an event exceeds that duration, start a new session.
 
 - **API level rate limit** : (same for every user)
 
