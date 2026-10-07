@@ -4,7 +4,7 @@ description: "Configure Gladia to transcribe audio that switches languages. Use 
 sidebarTitle: Code switching
 ---
 
-Code switching is a change of spoken language within an utterance or between turns. Gladia can transcribe these changes when code switching is enabled. Provide a focused list of expected languages and inspect the detected language in the transcript output. Transcription preserves the spoken content, while translation is a separate feature.
+Code switching is a change of spoken language between turns. Gladia can transcribe these changes when code switching is enabled. Provide a focused list of expected languages and inspect the detected language in the transcript output. Transcription preserves the spoken content, while translation is a separate feature.
 
 <Note>
   For best accuracy and latency, provide a small set of expected languages.
@@ -43,5 +43,5 @@ When enabled, transcript messages include the detected `language` per utterance 
 - Combine with [custom vocabulary](/chapters/audio-intelligence/custom-vocabulary) per language for domain terms.
 - Use [supported languages](/chapters/language/supported-languages) to pick valid ISO 639-1 codes.
 - Check [model selection](/chapters/introduction/models) for language and code-switching availability by model. Live transcription uses Solaria-1.
-- Multiple languages or code switching can reduce [partial transcript](/chapters/live-stt/features/partial-transcripts) accuracy — keep the expected-language list focused.
+- Multiple languages or code switching can reduce [partial transcript](/chapters/live-stt/features/partial-transcripts) accuracy, keep the expected-language list focused.
 - Supported languages describe coverage, not guaranteed accuracy on your production audio. Review [async benchmarks](https://www.gladia.io/competitors/benchmarks) with their model and dataset limits, then evaluate with the [blind comparison tool](https://www.gladia.io/compare-stt-apis) and [pricing](https://www.gladia.io/pricing).
