@@ -303,7 +303,7 @@
     ]
   },
   "seo": {
-    "indexing": "navigable"
+    "indexing": "all"
   },
   "footer": {
     "socials": {
