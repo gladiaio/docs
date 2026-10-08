@@ -4,7 +4,9 @@ description: "Configure Gladia to transcribe audio that switches languages. Use 
 sidebarTitle: Code switching
 ---
 
-Code switching is a change of spoken language between turns. Gladia can transcribe these changes when code switching is enabled. Provide a focused list of expected languages and inspect the detected language in the transcript output. Transcription preserves the spoken content, while translation is a separate feature.
+Code switching is when speakers change language during a conversation between turns. Gladia's multilingual transcription handles code switching with solaria-1 when language_config.code_switching is set to true: it uses [language detection](/chapters/language/language-detection) on each utterance, transcribes it in that language, and returns the detected language code with each utterance and word.
+We recommend listing the languages you expect in language_config.languages, chosen from the [supported languages](/chapters/language/supported-languages), for better accuracy. No spoken content is lost when speakers switch languages. 
+To get the full transcript in another language, use [translation](/chapters/audio-intelligence/translation). For background on how code switching works, see [what is code switching](https://www.gladia.io/blog/what-is-code-switching-in-speech-recognition).
 
 <Note>
   For best accuracy and latency, provide a small set of expected languages.
