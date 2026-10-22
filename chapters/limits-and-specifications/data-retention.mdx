@@ -45,6 +45,37 @@ By default, paid accounts keep audio and transcripts for a shorter window, while
 | API Metadata | 1 year | Request IDs, timestamps, and processing status only |
 | Logs | Limited period | Operational logs for service quality and reliability |
 
+## After the retention period
+
+Once the retention period of a transcription has passed, its audio and transcript are no longer available. Its metadata is kept for usage tracking, but the job can no longer be retrieved:
+
+- [`GET /v2/pre-recorded/:id`](/api-reference/v2/pre-recorded/get), `GET /v2/live/:id` and `GET /v2/transcription/:id` answer `404`.
+- `GET /v2/pre-recorded/:id/file` and the other audio file endpoints answer `404`.
+- The job no longer appears in list endpoints such as [`GET /v2/pre-recorded`](/api-reference/v2/pre-recorded/list), nor in the [playground](https://app.gladia.io).
+
+The `404` body carries an `error_code` field that tells you why the job is unavailable:
+
+| `error_code` | Meaning |
+| --- | --- |
+| `retention_period_expired` | The retention period of the job has passed. Its audio and transcript are no longer available. |
+| `stored_file_not_found` | The audio or transcript of the job is no longer stored, usually because its retention period has passed. |
+| `zero_data_retention_enabled` | [Zero data retention](#zero-data-retention-behavior) is enabled on your account, so the audio and transcript were never stored. Results are only delivered through [callbacks](/api-reference/v2/pre-recorded/callback/success). |
+
+```json
+{
+  "statusCode": 404,
+  "message": "This job's data retention period has passed: its audio and result have been deleted.",
+  "error_code": "retention_period_expired",
+  "timestamp": "2026-10-22T09:00:00.000Z",
+  "path": "/v2/pre-recorded/45463597-20b7-4af7-b3b3-f5fb778203ab",
+  "request_id": "G-821fe9df"
+}
+```
+
+<Warning>
+These error codes are final: the job will not come back, so do not retry it. To get a result again, submit the audio as a new transcription.
+</Warning>
+
 ## Zero data retention behavior
 
 When Zero Data Retention is enabled, Gladia processes data ephemerally; no data is stored at rest.
