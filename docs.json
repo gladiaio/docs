@@ -522,6 +522,10 @@
       "destination": "/chapters/audio-intelligence/audio-to-llm"
     },
     {
+      "source": "/chapters/audio-intelligence/structured-data-extraction",
+      "destination": "/chapters/audio-intelligence/audio-to-llm"
+    },
+    {
       "source": "/api-reference/v2/live/callback/post-chapterization",
       "destination": "/api-reference/v2/live/callback/post-summarization"
     },
