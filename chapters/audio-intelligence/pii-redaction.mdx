@@ -29,6 +29,11 @@ You can customize the behavior with `pii_redaction_config`:
 
 <ParamField body="entity_types" type="string[]">
   Preset or list of PII entity types to redact (e.g. `["GDPR"]`). See [Supported entity types](#supported-entity-types) for available presets.
+
+  - **Omitted or empty**: the full default detection set is redacted.
+  - **Non-empty**: **only** the listed presets and entity types are redacted. The list replaces the default set, it is not added to it. Everything else stays in the clear, and the job still completes with `status: done`.
+
+  To combine coverage, list several values, e.g. `["HIPAA_SAFE_HARBOR", "HEALTH_INFORMATION"]`.
 </ParamField>
 <ParamField body="processed_text_type" type="enum" default="MARKER">
   How to replace detected PII: 
@@ -68,7 +73,7 @@ This consistency is also useful for downstream tasks using LLMs, which can reaso
 
 ## Supported entity types
 
-When using `entity_types`, you can pass a preset group or a list of specific types.
+When using `entity_types`, you can pass a preset group or a list of specific types. Each preset only covers the entity types listed under it: pick the preset matching your requirement, or list several of them.
 
 ### Preset groups
 
@@ -88,14 +93,20 @@ Includes: `GENDER`, `LANGUAGE`, `ORIGIN`, `PHYSICAL_ATTRIBUTE`, `POLITICAL_AFFIL
 </Accordion>
 
 <Accordion title="HIPAA_SAFE_HARBOR — USA HIPAA Safe Harbor" icon="hospital">
-  De-identification standard for US healthcare data under HIPAA.
+  De-identification standard for US healthcare data under HIPAA. Use this preset to redact patient identifiers (names, contact details, SSN, record numbers, etc.).
+
+  It does **not** include clinical content such as conditions or drugs. Add `HEALTH_INFORMATION` to redact those too.
 
 Includes: `ACCOUNT_NUMBER`, `AGE`, `DATE`, `DATE_INTERVAL`, `DOB`, `DRIVER_LICENSE`, `EMAIL_ADDRESS`, `HEALTHCARE_NUMBER`, `IP_ADDRESS`, `LOCATION`, `LOCATION_ADDRESS`, `LOCATION_ADDRESS_STREET`, `LOCATION_CITY`, `LOCATION_COORDINATE`, `LOCATION_ZIP`, `NAME`, `NAME_FAMILY`, `NAME_GIVEN`, `NAME_MEDICAL_PROFESSIONAL`, `NUMERICAL_PII`, `PASSPORT_NUMBER`, `PHONE_NUMBER`, `SSN`, `URL`, `VEHICLE_ID`, `BANK_ACCOUNT`, `CREDIT_CARD`, `CREDIT_CARD_EXPIRATION`, `CVV`
 
 </Accordion>
 
-<Accordion title="HEALTH_INFORMATION — Health-related entities" icon="heart-pulse">
-  Medical and health-related information.
+<Accordion title="HEALTH_INFORMATION — Clinical entities only (not HIPAA)" icon="heart-pulse">
+  Clinical content only: medical conditions, drugs, doses, injuries, procedures, etc.
+
+<Warning>
+  `HEALTH_INFORMATION` is **not** a HIPAA preset. It does **not** redact names, contact details, SSN or other identifiers. Use `HIPAA_SAFE_HARBOR` (or `GDPR`) for those, e.g. `["HIPAA_SAFE_HARBOR", "HEALTH_INFORMATION"]` to redact both.
+</Warning>
 
 Includes: `BLOOD_TYPE`, `CONDITION`, `DOSE`, `DRUG`, `INJURY`, `MEDICAL_PROCESS`, `STATISTICS`
 
@@ -198,7 +209,7 @@ Excludes: `CREDIT_CARD`, `CVV`, `BANK_ACCOUNT`, `ROUTING_NUMBER`
 | `SEXUALITY`             | Sexual orientation     |
 | `PHYSICAL_ATTRIBUTE`    | Race, physical traits  |
 
-#### Healthcare (HIPAA / GDPR)
+#### Healthcare
 
 | Entity              | What it catches                         |
 | ------------------- | --------------------------------------- |
