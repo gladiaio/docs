@@ -29,9 +29,3 @@
   max-width: 100%;
   overflow: auto;
 }
-
-/* Hide Mintlify's floating "Ask a question" bar: the voice widget sits bottom-right and the
-   Ask button next to search stays. Undocumented class, so check it after Mintlify updates. */
-.chat-assistant-floating-input {
-  display: none;
-}
