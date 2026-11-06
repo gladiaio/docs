@@ -9,5 +9,6 @@
   script.src = "https://vox.gladia.io/embed/v1/widget.js";
   script.async = true;
   script.setAttribute("data-key", "vox_pub_9ktiRFEOfz8WaaTBsp-aUm-_-PSi7W0H");
+  script.setAttribute("data-transcript", "panel");
   document.head.appendChild(script);
 })();
