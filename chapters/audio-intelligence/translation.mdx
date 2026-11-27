@@ -16,9 +16,10 @@ The list of the languages covered by the Translation feature are listed in [Supp
 
 ---
 
-**2 translation models** are available:
+**3 translation models** are available:
 
-- `base` : Fast, cover most use cases
+- `batch` (default): Covers most use cases
+- `base` : Fast, translates sentence by sentence
 - `enhanced` : Slower, but higher quality and with context awareness
 
 ## Quickstart
@@ -33,7 +34,7 @@ To enable translation, set `translation` to `true` on your request, and add a `t
     "target_languages": [
       "fr"
     ],
-    "model": "base",
+    "model": "batch",
     "match_original_utterances": true,
     "lipsync": true,
     "context_adaptation": true,
@@ -73,8 +74,8 @@ To enable translation, set `translation` to `true` on your request, and add a `t
   Languages](/chapters/language/supported-languages).
 </ParamField>
 
-<ParamField body="model" type='enum["base", "enhanced"]' default="base">
-  Specifies the translation model to be used.
+<ParamField body="model" type='enum["base", "batch", "enhanced"]' default="batch">
+  Specifies the translation model to be used. When omitted, `batch` is used.
 </ParamField>
 
 <ParamField body="match_original_utterances" type="boolean" default>
